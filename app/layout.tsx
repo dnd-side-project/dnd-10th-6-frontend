@@ -34,8 +34,6 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         {children}
-
-        
         <div className="text-red-300  rounded-md border-2"></div>
       </body>
     </html>
