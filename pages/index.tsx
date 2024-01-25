@@ -1,10 +1,9 @@
-import Button from '@/components/Button'
+import Inputbox from '@/components/inputbox'
 import React from 'react'
 const index = () => {
   return (
-    <div>
-      Hello World!
-      <Button>??</Button>
+    <div className="p-4">
+      <Inputbox />
     </div>
   )
 }

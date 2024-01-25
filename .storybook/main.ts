@@ -30,6 +30,7 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: 'tag',
+    defaultName: 'documentation',
   },
   webpackFinal(config, options) {
     if (config.resolve) {
