@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --black: #111111;
+    --muted: #767676;
+    --line: #e5e5ec;
+    --disabled: #999999;
+  }
+
+  .dark {
+    --black: #111111;
+    --muted: #767676;
+    --line: #e5e5ec;
+    --disabled: #999999;
+  }
+}
