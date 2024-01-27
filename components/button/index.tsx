@@ -6,8 +6,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-green-400 text-white',
-        secondary: 'bg-gray-200 text-gray-700',
+        primary:
+          'text-white bg-green-500 hover:bg-green-600 active:bg-green-800 focus-visible:ring-green-400 focus-visible:ring-offset-green-500 focus-visible:ring-offset-2',
+        secondary:
+          'text-white-500 bg-gray-300 hover:bg-gray-200 active:bg-gray-200 focus-visible:ring-gray-200 focus-visible:ring-offset-gray-200 focus-visible:ring-offset-2',
       },
 
       rounded: {
