@@ -5,6 +5,7 @@ import React from 'react'
 const Signin = () => {
   return (
     <div>
+      커스텀 로그인 화면
       <Button
         onClick={() => signIn('kakao', { redirect: true, callbackUrl: '/' })}
       >

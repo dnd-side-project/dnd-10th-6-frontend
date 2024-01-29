@@ -1,4 +1,3 @@
-import Button from '@/components/button'
 import Carousel from '@/components/carousel'
 import Inputbox from '@/components/inputbox'
 import LoginButton from '@/components/login-button'
@@ -23,7 +22,6 @@ const Page = () => {
           />
         )}
       />
-      <Button />
       <LoginButton />
     </div>
   )
