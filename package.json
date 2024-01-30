@@ -14,7 +14,11 @@
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "embla-carousel": "^8.0.0-rc21",
+    "embla-carousel-react": "^8.0.0-rc21",
+    "framer-motion": "^11.0.3",
     "next": "14.1.0",
+    "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.1",
