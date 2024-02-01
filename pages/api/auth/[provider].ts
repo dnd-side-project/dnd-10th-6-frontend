@@ -1,4 +1,4 @@
-import { Oauth } from '@/lib/server/auth'
+import { Oauth } from '@/lib/auth'
 import withHandler from '@/lib/server/with-handler'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
