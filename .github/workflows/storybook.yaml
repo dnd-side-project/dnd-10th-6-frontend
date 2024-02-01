@@ -89,10 +89,10 @@ jobs:
           script: |
             function parseMessage(){
               return `
-              | Results |         |
+              | Results |   Domain   |
               | :---    |  ---:   |
-              | Storybook Preview |  ${{steps.chromatic.outputs.storybookUrl}} |
-              | Storybook BuildURL |  ${{steps.chromatic.outputs.buildUrl}} |
+              | Storybook Preview |  ${{steps.chromatic_publish.outputs.storybookUrl}} |
+              | Storybook BuildURL |  ${{steps.chromatic_publish.outputs.buildUrl}} |
               `
             }
             const comments = [
