@@ -12,7 +12,6 @@ import { useScroll } from 'framer-motion'
 
 interface CarouselProps<T> {
   slides: T[]
-  // eslint-disable-next-line no-unused-vars
   renderItem: (item: T, index: number) => ReactNode
 }
 

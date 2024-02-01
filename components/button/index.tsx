@@ -29,7 +29,6 @@ interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
-// eslint-disable-next-line react/display-name
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, className, variant, rounded, ...props }, ref) => {
     return (
@@ -48,4 +47,5 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   },
 )
 
+Button.displayName = 'Button'
 export default Button

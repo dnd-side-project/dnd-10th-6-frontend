@@ -1,5 +1,5 @@
 import '@/styles/global.css'
-import { SessionProvider } from 'next-auth/react'
+
 import type { AppProps } from 'next/app'
 import LocalFont from 'next/font/local'
 
@@ -9,15 +9,10 @@ const pretendard = LocalFont({
   display: 'swap',
   variable: '--font-base',
 })
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={pretendard.variable}>
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-      </SessionProvider>
+      <Component {...pageProps} />
     </main>
   )
 }
