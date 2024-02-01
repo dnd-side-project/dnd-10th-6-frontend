@@ -1,5 +1,10 @@
-name: 'Storybook Tests'
-on: push
+name: '스토리북 배포 자동화'
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
 jobs:
   test:
     timeout-minutes: 60
@@ -11,8 +16,23 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install dependencies
         run: yarn
-      - name: Install Playwright
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "::set-output name=version::$(yarn why --json @playwright/test | grep -h 'workspace:.' | jq --raw-output '.children[].locator' | sed -e 's/@playwright\/test@.*://')"
+
+      - uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: '~/.cache/ms-playwright'
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright's dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+
       - name: Build Storybook
         run: yarn build-storybook --quiet
       - name: Serve Storybook and run tests
@@ -61,3 +81,10 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
           autoAcceptChanges: true
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: '| Results |  |\n| --- | --- |\n| Build Results | ${{steps.chromatic.outputs.buildUrl}} |\n| Storybook Preview | ${{steps.chromatic.outputs.storybookUrl}} |\n| Component Count | ${{steps.chromatic.outputs.componentCount}} |'
