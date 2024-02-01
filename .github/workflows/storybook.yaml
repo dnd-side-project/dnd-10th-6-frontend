@@ -82,9 +82,30 @@ jobs:
           onlyChanged: true
           autoAcceptChanges: true
 
+      - name: Format Message
+        id: format_comment_message
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            function parseMessage(){
+              return `
+              # | Results  |          |
+              # | -------- | -------- |
+              # | Storybook Preview |  ${{steps.chromatic.outputs.storybookUrl}} |
+              `
+            }
+            const comments = [
+              `## Deploy Preview`,
+              `🔥 **check your project preview here!** : `,
+              parseMessage()
+            ].join('\n');
+
+            core.setOutput('comment', comments);
+
       - name: comment PR
         uses: thollander/actions-comment-pull-request@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: '| Results |  |\n| --- | --- |\n| Build Results | ${{steps.chromatic.outputs.buildUrl}} |\n| Storybook Preview | ${{steps.chromatic.outputs.storybookUrl}} |\n| Component Count | ${{steps.chromatic.outputs.componentCount}} |'
+          message: ${{ steps.format_comment_message.outputs.comment}}
