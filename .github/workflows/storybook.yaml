@@ -41,11 +41,12 @@ jobs:
             "npx http-server storybook-static --port 6006 --silent" \
             "npx wait-on tcp:6006 && yarn test-storybook"
 
-  chromatic:
+  chromatic-deploy:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      storybook_url: ${{ steps.chromatic_publish.outputs.storybookUrl }}
+      storybookUrl: ${{ steps.chromatic_publish.outputs.storybookUrl }}
+      buildUrl: ${{ steps.chromatic_publish.outputs.buildUrl }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -81,6 +82,11 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           onlyChanged: true
           autoAcceptChanges: true
+
+  github-bot:
+    needs: chromatic-deploy
+    runs-on: ubuntu-latest
+    steps:
       - name: Format Message
         id: format_comment_message
         uses: actions/github-script@v7
@@ -91,8 +97,8 @@ jobs:
               return `
               | 분류 |   도메인   |
               | :---    |  ---:   |
-              | 프리뷰 |  ${{steps.chromatic_publish.outputs.storybookUrl}} |
-              | 빌드URL |  ${{steps.chromatic_publish.outputs.buildUrl}} |
+              | 프리뷰 |  ${{needs.chromatic-deploy.outputs.storybookUrl}} |
+              | 빌드URL |  ${{needs.chromatic-deploy.outputs.buildUrl}} |
               `
             }
             const comments = [
