@@ -20,6 +20,7 @@ jobs:
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server storybook-static --port 6006 --silent" \
             "npx wait-on tcp:6006 && yarn test-storybook"
+
   chromatic:
     runs-on: ubuntu-latest
     outputs:
@@ -34,6 +35,20 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
+
+      - name: Setup Package Version
+        id: yarn-cached-version
+        run: echo YARN_VERSION=$(cat package.json | jq -r '.packageManager') >> $GITHUB_OUTPUT
+
+      - name: Yarn Cache - PnP
+        uses: actions/cache@v2
+        with:
+          path: |
+            .yarn/cache
+            .pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ steps.set-version.outputs.YARN_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Install dependencies
         run: yarn install --check-cache
