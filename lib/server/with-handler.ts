@@ -1,0 +1,55 @@
+import { Method } from 'axios'
+import { NextApiResponse, NextApiRequest } from 'next'
+import { getNewToken } from '@/lib/server/auth'
+import { CookieSerializeOptions, serialize } from 'cookie'
+import { withError } from './utils'
+
+interface ConfigType<T> {
+  methods: Method[]
+  handler: (req: NextApiRequest, res: NextApiResponse) => Promise<T>
+  hasAuthenticated?: boolean
+}
+
+const cookieOptions: CookieSerializeOptions = {
+  maxAge: 60 * 60, // 한시간,
+  path: '/',
+  httpOnly: true,
+  secure: true,
+}
+
+export default function withHandler<T = void>({
+  methods,
+  hasAuthenticated = false,
+  handler,
+}: ConfigType<T>) {
+  return async function (
+    req: NextApiRequest & { method: Method },
+    res: NextApiResponse,
+  ): Promise<T | void> {
+    if (req.method && !methods.includes(req.method)) {
+      return res.status(405).json({ message: 'Method not allowed' })
+    }
+    try {
+      if (hasAuthenticated) {
+        try {
+          return await handler(req, res)
+        } catch (error) {
+          const newToken = await getNewToken()
+          const serializedToken = serialize(
+            'access_token',
+            newToken,
+            cookieOptions,
+          )
+
+          req.cookies['access_token'] = serializedToken
+          res.setHeader('Set-Cookie', serializedToken)
+          return await handler(req, res)
+        }
+      }
+      return await handler(req, res)
+    } catch (error) {
+      console.error(error)
+      return withError(res, { status: 500 })
+    }
+  }
+}

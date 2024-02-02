@@ -1,0 +1,117 @@
+name: '스토리북 배포 자동화'
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'feature/**'
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Install dependencies
+        run: yarn
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "::set-output name=version::$(yarn why --json @playwright/test | grep -h 'workspace:.' | jq --raw-output '.children[].locator' | sed -e 's/@playwright\/test@.*://')"
+
+      - uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: '~/.cache/ms-playwright'
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright's dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Build Storybook
+        run: yarn build-storybook --quiet
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && yarn test-storybook"
+
+  chromatic-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      storybookUrl: ${{ steps.chromatic_publish.outputs.storybookUrl }}
+      buildUrl: ${{ steps.chromatic_publish.outputs.buildUrl }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install NodeJs
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Setup Package Version
+        id: yarn-cached-version
+        run: echo YARN_VERSION=$(cat package.json | jq -r '.packageManager') >> $GITHUB_OUTPUT
+
+      - name: Yarn Cache - PnP
+        uses: actions/cache@v2
+        with:
+          path: |
+            .yarn/cache
+            .pnp.*
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ steps.set-version.outputs.YARN_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-
+
+      - name: Install dependencies
+        run: yarn install --check-cache
+
+      - name: Publish to Chromatic
+        id: chromatic_publish
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          onlyChanged: true
+          autoAcceptChanges: true
+
+  github-bot:
+    needs: chromatic-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Format Message
+        id: format_comment_message
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            function parseMessage(){
+              return `
+              | 분류 |   도메인   |
+              | :---    |  ---:   |
+              | 프리뷰 |  ${{needs.chromatic-deploy.outputs.storybookUrl}} |
+              | 빌드URL |  ${{needs.chromatic-deploy.outputs.buildUrl}} |
+              `
+            }
+            const comments = [
+              `## 스토리북 배포화면 미리보기`,
+              `🔥 **배포된 화면을 확인해보세요!** : `,
+              parseMessage()
+            ].join('\n');
+
+            core.setOutput('comment', comments);
+
+      - name: comment PR
+        uses: thollander/actions-comment-pull-request@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: ${{ steps.format_comment_message.outputs.comment}}
