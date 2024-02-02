@@ -1,7 +1,7 @@
 import { VariantProps, cva } from 'class-variance-authority'
 import { HTMLAttributes, forwardRef } from 'react'
 
-const typographyVariants = cva('font-normal f ', {
+const typographyVariants = cva('font-normal ', {
   variants: {
     hierarchy: {
       mainTitle1: 'text-[28px] leading-[135.714%]',
@@ -17,13 +17,15 @@ const typographyVariants = cva('font-normal f ', {
 })
 
 interface TypographyProps
-  extends HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof typographyVariants> {}
+  extends HTMLAttributes<HTMLElement>,
+    VariantProps<typeof typographyVariants> {
+  as?: React.ElementType | string
+}
 
-export const Typography = forwardRef<HTMLDivElement, TypographyProps>(
-  ({ className, hierarchy, ...props }, ref) => {
+export const Typography = forwardRef<HTMLElement, TypographyProps>(
+  ({ className, hierarchy, as: Component = 'p', ...props }, ref) => {
     return (
-      <p
+      <Component
         className={typographyVariants({ hierarchy, className })}
         ref={ref}
         {...props}

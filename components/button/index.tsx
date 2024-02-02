@@ -29,11 +29,7 @@ interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
-<<<<<<< HEAD
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-=======
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
->>>>>>> origin
   ({ children, className, variant, rounded, ...props }, ref) => {
     return (
       <button
@@ -52,7 +48,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 )
 
 Button.displayName = 'Button'
-<<<<<<< HEAD
-=======
 export default Button
->>>>>>> origin
