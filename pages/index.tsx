@@ -2,6 +2,7 @@ import Button from '@/components/button'
 import Carousel from '@/components/carousel'
 import Inputbox from '@/components/inputbox'
 import { media } from '@/components/media'
+import { Typography } from '@/components/typography'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -26,6 +27,10 @@ const Page = () => {
       <Link href="/signin">
         <Button>Signin</Button>
       </Link>
+
+      <Typography hierarchy="mainTitle1" as="h1">
+        Main Title 1
+      </Typography>
     </div>
   )
 }
