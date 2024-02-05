@@ -1,4 +1,3 @@
-import { Typography } from '@/components/typography'
 import '@/styles/global.css'
 
 import type { AppProps } from 'next/app'
