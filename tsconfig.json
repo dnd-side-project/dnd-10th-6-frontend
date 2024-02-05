@@ -16,6 +16,13 @@
       "@/*": ["./*"],
     },
   },
-  "include": ["next-env.d.ts","static.d.ts", "env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "static.d.ts",
+    "env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/colors/colors.stories.mdx",
+  ],
   "exclude": ["node_modules"],
 }
