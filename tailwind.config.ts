@@ -21,6 +21,7 @@ const config = {
     extend: {
       colors: {
         ...colors,
+        black: 'var(--black)',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -53,10 +54,6 @@ const config = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
-        },
-        black: 'var(--black)',
-        muted: {
-          DEFAULT: 'var(--muted)',
         },
         line: {
           DEFAULT: 'var(--black)',
