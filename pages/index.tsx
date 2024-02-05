@@ -31,6 +31,14 @@ const Page = () => {
       <Typography hierarchy="mainTitle1" as="h1">
         Main Title 1
       </Typography>
+
+      <Typography
+        hierarchy="mainTitle2"
+        as="h2"
+        className="text-main-green-green400"
+      >
+        Main Title 2
+      </Typography>
     </div>
   )
 }
