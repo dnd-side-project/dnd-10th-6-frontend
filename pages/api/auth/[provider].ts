@@ -1,28 +1,56 @@
+import { AUTH } from '@/constants'
 import { NamuiError } from '@/error'
 import { Oauth, Provider } from '@/lib/auth'
+import { NamuiApi } from '@/lib/namui-api'
 import { withError } from '@/lib/server/utils'
 import withHandler from '@/lib/server/with-handler'
+import { serialize } from 'cookie'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { provider, code } = req.query
-  const parsedProvider = Provider.safeParse(provider)
-  if (!parsedProvider.success) {
-    return withError(res, {
-      status: 400,
-      message: NamuiError.BadRequestError.message,
-    })
+  try {
+    const { provider, code } = req.query
+    const parsedProvider = Provider.safeParse(provider)
+    if (!parsedProvider.success) {
+      return withError(res, {
+        status: 400,
+        message: NamuiError.BadRequestError.message,
+      })
+    }
+
+    const url = Oauth.getAuthorizationURL(parsedProvider.data)
+    if (!url || !code) {
+      return withError(res, {
+        status: 400,
+        message: NamuiError.BadRequestError.message,
+      })
+    }
+
+    const {
+      data: { accessToken, refreshToken },
+    } = await NamuiApi.signIn(parsedProvider.data, code)
+
+    res.setHeader('Set-Cookie', [
+      serialize('accessToken', accessToken, {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: AUTH.ACCESS_EXPIRED_TIME,
+      }),
+      serialize('refreshToken', refreshToken, {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        maxAge: AUTH.REFRESH_EXPIRED_TIME,
+      }),
+    ])
+  } catch (err) {
+    console.log(err)
   }
 
-  const url = Oauth.getAuthorizationURL(parsedProvider.data)
-  if (!url || !code) {
-    return withError(res, {
-      status: 400,
-      message: NamuiError.BadRequestError.message,
-    })
-  }
-  // TODO: 백앤드와 연동 필요
-  return res.redirect(302, '/').json('123')
+  return res.redirect(301, '/')
 }
 
 export default withHandler({

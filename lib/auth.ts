@@ -1,6 +1,16 @@
 import { NamuiError } from '@/error'
 import * as z from 'zod'
 
+export interface User {
+  id: string
+}
+
+export interface Token {
+  accessToken: string
+  refreshToken: string
+}
+export type Session = Partial<User & Token> | null
+
 export const Provider = z.enum(['kakao'])
 export type ProviderType = z.infer<typeof Provider>
 
