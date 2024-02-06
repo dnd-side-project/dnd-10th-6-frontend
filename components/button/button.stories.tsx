@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
-import Button from '.'
+
 import { userEvent } from '@storybook/testing-library'
+import { Button } from '.'
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
