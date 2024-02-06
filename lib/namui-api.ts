@@ -4,7 +4,7 @@ import axios, {
   CreateAxiosDefaults,
 } from 'axios'
 
-import { Provider } from '@/lib/server/auth'
+import type { ProviderType } from '@/lib/auth'
 import { NamuiError } from '@/error'
 
 export class NamuiApi {
@@ -15,18 +15,33 @@ export class NamuiApi {
     if (!refreshToken) throw new NamuiError.UnauthorizedError()
   }
 
-  static signIn(provider: Provider) {
+  /**
+   * @apiType Server
+   * @param provider
+   * @returns
+   */
+  static signIn(provider: ProviderType) {
     return NamuiApi.handler({
       method: 'POST',
       url: `/api/auth/signin/${provider}`,
     })
   }
 
-  private static getInstance() {
+  /**
+   *
+   * @returns {AxiosInstance}
+   */
+  static getInstance(): AxiosInstance {
     if (!NamuiApi.instance) {
       NamuiApi.instance = axios.create(this.instanceOption)
     }
     return NamuiApi.instance
+  }
+
+  private static getTokenFromHeader() {
+    const namuiWikiInstance = this.getInstance()
+    const token = namuiWikiInstance.defaults?.headers?.['Authorization'] ?? ''
+    return String(token ?? '').replaceAll('Bearer ', '')
   }
 
   private static handler<Response>(config: AxiosRequestConfig) {

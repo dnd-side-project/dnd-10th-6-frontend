@@ -1,5 +1,5 @@
 import Button from '@/components/button'
-import { signIn } from '@/lib/client/auth'
+import { signIn } from '@/lib/auth'
 import React from 'react'
 
 const Signin = () => {

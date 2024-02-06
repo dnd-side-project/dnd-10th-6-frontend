@@ -1,6 +1,9 @@
 import { NamuiError } from '@/error'
+import * as z from 'zod'
 
-export type Provider = 'kakao'
+export const Provider = z.enum(['kakao'])
+export type ProviderType = z.infer<typeof Provider>
+
 export const getNewToken = async () => new NamuiError.NotImplimentError()
 
 export interface SignInOptions {
@@ -9,11 +12,16 @@ export interface SignInOptions {
 }
 
 export async function signIn(
-  provider: Provider,
+  provider: ProviderType,
   options?: SignInOptions,
 ): Promise<void> {
+  const result = Provider.safeParse(provider)
+  if (!result.success) {
+    throw new NamuiError.BadRequestError()
+  }
+
   const { callbackUrl = window.location.href, redirect = true } = options ?? {}
-  console.log(callbackUrl, '<<')
+  console.log(callbackUrl)
 
   const url = Oauth.getAuthorizationURL(provider)
   if (!url) {
@@ -27,7 +35,7 @@ export async function signIn(
 }
 
 export class Oauth {
-  static getAuthorizationURL(provider: Provider | string) {
+  static getAuthorizationURL(provider: ProviderType | string) {
     let url = ''
     let clientId = ''
     let redirectUri = ''
