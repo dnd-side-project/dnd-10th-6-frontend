@@ -1,20 +1,21 @@
-import { NamuiError } from '@/error'
+import { BadRequestError, NotImplimentError } from '@/error'
 import * as z from 'zod'
 
 export interface User {
   id: string
+  nickname: string
 }
 
 export interface Token {
   accessToken: string
   refreshToken: string
 }
-export type Session = Partial<User & Token> | null
+export type Session = { user?: User; token?: Partial<Token> } | null
 
 export const Provider = z.enum(['kakao'])
 export type ProviderType = z.infer<typeof Provider>
 
-export const getNewToken = async () => new NamuiError.NotImplimentError()
+export const getNewToken = async () => new NotImplimentError()
 
 export interface SignInOptions {
   callbackUrl?: string
@@ -27,7 +28,7 @@ export async function signIn(
 ): Promise<void> {
   const result = Provider.safeParse(provider)
   if (!result.success) {
-    throw new NamuiError.BadRequestError()
+    throw new BadRequestError()
   }
 
   const { callbackUrl = window.location.href, redirect = true } = options ?? {}
@@ -35,7 +36,7 @@ export async function signIn(
 
   const url = Oauth.getAuthorizationURL(provider)
   if (!url) {
-    throw new NamuiError.BadRequestError()
+    throw new BadRequestError()
   }
   if (redirect) {
     window.location.href = url.toString()

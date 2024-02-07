@@ -1,4 +1,4 @@
-import { NamuiError } from '@/error'
+import { BadRequestError } from '@/error'
 import { NextApiResponse } from 'next'
 
 export const withError = (
@@ -10,7 +10,7 @@ export const withError = (
 ) => {
   const defaultOptions = {
     status: 400,
-    message: NamuiError.BadRequestError.message,
+    message: BadRequestError.message,
   }
 
   const { message, status } = { ...defaultOptions, ...options }

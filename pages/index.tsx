@@ -2,10 +2,11 @@ import Button from '@/components/button'
 import Carousel from '@/components/carousel'
 import Inputbox from '@/components/inputbox'
 import { media } from '@/components/media'
+import { useSession } from '@/provider/session-provider'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 const Page = () => {
+  const { signin, signout, data, status } = useSession()
   return (
     <div className="p-4">
       <Inputbox />
@@ -23,9 +24,14 @@ const Page = () => {
           />
         )}
       />
-      <Link href="/signin">
-        <Button>Signin</Button>
-      </Link>
+
+      <Button
+        disabled={status === 'loading' || !!data}
+        onClick={() => signin({ provider: 'kakao' })}
+      >
+        {data ? '접속중' : 'Signin'}
+      </Button>
+      <Button onClick={() => signout()}>Signout</Button>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { AUTH } from '@/constants'
-import { NamuiError } from '@/error'
+import { BadRequestError, isNamuiError } from '@/error'
 import { Oauth, Provider } from '@/lib/auth'
 import { NamuiApi } from '@/lib/namui-api'
 import { withError } from '@/lib/server/utils'
@@ -14,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!parsedProvider.success) {
       return withError(res, {
         status: 400,
-        message: NamuiError.BadRequestError.message,
+        message: BadRequestError.message,
       })
     }
 
@@ -22,7 +22,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (!url || !code) {
       return withError(res, {
         status: 400,
-        message: NamuiError.BadRequestError.message,
+        message: BadRequestError.message,
       })
     }
 
@@ -47,10 +47,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }),
     ])
   } catch (err) {
-    console.log(err)
+    if (isNamuiError(err)) {
+      return res.redirect(307, `/?err=${err.name}`).json({ ok: true })
+    }
   }
-
-  return res.redirect(301, '/')
+  res.status(200).redirect('/')
 }
 
 export default withHandler({

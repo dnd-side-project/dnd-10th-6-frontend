@@ -1,10 +1,13 @@
-import { NamuiError } from '@/error'
-import { Session } from '@/lib/auth'
+import { NotImplimentError } from '@/error'
+import { ProviderType, Session, signIn } from '@/lib/auth'
+import { NamuiApi } from '@/lib/namui-api'
 import {
   PropsWithChildren,
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -27,11 +30,20 @@ export type SessionContextValue<R extends boolean = false> = R extends true
           status: 'unauthenticated' | 'loading'
         }
 
-const SessionContext = createContext<SessionContextValue | undefined>(undefined)
-
+type SessionHandler = {
+  signin: (args: { provider: ProviderType; callbackUrl?: string }) => void
+  signout: () => Promise<void>
+}
 interface SessionProviderProps extends SessionContextType {
   refetchOnWindowFocus?: boolean
+  onSessionChange?: (session: Session) => void
 }
+
+const SessionContext = createContext<SessionContextValue | undefined>(undefined)
+
+const useBrowserEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : () => {}
+
 export const SessionProvider = ({
   children,
   ...props
@@ -45,10 +57,16 @@ export const SessionProvider = ({
   const [session, setSession] = useState<Session>(InitialSession)
   const [loading, setLoading] = useState(!hasInitialSession)
 
+  useBrowserEffect(() => {
+    props.onSessionChange && props.onSessionChange(session)
+  }, [session])
+
   const _getSession = async () => {
     try {
-      throw new NamuiError.NotImplimentError()
+      const newSession = await NamuiApi.getUserData()
+      setSession((prev) => ({ ...prev, user: newSession.data }))
     } catch (error) {
+      console.log(error, '<<<')
     } finally {
       setLoading(false)
     }
@@ -63,7 +81,7 @@ export const SessionProvider = ({
   useEffect(() => {
     const visibilityHandler = () => {
       if (refetchOnWindowFocus && document.visibilityState === 'visible')
-        throw new NamuiError.NotImplimentError()
+        throw new NotImplimentError()
     }
     document.addEventListener('visibilitychange', visibilityHandler, false)
     return () =>
@@ -85,9 +103,7 @@ export const SessionProvider = ({
           resolve(null),
         )
         setLoading(false)
-        if (newSession) {
-          setSession(newSession)
-        }
+        setSession(newSession)
       },
     }),
     [session, loading],
@@ -102,7 +118,7 @@ export const SessionProvider = ({
 
 export const useSession = <R extends boolean>(options?: {
   required: boolean
-}) => {
+}): SessionContextValue<R> & SessionHandler => {
   if (!SessionContext) {
     throw new Error('React Context is unavailable in Server Components')
   }
@@ -113,6 +129,23 @@ export const useSession = <R extends boolean>(options?: {
 
   const { required } = options ?? {}
 
+  const signin: SessionHandler['signin'] = useCallback((args) => {
+    const { provider, callbackUrl } = args
+    if (callbackUrl) {
+      sessionStorage.setItem('callbackUrl', callbackUrl)
+    }
+    signIn(provider, { callbackUrl })
+  }, [])
+
+  const signout: SessionHandler['signout'] = useCallback(async () => {
+    const url = `/api/auth/signout`
+    await fetch(url, {
+      method: 'POST',
+    })
+    value.update()
+    // window.location.href = window.location.origin
+  }, [value])
+
   const requiredAndNotLoading = required && value.status === 'unauthenticated'
 
   if (requiredAndNotLoading) {
@@ -120,8 +153,10 @@ export const useSession = <R extends boolean>(options?: {
       data: value.data,
       update: value.update,
       status: 'loading',
+      signin,
+      signout,
     }
   }
 
-  return value
+  return { ...value, signin, signout }
 }

@@ -4,22 +4,17 @@ import axios, {
   AxiosResponse,
   CreateAxiosDefaults,
 } from 'axios'
-
-import type { ProviderType } from '@/lib/auth'
-import { NamuiError } from '@/error'
+import type { ProviderType, User } from '@/lib/auth'
+import { BadRequestError, raiseNamuiErrorFromStatus } from '@/error'
 
 export class NamuiApi {
   private static instance: AxiosInstance
   private static instanceOption: CreateAxiosDefaults = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-  }
-
-  static getNewToken(refreshToken?: string) {
-    if (!refreshToken) throw new NamuiError.UnauthorizedError()
+    withCredentials: true,
   }
 
   /**
-   * @apiType Server
    * @param provider
    * @returns
    */
@@ -36,8 +31,16 @@ export class NamuiApi {
     )
   }
 
+  static getUserData() {
+    return NamuiApi.getData<User>(
+      NamuiApi.handler({
+        method: 'GET',
+        url: '/api/v1/auth/test',
+      }),
+    )
+  }
+
   /**
-   *
    * @returns {AxiosInstance}
    */
   static getInstance(): AxiosInstance {
@@ -52,13 +55,16 @@ export class NamuiApi {
   ) {
     return response.then((res) => res.data)
   }
-  private static getTokenFromHeader() {
-    const namuiWikiInstance = this.getInstance()
-    const token = namuiWikiInstance.defaults?.headers?.['Authorization'] ?? ''
-    return String(token ?? '').replaceAll('Bearer ', '')
-  }
 
-  private static handler<Response>(config: AxiosRequestConfig) {
-    return this.getInstance()<Response>(config)
+  private static async handler<Response>(config: AxiosRequestConfig) {
+    try {
+      const instance = this.getInstance()
+      return await instance<Response>(config)
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        return raiseNamuiErrorFromStatus(err.status || err.response?.status)
+      }
+      throw new BadRequestError('Holly Molly...')
+    }
   }
 }
