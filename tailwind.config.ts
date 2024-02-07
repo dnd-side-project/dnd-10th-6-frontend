@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { colors } from './styles/theme/colors'
 
 const config = {
   darkMode: ['class'],
@@ -7,6 +8,7 @@ const config = {
   theme: {
     extend: {
       colors: {
+        ...colors,
         black: 'var(--black)',
         muted: {
           DEFAULT: 'var(--muted)',
