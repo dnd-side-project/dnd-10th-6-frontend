@@ -1,4 +1,3 @@
-import { Typography } from '@/components/typography'
 import '@/styles/global.css'
 
 import type { AppProps } from 'next/app'
@@ -14,15 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={pretendard.variable}>
       <Component {...pageProps} />
-      <Typography hierarchy="mainTitle1" as="h1">
-        Main Title 1
-      </Typography>
-      <Typography hierarchy="subTitle1" as="h2">
-        Sub Title 1
-      </Typography>
-      <Typography hierarchy="body1" as="div">
-        Body 1
-      </Typography>
     </main>
   )
 }
