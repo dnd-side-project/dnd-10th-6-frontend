@@ -1,6 +1,5 @@
 import { Method } from 'axios'
 import { NextApiResponse, NextApiRequest } from 'next'
-import { getNewToken } from '@/lib/server/auth'
 import { CookieSerializeOptions, serialize } from 'cookie'
 import { withError } from './utils'
 
@@ -34,10 +33,10 @@ export default function withHandler<T = void>({
         try {
           return await handler(req, res)
         } catch (error) {
-          const newToken = await getNewToken()
+          // const newToken = await getNewToken()
           const serializedToken = serialize(
             'access_token',
-            newToken,
+            'newToken',
             cookieOptions,
           )
 
