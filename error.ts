@@ -8,7 +8,7 @@ export enum ERROR_TYPE {
 /**
  * @description 남의위키 베이스 에러 클래스
  */
-class NamuiError extends Error {
+export class NamuiError extends Error {
   public static readonly message: string
   constructor(
     public readonly message: string,
@@ -78,15 +78,26 @@ export const isNamuiError = (obj: unknown): obj is NamuiError => {
   return obj instanceof NamuiError
 }
 
-export const raiseNamuiErrorFromStatus = (status?: number) => {
+export const raiseNamuiErrorFromStatus = (
+  status: number = 500,
+  isReturned: boolean = false,
+) => {
+  const parsedError = (error: NamuiError) => {
+    if (isReturned) return error
+    throw error
+  }
   switch (true) {
     case !status:
-      throw new InternalServerError()
+      parsedError(new InternalServerError())
+      break
     case status === 401:
-      throw new UnauthorizedError()
+      parsedError(new UnauthorizedError())
+      break
     case status && status > 401 && status < 500:
-      throw new BadRequestError()
+      parsedError(new BadRequestError())
+      break
     default:
-      throw new InternalServerError()
+      parsedError(new InternalServerError())
+      break
   }
 }

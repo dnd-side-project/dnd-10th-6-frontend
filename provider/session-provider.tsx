@@ -63,10 +63,12 @@ export const SessionProvider = ({
 
   const _getSession = async () => {
     try {
-      const newSession = await NamuiApi.getUserData()
-      setSession((prev) => ({ ...prev, user: newSession.data }))
+      if (session?.token?.accessToken) {
+        const newSession = await NamuiApi.getUserData()
+        setSession((prev) => ({ ...prev, user: newSession.data }))
+      }
     } catch (error) {
-      console.log(error, '<<<')
+      setSession(null)
     } finally {
       setLoading(false)
     }
@@ -142,9 +144,8 @@ export const useSession = <R extends boolean>(options?: {
     await fetch(url, {
       method: 'POST',
     })
-    value.update()
-    // window.location.href = window.location.origin
-  }, [value])
+    window.location.href = window.location.origin
+  }, [])
 
   const requiredAndNotLoading = required && value.status === 'unauthenticated'
 

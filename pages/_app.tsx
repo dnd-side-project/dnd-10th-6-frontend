@@ -44,9 +44,7 @@ export default function NamuiWikiApp({
         <SessionProvider
           session={session}
           onSessionChange={() => {
-            NamuiApi.getInstance().defaults.headers.common[
-              AUTH.AUTH_HEADER_KEY
-            ] = session?.token?.accessToken
+            NamuiApi.setToken(session?.token?.accessToken)
           }}
         >
           <Component {...pageProps} />
@@ -97,7 +95,8 @@ NamuiWikiApp.getInitialProps = async (
       }
     }
   } catch (err) {
-    console.log(err)
+    if (refreshToken) {
+    }
   }
 
   return {
