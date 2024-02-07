@@ -1,18 +1,20 @@
 import { Typography } from '@/components/typography'
 import { AUTH } from '@/constants'
+import { UnauthorizedError } from '@/error'
 import BaseLayout from '@/layout/base-layout'
-import { Token } from '@/lib/auth'
+import { Session, Token } from '@/lib/auth'
 import { NamuiApi } from '@/lib/namui-api'
 import {
   SessionProvider,
   SessionContextType,
 } from '@/provider/session-provider'
 import '@/styles/global.css'
-import { parse } from 'cookie'
+import { parse, serialize } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
 import LocalFont from 'next/font/local'
+
 import { ReactElement, ReactNode } from 'react'
 
 const pretendard = LocalFont({
@@ -70,37 +72,62 @@ NamuiWikiApp.getInitialProps = async (
   const { accessToken, refreshToken } = parse(
     context.ctx.req?.headers.cookie ?? '',
   ) as Partial<Token>
+  let session: Session = {}
   try {
+    const headers = new Headers()
+    headers.set('Cookie', context.ctx.req?.headers.cookie ?? '')
+    const getUser = async (token: string) => {
+      headers.set(AUTH.AUTH_HEADER_KEY, token)
+      const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
+      serverURL.pathname = '/api/v1/auth/test'
+      const res = await fetch(serverURL, {
+        method: 'GET',
+        headers: headers,
+      })
+      const user = await res.json()
+      return user
+    }
     if (accessToken || refreshToken) {
       if (accessToken) {
-        const headers = new Headers()
-        headers.set('Cookie', context.ctx.req?.headers.cookie ?? '')
-        headers.set(AUTH.AUTH_HEADER_KEY, accessToken)
-        const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
-        serverURL.pathname = '/api/v1/auth/test'
-        const res = await fetch(serverURL, {
-          method: 'GET',
-          headers: headers,
-        })
-        const user = await res.json()
-        return {
-          ...ctx,
-          session: {
-            user: user.data,
-            token: { accessToken, refreshToken },
-          },
+        const user = await getUser(accessToken)
+        session = {
+          user: user.data,
+          token: { accessToken, refreshToken },
         }
       } else {
-        // TODO: 엑세스 재발급 로직 추가
+        if (refreshToken) {
+          const serverURL = new URL(process.env.HOST)
+          serverURL.pathname = '/api/auth/refresh'
+          const res = await fetch(serverURL, {
+            method: 'POST',
+            headers,
+          }).then((res) => {
+            if (res.status !== 200) {
+              throw new UnauthorizedError()
+            }
+            return res.json() as Promise<{ accessToken: string }>
+          })
+          context.ctx.res?.setHeader('Set-Cookie', [
+            serialize('accessToken', res.accessToken, {
+              path: '/',
+              httpOnly: true,
+              secure: true,
+              sameSite: 'none',
+              maxAge: AUTH.ACCESS_EXPIRED_TIME,
+            }),
+          ])
+          const user = await getUser(res.accessToken)
+          session = {
+            user: user.data,
+            token: { accessToken: res.accessToken, refreshToken },
+          }
+        }
       }
     }
-  } catch (err) {
-    if (refreshToken) {
-    }
-  }
+  } catch (err) {}
 
   return {
     ...ctx,
-    session: null,
+    session,
   }
 }

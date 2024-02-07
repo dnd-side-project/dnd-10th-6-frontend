@@ -5,7 +5,7 @@ import axios, {
   AxiosResponse,
   CreateAxiosDefaults,
 } from 'axios'
-import type { ProviderType, User } from '@/lib/auth'
+import type { ProviderType, Token, User } from '@/lib/auth'
 import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
 import { AUTH } from '@/constants'
 
@@ -16,8 +16,7 @@ export class NamuiApi {
   }
   private static accessToken: string
   /**
-   * @param provider
-   * @returns
+   * @NOTE 로그인 API
    */
   static signIn(provider: ProviderType, code: string | string[]) {
     return NamuiApi.handler<{ accessToken: string; refreshToken: string }>({
@@ -30,26 +29,20 @@ export class NamuiApi {
     })
   }
 
-  static getUserData() {
-    return NamuiApi.handler<User>({
+  static async getUserData() {
+    return await NamuiApi.handler<User>({
       method: 'GET',
       url: '/api/v1/auth/test',
     })
   }
 
-  private static async getNewToken() {
-    const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
-    serverURL.pathname = '/api/v1/refresh'
-    const response = await fetch(serverURL).then(
-      (res) =>
-        res.json() as Promise<{
-          data: {
-            accessToken: 'string'
-          }
-        }>,
-    )
-    NamuiApi.setToken(response.data.accessToken)
-    return response.data.accessToken
+  static async getNewToken() {
+    const res = await this.handler<Pick<Token, 'accessToken'>>({
+      method: 'POST',
+      baseURL: window.location.origin,
+      url: '/api/auth/refresh',
+    })
+    return res.data.accessToken
   }
 
   private static injectInterceptor(instance: AxiosInstance) {
@@ -69,17 +62,17 @@ export class NamuiApi {
       return Promise.reject(err)
     }
 
-    const onResponse = (config: AxiosResponse) => config.data
+    const onResponse = (config: AxiosResponse) => config
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onErrorResponse = async (error: any) => {
-      console.log(error)
-      if (error.response?.status === 401) {
+      if (error.response?.status === 500) {
         const newAccessToken = await this.getNewToken()
         error.config.headers = {
           ...error.config.headers,
           [AUTH.AUTH_HEADER_KEY]: newAccessToken,
         }
-        return await this.getInstance()(error.config)
+        this.setToken(newAccessToken)
+        return await this.handler(error.config)
       }
       const errorInstance = axios.isAxiosError(error)
         ? raiseNamuiErrorFromStatus(error.status || error.response?.status)

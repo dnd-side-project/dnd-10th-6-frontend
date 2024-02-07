@@ -1,4 +1,4 @@
-import { BadRequestError, NotImplimentError } from '@/error'
+import { BadRequestError } from '@/error'
 import * as z from 'zod'
 
 export interface User {
@@ -14,8 +14,6 @@ export type Session = { user?: User; token?: Partial<Token> } | null
 
 export const Provider = z.enum(['kakao'])
 export type ProviderType = z.infer<typeof Provider>
-
-export const getNewToken = async () => new NotImplimentError()
 
 export interface SignInOptions {
   callbackUrl?: string
