@@ -1,51 +1,21 @@
-import Button from '@/components/button'
-import Carousel from '@/components/carousel'
-import Inputbox from '@/components/inputbox'
-import { media } from '@/components/media'
-import { useSession } from '@/provider/session-provider'
-import { Typography } from '@/components/typography'
-import Image from 'next/image'
-import React from 'react'
+import OnBoard from '@/components/onboard'
+import { useEffect, useState } from 'react'
+
 const Page = () => {
-  const { signin, signout, data, status } = useSession()
-  return (
-    <div className="p-4">
-      <Inputbox />
-      <Carousel
-        slides={media}
-        renderItem={(item, index) => (
-          <Image
-            key={index}
-            height={300}
-            width={600}
-            src={item.src}
-            placeholder="blur"
-            blurDataURL={item.blurDataURL}
-            alt={item.src}
-          />
-        )}
-      />
+  const [isViewOnboard, setIsViewOnboard] = useState(() => false)
+  useEffect(() => {
+    setIsViewOnboard(!!localStorage.getItem('namui-init'))
+  }, [])
 
-      <Button
-        disabled={status === 'loading' || !!data}
-        onClick={() => signin({ provider: 'kakao' })}
-      >
-        {data ? '접속중' : 'Signin'}
-      </Button>
-      <Button onClick={() => signout()}>Signout</Button>
-
-      <Typography hierarchy="mainTitle1" as="h1">
-        Main Title 1
-      </Typography>
-
-      <Typography
-        hierarchy="mainTitle2"
-        as="h2"
-        className="text-main-green-green400"
-      >
-        Main Title 2
-      </Typography>
-    </div>
+  return isViewOnboard ? (
+    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">INDEX</div>
+  ) : (
+    <OnBoard
+      onStartClick={() => {
+        localStorage.setItem('namui-init', 'true')
+        setIsViewOnboard(true)
+      }}
+    />
   )
 }
 

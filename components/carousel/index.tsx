@@ -5,17 +5,27 @@ import React, {
   useRef,
   ReactNode,
 } from 'react'
-import { DotButton } from './carousel.components'
+import { AnimatedOpacity, DotButton } from './carousel.components'
 import useEmblaCarousel from 'embla-carousel-react'
 import { EmblaCarouselType } from 'embla-carousel'
-import { useScroll } from 'framer-motion'
+import { LazyMotion, domAnimation, useScroll } from 'framer-motion'
+import { cn } from '@/lib/client/utils'
 
 interface CarouselProps<T> {
+  className?: string
+  itemClass?: string
   slides: T[]
   renderItem: (item: T, index: number) => ReactNode
+  onSlideSelect?: (index: number) => void
 }
 
-const Carousel = <T,>({ slides, renderItem }: CarouselProps<T>) => {
+const Carousel = <T,>({
+  slides,
+  renderItem,
+  className,
+  itemClass,
+  onSlideSelect,
+}: CarouselProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [viewportRef, embla] = useEmblaCarousel({
     skipSnaps: false,
@@ -23,7 +33,6 @@ const Carousel = <T,>({ slides, renderItem }: CarouselProps<T>) => {
 
   const scrollX = useScroll({ axis: 'x', container: containerRef })
 
-  const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
   const scrollTo = useCallback(
@@ -31,60 +40,68 @@ const Carousel = <T,>({ slides, renderItem }: CarouselProps<T>) => {
     [embla],
   )
 
-  const onSelect = useCallback(() => {
-    if (!embla) return
-    setSelectedIndex(embla.selectedScrollSnap())
-  }, [embla, setSelectedIndex])
-
   const onScroll = useCallback(
     (emblaApi: EmblaCarouselType) => {
       scrollX.scrollXProgress.set(emblaApi.scrollProgress())
     },
     [scrollX.scrollXProgress],
   )
+  const onSelect = useCallback(
+    (emblaApi: EmblaCarouselType) => {
+      onSlideSelect && onSlideSelect(emblaApi.selectedScrollSnap())
+    },
+    [onSlideSelect],
+  )
 
   useEffect(() => {
     if (!embla) return
-    onSelect()
     const snap = embla?.scrollSnapList()
     setScrollSnaps(snap)
-    embla.on('select', onSelect)
     embla.on('scroll', onScroll)
+    embla.on('select', onSelect)
 
     return () => {
       embla.off('select', onSelect)
       embla.off('scroll', onScroll)
     }
-  }, [embla, setScrollSnaps, onSelect, onScroll])
+  }, [embla, setScrollSnaps, onScroll, onSelect])
 
   return (
-    <>
-      <div className="relative mx-auto">
-        <div className="overflow-hidden" ref={viewportRef}>
-          <div className="disabled-select flex" ref={containerRef}>
+    <LazyMotion features={domAnimation}>
+      <div className={cn(className)}>
+        <div className="overflow-hidden grow flex flex-col" ref={viewportRef}>
+          <div
+            className="disabled-select flex grow relative"
+            ref={containerRef}
+          >
             {slides.map((item, index) => (
-              <div className="flex-[0_0_100%]" key={index}>
+              <AnimatedOpacity
+                className={itemClass}
+                index={index}
+                maxLength={slides.length}
+                scrollX={scrollX.scrollXProgress}
+                key={index}
+              >
                 {renderItem(item, index)}
-              </div>
+              </AnimatedOpacity>
             ))}
           </div>
         </div>
+        <div className="flex list-none justify-center">
+          {scrollSnaps.map((_, index) => {
+            return (
+              <DotButton
+                index={index}
+                maxLength={scrollSnaps.length}
+                scrollX={scrollX.scrollXProgress}
+                key={index}
+                onClick={() => scrollTo(index)}
+              />
+            )
+          })}
+        </div>
       </div>
-      <div className="flex list-none justify-center">
-        {scrollSnaps.map((_, index) => {
-          return (
-            <DotButton
-              index={index}
-              maxLength={scrollSnaps.length}
-              scrollX={scrollX.scrollXProgress}
-              key={index}
-              selected={index === selectedIndex}
-              onClick={() => scrollTo(index)}
-            />
-          )
-        })}
-      </div>
-    </>
+    </LazyMotion>
   )
 }
 

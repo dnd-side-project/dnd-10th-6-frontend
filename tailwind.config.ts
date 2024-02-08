@@ -3,7 +3,11 @@ import { colors } from './styles/theme/colors'
 
 const config = {
   darkMode: ['class'],
-  content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './layout/**/*.{ts,tsx}',
+  ],
   prefix: '',
   theme: {
     extend: {
