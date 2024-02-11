@@ -62,12 +62,19 @@ const config = {
         disabled: 'var(--disabled)',
       },
       fontSize: {
-        sm: [
-          '14px',
-          {
-            lineHeight: '20px',
-          },
-        ],
+        mainTitle1: '28px',
+        mainTitle2: '24px',
+        subTitle1: '20px',
+        subTitle2: '18px',
+        body1: '16px',
+        body2: '15px',
+        body3: '14px',
+        caption1: '13px',
+        caption2: '12px',
+      },
+      fontWeight: {
+        medium: '500',
+        bold: '700',
       },
       borderRadius: {
         lg: 'var(--radius)',
