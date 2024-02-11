@@ -4,7 +4,7 @@ import Inputbox from '@/components/inputbox'
 import { media } from '@/components/media'
 import { useSession } from '@/provider/session-provider'
 import { Modal } from '@/components/modal'
-import { Typography } from '@/components/typography'
+
 import Image from 'next/image'
 import React from 'react'
 const Page = () => {
@@ -35,26 +35,12 @@ const Page = () => {
       </Button>
       <Button onClick={() => signout()}>Signout</Button>
 
-      <Typography hierarchy="mainTitle1" as="h1">
-        Main Title 1
-      </Typography>
-
-      <Typography
-        hierarchy="mainTitle2"
-        as="h2"
-        className="text-main-green-green400"
-      >
-        Main Title 2
-      </Typography>
-
       <Modal
         title="Modal Title"
         description="Modal Description"
         trigger={<Button>Open Modal</Button>}
       >
-        <Typography hierarchy="mainTitle1" as="h1">
-          Modal Content
-        </Typography>
+        Modal Content
       </Modal>
     </div>
   )

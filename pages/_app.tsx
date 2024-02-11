@@ -1,4 +1,3 @@
-import { Typography } from '@/components/typography'
 import { AUTH } from '@/constants'
 import BaseLayout from '@/layout/base-layout'
 import { Token } from '@/lib/auth'
@@ -49,15 +48,6 @@ export default function NamuiWikiApp({
         >
           <Component {...pageProps} />
         </SessionProvider>
-        <Typography hierarchy="mainTitle1" as="h1">
-          Main Title 1
-        </Typography>
-        <Typography hierarchy="subTitle1" as="h2">
-          Sub Title 1
-        </Typography>
-        <Typography hierarchy="body1" as="div">
-          Body 1
-        </Typography>
       </BaseLayout>
     </main>,
   )
