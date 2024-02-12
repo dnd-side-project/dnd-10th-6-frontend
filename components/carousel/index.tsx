@@ -8,8 +8,9 @@ import React, {
 import { AnimatedOpacity, DotButton } from './carousel.components'
 import useEmblaCarousel from 'embla-carousel-react'
 import { EmblaCarouselType } from 'embla-carousel'
-import { LazyMotion, domAnimation, useScroll } from 'framer-motion'
+import { LazyMotion, domAnimation, useScroll, m } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
+import { fadeInProps } from '@/variants'
 
 interface CarouselProps<T> {
   className?: string
@@ -68,7 +69,7 @@ const Carousel = <T,>({
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className={cn(className)}>
+      <m.div className={cn(className)} {...fadeInProps}>
         <div className="overflow-hidden grow flex flex-col" ref={viewportRef}>
           <div
             className="disabled-select flex grow relative"
@@ -100,7 +101,7 @@ const Carousel = <T,>({
             )
           })}
         </div>
-      </div>
+      </m.div>
     </LazyMotion>
   )
 }
