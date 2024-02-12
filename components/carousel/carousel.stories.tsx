@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import Carousel from '.'
 
-import { onBoardingItems } from '@/pages'
+import { onBoardingItems } from '@/components/onboard'
 const meta: Meta<typeof Carousel> = {
   title: 'UI/Carousel',
   component: Carousel,
