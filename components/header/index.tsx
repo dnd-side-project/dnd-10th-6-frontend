@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
-import Drawer from '../ui/drawer'
+import Drawer from '@/components/ui/drawer'
 
 const Logo = () => {
   return (
