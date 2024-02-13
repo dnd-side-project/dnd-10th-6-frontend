@@ -31,20 +31,6 @@ export default function NamuiWikiApp({
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
 
   return getLayout(
-<<<<<<< HEAD
-    <main className={pretendard.variable}>
-      <BaseLayout>
-        <SessionProvider
-          session={session}
-          onSessionChange={() => {
-            NamuiApi.setToken(session?.token?.accessToken)
-          }}
-        >
-          <Component {...pageProps} />
-        </SessionProvider>
-      </BaseLayout>
-    </main>,
-=======
     <BaseLayout>
       <SessionProvider
         session={session}
@@ -55,7 +41,6 @@ export default function NamuiWikiApp({
         <Component {...pageProps} />
       </SessionProvider>
     </BaseLayout>,
->>>>>>> 1c5d4b42b14c7562006a04157c89769a340a9aa7
   )
 }
 

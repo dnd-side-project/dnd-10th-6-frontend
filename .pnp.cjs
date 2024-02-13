@@ -43,11 +43,7 @@ const RAW_RUNTIME_STATE =
           ["@storybook/test", "npm:7.6.11"],\
           ["@storybook/test-runner", "npm:0.16.0"],\
           ["@storybook/testing-library", "npm:0.2.2"],\
-<<<<<<< HEAD
-          ["@tanstack/react-query", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.1"],\
-=======
           ["@tanstack/react-query", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.2"],\
->>>>>>> 1c5d4b42b14c7562006a04157c89769a340a9aa7
           ["@types/cookie", "npm:0.6.0"],\
           ["@types/cors", "npm:2.8.17"],\
           ["@types/js-cookie", "npm:3.0.6"],\
@@ -8721,36 +8717,15 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@tanstack/query-core", [\
-<<<<<<< HEAD
-      ["npm:5.20.1", {\
-        "packageLocation": "../../../.yarn/berry/cache/@tanstack-query-core-npm-5.20.1-46b8179032-10c0.zip/node_modules/@tanstack/query-core/",\
-        "packageDependencies": [\
-          ["@tanstack/query-core", "npm:5.20.1"]\
-=======
       ["npm:5.20.2", {\
         "packageLocation": "../../../.yarn/berry/cache/@tanstack-query-core-npm-5.20.2-c02d761049-10c0.zip/node_modules/@tanstack/query-core/",\
         "packageDependencies": [\
           ["@tanstack/query-core", "npm:5.20.2"]\
->>>>>>> 1c5d4b42b14c7562006a04157c89769a340a9aa7
         ],\
         "linkType": "HARD"\
       }]\
     ]],\
     ["@tanstack/react-query", [\
-<<<<<<< HEAD
-      ["npm:5.20.1", {\
-        "packageLocation": "../../../.yarn/berry/cache/@tanstack-react-query-npm-5.20.1-8395d13b95-10c0.zip/node_modules/@tanstack/react-query/",\
-        "packageDependencies": [\
-          ["@tanstack/react-query", "npm:5.20.1"]\
-        ],\
-        "linkType": "SOFT"\
-      }],\
-      ["virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.1", {\
-        "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-virtual-80efc28436/4/.yarn/berry/cache/@tanstack-react-query-npm-5.20.1-8395d13b95-10c0.zip/node_modules/@tanstack/react-query/",\
-        "packageDependencies": [\
-          ["@tanstack/react-query", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.1"],\
-          ["@tanstack/query-core", "npm:5.20.1"],\
-=======
       ["npm:5.20.2", {\
         "packageLocation": "../../../.yarn/berry/cache/@tanstack-react-query-npm-5.20.2-6938f7ff4a-10c0.zip/node_modules/@tanstack/react-query/",\
         "packageDependencies": [\
@@ -8763,7 +8738,6 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@tanstack/react-query", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.2"],\
           ["@tanstack/query-core", "npm:5.20.2"],\
->>>>>>> 1c5d4b42b14c7562006a04157c89769a340a9aa7
           ["@types/react", "npm:18.2.48"],\
           ["react", "npm:18.2.0"]\
         ],\
@@ -18573,11 +18547,7 @@ const RAW_RUNTIME_STATE =
           ["@storybook/test", "npm:7.6.11"],\
           ["@storybook/test-runner", "npm:0.16.0"],\
           ["@storybook/testing-library", "npm:0.2.2"],\
-<<<<<<< HEAD
-          ["@tanstack/react-query", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.1"],\
-=======
           ["@tanstack/react-query", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.20.2"],\
->>>>>>> 1c5d4b42b14c7562006a04157c89769a340a9aa7
           ["@types/cookie", "npm:0.6.0"],\
           ["@types/cors", "npm:2.8.17"],\
           ["@types/js-cookie", "npm:3.0.6"],\
