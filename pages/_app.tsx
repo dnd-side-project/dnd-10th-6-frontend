@@ -11,15 +11,8 @@ import { parse } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
-import LocalFont from 'next/font/local'
-import { ReactElement, ReactNode } from 'react'
 
-const pretendard = LocalFont({
-  src: './assets/fonts/PretendardVariable.woff2',
-  preload: true,
-  display: 'swap',
-  variable: '--font-base',
-})
+import { ReactElement, ReactNode } from 'react'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -38,6 +31,7 @@ export default function NamuiWikiApp({
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
 
   return getLayout(
+<<<<<<< HEAD
     <main className={pretendard.variable}>
       <BaseLayout>
         <SessionProvider
@@ -50,6 +44,18 @@ export default function NamuiWikiApp({
         </SessionProvider>
       </BaseLayout>
     </main>,
+=======
+    <BaseLayout>
+      <SessionProvider
+        session={session}
+        onSessionChange={() => {
+          NamuiApi.setToken(session?.token?.accessToken)
+        }}
+      >
+        <Component {...pageProps} />
+      </SessionProvider>
+    </BaseLayout>,
+>>>>>>> 1c5d4b42b14c7562006a04157c89769a340a9aa7
   )
 }
 
