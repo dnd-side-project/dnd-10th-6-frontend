@@ -1,8 +1,11 @@
 import { GetServerSideProps } from 'next'
-
+import { motion } from 'framer-motion'
+import { fadeInProps } from '@/variants'
 const Page = () => {
   return (
-    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">INDEX</div>
+    <motion.div {...fadeInProps} className="flex flex-col pb-[50px] px-5 grow">
+      INDEX
+    </motion.div>
   )
 }
 

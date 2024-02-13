@@ -2,6 +2,8 @@ import React, { PropsWithChildren } from 'react'
 import LocalFont from 'next/font/local'
 import { cn } from '@/lib/client/utils'
 import Header from '@/components/header'
+import { motion } from 'framer-motion'
+import { fadeInProps } from '@/variants'
 
 const pretendard = LocalFont({
   src: '../pages/assets/fonts/PretendardVariable.woff2',
@@ -10,12 +12,22 @@ const pretendard = LocalFont({
   variable: '--font-base',
 })
 
-const BaseLayout = ({ children }: PropsWithChildren) => {
+interface BaseLayoutProps {
+  showHeader?: boolean
+}
+
+const BaseLayout = ({
+  children,
+  showHeader = true,
+}: PropsWithChildren<BaseLayoutProps>) => {
   return (
-    <main className={cn(pretendard.variable)}>
-      <Header />
+    <motion.main
+      {...fadeInProps}
+      className={cn(pretendard.variable, 'flex flex-col min-h-[100dvh]')}
+    >
+      {showHeader && <Header />}
       {children}
-    </main>
+    </motion.main>
   )
 }
 

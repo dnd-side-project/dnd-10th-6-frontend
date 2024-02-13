@@ -28,19 +28,19 @@ export default function NamuiWikiApp({
   pageProps,
   session,
 }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
+  const getLayout =
+    Component.getLayout ??
+    ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
   return getLayout(
-    <BaseLayout>
-      <SessionProvider
-        session={session}
-        onSessionChange={() => {
-          NamuiApi.setToken(session?.token?.accessToken)
-        }}
-      >
-        <Component {...pageProps} />
-      </SessionProvider>
-    </BaseLayout>,
+    <SessionProvider
+      session={session}
+      onSessionChange={() => {
+        NamuiApi.setToken(session?.token?.accessToken)
+      }}
+    >
+      <Component {...pageProps} />
+    </SessionProvider>,
   )
 }
 

@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
+import { motion } from 'framer-motion'
+
 import Drawer from '@/components/ui/drawer'
+import { fadeInProps } from '@/variants'
 
 const Logo = () => {
   return (
@@ -54,8 +57,14 @@ const Header = ({ center = <Logo />, rightIcon, options }: HeaderProps) => {
   const [openAlert, setOpenAlert] = useState(false)
   const [openSetting, setOpenSetting] = useState(false)
   return (
-    <header className="w-full grid grid-cols-3 items-center px-5 h-14">
-      <button onClick={() => (onBackClick ? onBackClick() : router.back())}>
+    <motion.header
+      {...fadeInProps}
+      className="w-full grid grid-cols-3 items-center px-5 h-14"
+    >
+      <motion.button
+        {...fadeInProps}
+        onClick={() => (onBackClick ? onBackClick() : router.back())}
+      >
         <svg
           width="28"
           height="28"
@@ -70,10 +79,12 @@ const Header = ({ center = <Logo />, rightIcon, options }: HeaderProps) => {
             fill="#111111"
           />
         </svg>
-      </button>
+      </motion.button>
 
-      <div className="flex justify-center">{center}</div>
-      <div className="flex gap-x-4 justify-end">
+      <motion.div {...fadeInProps} className="flex justify-center">
+        {center}
+      </motion.div>
+      <motion.div {...fadeInProps} className="flex gap-x-4 justify-end">
         {showRight
           ? rightIcon ?? (
               <>
@@ -169,8 +180,8 @@ const Header = ({ center = <Logo />, rightIcon, options }: HeaderProps) => {
               </>
             )
           : null}
-      </div>
-    </header>
+      </motion.div>
+    </motion.header>
   )
 }
 

@@ -11,9 +11,9 @@ const fadeInVariants: Variants = {
   },
   animate: {
     opacity: 1,
-    transition: {
-      delay: 0.5,
-    },
+  },
+  exit: {
+    opacity: 0,
   },
 }
 
@@ -36,6 +36,7 @@ export const fadeInProps: AnimationProps = {
   variants: fadeInVariants,
   animate: 'animate',
   initial: 'initial',
+  exit: 'exit',
 }
 export const drawerInOutProps: AnimationProps = {
   variants: drawerVariants,
