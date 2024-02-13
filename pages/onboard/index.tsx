@@ -1,8 +1,17 @@
+import OnBoard from '@/components/onboard'
+import Cookie from 'js-cookie'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 
 const Page = () => {
+  const router = useRouter()
   return (
-    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">INDEX</div>
+    <OnBoard
+      onStartClick={() => {
+        Cookie.set('namui-init', new Date().toLocaleString())
+        router.replace('/')
+      }}
+    />
   )
 }
 
@@ -10,10 +19,10 @@ export default Page
 
 export const getServerSideProps = (async (context) => {
   const isViewOnboard = context.req.cookies['namui-init'] ?? null
-  if (!isViewOnboard) {
+  if (isViewOnboard) {
     return {
       redirect: {
-        destination: '/onboard',
+        destination: '/',
         permanent: true,
       },
     }

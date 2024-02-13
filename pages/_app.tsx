@@ -1,4 +1,3 @@
-import { Typography } from '@/components/typography'
 import { AUTH } from '@/constants'
 import BaseLayout from '@/layout/base-layout'
 import { Token } from '@/lib/auth'
@@ -12,15 +11,8 @@ import { parse } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
-import LocalFont from 'next/font/local'
-import { ReactElement, ReactNode } from 'react'
 
-const pretendard = LocalFont({
-  src: './assets/fonts/PretendardVariable.woff2',
-  preload: true,
-  display: 'swap',
-  variable: '--font-base',
-})
+import { ReactElement, ReactNode } from 'react'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -39,27 +31,16 @@ export default function NamuiWikiApp({
   const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
 
   return getLayout(
-    <main className={pretendard.variable}>
-      <BaseLayout>
-        <SessionProvider
-          session={session}
-          onSessionChange={() => {
-            NamuiApi.setToken(session?.token?.accessToken)
-          }}
-        >
-          <Component {...pageProps} />
-        </SessionProvider>
-        <Typography hierarchy="mainTitle1" as="h1">
-          Main Title 1
-        </Typography>
-        <Typography hierarchy="subTitle1" as="h2">
-          Sub Title 1
-        </Typography>
-        <Typography hierarchy="body1" as="div">
-          Body 1
-        </Typography>
-      </BaseLayout>
-    </main>,
+    <BaseLayout>
+      <SessionProvider
+        session={session}
+        onSessionChange={() => {
+          NamuiApi.setToken(session?.token?.accessToken)
+        }}
+      >
+        <Component {...pageProps} />
+      </SessionProvider>
+    </BaseLayout>,
   )
 }
 
