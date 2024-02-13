@@ -1,6 +1,5 @@
 import Button from '@/components/button'
 import Carousel from '@/components/carousel'
-import { Typography } from '@/components/typography'
 import { useState } from 'react'
 
 export const onBoardingItems = [
@@ -8,9 +7,9 @@ export const onBoardingItems = [
     key="step1"
     className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
   >
-    <Typography hierarchy="mainTitle2">
+    <h2 className="text-mainTitle2">
       나에 대해 <b>얼마나 알고 있나요?</b>
-    </Typography>
+    </h2>
     <svg
       className="mt-auto"
       width="158"
@@ -108,14 +107,14 @@ export const onBoardingItems = [
     key="step2"
     className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
   >
-    <Typography hierarchy="mainTitle2">
+    <h2 className="text-mainTitle2">
       남의위키를 통해{' '}
       <b>
         타인의 눈으로 본<br />
         &apos;나&apos;를 발견
       </b>
       하고 탐구해보세요
-    </Typography>
+    </h2>
     <svg
       className="mt-auto"
       width="171"
@@ -225,11 +224,11 @@ export const onBoardingItems = [
     key="step3"
     className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
   >
-    <Typography hierarchy="mainTitle2">
+    <h2 className="text-mainTitle2">
       <b>남이 작성한 내 소개서</b>를 통해
       <br />
       <b>나에 대해</b> 더 자세히 알 수 있어요
-    </Typography>
+    </h2>
     <svg
       className="mt-auto"
       width="228"
