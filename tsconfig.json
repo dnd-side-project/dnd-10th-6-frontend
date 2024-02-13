@@ -23,6 +23,7 @@
     "**/*.ts",
     "**/*.tsx",
     "components/colors/colors.stories.mdx",
+    "components/typography/typography.stories.mdx",
   ],
   "exclude": ["node_modules"],
 }
