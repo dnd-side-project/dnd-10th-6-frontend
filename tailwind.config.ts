@@ -58,6 +58,7 @@ const config = {
         line: {
           DEFAULT: 'var(--black)',
           muted: 'var(--line)',
+          ...colors.line,
         },
         disabled: 'var(--disabled)',
       },
@@ -108,7 +109,7 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 
 export default config

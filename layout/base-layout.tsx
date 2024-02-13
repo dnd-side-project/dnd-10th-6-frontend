@@ -23,7 +23,7 @@ const BaseLayout = ({
   return (
     <motion.main
       {...fadeInProps}
-      className={cn(pretendard.variable, 'flex flex-col min-h-[100dvh]')}
+      className={cn(pretendard.variable, pretendard.className, 'flex flex-col')}
     >
       {showHeader && <Header />}
       {children}

@@ -50,6 +50,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.11.6"],\
           ["@types/react", "npm:18.2.48"],\
           ["@types/react-dom", "npm:18.2.18"],\
+          ["@types/recharts", "npm:1.8.29"],\
           ["@types/semver", "npm:7.5.6"],\
           ["@typescript-eslint/eslint-plugin", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:6.19.1"],\
           ["@typescript-eslint/parser", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:6.19.1"],\
@@ -83,6 +84,7 @@ const RAW_RUNTIME_STATE =
           ["sharp", "npm:0.33.2"],\
           ["storybook", "npm:7.6.11"],\
           ["tailwind-merge", "npm:2.2.1"],\
+          ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.1"],\
           ["tailwindcss-animate", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.7"],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
@@ -9038,6 +9040,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/d3-path", [\
+      ["npm:1.0.11", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-d3-path-npm-1.0.11-d698e9526c-10c0.zip/node_modules/@types/d3-path/",\
+        "packageDependencies": [\
+          ["@types/d3-path", "npm:1.0.11"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:3.1.0", {\
         "packageLocation": "../../../.yarn/berry/cache/@types-d3-path-npm-3.1.0-3b8d8ad8d4-10c0.zip/node_modules/@types/d3-path/",\
         "packageDependencies": [\
@@ -9057,6 +9066,14 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/d3-shape", [\
+      ["npm:1.3.12", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-d3-shape-npm-1.3.12-0cb506a168-10c0.zip/node_modules/@types/d3-shape/",\
+        "packageDependencies": [\
+          ["@types/d3-shape", "npm:1.3.12"],\
+          ["@types/d3-path", "npm:1.0.11"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:3.1.6", {\
         "packageLocation": "../../../.yarn/berry/cache/@types-d3-shape-npm-3.1.6-e9f2cc5cff-10c0.zip/node_modules/@types/d3-shape/",\
         "packageDependencies": [\
@@ -9473,6 +9490,17 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/@types-react-dom-npm-18.2.18-b316a8af22-10c0.zip/node_modules/@types/react-dom/",\
         "packageDependencies": [\
           ["@types/react-dom", "npm:18.2.18"],\
+          ["@types/react", "npm:18.2.48"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/recharts", [\
+      ["npm:1.8.29", {\
+        "packageLocation": "../../../.yarn/berry/cache/@types-recharts-npm-1.8.29-3dca80c2d6-10c0.zip/node_modules/@types/recharts/",\
+        "packageDependencies": [\
+          ["@types/recharts", "npm:1.8.29"],\
+          ["@types/d3-shape", "npm:1.3.12"],\
           ["@types/react", "npm:18.2.48"]\
         ],\
         "linkType": "HARD"\
@@ -18803,6 +18831,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.11.6"],\
           ["@types/react", "npm:18.2.48"],\
           ["@types/react-dom", "npm:18.2.18"],\
+          ["@types/recharts", "npm:1.8.29"],\
           ["@types/semver", "npm:7.5.6"],\
           ["@typescript-eslint/eslint-plugin", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:6.19.1"],\
           ["@typescript-eslint/parser", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:6.19.1"],\
@@ -18836,6 +18865,7 @@ const RAW_RUNTIME_STATE =
           ["sharp", "npm:0.33.2"],\
           ["storybook", "npm:7.6.11"],\
           ["tailwind-merge", "npm:2.2.1"],\
+          ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.1"],\
           ["tailwindcss-animate", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.7"],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
@@ -22781,6 +22811,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["tailwind-merge", "npm:2.2.1"],\
           ["@babel/runtime", "npm:7.23.8"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["tailwind-scrollbar-hide", [\
+      ["npm:1.1.7", {\
+        "packageLocation": "../../../.yarn/berry/cache/tailwind-scrollbar-hide-npm-1.1.7-537baa5b75-10c0.zip/node_modules/tailwind-scrollbar-hide/",\
+        "packageDependencies": [\
+          ["tailwind-scrollbar-hide", "npm:1.1.7"]\
         ],\
         "linkType": "HARD"\
       }]\
