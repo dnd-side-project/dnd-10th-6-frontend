@@ -97,6 +97,18 @@ const config = {
           'Noto Color Emoji',
         ],
       },
+      lineHeight: {
+        mainTitle1: '9.5rem',
+        mainTitle2: '8.5rem',
+        subTitle1: '7rem',
+        subTitle2: '6.5rem',
+        body1: '6rem',
+        body2: '5.5rem',
+        body3: '5rem',
+        caption1: '4.5rem',
+        caption2: '4.5rem',
+      },
+
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
