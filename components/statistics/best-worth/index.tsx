@@ -113,7 +113,7 @@ function BestWorth() {
         이네요
       </h2>
       <div className="aspect-square flex justify-center items-center rounded-2xl shadow-lg mt-10 flex-col px-6">
-        <div ref={ref} className="w-[180px] h-[180px] mx-auto relative">
+        <div ref={ref} className="w-[180px] h-[180px] mx-auto relative -z-[1]">
           {isInview && (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart barGap={0} barCategoryGap={0}>
