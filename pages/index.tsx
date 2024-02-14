@@ -88,11 +88,11 @@ const Page = () => {
     <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
       <div
         className={cn(
-          'sticky top-0 bg-white mb-3 duration-300',
+          'sticky top-0 bg-white mb-3 duration-300 z-10',
           shouldShowHeader && 'top-header',
         )}
       >
-        <div className="h-14 flex items-center gap-x-6 px-5 bg-white">
+        <div className="h-14 flex items-center gap-x-6 px-5 bg-white z-10">
           <FilterText
             label="알게 된 기간"
             active={knowState === 'period'}
@@ -142,7 +142,7 @@ const Page = () => {
               <p className="text-body1 text-text-sub-gray4f">
                 내 정원에 심어진 나무는
                 <br />
-                <b className="text-mainTitle1 mt-1">총 999그루</b>
+                <b className="text-mainTitle1 mt-1 text-black">총 999그루</b>
               </p>
               <div className="w-20 h-20 bg-text-main-whiteFF flex justify-center items-center rounded-full">
                 <svg
@@ -203,13 +203,13 @@ const Page = () => {
             김디엔님에 대해 알아보세요!
           </h3>
 
-          <div className="flex overflow-x-scroll space-x-2 w-screen pr-12 scrollbar-hide avoid-min-w">
+          <div className="flex overflow-x-scroll space-x-2 w-screen px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">
             <Badge href="/" title="💬 내가 가장 많이 사용하는 단어는?" />
             <Badge href="/" title="👀 나의 첫인상은?" />
             <Badge href="/" title="😍 내가 혼자 몰래 좋아하고 있는 것은?" />
             <Badge href="/" title="🧐 나를 5글자로 표현한다면?" />
           </div>
-          <div className="mt-3 flex overflow-x-scroll overflow-y-hidden space-x-2 w-screen pr-12 scrollbar-hide">
+          <div className="mt-3 flex overflow-x-scroll overflow-y-hidden relative -left-[1.5rem] px-6 space-x-2 w-screen scrollbar-hide">
             <Badge href="/" title="🤔 나는 누구와 닮았나요?" />
             <Badge href="/" title="📚 나의 이런점은 꼭 배우고 싶어요!" />
             <Badge href="/" title="🧐 나를 5글자로 표현한다면?" />

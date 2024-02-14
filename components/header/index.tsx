@@ -52,6 +52,7 @@ const Logo = () => {
       viewBox="0 0 74 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="z-10"
     >
       <motion.path
         variants={pathVariants}
@@ -174,7 +175,7 @@ const Header = ({ center = <Logo />, rightIcon, options }: HeaderProps) => {
       ref={headerRef}
       {...fadeInProps}
       className={cn(
-        'w-full grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300',
+        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300',
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}
     >
