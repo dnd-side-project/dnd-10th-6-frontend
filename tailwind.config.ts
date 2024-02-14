@@ -93,6 +93,17 @@ const config = {
           'Noto Color Emoji',
         ],
       },
+      lineHeight: {
+        38: '9.5rem',
+        34: '8.5rem',
+        28: '7rem',
+        26: '6.5rem',
+        24: '6rem',
+        22: '5.5rem',
+        20: '5rem',
+        18: '4.5rem',
+      },
+
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
