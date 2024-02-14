@@ -1,30 +1,17 @@
-import { GetServerSideProps } from 'next'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Pie, PieChart, ResponsiveContainer } from 'recharts'
+
 import { HTMLAttributes, PropsWithChildren, useState } from 'react'
 
 import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
 import Button from '@/components/button'
-import { Cell } from 'recharts'
 import FilterText from '@/components/filter-text'
 import Badge from '@/components/badge'
 import useScrollDirection from '@/hooks/use-scroll-direction'
 import { useSettingStore } from '@/stores/setting.store'
 import FilterButton from '@/components/filter-button'
-
-const data01 = [
-  { name: '명예', value: 40, className: 'fill-brand-main-green400' },
-  { name: '사랑', value: 31, className: 'fill-brand-sub1-blue600' },
-  { name: '직접 입력', value: 12, className: 'fill-brand-sub1-yellow500' },
-]
-let cnt = 0
-data01.forEach((data, idx) => {
-  cnt += data.value
-  if (idx === data01.length - 1) {
-    data01.push({ name: 'none', value: 100 - cnt, className: 'fill-[#F0F0F0]' })
-  }
-})
+import { GetServerSideProps } from 'next'
+import BestWorth from '@/components/statistics/best-worth'
 
 type KnowFilterType = 'period' | 'route'
 const filterItems: {
@@ -37,23 +24,27 @@ const filterItems: {
     },
     {
       label: '초등학교',
-      value: 'A',
+      value: 'ELEMENTARY_SCHOOL',
     },
     {
       label: '중·고등학교',
-      value: 'B',
+      value: 'MIDDLE_AND_HIGH_SCHOOL',
     },
     {
       label: '대학교',
-      value: 'C',
+      value: 'UNIVERSITY',
     },
     {
       label: '직장',
-      value: 'D',
+      value: 'WORK',
     },
     {
       label: '모임',
-      value: 'E',
+      value: 'SOCIAL',
+    },
+    {
+      label: '기타',
+      value: 'ETC',
     },
   ],
   route: [
@@ -63,19 +54,19 @@ const filterItems: {
     },
     {
       label: '6개월 미만',
-      value: 'A',
+      value: 'SIX_MONTHS',
     },
     {
       label: '6개월-1년',
-      value: 'B',
+      value: 'ONE_YEAR',
     },
     {
       label: '1년-4년',
-      value: 'C',
+      value: 'FOUR_YEARS',
     },
     {
       label: '4년 이상',
-      value: 'D',
+      value: 'INFINITE',
     },
   ],
 }
@@ -144,6 +135,7 @@ const Page = () => {
         </AnimatePresence>
       </div>
       <div className="flex flex-col divide-y-[12px] divide-line-soft">
+        {/* 내 정원에 심어진 나무는? */}
         <Section>
           <div className="bg-bg-light-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
             <div className="flex justify-between items-center">
@@ -223,59 +215,9 @@ const Page = () => {
             <Badge href="/" title="🧐 나를 5글자로 표현한다면?" />
           </div>
         </Section>
+        {/* 가장 중요한 것 - 파이차트 */}
         <Section>
-          <div className="w-full h-full flex flex-col">
-            <h2 className="text-mainTitle2 font-bold">
-              가장 중요한 것은 <b className="text-brand-main-green400">명예</b>
-              이네요
-            </h2>
-            <div className="aspect-square flex justify-center items-center rounded-2xl shadow-lg mt-10 flex-col px-6">
-              <div className="w-[180px] h-[180px] mx-auto">
-                <ResponsiveContainer>
-                  <PieChart barGap={0} barCategoryGap={0}>
-                    <Pie
-                      data={data01}
-                      dataKey="value"
-                      cx={90}
-                      cy={90}
-                      innerRadius={45}
-                      outerRadius={80}
-                    >
-                      {data01.map((entry, index) => (
-                        <Cell
-                          className={entry.className}
-                          key={`cell-${index}`}
-                          fill={'blue'}
-                        />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="flex justify-between w-full mt-8">
-                {data01.slice(0, 3).map((item) => (
-                  <div key={item.name} className="flex items-center space-x-1">
-                    <div
-                      className={cn(
-                        'w-2 h-2 rounded-full',
-                        item.name === '명예'
-                          ? 'bg-brand-main-green400'
-                          : item.name === '사랑'
-                            ? 'bg-main-sub2-blue-blue600'
-                            : 'bg-brand-sub1-yellow500',
-                      )}
-                    />
-                    <p className="font-bold text-sm text-text-main-black11">
-                      {item.name}
-                    </p>
-                    <span className="font-medium text-sm text-text-sub-gray4f">
-                      {item.value}%
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <BestWorth />
         </Section>
         <Section>fdsf</Section>
         <Section>fdsf</Section>

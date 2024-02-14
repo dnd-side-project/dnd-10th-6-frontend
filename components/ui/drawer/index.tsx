@@ -94,7 +94,7 @@ const Drawer = ({
   }, [open, toggleOpen])
 
   return (
-    <div>
+    <div className="flex items-center">
       <button onClick={() => toggleOpen(true)}>{trigger}</button>
       {ref.current
         ? createPortal(
