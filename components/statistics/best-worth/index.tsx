@@ -97,7 +97,6 @@ function BestWorth() {
   const ref = useRef<HTMLDivElement>(null)
   const isInview = useInView(ref, {
     once: true,
-    amount: 0.9,
   })
 
   const orderByMaxValueList = useMemo(() => {
