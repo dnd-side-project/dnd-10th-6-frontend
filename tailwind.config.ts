@@ -94,14 +94,15 @@ const config = {
         ],
       },
       lineHeight: {
-        38: '9.5rem',
-        34: '8.5rem',
-        28: '7rem',
-        26: '6.5rem',
-        24: '6rem',
-        22: '5.5rem',
-        20: '5rem',
-        18: '4.5rem',
+        mainTitle1: '9.5rem',
+        mainTitle2: '8.5rem',
+        subTitle1: '7rem',
+        subTitle2: '6.5rem',
+        body1: '6rem',
+        body2: '5.5rem',
+        body3: '5rem',
+        caption1: '4.5rem',
+        caption2: '4.5rem',
       },
 
       keyframes: {
