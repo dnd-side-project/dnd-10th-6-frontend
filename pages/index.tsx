@@ -1,12 +1,13 @@
 import { GetServerSideProps } from 'next'
 import { motion } from 'framer-motion'
 import { Pie, PieChart, ResponsiveContainer } from 'recharts'
-import { HTMLAttributes, PropsWithChildren } from 'react'
+import { HTMLAttributes, PropsWithChildren, useState } from 'react'
 
 import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
 import Button from '@/components/button'
 import { Cell } from 'recharts'
+import FilterText from '@/components/filter-text'
 
 const data01 = [
   { name: '명예', value: 40, className: 'fill-brand-main-green400' },
@@ -21,67 +22,32 @@ data01.forEach((data, idx) => {
   }
 })
 
+type KnowFilterType = 'period' | 'route' | null
 const Page = () => {
+  const [knowState, setKnowState] = useState<KnowFilterType>(null)
+
+  const onKnowFilterClick = (type: KnowFilterType) => {
+    setKnowState(knowState === type ? null : type)
+  }
   return (
     <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
-      <div className="h-14 flex items-center gap-x-2 px-5">
-        <div className="w-9 h-9 rounded-full border border-line-medium flex justify-center items-center">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8.03476 16C10.0744 16 11.8523 15.3369 13.3684 14.0106C14.8846 12.6843 15.7618 11.0141 16 9H14.9841C14.7111 10.7205 13.924 12.1506 12.6229 13.2904C11.3217 14.4301 9.79237 15 8.03476 15C6.07629 15 4.41494 14.3208 3.0507 12.9625C1.68646 11.6042 1.00435 9.95 1.00435 8C1.00435 6.05 1.68646 4.39583 3.0507 3.0375C4.41494 1.67917 6.07629 1 8.03476 1C9.07387 1 10.0505 1.21859 10.9648 1.65578C11.879 2.09296 12.6857 2.69488 13.3848 3.46155H10.8933V4.46155H15.0652V0.3077H14.0609V2.69615C13.2844 1.84743 12.3744 1.18589 11.3308 0.711525C10.2872 0.237175 9.18849 0 8.03476 0C6.92098 0 5.87704 0.208651 4.90296 0.625951C3.92886 1.04327 3.07774 1.61443 2.34959 2.33943C1.62144 3.06443 1.04781 3.91186 0.628695 4.88172C0.209565 5.85159 0 6.89102 0 8C0 9.10898 0.209565 10.1484 0.628695 11.1183C1.04781 12.0881 1.62144 12.9356 2.34959 13.6606C3.07774 14.3856 3.92886 14.9567 4.90296 15.3741C5.87704 15.7914 6.92098 16 8.03476 16Z"
-              fill="#111111"
-            />
-          </svg>
-        </div>
-        <button className="rounded-full border border-line-medium flex justify-center items-center h-9 px-3 gap-x-3">
-          <span className="text-caption2">알게 된 기간</span>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M13.4961 5.36031C13.6914 5.55558 13.6914 5.87216 13.4961 6.06742L8.35327 11.2103C8.25951 11.304 8.13233 11.3567 7.99972 11.3567C7.86711 11.3567 7.73994 11.304 7.64617 11.2103L2.50331 6.06742C2.30805 5.87216 2.30805 5.55558 2.50331 5.36031C2.69857 5.16505 3.01516 5.16505 3.21042 5.36031L7.99972 10.1496L12.789 5.36031C12.9843 5.16505 13.3009 5.16505 13.4961 5.36031Z"
-              fill="#767676"
-              stroke="#767676"
-              strokeWidth="0.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        <button className="rounded-full border border-line-medium flex justify-center items-center h-9 px-3 gap-x-3">
-          <span className="text-caption2">알게 된 경로</span>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M13.4961 5.36031C13.6914 5.55558 13.6914 5.87216 13.4961 6.06742L8.35327 11.2103C8.25951 11.304 8.13233 11.3567 7.99972 11.3567C7.86711 11.3567 7.73994 11.304 7.64617 11.2103L2.50331 6.06742C2.30805 5.87216 2.30805 5.55558 2.50331 5.36031C2.69857 5.16505 3.01516 5.16505 3.21042 5.36031L7.99972 10.1496L12.789 5.36031C12.9843 5.16505 13.3009 5.16505 13.4961 5.36031Z"
-              fill="#767676"
-              stroke="#767676"
-              strokeWidth="0.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+      <div className="h-14 flex items-center gap-x-6 px-5">
+        <FilterText
+          label="알게 된 기간"
+          active={knowState === 'period'}
+          onClick={() => {
+            onKnowFilterClick('period')
+          }}
+        />
+        <FilterText
+          label="알게 된 경로"
+          active={knowState === 'route'}
+          onClick={() => {
+            onKnowFilterClick('route')
+          }}
+        />
       </div>
+      <div className="h-12 overflow-x-scroll"></div>
       <div className="flex flex-col divide-y-[12px] divide-line-soft">
         <Section className="">
           <div className="bg-bg-light-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">

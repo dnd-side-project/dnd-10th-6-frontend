@@ -69,7 +69,8 @@
 @layer base {
   * {
     @apply border-border;
-    font-family: var(font-base);
+    font-family: var(--font-base);
+    min-width: 0;
   }
   body {
     @apply bg-background text-foreground;
