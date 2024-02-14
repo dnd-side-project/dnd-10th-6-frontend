@@ -20,9 +20,12 @@ const config = {
       },
     },
     extend: {
+      spacing: {
+        header: 'var(--header-height)',
+      },
+
       colors: {
         ...colors,
-        black: 'var(--black)',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -59,6 +62,7 @@ const config = {
         line: {
           DEFAULT: 'var(--black)',
           muted: 'var(--line)',
+          ...colors.line,
         },
         disabled: 'var(--disabled)',
       },
@@ -119,9 +123,12 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      transitionTimingFunction: {
+        easeOutQuint: 'cubic-bezier(0.22,1,0.36,1)',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 
 export default config

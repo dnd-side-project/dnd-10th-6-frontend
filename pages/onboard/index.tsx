@@ -2,6 +2,7 @@ import OnBoard from '@/components/onboard'
 import Cookie from 'js-cookie'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { ReactNode } from 'react'
 
 const Page = () => {
   const router = useRouter()
@@ -15,6 +16,9 @@ const Page = () => {
   )
 }
 
+Page.getLayout = (page: ReactNode) => {
+  return page
+}
 export default Page
 
 export const getServerSideProps = (async (context) => {

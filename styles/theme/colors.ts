@@ -86,7 +86,7 @@ export const colors = {
     primary: '#FFEB34',
     secondary: '#F77D0E',
   },
-  background: {
+  bg: {
     light: {
       green1: '#C5E4CC',
       green2: '#E2F6E9',
@@ -94,7 +94,7 @@ export const colors = {
       blue1: '#E2F5FF',
       yellow1: '#FFFDE7',
       orange1: '#FFF1DB',
-      gray1: '#F7F7F7',
+      gray1: '#FAFAFA',
     },
   },
   inputbox: {
