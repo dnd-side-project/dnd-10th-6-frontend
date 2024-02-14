@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 import Drawer from '@/components/ui/drawer'
 import { fadeInProps } from '@/variants'
+import { useSettingStore } from '@/stores/setting.store'
+import useScrollDirection from '@/hooks/use-scroll-direction'
+import { cn } from '@/lib/client/utils'
 
 const Logo = () => {
   return (
@@ -53,13 +56,59 @@ interface HeaderProps {
 
 const Header = ({ center = <Logo />, rightIcon, options }: HeaderProps) => {
   const { showRight, onBackClick } = options ?? { showRight: true }
+  const headerRef = useRef<HTMLElement>(null)
   const router = useRouter()
   const [openAlert, setOpenAlert] = useState(false)
   const [openSetting, setOpenSetting] = useState(false)
+
+  const { scrollTop, direction } = useScrollDirection()
+
+  const { headerHeight, setIntersecting, setHeaderHeight } = useSettingStore(
+    (state) => ({
+      headerHeight: state.headerHeight,
+      setIntersecting: state.setIsHide,
+      setHeaderHeight: state.setHeaderHeight,
+    }),
+  )
+  const handleResize = useCallback(() => {
+    if (!headerRef.current || typeof window === 'undefined') return
+
+    document.documentElement.style.setProperty(
+      '--header-height',
+      `${headerRef.current.clientHeight}px`,
+    )
+    setHeaderHeight(headerRef.current.clientHeight)
+  }, [setHeaderHeight])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && headerRef.current) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          setIntersecting(entry.isIntersecting)
+        })
+      })
+
+      const element = headerRef.current
+      observer.observe(element)
+      element.addEventListener('resize', handleResize)
+      handleResize()
+      return () => {
+        element.removeEventListener('resize', handleResize)
+        observer.disconnect()
+      }
+    }
+  }, [handleResize, setIntersecting])
+
+  const shoudFixedHeader = scrollTop > headerHeight && direction === 'UP'
+
   return (
     <motion.header
+      ref={headerRef}
       {...fadeInProps}
-      className="w-full grid grid-cols-3 items-center px-5 h-14"
+      className={cn(
+        'w-full grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300',
+        shoudFixedHeader ? 'top-0' : '-top-header',
+      )}
     >
       <motion.button
         {...fadeInProps}

@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Pie, PieChart, ResponsiveContainer } from 'recharts'
 import { HTMLAttributes, PropsWithChildren, useState } from 'react'
 
@@ -8,6 +8,10 @@ import { cn } from '@/lib/client/utils'
 import Button from '@/components/button'
 import { Cell } from 'recharts'
 import FilterText from '@/components/filter-text'
+import Badge from '@/components/badge'
+import useScrollDirection from '@/hooks/use-scroll-direction'
+import { useSettingStore } from '@/stores/setting.store'
+import FilterButton from '@/components/filter-button'
 
 const data01 = [
   { name: '명예', value: 40, className: 'fill-brand-main-green400' },
@@ -22,34 +26,125 @@ data01.forEach((data, idx) => {
   }
 })
 
-type KnowFilterType = 'period' | 'route' | null
-const Page = () => {
-  const [knowState, setKnowState] = useState<KnowFilterType>(null)
+type KnowFilterType = 'period' | 'route'
+const filterItems: {
+  [key in 'period' | 'route']: { label: string; value: string }[]
+} = {
+  period: [
+    {
+      label: '전체',
+      value: 'ALL',
+    },
+    {
+      label: '초등학교',
+      value: 'A',
+    },
+    {
+      label: '중·고등학교',
+      value: 'B',
+    },
+    {
+      label: '대학교',
+      value: 'C',
+    },
+    {
+      label: '직장',
+      value: 'D',
+    },
+    {
+      label: '모임',
+      value: 'E',
+    },
+  ],
+  route: [
+    {
+      label: '전체',
+      value: 'ALL',
+    },
+    {
+      label: '6개월 미만',
+      value: 'A',
+    },
+    {
+      label: '6개월-1년',
+      value: 'B',
+    },
+    {
+      label: '1년-4년',
+      value: 'C',
+    },
+    {
+      label: '4년 이상',
+      value: 'D',
+    },
+  ],
+}
 
-  const onKnowFilterClick = (type: KnowFilterType) => {
-    setKnowState(knowState === type ? null : type)
+const Page = () => {
+  const [knowState, setKnowState] = useState<KnowFilterType>('period')
+  const [selectedFilterItem, setSelectedFilterItem] = useState('ALL')
+  const headerHeight = useSettingStore((state) => state.headerHeight)
+
+  const { direction, scrollTop } = useScrollDirection()
+  const onKnowFilterClick = (type: KnowFilterType) => () => {
+    setSelectedFilterItem('ALL')
+    setKnowState(type)
   }
+
+  const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
+
   return (
     <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
-      <div className="h-14 flex items-center gap-x-6 px-5">
-        <FilterText
-          label="알게 된 기간"
-          active={knowState === 'period'}
-          onClick={() => {
-            onKnowFilterClick('period')
-          }}
-        />
-        <FilterText
-          label="알게 된 경로"
-          active={knowState === 'route'}
-          onClick={() => {
-            onKnowFilterClick('route')
-          }}
-        />
+      <div
+        className={cn(
+          'sticky top-0 bg-white mb-3 duration-300',
+          shouldShowHeader && 'top-header',
+        )}
+      >
+        <div className="h-14 flex items-center gap-x-6 px-5 bg-white">
+          <FilterText
+            label="알게 된 기간"
+            active={knowState === 'period'}
+            onClick={onKnowFilterClick('period')}
+          />
+          <FilterText
+            label="알게 된 경로"
+            active={knowState === 'route'}
+            onClick={onKnowFilterClick('route')}
+          />
+        </div>
+        <AnimatePresence mode="wait">
+          {knowState && (
+            <motion.div
+              key={knowState ?? 'defaultKnowState'}
+              {...fadeInProps}
+              variants={{
+                ...fadeInProps.variants,
+                animate: {
+                  ...(fadeInProps.variants?.animate ?? {}),
+                  transition: {
+                    staggerChildren: 0.05,
+                  },
+                },
+              }}
+              className={cn(
+                'h-[48px] flex overflow-x-scroll px-5 space-x-2 overflow-y-hidden w-screen scrollbar-hide items-center absolute -z-[1] bg-white',
+              )}
+            >
+              {filterItems[knowState].map((item) => (
+                <FilterButton
+                  selected={selectedFilterItem === item.value}
+                  onClick={() => setSelectedFilterItem(item.value)}
+                  key={item.value}
+                  label={item.label}
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-      <div className="h-12 overflow-x-scroll"></div>
       <div className="flex flex-col divide-y-[12px] divide-line-soft">
-        <Section className="">
+        <Section>
           <div className="bg-bg-light-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
             <div className="flex justify-between items-center">
               <p className="text-body1 text-text-sub-gray4f">
@@ -116,163 +211,16 @@ const Page = () => {
             김디엔님에 대해 알아보세요!
           </h3>
 
-          <div className="flex overflow-x-scroll overflow-y-hidden space-x-2 w-screen pr-12 scrollbar-hide">
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              💬 내가 가장 많이 사용하는 단어는?
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              👀 나의 첫인상은?
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              😍 내가 혼자 몰래 좋아하고 있는 것은?
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              🧐 나를 5글자로 표현한다면?
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
+          <div className="flex overflow-x-scroll space-x-2 w-screen pr-12 scrollbar-hide avoid-min-w">
+            <Badge href="/" title="💬 내가 가장 많이 사용하는 단어는?" />
+            <Badge href="/" title="👀 나의 첫인상은?" />
+            <Badge href="/" title="😍 내가 혼자 몰래 좋아하고 있는 것은?" />
+            <Badge href="/" title="🧐 나를 5글자로 표현한다면?" />
           </div>
           <div className="mt-3 flex overflow-x-scroll overflow-y-hidden space-x-2 w-screen pr-12 scrollbar-hide">
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              🤔 나는 누구와 닮았나요?
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              📚 나의 이런점은 꼭 배우고 싶어요!
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
-            <div
-              className={cn(
-                'h-14 rounded-full border border-line-medium',
-                'w-fit flex items-center px-5 grow whitespace-nowrap',
-              )}
-            >
-              🧐 나를 5글자로 표현한다면?
-              <svg
-                className="ml-2 "
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  className="fill-text-sub-gray76"
-                  d="M3 7.5C2.72386 7.5 2.5 7.72386 2.5 8C2.5 8.27614 2.72386 8.5 3 8.5V7.5ZM13.3536 8.35355C13.5488 8.15829 13.5488 7.84171 13.3536 7.64645L10.1716 4.46447C9.97631 4.2692 9.65973 4.2692 9.46447 4.46447C9.2692 4.65973 9.2692 4.97631 9.46447 5.17157L12.2929 8L9.46447 10.8284C9.2692 11.0237 9.2692 11.3403 9.46447 11.5355C9.65973 11.7308 9.97631 11.7308 10.1716 11.5355L13.3536 8.35355ZM3 8.5H13V7.5H3V8.5Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </div>
+            <Badge href="/" title="🤔 나는 누구와 닮았나요?" />
+            <Badge href="/" title="📚 나의 이런점은 꼭 배우고 싶어요!" />
+            <Badge href="/" title="🧐 나를 5글자로 표현한다면?" />
           </div>
         </Section>
         <Section>

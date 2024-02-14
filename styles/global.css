@@ -70,6 +70,8 @@
   * {
     @apply border-border;
     font-family: var(--font-base);
+  }
+  *:not([class*='avoid-min-w']) {
     min-width: 0;
   }
   body {
