@@ -84,6 +84,7 @@ const Drawer = ({
       if (isMounted) {
         css(ref.current, {
           display: 'block',
+          zIndex: '100',
         })
       }
     }
