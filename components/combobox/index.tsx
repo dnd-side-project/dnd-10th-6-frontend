@@ -1,5 +1,29 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+
+const variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.05,
+      type: 'spring',
+      stiffness: 500,
+      damping: 30,
+    },
+  },
+  closed: {
+    opacity: 0,
+    y: -10,
+    transition: {
+      staggerChildren: 0.05,
+      type: 'spring',
+      stiffness: 500,
+      damping: 30,
+    },
+  },
+}
 
 interface ComboboxDropdownProps {
   options: string[]
@@ -35,7 +59,7 @@ const ComboboxDropdown: React.FC<ComboboxDropdownProps> = ({
         )}
         disabled={disabled}
       >
-        <span className="font-bold">
+        <span className={cn(selectedOption && 'font-bold')}>
           {selectedOption || 'Select an option'}
         </span>
 
@@ -54,24 +78,43 @@ const ComboboxDropdown: React.FC<ComboboxDropdownProps> = ({
           />
         </svg>
       </button>
-      {isOpen && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
-          {options.map((option, index) => (
-            <li
-              key={index}
-              onClick={() => handleOptionClick(option)}
-              className={cn(
-                'px-4 py-2 cursor-pointer select-none',
-                index === options.length - 1 ? 'rounded-b-md' : '',
-                selectedOption === option && 'font-bold',
-                !disabled && 'hover:bg-gray-gray50',
-              )}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            key="options"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={variants}
+            className="absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg"
+          >
+            {options.map((option, index) => (
+              <motion.li
+                key={index}
+                onClick={() => handleOptionClick(option)}
+                className={cn(
+                  'px-4 py-2 cursor-pointer select-none',
+                  index === options.length - 1 ? 'rounded-b-md' : '',
+                  selectedOption === option && 'font-bold',
+                  !disabled && 'hover:bg-gray-gray50',
+                )}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: index * 0.07,
+                  duration: 0.3,
+                  ease: 'easeInOut',
+                  type: 'spring',
+                  stiffness: 500,
+                  damping: 20,
+                }}
+              >
+                {option}
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
