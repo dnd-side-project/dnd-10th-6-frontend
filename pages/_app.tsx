@@ -35,8 +35,8 @@ export default function NamuiWikiApp({
   return getLayout(
     <SessionProvider
       session={session}
-      onSessionChange={() => {
-        NamuiApi.setToken(session?.token?.accessToken)
+      onSessionChange={(newSession) => {
+        NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
       <Component {...pageProps} />
@@ -63,7 +63,7 @@ NamuiWikiApp.getInitialProps = async (
           method: 'GET',
           headers: headers,
         })
-        const user = await res.json()
+        const user = (await res.json()) ?? {}
         return {
           ...ctx,
           session: {
