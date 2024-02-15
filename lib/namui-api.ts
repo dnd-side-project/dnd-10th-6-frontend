@@ -14,7 +14,7 @@ export class NamuiApi {
   private static instanceOption: CreateAxiosDefaults = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
   }
-  private static accessToken: string
+  private static accessToken: string = ''
   /**
    * @param provider
    * @returns
@@ -24,7 +24,7 @@ export class NamuiApi {
       method: 'POST',
       url: `/api/v1/auth/login`,
       data: {
-        provider,
+        provider: provider.toUpperCase(),
         code,
       },
     })
@@ -40,20 +40,27 @@ export class NamuiApi {
   private static async getNewToken() {
     const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
     serverURL.pathname = '/api/v1/refresh'
-    const response = await fetch(serverURL).then(
-      (res) =>
-        res.json() as Promise<{
+    const response = await fetch(serverURL).then((res) => {
+      if (res.status > 400) {
+        throw raiseNamuiErrorFromStatus(res.status)
+      } else {
+        return res.json() as Promise<{
           data: {
             accessToken: 'string'
           }
-        }>,
-    )
+        }>
+      }
+    })
     NamuiApi.setToken(response.data.accessToken)
     return response.data.accessToken
   }
 
   private static injectInterceptor(instance: AxiosInstance) {
     const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[LOG-Request] : ${config.url}`)
+        console.log(`[LOG-Request] : ${config.headers}`)
+      }
       const accessToken = NamuiApi.accessToken
 
       config.headers = {
@@ -72,7 +79,11 @@ export class NamuiApi {
     const onResponse = (config: AxiosResponse) => config.data
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onErrorResponse = async (error: any) => {
-      console.log(error)
+      if (process.env.NODE_ENV === 'development') {
+        console.log(
+          `[LOG-RESPONSE-ERROR] : PATH-${error.request.path} ${error?.message}`,
+        )
+      }
       if (error.response?.status === 401) {
         const newAccessToken = await this.getNewToken()
         error.config.headers = {
@@ -84,6 +95,7 @@ export class NamuiApi {
       const errorInstance = axios.isAxiosError(error)
         ? raiseNamuiErrorFromStatus(error.status || error.response?.status)
         : error
+
       return Promise.reject(errorInstance)
     }
 
@@ -112,6 +124,6 @@ export class NamuiApi {
 
   private static async handler<Response>(config: AxiosRequestConfig) {
     const instance = this.getInstance()
-    return instance<Response>(config)
+    return instance(config) as Response
   }
 }
