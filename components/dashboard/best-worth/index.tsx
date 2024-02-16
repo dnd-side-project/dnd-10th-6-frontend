@@ -1,10 +1,26 @@
-import { cn } from '@/lib/client/utils'
-import { useInView } from 'framer-motion'
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
+import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 import { Pie, Sector } from 'recharts'
 import { Cell } from 'recharts'
 import { PieChart, ResponsiveContainer } from 'recharts'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
+import Button from '@/components/button'
+import { useInViewRef } from '@/hooks/use-in-view-ref'
+
+export interface Payload {
+  payload: {
+    name: string
+    value: number
+    className: string
+  }
+  cx: string
+  cy: string
+  stroke: string
+  fill: string
+  name: string
+  value: number
+  className: string
+}
 
 const RenderActiveShape = (props: PieSectorDataItem) => {
   const {
@@ -17,52 +33,71 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
     fill,
     percent,
     name,
-  } = props
+    payload,
+  } = props as PieSectorDataItem & Payload
 
   const textRef = useRef<SVGTextElement>(null)
-  useEffect(() => {
-    const DURATION = 1700
-    function easeInOutQuad(x: number): number {
-      return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2
-    }
-    const target = (percent ?? 0) * 100
+  const IsStartAnimation = useRef(false)
+  useBrowserLayoutEffect(() => {
+    if (!IsStartAnimation.current) {
+      const DURATION = 1500
+      const easeOutQuint = (x: number): number => {
+        return 1 - Math.pow(1 - x, 5)
+      }
 
-    let animationId: number
-    let start: number
+      const target = (percent ?? 0) * 100
 
-    const animate = (timetamp: number) => {
-      if (!start) start = timetamp
-      const progress = timetamp - start
-      if (progress >= DURATION) {
-        if (textRef.current) {
-          textRef.current.innerHTML = `${target}%`
+      let animationId: number
+      // 최초 시작 시간
+      let start: number
+
+      const animate = () => {
+        if (!start) start = new Date().getTime()
+        // 현재시간 - 최초시작시간
+        const timestamp = new Date().getTime()
+        const progress = timestamp - start
+        if (progress >= DURATION) {
+          if (textRef.current) {
+            textRef.current.textContent = `${target}%`
+          }
+          return cancelAnimationFrame(animationId)
         }
-        return cancelAnimationFrame(animationId)
+
+        const p = progress / DURATION
+        const value = easeOutQuint(p)
+        if (textRef.current) {
+          textRef.current.textContent = `${Math.round(target * value)}%`
+        }
+        if (p < DURATION) {
+          animationId = requestAnimationFrame(animate)
+        }
       }
 
-      const p = progress / DURATION
-      const value = easeInOutQuad(p)
-      if (textRef.current) {
-        textRef.current.innerHTML = `${Math.round(target * value)}%`
-      }
-      if (p < DURATION) {
-        animationId = requestAnimationFrame(animate)
-      }
+      animationId = requestAnimationFrame(animate)
+      IsStartAnimation.current = true
     }
-
-    animationId = requestAnimationFrame(animate)
   }, [percent])
 
   return (
     <g>
-      <text x={cx} y={cy} dy={-10} textAnchor="middle">
+      <text
+        x={cx}
+        y={cy}
+        dy={-10}
+        textAnchor="middle"
+        className="text-subTitle1-bold"
+      >
         {name}
       </text>
       <text
         ref={textRef}
+        className={cn(
+          payload.className,
+          'font-base font-bold text-3xl leading-10',
+        )}
         x={cx}
         y={cy}
-        dy={20}
+        dy={25}
         textAnchor="middle"
         fontSize={30}
         fill={fill}
@@ -74,6 +109,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
+        className={cn(payload.className)}
         fill={fill}
       />
     </g>
@@ -94,9 +130,9 @@ data01.forEach((data, idx) => {
 })
 
 function BestWorth() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInview = useInView(ref, {
+  const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
+    margin: '2%',
   })
 
   const orderByMaxValueList = useMemo(() => {
@@ -106,24 +142,28 @@ function BestWorth() {
   }, [])
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div ref={ref} className="w-full h-full flex flex-col">
       <h2 className="text-mainTitle2 font-bold">
         가장 중요한 것은 <b className="text-brand-main-green400">명예</b>
         이네요
       </h2>
-      <div className="aspect-square flex justify-center items-center rounded-2xl shadow-lg mt-10 flex-col px-6">
-        <div ref={ref} className="w-[180px] h-[180px] mx-auto relative -z-[1]">
-          {isInview && (
+      <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
+        <div className="w-[180px] h-[180px] mx-auto relative">
+          {inView && (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart barGap={0} barCategoryGap={0}>
                 <Pie
                   data={orderByMaxValueList}
                   activeIndex={0}
                   activeShape={RenderActiveShape}
+                  animationBegin={0}
+                  animationDuration={700}
+                  animationEasing="ease-in-out"
+                  labelLine={false}
                   dataKey="value"
                   cx="50%"
                   cy="50%"
-                  innerRadius={45}
+                  innerRadius={48}
                   outerRadius={80}
                 >
                   {orderByMaxValueList.map((entry, index) => (
@@ -134,7 +174,7 @@ function BestWorth() {
             </ResponsiveContainer>
           )}
         </div>
-        <div className="flex justify-between w-full mt-8">
+        <div className="flex justify-center space-x-4 w-full mt-8">
           {data01.slice(0, 3).map((item) => (
             <div key={item.name} className="flex items-center space-x-1">
               <div
@@ -156,6 +196,11 @@ function BestWorth() {
             </div>
           ))}
         </div>
+      </div>
+      <div className="w-1/2  mx-auto mt-10">
+        <Button rounded="full" variant="muted" className="bg-text-main-whiteFF">
+          자세히 보기
+        </Button>
       </div>
     </div>
   )
