@@ -103,7 +103,7 @@ const Logo = () => {
   )
 }
 
-interface HeaderProps {
+export interface HeaderProps {
   center?: ReactNode
   rightIcon?: ReactNode
   options?: {
