@@ -109,7 +109,7 @@ const config = {
         caption2: '18px',
       },
       boxShadow: {
-        'chat-bubble': '0px 4px 10px rgba(0, 0, 0, 0.06)',
+        'chat-bubble': '4px 4px 16px rgba(0, 0, 0, 0.1)',
       },
       keyframes: {
         'accordion-down': {

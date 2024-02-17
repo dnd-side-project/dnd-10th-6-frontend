@@ -145,7 +145,6 @@ const WriterLanding = ({ onNonMemberClick }: WriterLandingProps) => {
           fill="black"
         />
       </svg>
-
       <div className="flex flex-col">
         <h2 className="text-mainTitle2 leading-mainTitle2 font-bold  mt-10 mb-5">
           남의위키가 도착했어요
@@ -156,16 +155,17 @@ const WriterLanding = ({ onNonMemberClick }: WriterLandingProps) => {
           내가 본 친구의 모습을 알려주세요
         </p>
       </div>
-      <div className="w-[236px] h-full font-medium">
-        <div className="bg-white shadow-chat-bubble py-4  my-6 rounded-lg flex-1 relative">
+      <div className="w-[236px] h-full font-medium relative mt-20 ">
+        <div className="bg-white shadow-chat-bubble py-4 my-6 rounded-lg flex-1 relative">
           <p className="text-body3 leading-body3 text-black">
             <b>비회원</b>으로 시작하면 <br />
             내가 작성한 <b>남의위키를 볼 수 없어요!</b>
           </p>
-          <div className="absolute bottom-[-1] z-[-1] shadow-chat-bubble rounded-sm left-1/2 w-5 h-5 bg-white rotate-45 transform origin-top-left"></div>
+        </div>
+        <div className="absolute bottom-0 left-1/2">
+          <div className=" w-0 h-0 border-l-[18px] border-l-transparent border-t-[15px] border-white border-r-[15px] border-r-transparent transform -translate-x-1/2 -translate-y-full"></div>
         </div>
       </div>
-
       <a
         // href= 로그인
         className="w-full h-13 p-2 px-4 flex items-center justify-center bg-brand-sub1-yellow500 rounded-md "
