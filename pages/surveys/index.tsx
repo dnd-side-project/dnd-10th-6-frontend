@@ -4,14 +4,11 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
-import { useRouter } from 'next/router'
+import BaseLayout from '@/layout/base-layout'
 import createFunnel from '@/components/funnel/createFunnel'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
-
 import InputName from '@/components/form-contents/InputName'
-
 import InputKnowing from '@/components/form-contents/InputKnowing'
-import BaseLayout from '@/layout/base-layout'
 
 const { Funnel, Step, useFunnel } = createFunnel(['inputName', 'knowing'])
 

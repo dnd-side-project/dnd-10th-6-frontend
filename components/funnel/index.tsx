@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React from 'react'
 
 interface FunnelProps<T extends readonly string[]> {
   step: T[number]
