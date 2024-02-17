@@ -12,6 +12,7 @@ import { FunnelProvider } from '@/contexts/useFunnelContext'
 import InputName from '@/components/form-contents/InputName'
 import WriterLanding from '@/components/form-contents/WriterLanding'
 import InputKnowing from '@/components/form-contents/InputKnowing'
+import FormHeader from '@/components/form-contents/formHeader'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   'writerLanding',
@@ -50,15 +51,26 @@ const Page = () => {
 
   return (
     <>
-      <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5 justify-center items-center text-center">
+      <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
         <FunnelProvider
           value={{
             toPrevStep,
             toNextStep,
           }}
         >
-          <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <form
+            onSubmit={handleSubmit(onSubmit, onError)}
+            className="flex flex-col h-full justify-between items-center"
+          >
             <FormProvider {...form}>
+              <FormHeader
+                showBackButton={true}
+                showStepOrTitle={false}
+                showCloseButton={true}
+                step={step}
+                title="정보입력"
+              />
+
               <Funnel step={step}>
                 <Step
                   name="writerLanding"

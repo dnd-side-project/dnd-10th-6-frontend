@@ -5,7 +5,7 @@ const WriterLanding = () => {
 
   return (
     <>
-      <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5 justify-center items-center text-center">
+      <div className="flex flex-col items-center justify-center text-center">
         <svg
           width="140"
           height="247"
@@ -146,54 +146,52 @@ const WriterLanding = () => {
             fill="black"
           />
         </svg>
-        <div className="flex flex-col">
-          <h2 className="text-mainTitle2 leading-mainTitle2 font-bold  mt-10 mb-5">
-            남의위키가 도착했어요
-          </h2>
-          <p className="text-subTitle2 leading-subTitle2 font-medium text-text-sub-gray4f ">
-            남의위키를 통해
-            <br />
-            내가 본 친구의 모습을 알려주세요
-          </p>
-        </div>
-        <div className="font-medium relative mt-20 mb-4">
-          <div className="w-full h-full bg-white shadow-chat-bubble py-5 px-4 my-6 rounded-lg flex-1 relative">
-            <p className="text-body3 leading-body3 text-black">
-              <b>비회원</b>으로 시작하면 <br />
-              내가 작성한 <b>남의위키를 볼 수 없어요!</b>
-            </p>
-          </div>
-          <div className="absolute bottom-0 left-1/2">
-            <div className=" w-0 h-0 border-l-[18px] border-l-transparent border-t-[15px] border-white border-r-[15px] border-r-transparent transform -translate-x-1/2 -translate-y-full"></div>
-          </div>
-        </div>
-        <a
-          // href= 로그인 리다이렉트 페이지 연결후 nextStep 넘어가는 버튼 연동 필요, 일단은 비회원에 nextStep 연결하고 작업 시도함.
-          className="w-full h-13 p-2 px-4 flex items-center justify-center bg-brand-sub1-yellow500 rounded-md "
-        >
-          <svg
-            width="22"
-            height="20"
-            viewBox="0 0 22 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11 0C4.92484 0 0 3.82543 0 8.54421C0 11.595 2.05893 14.2719 5.15604 15.7836C4.98754 16.356 4.0733 19.4663 4.03686 19.7107C4.03686 19.7107 4.015 19.8942 4.13566 19.9642C4.25638 20.0343 4.39828 19.9799 4.39828 19.9799C4.74437 19.9323 8.41149 17.3946 9.04626 16.954C9.68034 17.0424 10.3333 17.0884 11 17.0884C17.0752 17.0884 22 13.2631 22 8.54421C22 3.82543 17.0752 0 11 0Z"
-              fill="black"
-            />
-          </svg>
-          <p className="ml-3 p-2 text-center font-bold text-subTitle2 leading-subTitle2">
-            카카오 로그인
-          </p>
-        </a>
-        <button
-          onClick={toNextStep}
-          className="mt-4 text-text-sub-gray76 text-body3 leading-body3 text-medium underline"
-        >
-          비회원으로 시작하기
-        </button>
+        <h2 className="text-mainTitle2-bold mt-6 mb-5">
+          남의위키가 도착했어요
+        </h2>
+        <p className="text-subTitle2-medium text-text-sub-gray4f ">
+          남의위키를 통해
+          <br />
+          내가 본 친구의 모습을 알려주세요
+        </p>
       </div>
+      <div className="relative mt-10 mb-8 text-center">
+        <div className="w-full h-full bg-white shadow-chat-bubble py-5 px-4  rounded-lg flex-1 relative">
+          <p className="text-body3-medium text-black">
+            <b>비회원</b>으로 시작하면 <br />
+            내가 작성한 <b>남의위키를 볼 수 없어요!</b>
+          </p>
+        </div>
+        <div className="absolute bottom-0 left-1/2">
+          <div className=" w-0 h-0 border-l-[18px] border-l-transparent border-t-[15px] border-white border-r-[15px] border-r-transparent transform -translate-x-1/2 translate-y-full"></div>
+        </div>
+      </div>
+      <a
+        // href= 로그인 리다이렉트 페이지 연결후 nextStep 넘어가는 버튼 연동 필요, 일단은 비회원에 nextStep 연결하고 작업 시도함.
+        className="w-full h-13 p-2 px-4 flex items-center justify-center bg-brand-sub1-yellow500 rounded-md"
+      >
+        <svg
+          width="22"
+          height="20"
+          viewBox="0 0 22 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 0C4.92484 0 0 3.82543 0 8.54421C0 11.595 2.05893 14.2719 5.15604 15.7836C4.98754 16.356 4.0733 19.4663 4.03686 19.7107C4.03686 19.7107 4.015 19.8942 4.13566 19.9642C4.25638 20.0343 4.39828 19.9799 4.39828 19.9799C4.74437 19.9323 8.41149 17.3946 9.04626 16.954C9.68034 17.0424 10.3333 17.0884 11 17.0884C17.0752 17.0884 22 13.2631 22 8.54421C22 3.82543 17.0752 0 11 0Z"
+            fill="black"
+          />
+        </svg>
+        <p className="ml-3 p-2 text-center font-bold text-subTitle2 leading-subTitle2">
+          카카오 로그인
+        </p>
+      </a>
+      <button
+        onClick={toNextStep}
+        className="mt-4 text-text-sub-gray76 text-body3 leading-body3 text-medium underline"
+      >
+        비회원으로 시작하기
+      </button>
     </>
   )
 }
