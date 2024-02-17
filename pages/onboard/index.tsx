@@ -29,7 +29,7 @@ export const getServerSideProps = (async (context) => {
   if (isViewOnboard) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/dashboard',
         permanent: true,
       },
     }
