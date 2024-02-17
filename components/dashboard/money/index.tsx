@@ -53,9 +53,11 @@ function Bar({ active, value, isMe = true }: BarProps) {
       <div className="w-14 mx-auto flex flex-col items-center justify-end h-40">
         <div
           className={cn(
-            'w-fit relative rounded-md text-body3-bold whitespace-nowrap text-text-main-whiteFF items-center justify-center',
+            'w-fit relative rounded-md text-body3-bold whitespace-nowrap  items-center justify-center',
             'mb-4 px-2 py-1',
-            isMe ? 'bg-brand-sub1-yellow900' : 'bg-gray-gray100',
+            isMe
+              ? 'bg-brand-sub1-yellow900 text-text-main-whiteFF'
+              : 'bg-gray-gray100 text-text-sub-gray76',
           )}
         >
           {(1384843).toLocaleString()}원
@@ -108,9 +110,8 @@ function Bar({ active, value, isMe = true }: BarProps) {
       <p
         className={cn(
           'w-fit mx-auto mt-4',
-          isMe
-            ? 'text-text-main-black11 text-body1-bold'
-            : 'text-text-sub-gray76 text-body1-medium',
+          isMe && 'text-text-main-black11 text-body1-bold',
+          !isMe && 'text-text-sub-gray76 text-body1-medium opacity-50',
         )}
       >
         {isMe ? '김디엔님' : '이용자 평균'}
