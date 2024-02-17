@@ -5,9 +5,9 @@ import { useState } from 'react'
 export const onBoardingItems = [
   <div
     key="step1"
-    className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
+    className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center text-center"
   >
-    <h2 className="text-mainTitle2">
+    <h2 className="text-mainTitle2-medium">
       나에 대해 <b>얼마나 알고 있나요?</b>
     </h2>
     <svg
@@ -107,7 +107,7 @@ export const onBoardingItems = [
     key="step2"
     className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
   >
-    <h2 className="text-mainTitle2">
+    <h2 className="text-mainTitle2-medium text-center">
       남의위키를 통해{' '}
       <b>
         타인의 눈으로 본<br />
@@ -224,7 +224,7 @@ export const onBoardingItems = [
     key="step3"
     className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
   >
-    <h2 className="text-mainTitle2">
+    <h2 className="text-mainTitle2-medium text-center">
       <b>남이 작성한 내 소개서</b>를 통해
       <br />
       <b>나에 대해</b> 더 자세히 알 수 있어요

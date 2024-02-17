@@ -74,10 +74,24 @@ const config = {
             lineHeight: '38px',
           },
         ],
+        'mainTitle1-medium': [
+          '28px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '38px',
+          },
+        ],
         'mainTitle2-bold': [
           '24px',
           {
             fontWeight: 'bold',
+            lineHeight: '34px',
+          },
+        ],
+        'mainTitle2-medium': [
+          '24px',
+          {
+            fontWeight: 'medium',
             lineHeight: '34px',
           },
         ],
@@ -161,7 +175,9 @@ const config = {
         caption1: '18px',
         caption2: '18px',
       },
-
+      boxShadow: {
+        'chat-bubble': '4px 4px 16px rgba(0, 0, 0, 0.1)',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
