@@ -67,13 +67,64 @@ const config = {
         disabled: 'var(--disabled)',
       },
       fontSize: {
-        mainTitle1: '28px',
-        mainTitle2: '24px',
-        subTitle1: '20px',
+        'mainTitle1-bold': [
+          '28px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '38px',
+          },
+        ],
+        'mainTitle2-bold': [
+          '24px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '34px',
+          },
+        ],
+        'subTitle1-bold': [
+          '20px',
+          {
+            lineHeight: '28px',
+            fontWeight: 'bold',
+          },
+        ],
+        'subTitle1-medium': [
+          '20px',
+          {
+            lineHeight: '28px',
+            fontWeight: 'medium',
+          },
+        ],
         subTitle2: '18px',
-        body1: '16px',
+        'body1-medium': [
+          '16px',
+          {
+            fontWeight: '500',
+            lineHeight: '24px',
+          },
+        ],
+        'body1-bold': [
+          '16px',
+          {
+            fontWeight: '700',
+            lineHeight: '24px',
+          },
+        ],
         body2: '15px',
-        body3: '14px',
+        'body3-medium': [
+          '14px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '20px',
+          },
+        ],
+        'body3-bold': [
+          '14px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '20px',
+          },
+        ],
         caption1: '13px',
         caption2: '12px',
       },
@@ -97,10 +148,12 @@ const config = {
           'Noto Color Emoji',
         ],
       },
+      boxShadow: {
+        basic: '0px 4px 10px rgba(0,0,0,0.06)',
+      },
       lineHeight: {
         mainTitle1: '38px',
         mainTitle2: '36px',
-        subTitle1: '28px',
         subTitle2: '26px',
         body1: '24px',
         body2: '22px',

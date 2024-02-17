@@ -11,7 +11,9 @@ import useScrollDirection from '@/hooks/use-scroll-direction'
 import { useSettingStore } from '@/stores/setting.store'
 import FilterButton from '@/components/filter-button'
 import { GetServerSideProps } from 'next'
-import BestWorth from '@/components/statistics/best-worth'
+import BestWorth from '@/components/dashboard/best-worth'
+import Character from '@/components/dashboard/character'
+import Money from '@/components/dashboard/money'
 
 type KnowFilterType = 'period' | 'route'
 const filterItems: {
@@ -137,7 +139,7 @@ const Page = () => {
       <div className="flex flex-col divide-y-[12px] divide-line-soft">
         {/* 내 정원에 심어진 나무는? */}
         <Section>
-          <div className="bg-bg-light-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
+          <div className="bg-bg-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
             <div className="flex justify-between items-center">
               <p className="text-body1 text-text-sub-gray4f">
                 내 정원에 심어진 나무는
@@ -219,8 +221,13 @@ const Page = () => {
         <Section>
           <BestWorth />
         </Section>
-        <Section>fdsf</Section>
-        <Section>fdsf</Section>
+        {/* 이런사람이에요 - 박스 */}
+        <Section>
+          <Character />
+        </Section>
+        <Section>
+          <Money />
+        </Section>
       </div>
     </motion.div>
   )
@@ -236,7 +243,7 @@ function Section({
     <section
       {...props}
       className={cn(
-        'pt-10 pb-12 px-6 flex flex-col overflow-x-hidden',
+        'pt-10 pb-12 px-6 flex flex-col overflow-x-hidden bg-text-main-whiteFF',
         props.className,
       )}
     >

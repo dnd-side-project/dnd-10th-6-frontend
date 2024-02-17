@@ -16,22 +16,17 @@ const logoVariants: Variants = {
 
 const pathVariants: Variants = {
   initial: { fill: '#ffffff', pathLength: 0 },
-  animate: {
-    fill: '#ffffff',
-    pathLength: 1,
-  },
-  fill: (color: string) => ({
+  animate: (color: string) => ({
     fill: color,
     strokeWidth: 0,
   }),
 }
 
 const Logo = () => {
-  const isInitialAnimationEnd = useRef(false)
   const control = useAnimation()
   useEffect(() => {
     control.start('animate')
-  }, [])
+  }, [control])
   return (
     <motion.svg
       initial="initial"
@@ -40,12 +35,6 @@ const Logo = () => {
       transition={{
         duration: 1.5,
         staggerChildren: 0.1,
-      }}
-      onAnimationComplete={() => {
-        if (!isInitialAnimationEnd.current) {
-          control.start('fill')
-          isInitialAnimationEnd.current = true
-        }
       }}
       width="74"
       height="20"

@@ -9,7 +9,10 @@ const Page = () => {
   return (
     <OnBoard
       onStartClick={() => {
-        Cookie.set('namui-init', new Date().toLocaleString())
+        Cookie.set('namui-init', new Date().toLocaleString(), {
+          secure: false,
+          path: '/',
+        })
         router.replace('/')
       }}
     />
