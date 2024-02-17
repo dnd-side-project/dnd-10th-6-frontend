@@ -143,7 +143,7 @@ function BestWorth() {
 
   return (
     <div ref={ref} className="w-full h-full flex flex-col">
-      <h2 className="text-mainTitle2 font-bold">
+      <h2 className="text-mainTitle2-bold font-bold">
         가장 중요한 것은 <b className="text-brand-main-green400">명예</b>
         이네요
       </h2>

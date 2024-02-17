@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
-
 const variants = {
   open: {
     opacity: 1,
@@ -26,10 +25,11 @@ const variants = {
 }
 
 interface ComboboxDropdownProps {
-  options: string[]
+  options: { label: string; value: string }[]
   onSelect: (selectedOption: string) => void
   disabled?: boolean
   className?: string
+  placeholder?: string
 }
 
 const ComboboxDropdown: React.FC<ComboboxDropdownProps> = ({
@@ -37,13 +37,14 @@ const ComboboxDropdown: React.FC<ComboboxDropdownProps> = ({
   onSelect,
   disabled = false,
   className,
+  placeholder,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
 
-  const handleOptionClick = (option: string) => {
-    setSelectedOption(option)
-    onSelect(option)
+  const handleOptionClick = (value: string) => {
+    setSelectedOption(value)
+    onSelect(value)
     setIsOpen(false)
   }
 
@@ -60,7 +61,7 @@ const ComboboxDropdown: React.FC<ComboboxDropdownProps> = ({
         disabled={disabled}
       >
         <span className={cn(selectedOption && 'font-bold')}>
-          {selectedOption || 'Select an option'}
+          {selectedOption ? selectedOption : placeholder}
         </span>
 
         <svg
@@ -88,35 +89,36 @@ const ComboboxDropdown: React.FC<ComboboxDropdownProps> = ({
             variants={variants}
             className="absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg"
           >
-            {options.map((option, index) => (
-              <motion.li
-                key={index}
-                onClick={() => handleOptionClick(option)}
-                className={cn(
-                  'px-4 py-2 cursor-pointer select-none',
-                  index === options.length - 1 ? 'rounded-b-md' : '',
-                  selectedOption === option && 'font-bold',
-                  !disabled && 'hover:bg-gray-gray50',
-                )}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: index * 0.07,
-                  duration: 0.3,
-                  ease: 'easeInOut',
-                  type: 'spring',
-                  stiffness: 500,
-                  damping: 20,
-                }}
-              >
-                {option}
-              </motion.li>
-            ))}
+            {options.map((option, index) => {
+              return (
+                <motion.li
+                  key={index}
+                  onClick={() => handleOptionClick(option.value)}
+                  className={cn(
+                    'px-4 py-2 cursor-pointer select-none text-left',
+                    index === options.length - 1 ? 'rounded-b-md' : '',
+                    selectedOption === option.value && 'font-bold',
+                    !disabled && 'hover:bg-gray-gray50',
+                  )}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: index * 0.07,
+                    duration: 0.3,
+                    ease: 'easeInOut',
+                    type: 'spring',
+                    stiffness: 500,
+                    damping: 20,
+                  }}
+                >
+                  {option.label}
+                </motion.li>
+              )
+            })}
           </motion.ul>
         )}
       </AnimatePresence>
     </div>
   )
 }
-
 export default ComboboxDropdown
