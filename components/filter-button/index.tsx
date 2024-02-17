@@ -25,7 +25,7 @@ const FilterButton = ({
             color: '#FFFFFF',
           }
         : {
-            backgroundColor: '#EEEEEE',
+            backgroundColor: '#FAFAFA',
             color: '#000000',
           },
       {
@@ -46,7 +46,7 @@ const FilterButton = ({
       draggable={false}
       variants={fadeInProps.variants}
       className={cn(
-        'text-caption2 h-9 bg-gray-gray100 rounded-full px-3 whitespace-nowrap avoid-min-w',
+        'text-caption2 h-9 rounded-full px-3 whitespace-nowrap avoid-min-w',
         'origin-center select-none',
         selected && 'text-text-main-whiteFF ',
       )}
