@@ -348,7 +348,7 @@ interface OnBoardProps {
 const OnBoard = ({ onStartClick }: OnBoardProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   return (
-    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
+    <div className="h-calc-h flex flex-col pb-[50px] px-5">
       <Carousel
         className="grow flex flex-col w-[calc(100%_+_40px)] -ml-5 py-9"
         slides={onBoardingItems}

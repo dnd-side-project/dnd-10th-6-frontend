@@ -104,7 +104,7 @@ const Drawer = ({
                 {isMounted ? (
                   <m.main
                     {...drawerInOutProps}
-                    className="w-screen h-screen bg-white"
+                    className="w-screen h-calc-h bg-white"
                   >
                     {children}
                   </m.main>

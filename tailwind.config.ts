@@ -22,6 +22,7 @@ const config = {
     extend: {
       spacing: {
         header: 'var(--header-height)',
+        'calc-h': 'calc(var(--vh,1vh)*100)',
       },
 
       colors: {
