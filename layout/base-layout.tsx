@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import LocalFont from 'next/font/local'
 import { cn } from '@/lib/client/utils'
-import Header from '@/components/header'
+import Header, { HeaderProps } from '@/components/header'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 
@@ -32,18 +32,27 @@ const pretendard = LocalFont({
 
 interface BaseLayoutProps {
   showHeader?: boolean
+  header?: HeaderProps
+  className?: string
 }
 
 const BaseLayout = ({
+  className,
   children,
   showHeader = true,
+  header,
 }: PropsWithChildren<BaseLayoutProps>) => {
   return (
     <motion.main
       {...fadeInProps}
-      className={cn(pretendard.variable, pretendard.className, 'flex flex-col')}
+      className={cn(
+        pretendard.variable,
+        pretendard.className,
+        'flex flex-col',
+        className,
+      )}
     >
-      {showHeader && <Header />}
+      {showHeader && <Header {...header} />}
       {children}
     </motion.main>
   )
