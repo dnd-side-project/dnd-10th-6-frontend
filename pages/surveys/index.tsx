@@ -10,15 +10,11 @@ import createFunnel from '@/components/funnel/createFunnel'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 
 import InputName from '@/components/form-contents/InputName'
-import WriterLanding from '@/components/form-contents/WriterLanding'
-import InputKnowing from '@/components/form-contents/InputKnowing'
-import FormHeader from '@/components/form-contents/formHeader'
 
-const { Funnel, Step, useFunnel } = createFunnel([
-  'writerLanding',
-  'inputName',
-  'knowing',
-])
+import InputKnowing from '@/components/form-contents/InputKnowing'
+import BaseLayout from '@/layout/base-layout'
+
+const { Funnel, Step, useFunnel } = createFunnel(['inputName', 'knowing'])
 
 interface FormValues {
   name: string
@@ -63,24 +59,7 @@ const Page = () => {
             className="flex flex-col h-full justify-between items-center"
           >
             <FormProvider {...form}>
-              <FormHeader
-                showBackButton={true}
-                showStepOrTitle={false}
-                showCloseButton={true}
-                step={step}
-                title="정보입력"
-              />
-
               <Funnel step={step}>
-                <Step
-                  name="writerLanding"
-                  onEnter={() => {
-                    // 프로그래스바 진척사항을 표시하기 위한 로직
-                    console.log('writerLanding')
-                  }}
-                >
-                  <WriterLanding />
-                </Step>
                 <Step
                   name="inputName"
                   onEnter={() => {
@@ -106,8 +85,11 @@ const Page = () => {
   )
 }
 
-Page.getLayout = (page: ReactNode) => {
-  return page
+Page.getLayout = () => {
+  return (
+    <BaseLayout showHeader={true}>
+      <Page />
+    </BaseLayout>
+  )
 }
-
 export default Page
