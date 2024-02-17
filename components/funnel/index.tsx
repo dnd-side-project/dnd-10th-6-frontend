@@ -33,11 +33,9 @@ export const Step = <T extends readonly string[]>({
   children,
   onEnter,
 }: StepProps<T>) => {
-  useLayoutEffect(() => {
-    if (onEnter) {
-      onEnter()
-    }
-  }, [])
+  if (onEnter) {
+    onEnter()
+  }
 
   return <>{children}</>
 }
