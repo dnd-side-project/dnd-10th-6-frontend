@@ -1,4 +1,4 @@
-import WriterLanding from '@/components/form-contents/WriterLanding'
+import WriterLanding from '@/components/landing/WriterLanding'
 import BaseLayout from '@/layout/base-layout'
 
 const Page = () => {
