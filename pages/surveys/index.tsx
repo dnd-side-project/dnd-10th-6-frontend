@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -47,40 +46,35 @@ const Page = () => {
 
   return (
     <>
-      <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
-        <FunnelProvider
-          value={{
-            toPrevStep,
-            toNextStep,
-          }}
-        >
-          <form
-            onSubmit={handleSubmit(onSubmit, onError)}
-            className="flex flex-col h-full justify-between items-center"
-          >
-            <FormProvider {...form}>
-              <Funnel step={step}>
-                <Step
-                  name="inputName"
-                  onEnter={() => {
-                    console.log('inputName')
-                  }}
-                >
-                  <InputName />
-                </Step>
-                <Step
-                  name="knowing"
-                  onEnter={() => {
-                    console.log('knowing')
-                  }}
-                >
-                  <InputKnowing />
-                </Step>
-              </Funnel>
-            </FormProvider>
-          </form>
-        </FunnelProvider>
-      </div>
+      <FunnelProvider
+        value={{
+          toPrevStep,
+          toNextStep,
+        }}
+      >
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <FormProvider {...form}>
+            <Funnel step={step}>
+              <Step
+                name="inputName"
+                onEnter={() => {
+                  console.log('inputName')
+                }}
+              >
+                <InputName />
+              </Step>
+              <Step
+                name="knowing"
+                onEnter={() => {
+                  console.log('knowing')
+                }}
+              >
+                <InputKnowing />
+              </Step>
+            </Funnel>
+          </FormProvider>
+        </form>
+      </FunnelProvider>
     </>
   )
 }

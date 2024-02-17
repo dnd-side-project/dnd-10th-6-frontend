@@ -74,10 +74,24 @@ const config = {
             lineHeight: '38px',
           },
         ],
+        'mainTitle1-medium': [
+          '28px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '38px',
+          },
+        ],
         'mainTitle2-bold': [
           '24px',
           {
             fontWeight: 'bold',
+            lineHeight: '34px',
+          },
+        ],
+        'mainTitle2-medium': [
+          '24px',
+          {
+            fontWeight: 'medium',
             lineHeight: '34px',
           },
         ],
