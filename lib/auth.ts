@@ -2,8 +2,10 @@ import { BadRequestError } from '@/error'
 import * as z from 'zod'
 
 export interface User {
-  id: string
-  nickname: string
+  wikiId: string
+  name?: string
+  totalSurveyCnt: number
+  nickname?: string
 }
 
 export interface Token {

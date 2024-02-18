@@ -60,7 +60,7 @@ NamuiWikiApp.getInitialProps = async (
     const getUser = async (token: string) => {
       headers.set(AUTH.AUTH_HEADER_KEY, token)
       const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
-      serverURL.pathname = '/api/v1/auth/test'
+      serverURL.pathname = '/api/v1/users/profile'
       const res = await fetch(serverURL, {
         method: 'GET',
         headers: headers,

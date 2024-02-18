@@ -32,7 +32,7 @@ export class NamuiApi {
   static async getUserData() {
     return await NamuiApi.handler<User>({
       method: 'GET',
-      url: '/api/v1/auth/test',
+      url: '/api/v1/users/profile',
     })
   }
 
@@ -75,7 +75,7 @@ export class NamuiApi {
       return Promise.reject(err)
     }
 
-    const onResponse = (config: AxiosResponse) => config
+    const onResponse = (config: AxiosResponse) => config.data
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onErrorResponse = async (error: any) => {
       if (process.env.NODE_ENV === 'development') {

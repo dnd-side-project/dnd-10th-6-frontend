@@ -58,7 +58,7 @@ export const SessionProvider = ({
     props.onSessionChange && props.onSessionChange(session)
   }, [session])
 
-  const _getSession = async () => {
+  const _getSession = useCallback(async () => {
     try {
       if (session?.token?.accessToken) {
         const newSession = await NamuiApi.getUserData()
@@ -69,13 +69,13 @@ export const SessionProvider = ({
     } finally {
       setLoading(false)
     }
-  }
+  }, [session?.token?.accessToken])
 
   useEffect(() => {
     _getSession()
 
     return () => {}
-  }, [])
+  }, [_getSession])
 
   useEffect(() => {
     const visibilityHandler = () => {
@@ -92,7 +92,7 @@ export const SessionProvider = ({
       data: session,
       status: loading
         ? 'loading'
-        : session
+        : Object.keys(session ?? {}).length
           ? 'authenticated'
           : 'unauthenticated',
       async update() {
