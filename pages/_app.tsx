@@ -1,4 +1,5 @@
 import { AUTH } from '@/constants'
+import CalcMobileHeight from '@/contexts/calc-mobile-height'
 import BaseLayout from '@/layout/base-layout'
 import { Token } from '@/lib/auth'
 import { NamuiApi } from '@/lib/namui-api'
@@ -40,6 +41,7 @@ export default function NamuiWikiApp({
       }}
     >
       <Component {...pageProps} />
+      <CalcMobileHeight />
     </SessionProvider>,
   )
 }

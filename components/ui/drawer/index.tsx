@@ -1,6 +1,8 @@
+import { HeaderProps } from '@/components/header'
+import BaseLayout from '@/layout/base-layout'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import { drawerInOutProps } from '@/variants'
-import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion'
+import { AnimatePresence, LazyMotion, domAnimation } from 'framer-motion'
 import {
   PropsWithChildren,
   ReactNode,
@@ -16,6 +18,7 @@ interface DrawerProps {
   open?: boolean
   onChangeOpen?: (state: boolean) => void
   trigger?: ReactNode
+  header?: HeaderProps & { showHeader?: boolean }
 }
 
 function css(element: HTMLElement, style: Partial<CSSStyleDeclaration>) {
@@ -31,6 +34,7 @@ const Drawer = ({
   open = false,
   onChangeOpen,
   children,
+  header,
 }: PropsWithChildren<DrawerProps>) => {
   const id = useId()
   const [isMounted, setIsMounted] = useState(open)
@@ -49,16 +53,18 @@ const Drawer = ({
             left: '0px',
             top: '0px',
             width: '100dvw',
-            height: '100dvh',
+            height: 'calc(var(--vh,1vh)*100)',
           })
+          document.body.style.overflowY = 'hidden'
         } else {
           css(ref.current, {
             position: 'fixed',
             left: '0px',
             top: '0px',
             width: '0px',
-            height: '0px',
+            height: 'calc(var(--vh,1vh)*100)',
           })
+          document.body.style.overflowY = ''
         }
         const newIsMountState = state ?? !isMounted
         setIsMounted(newIsMountState)
@@ -84,7 +90,7 @@ const Drawer = ({
       if (isMounted) {
         css(ref.current, {
           display: 'block',
-          zIndex: '100',
+          zIndex: '10',
         })
       }
     }
@@ -102,12 +108,16 @@ const Drawer = ({
             <LazyMotion features={domAnimation}>
               <AnimatePresence mode="wait">
                 {isMounted ? (
-                  <m.main
-                    {...drawerInOutProps}
-                    className="w-screen h-screen bg-white"
+                  <BaseLayout
+                    className="w-screen bg-white h-calc-h"
+                    framer={{ ...drawerInOutProps }}
+                    showHeader={header?.showHeader}
+                    header={header}
                   >
-                    {children}
-                  </m.main>
+                    <section className="flex flex-col grow overflow-y-scroll h-full">
+                      {children}
+                    </section>
+                  </BaseLayout>
                 ) : null}
               </AnimatePresence>
             </LazyMotion>,

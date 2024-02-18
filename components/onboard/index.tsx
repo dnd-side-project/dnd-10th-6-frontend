@@ -5,13 +5,12 @@ import { useState } from 'react'
 export const onBoardingItems = [
   <div
     key="step1"
-    className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center text-center"
+    className="px-5 h-full flex flex-col items-center text-center justify-center"
   >
-    <h2 className="text-mainTitle2-medium">
+    <h2 className="text-mainTitle2-medium mb-4">
       나에 대해 <b>얼마나 알고 있나요?</b>
     </h2>
     <svg
-      className="mt-auto"
       width="158"
       height="272"
       viewBox="0 0 158 272"
@@ -105,9 +104,9 @@ export const onBoardingItems = [
   </div>,
   <div
     key="step2"
-    className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
+    className="px-5 h-full flex flex-col items-center justify-center"
   >
-    <h2 className="text-mainTitle2-medium text-center">
+    <h2 className="text-mainTitle2-medium text-center justify-center">
       남의위키를 통해{' '}
       <b>
         타인의 눈으로 본<br />
@@ -116,7 +115,6 @@ export const onBoardingItems = [
       하고 탐구해보세요
     </h2>
     <svg
-      className="mt-auto"
       width="171"
       height="246"
       viewBox="0 0 171 246"
@@ -222,7 +220,7 @@ export const onBoardingItems = [
   </div>,
   <div
     key="step3"
-    className="px-5 h-full pt-[11.8dvh] pb-[16dvh] flex flex-col items-center"
+    className="px-5 h-full flex flex-col items-center justify-center"
   >
     <h2 className="text-mainTitle2-medium text-center">
       <b>남이 작성한 내 소개서</b>를 통해
@@ -230,7 +228,6 @@ export const onBoardingItems = [
       <b>나에 대해</b> 더 자세히 알 수 있어요
     </h2>
     <svg
-      className="mt-auto"
       width="228"
       height="246"
       viewBox="0 0 228 246"
@@ -348,7 +345,7 @@ interface OnBoardProps {
 const OnBoard = ({ onStartClick }: OnBoardProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
   return (
-    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
+    <div className="h-calc-h flex flex-col pb-[50px] px-5">
       <Carousel
         className="grow flex flex-col w-[calc(100%_+_40px)] -ml-5 py-9"
         slides={onBoardingItems}

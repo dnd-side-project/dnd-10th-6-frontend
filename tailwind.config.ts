@@ -22,6 +22,7 @@ const config = {
     extend: {
       spacing: {
         header: 'var(--header-height)',
+        'calc-h': 'calc(var(--vh,1vh)*100)',
       },
 
       colors: {
@@ -77,7 +78,7 @@ const config = {
         'mainTitle1-medium': [
           '28px',
           {
-            fontWeight: 'medium',
+            fontWeight: '500',
             lineHeight: '38px',
           },
         ],
@@ -91,7 +92,7 @@ const config = {
         'mainTitle2-medium': [
           '24px',
           {
-            fontWeight: 'medium',
+            fontWeight: '500',
             lineHeight: '34px',
           },
         ],
@@ -106,7 +107,7 @@ const config = {
           '20px',
           {
             lineHeight: '28px',
-            fontWeight: 'medium',
+            fontWeight: '500',
           },
         ],
         subTitle2: '18px',
@@ -128,7 +129,7 @@ const config = {
         'body3-medium': [
           '14px',
           {
-            fontWeight: 'medium',
+            fontWeight: '500',
             lineHeight: '20px',
           },
         ],
