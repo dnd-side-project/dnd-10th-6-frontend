@@ -1,6 +1,6 @@
-import { Typography } from '@/components/typography'
 import { AUTH } from '@/constants'
 import { UnauthorizedError } from '@/error'
+import CalcMobileHeight from '@/contexts/calc-mobile-height'
 import BaseLayout from '@/layout/base-layout'
 import { Session, Token } from '@/lib/auth'
 import { NamuiApi } from '@/lib/namui-api'
@@ -13,16 +13,7 @@ import { parse, serialize } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
-import LocalFont from 'next/font/local'
-
 import { ReactElement, ReactNode } from 'react'
-
-const pretendard = LocalFont({
-  src: './assets/fonts/PretendardVariable.woff2',
-  preload: true,
-  display: 'swap',
-  variable: '--font-base',
-})
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -38,30 +29,20 @@ export default function NamuiWikiApp({
   pageProps,
   session,
 }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page: ReactNode) => page)
+  const getLayout =
+    Component.getLayout ??
+    ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
   return getLayout(
-    <main className={pretendard.variable}>
-      <BaseLayout>
-        <SessionProvider
-          session={session}
-          onSessionChange={() => {
-            NamuiApi.setToken(session?.token?.accessToken)
-          }}
-        >
-          <Component {...pageProps} />
-        </SessionProvider>
-        <Typography hierarchy="mainTitle1" as="h1">
-          Main Title 1
-        </Typography>
-        <Typography hierarchy="subTitle1" as="h2">
-          Sub Title 1
-        </Typography>
-        <Typography hierarchy="body1" as="div">
-          Body 1
-        </Typography>
-      </BaseLayout>
-    </main>,
+    <SessionProvider
+      session={session}
+      onSessionChange={(newSession) => {
+        NamuiApi.setToken(newSession?.token?.accessToken)
+      }}
+    >
+      <Component {...pageProps} />
+      <CalcMobileHeight />
+    </SessionProvider>,
   )
 }
 

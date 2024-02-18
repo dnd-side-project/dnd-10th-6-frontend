@@ -5,7 +5,7 @@ import axios, {
   AxiosResponse,
   CreateAxiosDefaults,
 } from 'axios'
-import type { ProviderType, Token, User } from '@/lib/auth'
+import type { ProviderType, User } from '@/lib/auth'
 import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
 import { AUTH } from '@/constants'
 
@@ -14,7 +14,7 @@ export class NamuiApi {
   private static instanceOption: CreateAxiosDefaults = {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
   }
-  private static accessToken: string
+  private static accessToken: string = ''
   /**
    * @NOTE 로그인 API
    */
@@ -23,7 +23,7 @@ export class NamuiApi {
       method: 'POST',
       url: `/api/v1/auth/login`,
       data: {
-        provider,
+        provider: provider.toUpperCase(),
         code,
       },
     })
@@ -36,17 +36,30 @@ export class NamuiApi {
     })
   }
 
-  static async getNewToken() {
-    const res = await this.handler<Pick<Token, 'accessToken'>>({
-      method: 'POST',
-      baseURL: window.location.origin,
-      url: '/api/auth/refresh',
+  private static async getNewToken() {
+    const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
+    serverURL.pathname = '/api/v1/refresh'
+    const response = await fetch(serverURL).then((res) => {
+      if (res.status > 400) {
+        throw raiseNamuiErrorFromStatus(res.status)
+      } else {
+        return res.json() as Promise<{
+          data: {
+            accessToken: 'string'
+          }
+        }>
+      }
     })
-    return res.data.accessToken
+    NamuiApi.setToken(response.data.accessToken)
+    return response.data.accessToken
   }
 
   private static injectInterceptor(instance: AxiosInstance) {
     const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[LOG-Request] : ${config.url}`)
+        console.log(`[LOG-Request] : ${config.headers}`)
+      }
       const accessToken = NamuiApi.accessToken
 
       config.headers = {
@@ -65,7 +78,12 @@ export class NamuiApi {
     const onResponse = (config: AxiosResponse) => config
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onErrorResponse = async (error: any) => {
-      if (error.response?.status === 500) {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(
+          `[LOG-RESPONSE-ERROR] : PATH-${error.request.path} ${error?.message}`,
+        )
+      }
+      if (error.response?.status === 401) {
         const newAccessToken = await this.getNewToken()
         error.config.headers = {
           ...error.config.headers,
@@ -77,6 +95,7 @@ export class NamuiApi {
       const errorInstance = axios.isAxiosError(error)
         ? raiseNamuiErrorFromStatus(error.status || error.response?.status)
         : error
+
       return Promise.reject(errorInstance)
     }
 
@@ -105,6 +124,6 @@ export class NamuiApi {
 
   private static async handler<Response>(config: AxiosRequestConfig) {
     const instance = this.getInstance()
-    return instance<Response>(config)
+    return instance(config) as Response
   }
 }

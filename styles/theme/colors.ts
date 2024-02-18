@@ -86,16 +86,15 @@ export const colors = {
     primary: '#FFEB34',
     secondary: '#F77D0E',
   },
-  background: {
-    light: {
-      green1: '#C5E4CC',
-      green2: '#E2F6E9',
-      green3: '#ECFFE8',
-      blue1: '#E2F5FF',
-      yellow1: '#FFFDE7',
-      orange1: '#FFF1DB',
-      gray1: '#F7F7F7',
-    },
+  bg: {
+    green1: '#C5E4CC',
+    green2: '#E2F6E9',
+    green3: '#ECFFE8',
+    blue1: '#E2F5FF',
+    blue2: '#EFFAFF',
+    yellow1: '#FFFDE7',
+    orange1: '#FFF1DB',
+    gray1: '#FAFAFA',
   },
   inputbox: {
     color: {
@@ -104,5 +103,3 @@ export const colors = {
     },
   },
 }
-
-

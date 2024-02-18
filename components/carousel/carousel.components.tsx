@@ -1,5 +1,6 @@
-import { MotionValue, useTransform, motion } from 'framer-motion'
-import React, { useMemo } from 'react'
+import { cn } from '@/lib/client/utils'
+import { MotionValue, useTransform, m, circOut } from 'framer-motion'
+import React, { PropsWithChildren, useMemo } from 'react'
 
 export const DotButton = ({
   index,
@@ -10,7 +11,6 @@ export const DotButton = ({
   index: number
   maxLength: number
   scrollX: MotionValue<number>
-  selected: boolean
   onClick: () => void
 }) => {
   const inputRange = useMemo(
@@ -22,8 +22,9 @@ export const DotButton = ({
     [index, maxLength],
   )
 
-  const x = useTransform(scrollX, inputRange, [10, 30, 10], {
+  const x = useTransform(scrollX, inputRange, [6, 20, 6], {
     clamp: true,
+    ease: circOut,
   })
   const backgroundColor = useTransform(scrollX, inputRange, [
     'rgba(17,17,17,0.2)',
@@ -32,9 +33,9 @@ export const DotButton = ({
   ])
 
   return (
-    <motion.button
+    <m.button
       style={{ width: x, backgroundColor }}
-      className="h-2 mx-2 flex items-center origin-center rounded-full"
+      className="h-[6px] mx-[3px] flex items-center origin-center rounded-full"
       type="button"
       onClick={onClick}
     />
@@ -68,3 +69,37 @@ export const NextButton = ({
     </svg>
   </button>
 )
+
+interface AnimatedOpacityProps {
+  className?: string
+  index: number
+  maxLength: number
+  scrollX: MotionValue<number>
+}
+
+export const AnimatedOpacity = ({
+  children,
+  index,
+  maxLength,
+  scrollX,
+  className,
+}: PropsWithChildren<AnimatedOpacityProps>) => {
+  const inputRange = useMemo(
+    () => [
+      (index - 1) / (maxLength - 1),
+      index / (maxLength - 1),
+      (index + 1) / (maxLength - 1),
+    ],
+    [index, maxLength],
+  )
+
+  const opacity = useTransform(scrollX, inputRange, [0, 1, 0], {
+    ease: circOut,
+  })
+
+  return (
+    <m.div style={{ opacity }} className={cn('flex-[0_0_100%]', className)}>
+      {children}
+    </m.div>
+  )
+}

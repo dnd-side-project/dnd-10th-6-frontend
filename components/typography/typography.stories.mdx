@@ -1,0 +1,93 @@
+import { Meta, Typeset } from '@storybook/blocks'
+
+<Meta title="Typography" />
+
+export const typography = {
+  type: {
+    primary: 'PretendardVariable',
+    weight: {
+      medium: '500',
+      bold: '700',
+    },
+    size: {
+      mainTitle1: 28,
+      mainTitle2: 24,
+      subTitle1: 20,
+      subTitle2: 18,
+      body1: 16,
+      body2: 15,
+      body3: 14,
+      caption1: 13,
+      caption2: 12,
+    },
+  },
+}
+
+export const SampleText = 'Namui Wiki Text'
+
+# Typography
+
+- **Primary Font** : PretendardVariable
+- **Weighs** : Medium 500
+
+## Tag 사용 Rule
+
+- **Main Title 1** : h1
+- **Main Title 2** : h2
+- **Sub Title 1** : h3
+- **Sub Title 2** : h3
+- **Body 1** : p
+- **Body 2** : p
+- **Body 3** : p
+- **Caption 1** : p
+- **Caption 2** : p
+
+## Line Height 값
+
+
+- **Main Title 1** : 38
+- **Main Title 2** : 34
+- **Sub Title 1** : 28
+- **Sub Title 2** : 26
+- **Body 1** : 24
+- **Body 2** : 22
+- **Body 3** : 20
+- **Caption 1** : 18
+- **Caption 2** : 18
+
+<Typeset
+  fontSizes={[
+    Number(typography.type.size.mainTitle1),
+    Number(typography.type.size.mainTitle2),
+    Number(typography.type.size.subTitle1),
+    Number(typography.type.size.subTitle2),
+    Number(typography.type.size.body1),
+    Number(typography.type.size.body2),
+    Number(typography.type.size.body3),
+    Number(typography.type.size.caption1),
+    Number(typography.type.size.caption2),
+  ]}
+  fontWeight={typography.type.weight.medium}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
+- **Primary Font** : PretendardVariable
+- **Weighs** : Bold 700
+
+<Typeset
+  fontSizes={[
+    Number(typography.type.size.mainTitle1),
+    Number(typography.type.size.mainTitle2),
+    Number(typography.type.size.subTitle1),
+    Number(typography.type.size.subTitle2),
+    Number(typography.type.size.body1),
+    Number(typography.type.size.body2),
+    Number(typography.type.size.body3),
+    Number(typography.type.size.caption1),
+    Number(typography.type.size.caption2),
+  ]}
+  fontWeight={typography.type.weight.bold}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>

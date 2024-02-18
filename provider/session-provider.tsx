@@ -1,5 +1,6 @@
 import { NotImplimentError } from '@/error'
 import { ProviderType, Session, signIn } from '@/lib/auth'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import { NamuiApi } from '@/lib/namui-api'
 import {
   PropsWithChildren,
@@ -7,7 +8,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -31,7 +31,7 @@ export type SessionContextValue<R extends boolean = false> = R extends true
         }
 
 type SessionHandler = {
-  signin: (args: { provider: ProviderType; callbackUrl?: string }) => void
+  signin: (args?: { provider: ProviderType; callbackUrl?: string }) => void
   signout: () => Promise<void>
 }
 interface SessionProviderProps extends SessionContextType {
@@ -40,9 +40,6 @@ interface SessionProviderProps extends SessionContextType {
 }
 
 const SessionContext = createContext<SessionContextValue | undefined>(undefined)
-
-const useBrowserEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : () => {}
 
 export const SessionProvider = ({
   children,
@@ -57,7 +54,7 @@ export const SessionProvider = ({
   const [session, setSession] = useState<Session>(InitialSession)
   const [loading, setLoading] = useState(!hasInitialSession)
 
-  useBrowserEffect(() => {
+  useBrowserLayoutEffect(() => {
     props.onSessionChange && props.onSessionChange(session)
   }, [session])
 
@@ -65,7 +62,7 @@ export const SessionProvider = ({
     try {
       if (session?.token?.accessToken) {
         const newSession = await NamuiApi.getUserData()
-        setSession((prev) => ({ ...prev, user: newSession.data }))
+        setSession((prev) => ({ ...prev, user: newSession }))
       }
     } catch (error) {
       setSession(null)
@@ -132,7 +129,7 @@ export const useSession = <R extends boolean>(options?: {
   const { required } = options ?? {}
 
   const signin: SessionHandler['signin'] = useCallback((args) => {
-    const { provider, callbackUrl } = args
+    const { provider = 'kakao', callbackUrl } = args ?? {}
     if (callbackUrl) {
       sessionStorage.setItem('callbackUrl', callbackUrl)
     }

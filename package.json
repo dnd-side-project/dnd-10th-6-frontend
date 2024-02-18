@@ -13,7 +13,8 @@
     "test-storybook": "test-storybook"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.18.1",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@tanstack/react-query": "^5.17.19",
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -21,12 +22,18 @@
     "embla-carousel": "^8.0.0-rc21",
     "embla-carousel-react": "^8.0.0-rc21",
     "framer-motion": "^11.0.3",
+    "js-cookie": "^3.0.5",
+    "lucide-react": "^0.322.0",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.50.1",
+    "recharts": "^2.12.0",
     "tailwind-merge": "^2.2.1",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.1",
@@ -46,10 +53,11 @@
     "@storybook/testing-library": "^0.2.2",
     "@types/cookie": "^0",
     "@types/cors": "^2",
-    "@types/js-cookie": "^3",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/recharts": "^1.8.29",
     "@types/semver": "^7",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",

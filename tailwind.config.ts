@@ -3,29 +3,154 @@ import { colors } from './styles/theme/colors'
 
 const config = {
   darkMode: ['class'],
-  content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+    './layout/**/*.{ts,tsx}',
+  ],
   prefix: '',
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
+      spacing: {
+        header: 'var(--header-height)',
+        'calc-h': 'calc(var(--vh,1vh)*100)',
+      },
+
       colors: {
         ...colors,
-        black: 'var(--black)',
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
         muted: {
-          DEFAULT: 'var(--muted)',
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
         },
         line: {
           DEFAULT: 'var(--black)',
           muted: 'var(--line)',
+          ...colors.line,
         },
         disabled: 'var(--disabled)',
       },
       fontSize: {
-        sm: [
+        'mainTitle1-bold': [
+          '28px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '38px',
+          },
+        ],
+        'mainTitle1-medium': [
+          '28px',
+          {
+            fontWeight: '500',
+            lineHeight: '38px',
+          },
+        ],
+        'mainTitle2-bold': [
+          '24px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '34px',
+          },
+        ],
+        'mainTitle2-medium': [
+          '24px',
+          {
+            fontWeight: '500',
+            lineHeight: '34px',
+          },
+        ],
+        'subTitle1-bold': [
+          '20px',
+          {
+            lineHeight: '28px',
+            fontWeight: 'bold',
+          },
+        ],
+        'subTitle1-medium': [
+          '20px',
+          {
+            lineHeight: '28px',
+            fontWeight: '500',
+          },
+        ],
+        subTitle2: '18px',
+        'body1-medium': [
+          '16px',
+          {
+            fontWeight: '500',
+            lineHeight: '24px',
+          },
+        ],
+        'body1-bold': [
+          '16px',
+          {
+            fontWeight: '700',
+            lineHeight: '24px',
+          },
+        ],
+        body2: '15px',
+        'body3-medium': [
           '14px',
           {
+            fontWeight: '500',
             lineHeight: '20px',
           },
         ],
+        'body3-bold': [
+          '14px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '20px',
+          },
+        ],
+        caption1: '13px',
+        caption2: '12px',
+      },
+      fontWeight: {
+        medium: '500',
+        bold: '700',
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
         base: [
@@ -37,6 +162,20 @@ const config = {
           'Segoe UI Symbol',
           'Noto Color Emoji',
         ],
+      },
+      boxShadow: {
+        basic: '0px 4px 10px rgba(0,0,0,0.06)',
+        'chat-bubble': '4px 4px 16px rgba(0, 0, 0, 0.1)',
+      },
+      lineHeight: {
+        mainTitle1: '38px',
+        mainTitle2: '36px',
+        subTitle2: '26px',
+        body1: '24px',
+        body2: '22px',
+        body3: '20px',
+        caption1: '18px',
+        caption2: '18px',
       },
       keyframes: {
         'accordion-down': {
@@ -52,9 +191,12 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      transitionTimingFunction: {
+        easeOutQuint: 'cubic-bezier(0.22,1,0.36,1)',
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 
 export default config
