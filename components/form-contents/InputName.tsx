@@ -12,26 +12,30 @@ const InputName = () => {
   const { name } = useWatch({ control })
 
   return (
-    <div className="flex flex-col space-y-4 p-4">
-      <InputLabel label="이름">
-        <Controller
-          control={control}
-          name="name"
-          render={({ field }) => (
-            <Inputbox
-              {...field}
-              placeholder="이름을 입력해주세요"
-              onChange={(e) => {
-                setValue('name', e.target.value)
-              }}
-            />
-          )}
-        />
-      </InputLabel>
+    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
+      <div className="flex-1 flex flex-col mt-4 ">
+        <InputLabel label="이름">
+          <Controller
+            control={control}
+            name="name"
+            render={({ field }) => (
+              <Inputbox
+                {...field}
+                placeholder="이름을 입력해주세요"
+                onChange={(e) => {
+                  setValue('name', e.target.value)
+                }}
+              />
+            )}
+          />
+        </InputLabel>
+      </div>
 
-      <Button onClick={toNextStep} disabled={!name}>
-        다음
-      </Button>
+      <div className="fixed bottom-0 left-0 right-0 p-5 mb-4 bg-white flex justify-center">
+        <Button onClick={toNextStep} disabled={!name}>
+          다음
+        </Button>
+      </div>
     </div>
   )
 }

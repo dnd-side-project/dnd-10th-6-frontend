@@ -45,8 +45,18 @@ const Page = () => {
 }
 
 Page.getLayout = () => {
+  const { toPrevStep } = useFunnel()
   return (
-    <BaseLayout showHeader={true}>
+    <BaseLayout
+      showHeader={true}
+      header={{
+        center: '정보입력',
+        options: {
+          showRight: false,
+          onBackClick: () => toPrevStep(),
+        },
+      }}
+    >
       <Page />
     </BaseLayout>
   )

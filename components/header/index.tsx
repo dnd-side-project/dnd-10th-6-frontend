@@ -155,7 +155,7 @@ const Header = ({ center = <Logo />, rightIcon, options }: HeaderProps) => {
       ref={headerRef}
       {...fadeInProps}
       className={cn(
-        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300',
+        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold',
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}
     >
