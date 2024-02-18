@@ -5,6 +5,7 @@ import { FunnelProvider } from '@/contexts/useFunnelContext'
 import InputName from '@/components/form-contents/InputName'
 import InputKnowing from '@/components/form-contents/InputKnowing'
 import useSurveyForm from './hooks/useSurveyForm'
+import { ReactNode } from 'react'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   'inputName',
@@ -17,7 +18,16 @@ const Page = () => {
   const form = useSurveyForm()
 
   return (
-    <>
+    <BaseLayout
+      showHeader={true}
+      header={{
+        center: '정보입력',
+        options: {
+          showRight: false,
+          onBackClick: () => toPrevStep(),
+        },
+      }}
+    >
       <FunnelProvider
         value={{
           toPrevStep,
@@ -40,26 +50,9 @@ const Page = () => {
           </Funnel>
         </FormProvider>
       </FunnelProvider>
-    </>
-  )
-}
-
-Page.getLayout = () => {
-  //eslint-disable-next-line
-  const { toPrevStep } = useFunnel()
-  return (
-    <BaseLayout
-      showHeader={true}
-      header={{
-        center: '정보입력',
-        options: {
-          showRight: false,
-          onBackClick: () => toPrevStep(),
-        },
-      }}
-    >
-      <Page />
     </BaseLayout>
   )
 }
+
+Page.getLayout = (page: ReactNode) => page
 export default Page
