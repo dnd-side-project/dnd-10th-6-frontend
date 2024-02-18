@@ -4,12 +4,7 @@ interface InfoInsertTemplateProps {
 }
 
 const InfoInsertTemplate = ({ children, button }: InfoInsertTemplateProps) => {
-  return (
-    <>
-      <main>{children}</main>
-      <section>{button}</section>
-    </>
-  )
+  return <></>
 }
 
 export default InfoInsertTemplate

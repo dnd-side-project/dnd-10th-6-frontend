@@ -1,33 +1,38 @@
 import { useFunnelContext } from '@/contexts/useFunnelContext'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller, useFormContext, useWatch } from 'react-hook-form'
 import Inputbox from '../inputbox'
 import InputLabel from '../inputLabel'
+import Button from '../button'
+import { FormValues } from '@/pages/surveys/hooks/useSurveyForm'
 
 const InputName = () => {
   const { toNextStep } = useFunnelContext()
-  const { control } = useFormContext()
+
+  const { setValue, control } = useFormContext<FormValues>()
+  const { name } = useWatch({ control })
 
   return (
-    <>
-      <div>
-        <InputLabel label="이름을 입력해주세요">
-          <Controller
-            control={control}
-            name="name"
-            render={({ field }) => (
-              <Inputbox {...field} placeholder="이름을 입력해주세요" />
-            )}
-          />
-          <p className="text-body3-medium text-text-sub-gray99 mt-1">
-            2-6자로 입력해주세요
-          </p>
-        </InputLabel>
+    <div className="flex flex-col space-y-4 p-4">
+      <InputLabel label="이름">
+        <Controller
+          control={control}
+          name="name"
+          render={({ field }) => (
+            <Inputbox
+              {...field}
+              placeholder="이름을 입력해주세요"
+              onChange={(e) => {
+                setValue('name', e.target.value)
+              }}
+            />
+          )}
+        />
+      </InputLabel>
 
-        <button onClick={toNextStep} type="button">
-          Next
-        </button>
-      </div>
-    </>
+      <Button onClick={toNextStep} disabled={!name}>
+        다음
+      </Button>
+    </div>
   )
 }
 
