@@ -10,18 +10,15 @@ const InputName = () => {
   return (
     <>
       <div>
-        <InputLabel label="이름을 입력해주세요">
-          <Controller
-            control={control}
-            name="name"
-            render={({ field }) => (
+        <Controller
+          control={control}
+          name="name"
+          render={({ field }) => (
+            <InputLabel label="이름을 입력해주세요">
               <Inputbox {...field} placeholder="이름을 입력해주세요" />
-            )}
-          />
-          <p className="text-body3-medium text-text-sub-gray99 mt-1">
-            2-6자로 입력해주세요
-          </p>
-        </InputLabel>
+            </InputLabel>
+          )}
+        />
 
         <button onClick={toNextStep} type="button">
           Next

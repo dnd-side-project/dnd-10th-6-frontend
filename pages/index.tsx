@@ -3,11 +3,13 @@ import Button from '@/components/button'
 import Logo from '@/components/ui/logo'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
+import BaseLayout from '@/layout/base-layout'
+import { ReactNode } from 'react'
 
 const Page = () => {
   const { signin, data } = useSession()
   const router = useRouter()
-  if (typeof window !== 'undefined' && data) {
+  if (typeof window !== 'undefined' && data?.user) {
     if (!data.user?.nickname) {
       router.replace('/signup')
     } else {
@@ -139,6 +141,10 @@ const Page = () => {
 }
 
 export default Page
+
+Page.getLayout = (page: ReactNode) => (
+  <BaseLayout showHeader={false}>{page}</BaseLayout>
+)
 
 export const getServerSideProps = (async (context) => {
   const isViewOnboard = context.req.cookies['namui-init'] ?? null

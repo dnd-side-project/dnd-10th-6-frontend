@@ -13,6 +13,7 @@ import Logo from '../ui/logo'
 export interface HeaderProps {
   center?: ReactNode
   rightIcon?: ReactNode
+  leftIcon?: ReactNode
   options?: {
     onBackClick?: () => void
     showRight?: boolean
@@ -20,6 +21,7 @@ export interface HeaderProps {
 }
 
 const Header = ({
+  leftIcon,
   center = (
     <div className="h-5">
       <Logo />
@@ -63,7 +65,6 @@ const Header = ({
   }, [handleResize, setIntersecting])
 
   const shoudFixedHeader = scrollTop > headerHeight && direction === 'UP'
-
   return (
     <motion.header
       ref={headerRef}
@@ -75,22 +76,32 @@ const Header = ({
     >
       <motion.button
         {...fadeInProps}
-        onClick={() => (onBackClick ? onBackClick() : router.back())}
+        onClick={() =>
+          onBackClick
+            ? onBackClick()
+            : typeof leftIcon === 'undefined'
+              ? router.back()
+              : () => {}
+        }
       >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 28 28"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M18.6187 23.6187C18.277 23.9604 17.723 23.9604 17.3813 23.6187L8.38128 14.6187C8.21719 14.4546 8.125 14.2321 8.125 14C8.125 13.7679 8.21719 13.5454 8.38128 13.3813L17.3813 4.38128C17.723 4.03957 18.277 4.03957 18.6187 4.38128C18.9604 4.72299 18.9604 5.27701 18.6187 5.61872L10.2374 14L18.6187 22.3813C18.9604 22.723 18.9604 23.277 18.6187 23.6187Z"
-            fill="#111111"
-          />
-        </svg>
+        {typeof leftIcon === 'undefined' ? null : leftIcon ? (
+          leftIcon
+        ) : (
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M18.6187 23.6187C18.277 23.9604 17.723 23.9604 17.3813 23.6187L8.38128 14.6187C8.21719 14.4546 8.125 14.2321 8.125 14C8.125 13.7679 8.21719 13.5454 8.38128 13.3813L17.3813 4.38128C17.723 4.03957 18.277 4.03957 18.6187 4.38128C18.9604 4.72299 18.9604 5.27701 18.6187 5.61872L10.2374 14L18.6187 22.3813C18.9604 22.723 18.9604 23.277 18.6187 23.6187Z"
+              fill="#111111"
+            />
+          </svg>
+        )}
       </motion.button>
       <motion.div {...fadeInProps} className="flex justify-center">
         {center}
