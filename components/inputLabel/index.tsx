@@ -12,7 +12,7 @@ const InputLabel = ({
 }: PropsWithChildren<InputLabelProps>) => {
   return (
     <label>
-      <h3 className="text-body1-bold">{label}</h3>
+      <h3 className="text-body1-bold p-2">{label}</h3>
       <div className="w-full h-fit relative ">
         {children}
         {errorMessage && (
