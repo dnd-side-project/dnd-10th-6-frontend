@@ -27,6 +27,28 @@ const filterItems: {
       value: 'ALL',
     },
     {
+      label: '6개월 미만',
+      value: 'SIX_MONTHS',
+    },
+    {
+      label: '6개월-1년',
+      value: 'ONE_YEAR',
+    },
+    {
+      label: '1년-4년',
+      value: 'FOUR_YEARS',
+    },
+    {
+      label: '4년 이상',
+      value: 'INFINITE',
+    },
+  ],
+  route: [
+    {
+      label: '전체',
+      value: 'ALL',
+    },
+    {
       label: '초등학교',
       value: 'ELEMENTARY_SCHOOL',
     },
@@ -49,28 +71,6 @@ const filterItems: {
     {
       label: '기타',
       value: 'ETC',
-    },
-  ],
-  route: [
-    {
-      label: '전체',
-      value: 'ALL',
-    },
-    {
-      label: '6개월 미만',
-      value: 'SIX_MONTHS',
-    },
-    {
-      label: '6개월-1년',
-      value: 'ONE_YEAR',
-    },
-    {
-      label: '1년-4년',
-      value: 'FOUR_YEARS',
-    },
-    {
-      label: '4년 이상',
-      value: 'INFINITE',
     },
   ],
 }
