@@ -45,6 +45,7 @@ const Page = () => {
 }
 
 Page.getLayout = () => {
+  //eslint-disable-next-line
   const { toPrevStep } = useFunnel()
   return (
     <BaseLayout
