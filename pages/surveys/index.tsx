@@ -18,39 +18,28 @@ const Page = () => {
   const form = useSurveyForm()
 
   return (
-    <BaseLayout
-      showHeader={true}
-      header={{
-        center: '정보입력',
-        options: {
-          showRight: false,
-          onBackClick: () => toPrevStep(),
-        },
+    <FunnelProvider
+      value={{
+        toPrevStep,
+        toNextStep,
       }}
     >
-      <FunnelProvider
-        value={{
-          toPrevStep,
-          toNextStep,
-        }}
-      >
-        <FormProvider {...form}>
-          <Funnel step={step}>
-            <Step
-              name="inputName"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <InputName />
-            </Step>
-            <Step name="knowing" onEnter={() => {}}>
-              <InputKnowing />
-            </Step>
-          </Funnel>
-        </FormProvider>
-      </FunnelProvider>
-    </BaseLayout>
+      <FormProvider {...form}>
+        <Funnel step={step}>
+          <Step
+            name="inputName"
+            onEnter={() => {
+              //프로그래스바 진척도
+            }}
+          >
+            <InputName />
+          </Step>
+          <Step name="knowing" onEnter={() => {}}>
+            <InputKnowing />
+          </Step>
+        </Funnel>
+      </FormProvider>
+    </FunnelProvider>
   )
 }
 
