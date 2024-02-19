@@ -6,21 +6,26 @@ import { useFunnelContext } from '@/contexts/useFunnelContext'
 import FormLayout from '@/layout/form-layout'
 import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
 
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import {
+  Controller,
+  SubmitHandler,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form'
 
 const fetchQuestionMockData = {
   data: [
     {
-      id: '65d3156916f83528d804fadb',
-      title: '{{userName}}님은<br/><b>사람들과 빨리 친해지는 편</b>인가요?',
+      id: '65d3156916f83528d804fadc',
+      title: '{{userName}}님은<br/><b>나와 비슷한 성향</b>인가요?',
       type: 'OX',
       dashboardType: 'CHARACTER',
-      surveyOrder: 1,
+      surveyOrder: 2,
       options: [
         {
-          id: '65d3156916f83528d804fac7',
-          value: '🙅‍♂️  아니요, 시간이 걸리는 편이에요',
-          text: '🙅‍♂️  아니요, 시간이 걸리는 편이에요',
+          id: '65d3156916f83528d804fac8',
+          value: '🙅‍♂️  아니요, 나와 달라요',
+          text: '🙅‍♂️  아니요, 나와 달라요',
         },
         {
           id: '65d3156916f83528d804fac6',
@@ -32,20 +37,27 @@ const fetchQuestionMockData = {
   ],
 }
 
-const First = () => {
+const Second = () => {
   const { toNextStep } = useFunnelContext()
-  const { trigger, control } = useFormContext<QsSchemaType>()
+  const { handleSubmit, trigger, control } = useFormContext<QsSchemaType>()
 
-  const { firstQuestion, firstReason } = useWatch({ control })
+  const { secondQuestion, secondReason } = useWatch({ control })
+  const onSubmit: SubmitHandler<QsSchemaType> = (data) => {
+    console.log(data)
+  }
 
-  const isDisabled = !firstQuestion || !firstReason
+  const isDisabled = !secondQuestion || !secondReason
 
   return (
     <>
       <FormLayout
         title="1/2" //프로그래스바
         button={
-          <Button disabled={isDisabled} onClick={toNextStep} className="w-full">
+          <Button
+            disabled={isDisabled}
+            onClick={handleSubmit(onSubmit)}
+            className="w-full"
+          >
             다음
           </Button>
         }
@@ -62,7 +74,7 @@ const First = () => {
                 {fetchQuestionMockData.data[0].options.map((option) => (
                   <Controller
                     key={option.id}
-                    name="firstQuestion"
+                    name="secondQuestion"
                     control={control}
                     render={({ field }) => (
                       <RadioButton
@@ -70,10 +82,10 @@ const First = () => {
                         id={option.id}
                         value={option.value}
                         label={option.text}
-                        selected={firstQuestion === option.value || false}
+                        selected={secondQuestion === option.value || false}
                         onChange={(e) => {
                           field.onChange(e.target.value)
-                          trigger('firstQuestion')
+                          trigger('secondReason')
                         }}
                       />
                     )}
@@ -88,7 +100,7 @@ const First = () => {
                 >
                   <Controller
                     control={control}
-                    name="firstReason"
+                    name="secondReason"
                     render={({ field }) => (
                       <Inputbox
                         {...field}
@@ -107,4 +119,4 @@ const First = () => {
   )
 }
 
-export default First
+export default Second

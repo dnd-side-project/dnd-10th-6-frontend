@@ -58,12 +58,21 @@ export type QuestionValues = z.infer<typeof QuestionSchema>
 
 const QsSchema = z.object({
   firstQuestion: z.string().min(1, { message: '필수임' }),
+  firstReason: z.string().min(1, { message: '필수임' }),
+  secondQuestion: z.string().min(1, { message: '필수임' }),
+  secondReason: z.string().min(1, { message: '필수임' }),
 })
 
 export type QsSchemaType = z.infer<typeof QsSchema>
 
 const useQuestionForm = () => {
   return useForm<QsSchemaType>({
+    defaultValues: {
+      firstQuestion: '',
+      firstReason: '',
+      secondQuestion: '',
+      secondReason: '',
+    },
     resolver: zodResolver(QsSchema),
   })
 }
