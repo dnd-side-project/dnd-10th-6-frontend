@@ -36,10 +36,11 @@ export class NamuiApi {
     })
   }
 
-  static async updateNickname(nickname: string) {
-    return await NamuiApi.handler({
+  static async signUp(nickname: string) {
+    return await NamuiApi.handler<{ accessToken: string }>({
       method: 'POST',
-      url: '/api/v1/users/nickname',
+      url: '/api/auth/signup',
+      baseURL: window.location.origin,
       data: {
         nickname,
       },
