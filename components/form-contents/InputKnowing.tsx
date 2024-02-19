@@ -1,48 +1,99 @@
-import { useFunnelContext } from '@/contexts/useFunnelContext'
-import { useFormContext, useWatch } from 'react-hook-form'
 import ComboboxDropdown from '../combobox'
+import Button from '../button'
+import InputLabel from '../inputLabel'
+import {
+  Controller,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form'
+import { FormValues } from '@/pages/surveys/hooks/useSurveyForm'
 
 const InputKnowing = () => {
-  const { toNextStep } = useFunnelContext()
-  const { control } = useFormContext()
-  const { name } = useWatch({ control })
+  const { handleSubmit, trigger, control } = useFormContext<FormValues>()
+
+  const { knowingPeriod, knowingRoute } = useWatch({ control })
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data)
+  }
+
+  const onError: SubmitErrorHandler<FormValues> = (errors) => {
+    console.log(errors)
+  }
 
   return (
     <>
-      <div>
-        <span>안녕하세요 {name}님</span>
-        <span>어떻게 알게 되셨나요?</span>
-        <ComboboxDropdown
-          placeholder="알게 된 경로를 선택해주세요"
-          options={[
-            { label: '친구 추천', value: '친구 추천' },
-            { label: '인터넷 검색', value: '인터넷 검색' },
-            { label: '기타', value: '기타' },
-          ]}
-          onSelect={(value) => {
-            console.log(value)
-          }}
-        />
-
-        <span>언제 알게 되셨나요?</span>
-        <ComboboxDropdown
-          placeholder="언제 알게 되셨나요?"
-          options={[
-            { label: '1주일 전', value: '1주일 전' },
-            { label: '1개월 전', value: '1개월 전' },
-            { label: '3개월 전', value: '3개월 전' },
-            { label: '6개월 전', value: '6개월 전' },
-            { label: '1년 전', value: '1년 전' },
-            { label: '기타', value: '기타' },
-          ]}
-          onSelect={(value) => {
-            console.log(value)
-          }}
-        />
-
-        <button onClick={toNextStep} type="button">
-          Next
-        </button>
+      <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
+        <div className="flex-1 flex flex-col mt-4 space-y-4">
+          <InputLabel label="알게 된 기간">
+            <Controller
+              control={control}
+              name="knowingPeriod"
+              render={({ field }) => (
+                <ComboboxDropdown
+                  placeholder="알게 된 기간을 선택해주세요"
+                  options={[
+                    { label: '6개월미만', value: 'six_months'.toUpperCase() },
+                    {
+                      label: '6개월 - 1년미만',
+                      value: 'one_year'.toUpperCase(),
+                    },
+                    {
+                      label: '1년 - 4년미만',
+                      value: 'four_years'.toUpperCase(),
+                    },
+                    { label: '4년이상', value: 'infinite'.toUpperCase() },
+                  ]}
+                  {...field}
+                  onChange={(value) => {
+                    field.onChange(value)
+                    trigger('knowingPeriod')
+                  }}
+                />
+              )}
+            />
+          </InputLabel>
+          <InputLabel label="알게 된 경로">
+            <Controller
+              control={control}
+              name="knowingRoute"
+              render={({ field }) => (
+                <ComboboxDropdown
+                  placeholder="알게 된 경로를 선택해주세요"
+                  options={[
+                    {
+                      label: '초등학교',
+                      value: 'elementary_school'.toUpperCase(),
+                    },
+                    {
+                      label: '중·고등학교',
+                      value: 'middle_and_high_school'.toUpperCase(),
+                    },
+                    { label: '대학교', value: 'university'.toUpperCase() },
+                    { label: '직장', value: 'work'.toUpperCase() },
+                    { label: '친목모임', value: 'social'.toUpperCase() },
+                    { label: '기타', value: 'etc'.toUpperCase() },
+                  ]}
+                  {...field}
+                  onChange={(value) => {
+                    field.onChange(value)
+                    trigger('knowingRoute')
+                  }}
+                />
+              )}
+            />
+          </InputLabel>
+        </div>
+        <div className="fixed bottom-0 left-0 right-0 p-5 mb-4 bg-white flex justify-center">
+          <Button
+            onClick={handleSubmit(onSubmit, onError)}
+            disabled={!knowingPeriod || !knowingRoute}
+          >
+            시작하기
+          </Button>
+        </div>
       </div>
     </>
   )
