@@ -38,7 +38,7 @@ const InputKnowing = () => {
         }
         content={
           <>
-            <InputLabel label="알게 된 기간">
+            <InputLabel className="text-body1-bold" label="알게 된 기간">
               <Controller
                 control={control}
                 name="knowingPeriod"
@@ -70,7 +70,7 @@ const InputKnowing = () => {
               />
             </InputLabel>
             <div className="mt-4">
-              <InputLabel label="알게 된 경로">
+              <InputLabel className="text-body1-bold" label="알게 된 경로">
                 <Controller
                   control={control}
                   name="knowingRoute"
