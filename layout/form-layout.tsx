@@ -1,8 +1,7 @@
-import React, { HTMLAttributes, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import BaseLayout from './base-layout'
 
-interface FormLayoutProps
-  extends Omit<HTMLAttributes<HTMLFormElement>, 'title' | 'content'> {
+interface FormLayoutProps {
   title: ReactNode
   content: ReactNode
   button: ReactNode
