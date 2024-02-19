@@ -2,7 +2,7 @@ import Button from '@/components/button'
 import RadioButton from '@/components/radioButton'
 import { useFunnelContext } from '@/contexts/useFunnelContext'
 import FormLayout from '@/layout/form-layout'
-import { QuestionValues } from '@/pages/surveys/hooks/useQuestionsForm'
+import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
 
 import {
   Controller,
@@ -37,10 +37,10 @@ const fetchQuestionMockData = {
 
 const First = () => {
   const { toNextStep } = useFunnelContext()
-  const { handleSubmit, trigger, control } = useFormContext<QuestionValues>()
+  const { handleSubmit, trigger, control } = useFormContext<QsSchemaType>()
 
   const { firstQuestion } = useWatch({ control })
-  const onSubmit: SubmitHandler<QuestionValues> = (data) => {
+  const onSubmit: SubmitHandler<QsSchemaType> = (data) => {
     console.log(data)
   }
 

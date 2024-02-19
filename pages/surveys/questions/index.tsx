@@ -1,7 +1,7 @@
 import First from '@/components/compositions/question/First'
 import createFunnel from '@/components/funnel/createFunnel'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import useQuestionForm from '../hooks/useQuestionsForm'
 import { FormProvider } from 'react-hook-form'
 
