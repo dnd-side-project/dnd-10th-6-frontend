@@ -1,6 +1,6 @@
-import ComboboxDropdown from '../combobox'
-import Button from '../button'
-import InputLabel from '../inputLabel'
+import ComboboxDropdown from '../../combobox'
+import Button from '../../button'
+import InputLabel from '../../inputLabel'
 import {
   Controller,
   SubmitErrorHandler,
