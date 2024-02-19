@@ -9,8 +9,10 @@ import { ReactNode } from 'react'
 const Page = () => {
   const { signin, data } = useSession()
   const router = useRouter()
+
+  //FIXME
   if (typeof window !== 'undefined' && data?.user) {
-    if (!data.user?.nickname) {
+    if (!data.user?.name) {
       router.replace('/signup')
     } else {
       router.replace('/dashboard')

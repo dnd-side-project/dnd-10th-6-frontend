@@ -1,29 +1,52 @@
 import { AUTH } from '@/constants'
-import { BadRequestError, InternalServerError, isNamuiError } from '@/error'
-import { Provider } from '@/lib/auth'
+import { BadRequestError } from '@/error'
+import { withError } from '@/lib/server/utils'
+
 import withHandler from '@/lib/server/with-handler'
-import { parse, serialize } from 'cookie'
+import { serialize } from 'cookie'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
+    const { nickname } = req.body
+    if (!nickname) {
+      throw new BadRequestError()
+    }
     const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
-    serverURL.pathname = '/api/v1/auth/login'
-    console.log(req.headers.cookie)
-    const response = await fetch(serverURL, {
+    serverURL.pathname = '/api/v1/auth/signup'
+    const response = (await fetch(serverURL, {
       method: 'POST',
       body: JSON.stringify({ nickname: '123' }),
       headers: {
         'Content-Type': 'application/json',
         cookie: req.headers.cookie ?? '',
       },
-    }).then((res) => res.json())
-    console.log(response)
-    res.status(200).json({ ok: true })
+    })
+      .then((res) => res.json())
+      .catch((err) => {
+        return err
+      })) as { accessToken: string; refreshToken: string }
+
+    const { accessToken, refreshToken } = response
+    res.setHeader('Set-Cookie', [
+      serialize('accessToken', accessToken, {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        maxAge: AUTH.ACCESS_EXPIRED_TIME,
+      }),
+      serialize('refreshToken', refreshToken, {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        maxAge: AUTH.REFRESH_EXPIRED_TIME,
+      }),
+    ])
+    return res.status(200).json({ accessToken })
   } catch (err) {
-    console.log(err)
-    const error = isNamuiError(err) ? err : new InternalServerError()
-    res.status(200).json({ ok: true })
+    return withError(res, { status: 400 })
   }
 }
 

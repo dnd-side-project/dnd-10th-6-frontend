@@ -24,18 +24,18 @@ const SignUp = () => {
   const router = useRouter()
   const form = useForm<SchemeType>({
     defaultValues: {
-      nickname: data?.user?.nickname ?? '',
+      nickname: data?.user?.name ?? '',
     },
     resolver: zodResolver(scheme),
   })
 
   const onValid = async (values: SchemeType) => {
-    const response = await NamuiApi.signUp(values.nickname)
-
-    // router.replace({
-    //   pathname: '/dashboard',
-    //   hash: 'welcome',
-    // })
+    const { accessToken } = await NamuiApi.signUp(values.nickname)
+    NamuiApi.setToken(accessToken)
+    router.replace({
+      pathname: '/dashboard',
+      hash: 'welcome',
+    })
   }
 
   return (
