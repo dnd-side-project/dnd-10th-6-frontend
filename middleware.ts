@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { AUTH } from './constants'
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
@@ -10,10 +11,14 @@ export async function middleware(req: NextRequest) {
   if (!accessToken || !refreshToken) {
     return NextResponse.redirect(new URL('/', req.url))
   }
+  const requestHeaders = new Headers(req.headers)
 
-  return NextResponse.next()
+  requestHeaders.append(AUTH.AUTH_HEADER_KEY, accessToken.value)
+  return NextResponse.next({
+    headers: requestHeaders,
+  })
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|onboard).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|onboard|signup).*)'],
 }
