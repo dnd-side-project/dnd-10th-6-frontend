@@ -16,21 +16,27 @@ const InputName = () => {
   const { name } = useWatch({ control })
   const isNameValid = !errors.name && name
   return (
-    <div>
-      <div>
-        <Controller
-          control={control}
-          name="name"
-          render={({ field }) => (
-            <InputLabel label="이름을 입력해주세요">
-              <Inputbox {...field} placeholder="이름을 입력해주세요" />
-            </InputLabel>
-          )}
-        />
-
-        <button onClick={toNextStep} type="button">
-          Next
-        </button>
+    <div className="min-h-[100dvh] flex flex-col pb-[50px] px-5">
+      <div className="flex-1 flex flex-col mt-4 ">
+        <InputLabel label="이름">
+          <Controller
+            control={control}
+            name="name"
+            render={({ field }) => (
+              <Inputbox
+                {...field}
+                placeholder="이름을 입력해주세요"
+                maxLength={6}
+              />
+            )}
+          />
+        </InputLabel>
+        {errors.name && (
+          <span className="text-red-500">{errors.name.message}</span>
+        )}
+        <p className="ml-2 mt-2 text-body3-medium text-text-sub-gray76">
+          2-6자로 입력해주세요
+        </p>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-5 mb-4 bg-white flex justify-center">
