@@ -16,8 +16,7 @@ export class NamuiApi {
   }
   private static accessToken: string = ''
   /**
-   * @param provider
-   * @returns
+   * @NOTE 로그인 API
    */
   static signIn(provider: ProviderType, code: string | string[]) {
     return NamuiApi.handler<{ accessToken: string; refreshToken: string }>({
@@ -30,10 +29,10 @@ export class NamuiApi {
     })
   }
 
-  static getUserData() {
-    return NamuiApi.handler<User>({
+  static async getUserData() {
+    return await NamuiApi.handler<User>({
       method: 'GET',
-      url: '/api/v1/auth/test',
+      url: '/api/v1/users/profile',
     })
   }
 
@@ -90,7 +89,8 @@ export class NamuiApi {
           ...error.config.headers,
           [AUTH.AUTH_HEADER_KEY]: newAccessToken,
         }
-        return await this.getInstance()(error.config)
+        this.setToken(newAccessToken)
+        return await this.handler(error.config)
       }
       const errorInstance = axios.isAxiosError(error)
         ? raiseNamuiErrorFromStatus(error.status || error.response?.status)

@@ -1,16 +1,9 @@
-import WriterLanding from '@/components/landing/WriterLanding'
-import BaseLayout from '@/layout/base-layout'
+import { ReactNode } from 'react'
 
 const Page = () => {
-  return <></>
-}
-
-Page.getLayout = () => {
-  return (
-    <BaseLayout showHeader={false}>
-      <WriterLanding />
-    </BaseLayout>
-  )
+  return <div className="h-calc-h flex flex-col px-5 py-4"></div>
 }
 
 export default Page
+
+Page.getLayout = (page: ReactNode) => page

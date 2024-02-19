@@ -1,9 +1,11 @@
-import { BadRequestError, NotImplimentError } from '@/error'
+import { BadRequestError } from '@/error'
 import * as z from 'zod'
 
 export interface User {
-  id: string
-  nickname: string
+  wikiId: string
+  name?: string
+  totalSurveyCnt: number
+  nickname?: string
 }
 
 export interface Token {
@@ -14,8 +16,6 @@ export type Session = { user?: User; token?: Partial<Token> } | null
 
 export const Provider = z.enum(['kakao'])
 export type ProviderType = z.infer<typeof Provider>
-
-export const getNewToken = async () => new NotImplimentError()
 
 export interface SignInOptions {
   callbackUrl?: string
