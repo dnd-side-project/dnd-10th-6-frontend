@@ -5,8 +5,9 @@ import { ReactNode } from 'react'
 import useQuestionForm from '../hooks/useQuestionsForm'
 import { FormProvider } from 'react-hook-form'
 import Second from '@/components/compositions/question/Second'
+import Third from '@/components/compositions/question/Third'
 
-const { Funnel, Step, useFunnel } = createFunnel(['1번', '2번'] as const)
+const { Funnel, Step, useFunnel } = createFunnel(['1번', '2번', '3번'] as const)
 
 const Page = () => {
   const { step, toPrevStep, toNextStep } = useFunnel()
@@ -289,6 +290,15 @@ const Page = () => {
               }}
             >
               <Second />
+            </Step>
+
+            <Step
+              name="3번"
+              onEnter={() => {
+                //프로그래스바 진척도
+              }}
+            >
+              <Third />
             </Step>
           </Funnel>
         </FormProvider>
