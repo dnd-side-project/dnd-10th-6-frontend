@@ -33,16 +33,16 @@ export default function NamuiWikiApp({
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
-  return getLayout(
+  return (
     <SessionProvider
       session={session}
       onSessionChange={(newSession) => {
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
       <CalcMobileHeight />
-    </SessionProvider>,
+    </SessionProvider>
   )
 }
 
@@ -106,7 +106,6 @@ NamuiWikiApp.getInitialProps = async (
       }
     }
   } catch (err) {}
-
   return {
     ...ctx,
     session,

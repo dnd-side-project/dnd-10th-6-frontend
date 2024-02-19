@@ -51,7 +51,9 @@ export const SessionProvider = ({
   const { session: InitialSession, refetchOnWindowFocus } = props
 
   const hasInitialSession = props.session !== undefined
-  const [session, setSession] = useState<Session>(InitialSession)
+  const [session, setSession] = useState<Session>(() => {
+    return InitialSession
+  })
   const [loading, setLoading] = useState(!hasInitialSession)
 
   useBrowserLayoutEffect(() => {

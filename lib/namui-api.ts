@@ -36,6 +36,16 @@ export class NamuiApi {
     })
   }
 
+  static async updateNickname(nickname: string) {
+    return await NamuiApi.handler({
+      method: 'POST',
+      url: '/api/v1/users/nickname',
+      data: {
+        nickname,
+      },
+    })
+  }
+
   private static async getNewToken() {
     const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
     serverURL.pathname = '/api/v1/refresh'
