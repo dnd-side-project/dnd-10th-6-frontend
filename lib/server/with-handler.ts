@@ -33,6 +33,7 @@ export default function withHandler<T = void>({
         try {
           return await handler(req, res)
         } catch (error) {
+          //TODO
           // const newToken = await getNewToken()
           const serializedToken = serialize(
             'access_token',
