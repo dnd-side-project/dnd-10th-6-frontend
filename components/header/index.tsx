@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { ReactNode, useCallback, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { fadeInProps } from '@/variants'
 import { useSettingStore } from '@/stores/setting.store'
@@ -70,7 +70,7 @@ const Header = ({
       ref={headerRef}
       {...fadeInProps}
       className={cn(
-        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold',
+        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold shrink-0',
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}
     >
@@ -84,7 +84,7 @@ const Header = ({
               : () => {}
         }
       >
-        {typeof leftIcon !== 'undefined' ? null : leftIcon ? (
+        {typeof leftIcon === 'undefined' ? null : leftIcon ? (
           leftIcon
         ) : (
           <svg
@@ -103,9 +103,11 @@ const Header = ({
           </svg>
         )}
       </motion.button>
-      <motion.div {...fadeInProps} className="flex justify-center">
-        {center}
-      </motion.div>
+      <AnimatePresence mode="sync">
+        <motion.div {...fadeInProps} className="flex justify-center">
+          {center}
+        </motion.div>
+      </AnimatePresence>
       <motion.div {...fadeInProps} className="flex gap-x-4 justify-end">
         {showRight
           ? rightIcon ?? (

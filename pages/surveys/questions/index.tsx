@@ -1,4 +1,5 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
+import { Variants, motion, useAnimate } from 'framer-motion'
 import { FormProvider } from 'react-hook-form'
 
 import { FunnelProvider } from '@/contexts/useFunnelContext'
@@ -10,6 +11,9 @@ import Second from '@/components/compositions/question/Second'
 import Third from '@/components/compositions/question/Third'
 import Fourth from '@/components/compositions/question/Fourth'
 import { QUESTION_MAX } from '@/constants'
+import ProgressBar from '@/components/progressbar'
+import Button from '@/components/button'
+import FormLayout from '@/layout/form-layout'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   '1번',
@@ -268,9 +272,50 @@ const questionMockData = {
 }
 export type QSMockDataType = (typeof questionMockData)['data'][number]
 
+const stepTextVariants: Variants = {
+  initial: {
+    opacity: 0,
+    y: -20,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  },
+  exit: {
+    opacity: 0,
+    y: 20,
+  },
+}
+
 const Page = () => {
   const { step, toPrevStep, toNextStep } = useFunnel()
 
+  const [stepRef, animate] = useAnimate()
+
+  const goPrev = async () => {
+    toPrevStep()
+    await animate(stepRef.current, stepTextVariants.initial, {
+      ease: 'easeInOut',
+      type: 'tween',
+    })
+    await animate(stepRef.current, stepTextVariants.exit, { duration: 0 })
+    await animate(stepRef.current, stepTextVariants.animate, {
+      ease: 'easeInOut',
+      type: 'tween',
+    })
+  }
+  const goNext = async () => {
+    toNextStep()
+    await animate(stepRef.current, stepTextVariants.exit, {
+      ease: 'easeInOut',
+      type: 'tween',
+    })
+    await animate(stepRef.current, stepTextVariants.initial, { duration: 0 })
+    await animate(stepRef.current, stepTextVariants.animate, {
+      ease: 'easeInOut',
+      type: 'tween',
+    })
+  }
   const [progress, setProgress] = useState<{ current: number; max: number }>({
     current: 0,
     max: QUESTION_MAX,
@@ -278,74 +323,116 @@ const Page = () => {
 
   const questionForm = useQuestionForm()
 
+  const stepText = useMemo(() => `${step.replace('번', '')}`, [step])
+
   return (
-    <>
-      <FunnelProvider
-        value={{
-          toPrevStep,
-          toNextStep,
-        }}
-      >
-        <FormProvider {...questionForm}>
-          <Funnel step={step}>
-            <Step
-              name="1번"
-              onEnter={() => {
-                setProgress({ current: 1, max: QUESTION_MAX })
-              }}
-            >
-              <First data={questionMockData.data[0]} progress={progress} />
-            </Step>
+    <FormLayout
+      header={{
+        leftIcon: (
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M18.6187 23.6187C18.277 23.9604 17.723 23.9604 17.3813 23.6187L8.38128 14.6187C8.21719 14.4546 8.125 14.2321 8.125 14C8.125 13.7679 8.21719 13.5454 8.38128 13.3813L17.3813 4.38128C17.723 4.03957 18.277 4.03957 18.6187 4.38128C18.9604 4.72299 18.9604 5.27701 18.6187 5.61872L10.2374 14L18.6187 22.3813C18.9604 22.723 18.9604 23.277 18.6187 23.6187Z"
+              fill="#111111"
+            />
+          </svg>
+        ),
+        options: {
+          onBackClick() {
+            goPrev()
+          },
+        },
+      }}
+      title={
+        <div className="flex items-center space-x-1 overflow-hidden">
+          <motion.p className="w-2" ref={stepRef}>
+            {stepText}
+          </motion.p>
+          <span>/ 14</span>
+        </div>
+      }
+      button={
+        <Button disabled={false} onClick={goNext} className="w-full">
+          다음
+        </Button>
+      }
+      content={
+        <FunnelProvider
+          value={{
+            toPrevStep: goPrev,
+            toNextStep: goNext,
+          }}
+        >
+          <ProgressBar {...progress} />
 
-            <Step
-              name="2번"
-              onEnter={() => {
-                setProgress({ current: 2, max: QUESTION_MAX })
-              }}
-            >
-              <Second data={questionMockData.data[1]} progress={progress} />
-            </Step>
+          <FormProvider {...questionForm}>
+            <Funnel step={step}>
+              <Step
+                name="1번"
+                onEnter={() => {
+                  setProgress({ current: 1, max: QUESTION_MAX })
+                }}
+              >
+                <First data={questionMockData.data[0]} progress={progress} />
+              </Step>
 
-            <Step
-              name="3번"
-              onEnter={() => {
-                setProgress({ current: 3, max: QUESTION_MAX })
-              }}
-            >
-              <Third data={questionMockData.data[2]} progress={progress} />
-            </Step>
+              <Step
+                name="2번"
+                onEnter={() => {
+                  setProgress({ current: 2, max: QUESTION_MAX })
+                }}
+              >
+                <Second data={questionMockData.data[1]} progress={progress} />
+              </Step>
 
-            <Step
-              name="4번"
-              onEnter={() => {
-                setProgress({ current: 4, max: QUESTION_MAX })
-              }}
-            >
-              <Fourth data={questionMockData.data[3]} progress={progress} />
-            </Step>
+              <Step
+                name="3번"
+                onEnter={() => {
+                  setProgress({ current: 3, max: QUESTION_MAX })
+                }}
+              >
+                <Third data={questionMockData.data[2]} progress={progress} />
+              </Step>
 
-            {/* <Step
-              name="5번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Fifth data={questionMockData.data[4]}/>
-            </Step>
+              <Step
+                name="4번"
+                onEnter={() => {
+                  setProgress({ current: 4, max: QUESTION_MAX })
+                }}
+              >
+                <Fourth data={questionMockData.data[3]} progress={progress} />
+              </Step>
 
-            <Step
-              name="6번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Sixth data={questionMockData.data[5]}/>
-            </Step>
- */}
-          </Funnel>
-        </FormProvider>
-      </FunnelProvider>
-    </>
+              {/* <Step
+          name="5번"
+          onEnter={() => {
+            //프로그래스바 진척도
+          }}
+        >
+          <Fifth data={questionMockData.data[4]}/>
+        </Step>
+
+        <Step
+          name="6번"
+          onEnter={() => {
+            //프로그래스바 진척도
+          }}
+        >
+          <Sixth data={questionMockData.data[5]}/>
+        </Step>
+*/}
+            </Funnel>
+          </FormProvider>
+        </FunnelProvider>
+      }
+    />
   )
 }
 
