@@ -26,7 +26,7 @@ const InputName = () => {
       }
       content={
         <>
-          <InputLabel label="이름">
+          <InputLabel className="text-body1-bold" label="이름">
             <Controller
               control={control}
               name="name"
