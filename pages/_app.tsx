@@ -1,5 +1,5 @@
 import { AUTH } from '@/constants'
-import { UnauthorizedError } from '@/error'
+import { UnauthorizedError, getErrorMessage } from '@/error'
 import CalcMobileHeight from '@/contexts/calc-mobile-height'
 import BaseLayout from '@/layout/base-layout'
 import { Session, Token } from '@/lib/auth'
@@ -48,9 +48,18 @@ export default function NamuiWikiApp({
 
   useEffect(() => {
     if (mounted && errorCode) {
-      toast.error(() => {
-        return errorCode
-      }, {})
+      toast.error(
+        () => {
+          return getErrorMessage(errorCode)
+        },
+        {
+          icon: '🫠',
+          style: {
+            color: 'rgba(239,68,68,1)',
+            fontSize: '16px',
+          },
+        },
+      )
     }
   }, [errorCode, mounted, router, searchparams])
   return (
@@ -146,6 +155,7 @@ NamuiWikiApp.getInitialProps = async (
       }
     }
   } catch (err) {}
+
   return {
     ...ctx,
     session,

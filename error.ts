@@ -5,6 +5,18 @@ export enum ERROR_TYPE {
   UNAUTHORIZED = 'UNAUTHORIZED',
 }
 
+export const ERROR_MESSAGE: { [key in ERROR_TYPE]: string } = {
+  NOT_IMPLIMENT: '제작중이에요.',
+  BAD_REQUEST_ERROR: '서비스에 문제가 생겼어요.',
+  INTERNAL_SERVER_ERROR: '서비스에 문제가 생겼어요.',
+  UNAUTHORIZED: '권한이 없어요.',
+}
+
+export const getErrorMessage = <T extends string>(key: T) =>
+  Object.hasOwn(ERROR_MESSAGE, key)
+    ? ERROR_MESSAGE[key as keyof typeof ERROR_MESSAGE]
+    : '문제가 생겼어요.'
+
 /**
  * @description 남의위키 베이스 에러 클래스
  */
