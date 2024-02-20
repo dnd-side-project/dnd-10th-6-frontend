@@ -5,10 +5,11 @@ import RadioButton from '@/components/radioButton'
 import { useFunnelContext } from '@/contexts/useFunnelContext'
 import FormLayout from '@/layout/form-layout'
 import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
+import { QSMockDataType } from '@/pages/surveys/questions'
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
-const First = ({ data }) => {
+const First = ({ data }: { data: QSMockDataType }) => {
   const { toNextStep } = useFunnelContext()
   const { trigger, control } = useFormContext<QsSchemaType>()
 
@@ -44,7 +45,7 @@ const First = ({ data }) => {
                       <RadioButton
                         {...field}
                         id={option.id}
-                        value={option.value}
+                        value={option.value + ''}
                         label={option.text}
                         selected={firstQuestion === option.value || false}
                         onChange={(e) => {
