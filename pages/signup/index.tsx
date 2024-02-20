@@ -7,7 +7,6 @@ import React, { ReactNode, useId } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { cn } from '@/lib/client/utils'
-import { NamuiApi } from '@/lib/namui-api'
 import { useRouter } from 'next/router'
 
 const scheme = z.object({
@@ -20,7 +19,7 @@ const scheme = z.object({
 type SchemeType = z.infer<typeof scheme>
 const SignUp = () => {
   const id = useId()
-  const { data } = useSession()
+  const { data, signup } = useSession()
   const router = useRouter()
   const form = useForm<SchemeType>({
     defaultValues: {
@@ -30,8 +29,7 @@ const SignUp = () => {
   })
 
   const onValid = async (values: SchemeType) => {
-    const { accessToken } = await NamuiApi.signUp(values.nickname)
-    NamuiApi.setToken(accessToken)
+    await signup(values.nickname)
     router.replace({
       pathname: '/dashboard',
       hash: 'welcome',

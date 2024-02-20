@@ -84,7 +84,7 @@ const Header = ({
               : () => {}
         }
       >
-        {typeof leftIcon === 'undefined' ? null : leftIcon ? (
+        {typeof leftIcon !== 'undefined' ? null : leftIcon ? (
           leftIcon
         ) : (
           <svg

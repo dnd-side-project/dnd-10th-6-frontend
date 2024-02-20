@@ -37,7 +37,9 @@ export class NamuiApi {
   }
 
   static async signUp(nickname: string) {
-    return await NamuiApi.handler<{ accessToken: string }>({
+    return await NamuiApi.handler<{
+      accessToken: string
+    }>({
       method: 'POST',
       url: '/api/auth/signup',
       baseURL: window.location.origin,
@@ -125,6 +127,10 @@ export class NamuiApi {
       NamuiApi.injectInterceptor(NamuiApi.instance)
     }
     return NamuiApi.instance
+  }
+
+  static hasToken() {
+    return !!this.accessToken
   }
 
   static setToken(accessToken?: string) {

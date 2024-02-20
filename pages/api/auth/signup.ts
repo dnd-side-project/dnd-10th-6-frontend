@@ -16,7 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     serverURL.pathname = '/api/v1/auth/signup'
     const response = (await fetch(serverURL, {
       method: 'POST',
-      body: JSON.stringify({ nickname: '123' }),
+      body: JSON.stringify({ nickname }),
       headers: {
         'Content-Type': 'application/json',
         cookie: req.headers.cookie ?? '',
