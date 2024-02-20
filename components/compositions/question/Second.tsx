@@ -8,13 +8,13 @@ import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
-const First = ({ data }) => {
+const Second = ({ data }) => {
   const { toNextStep } = useFunnelContext()
   const { trigger, control } = useFormContext<QsSchemaType>()
 
-  const { firstQuestion, firstReason } = useWatch({ control })
+  const { secondQuestion, secondReason } = useWatch({ control })
 
-  const isDisabled = !firstQuestion || !firstReason
+  const isDisabled = !secondQuestion || !secondReason
 
   return (
     <>
@@ -38,7 +38,7 @@ const First = ({ data }) => {
                 {data.options.map((option) => (
                   <Controller
                     key={option.id}
-                    name="firstQuestion"
+                    name="secondQuestion"
                     control={control}
                     render={({ field }) => (
                       <RadioButton
@@ -46,10 +46,10 @@ const First = ({ data }) => {
                         id={option.id}
                         value={option.value}
                         label={option.text}
-                        selected={firstQuestion === option.value || false}
+                        selected={secondQuestion === option.value || false}
                         onChange={(e) => {
                           field.onChange(e.target.value)
-                          trigger('firstQuestion')
+                          trigger('secondReason')
                         }}
                       />
                     )}
@@ -64,7 +64,7 @@ const First = ({ data }) => {
                 >
                   <Controller
                     control={control}
-                    name="firstReason"
+                    name="secondReason"
                     render={({ field }) => (
                       <Inputbox
                         {...field}
@@ -83,4 +83,4 @@ const First = ({ data }) => {
   )
 }
 
-export default First
+export default Second

@@ -43,6 +43,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         sameSite: 'lax',
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
+      serialize(AUTH.OAUTH_TOKEN, '', {
+        maxAge: -1,
+        path: '/',
+      }),
+      serialize(AUTH.OAUTH_PROVIDER, '', {
+        maxAge: -1,
+        path: '/',
+      }),
     ])
     return res.status(200).json({ accessToken })
   } catch (err) {

@@ -6,22 +6,35 @@ import { useFunnelContext } from '@/contexts/useFunnelContext'
 import FormLayout from '@/layout/form-layout'
 import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
 
-import { Controller, useFormContext, useWatch } from 'react-hook-form'
+import {
+  Controller,
+  SubmitHandler,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form'
 
-const First = ({ data }) => {
+const Fourth = ({ data }) => {
   const { toNextStep } = useFunnelContext()
-  const { trigger, control } = useFormContext<QsSchemaType>()
+  const { handleSubmit, trigger, control } = useFormContext<QsSchemaType>()
 
-  const { firstQuestion, firstReason } = useWatch({ control })
+  const { fourthQuestion, fourthReason } = useWatch({ control })
 
-  const isDisabled = !firstQuestion || !firstReason
+  const onSubmit: SubmitHandler<QsSchemaType> = (data) => {
+    console.log(data)
+  }
+
+  const isDisabled = !fourthReason || !fourthReason
 
   return (
     <>
       <FormLayout
         title="1/2" //프로그래스바
         button={
-          <Button disabled={isDisabled} onClick={toNextStep} className="w-full">
+          <Button
+            disabled={isDisabled}
+            onClick={handleSubmit(onSubmit)}
+            className="w-full"
+          >
             다음
           </Button>
         }
@@ -38,7 +51,7 @@ const First = ({ data }) => {
                 {data.options.map((option) => (
                   <Controller
                     key={option.id}
-                    name="firstQuestion"
+                    name="fourthQuestion"
                     control={control}
                     render={({ field }) => (
                       <RadioButton
@@ -46,10 +59,10 @@ const First = ({ data }) => {
                         id={option.id}
                         value={option.value}
                         label={option.text}
-                        selected={firstQuestion === option.value || false}
+                        selected={fourthQuestion === option.value || false}
                         onChange={(e) => {
                           field.onChange(e.target.value)
-                          trigger('firstQuestion')
+                          trigger('fourthReason')
                         }}
                       />
                     )}
@@ -64,7 +77,7 @@ const First = ({ data }) => {
                 >
                   <Controller
                     control={control}
-                    name="firstReason"
+                    name="fourthReason"
                     render={({ field }) => (
                       <Inputbox
                         {...field}
@@ -83,4 +96,4 @@ const First = ({ data }) => {
   )
 }
 
-export default First
+export default Fourth

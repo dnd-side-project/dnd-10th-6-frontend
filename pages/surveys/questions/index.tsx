@@ -1,16 +1,24 @@
 import First from '@/components/compositions/question/First'
 import createFunnel from '@/components/funnel/createFunnel'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import useQuestionForm from '../hooks/useQuestionsForm'
 import { FormProvider } from 'react-hook-form'
+import Second from '@/components/compositions/question/Second'
+import Third from '@/components/compositions/question/Third'
+import Fourth from '@/components/compositions/question/Fourth'
 
-const { Funnel, Step, useFunnel } = createFunnel(['1번'] as const)
+const { Funnel, Step, useFunnel } = createFunnel([
+  '1번',
+  '2번',
+  '3번',
+  '4번',
+] as const)
 
 const Page = () => {
   const { step, toPrevStep, toNextStep } = useFunnel()
 
-  const fetchQuestionMockData = {
+  const questionMockData = {
     data: [
       {
         id: '65d3156916f83528d804fadb',
@@ -278,8 +286,54 @@ const Page = () => {
                 //프로그래스바 진척도
               }}
             >
-              <First />
+              <First data={questionMockData.data[0]} />
             </Step>
+
+            <Step
+              name="2번"
+              onEnter={() => {
+                //프로그래스바 진척도
+              }}
+            >
+              <Second data={questionMockData.data[1]} />
+            </Step>
+
+            <Step
+              name="3번"
+              onEnter={() => {
+                //프로그래스바 진척도
+              }}
+            >
+              <Third data={questionMockData.data[2]} />
+            </Step>
+
+            <Step
+              name="4번"
+              onEnter={() => {
+                //프로그래스바 진척도
+              }}
+            >
+              <Fourth data={questionMockData.data[3]} />
+            </Step>
+
+            {/* <Step
+              name="5번"
+              onEnter={() => {
+                //프로그래스바 진척도
+              }}
+            >
+              <Fifth data={questionMockData.data[4]}/>
+            </Step>
+
+            <Step
+              name="6번"
+              onEnter={() => {
+                //프로그래스바 진척도
+              }}
+            >
+              <Sixth data={questionMockData.data[5]}/>
+            </Step>
+ */}
           </Funnel>
         </FormProvider>
       </FunnelProvider>
