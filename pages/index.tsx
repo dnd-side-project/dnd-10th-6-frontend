@@ -5,21 +5,25 @@ import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import BaseLayout from '@/layout/base-layout'
 import { ReactNode } from 'react'
+import { useMount } from '@/hooks/use-mount'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
 
 const Page = () => {
   const { signin, data } = useSession()
   const router = useRouter()
+  const mounted = useMount()
 
-  //FIXME
-  if (typeof window !== 'undefined' && data?.user) {
-    if (!data.user?.name) {
-      router.replace('/signup')
+  useBrowserLayoutEffect(() => {
+    if (!data?.user?.name) {
+      router.replace('/signup', undefined, { shallow: true })
     } else {
-      router.replace('/dashboard')
+      router.replace('/dashboard', undefined, { shallow: true })
     }
-  }
+  }, [data, router])
 
-  return (
+  return !mounted ? (
+    <>Loading...</>
+  ) : (
     <div className="h-calc-h flex flex-col px-5 py-4">
       <section className="grow flex flex-col text-center justify-center items-center space-y-16">
         <div className="flex flex-col space-y-4">

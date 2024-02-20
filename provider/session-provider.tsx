@@ -63,7 +63,7 @@ export const SessionProvider = ({
   const _getSession = useCallback(async () => {
     try {
       if (session?.token?.accessToken) {
-        const newSession = await NamuiApi.getUserData()
+        const { data: newSession } = await NamuiApi.getUserData()
         setSession((prev) => ({ ...prev, user: newSession }))
       }
     } catch (error) {
