@@ -5,3 +5,5 @@ export const AUTH = {
   OAUTH_TOKEN: 'oauthAccessToken',
   OAUTH_PROVIDER: 'oauthProvider',
 }
+
+export const QUESTION_MAX = 14

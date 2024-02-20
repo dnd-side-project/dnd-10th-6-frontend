@@ -9,6 +9,7 @@ import First from '@/components/compositions/question/First'
 import Second from '@/components/compositions/question/Second'
 import Third from '@/components/compositions/question/Third'
 import Fourth from '@/components/compositions/question/Fourth'
+import { QUESTION_MAX } from '@/constants'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   '1번',
@@ -272,7 +273,7 @@ const Page = () => {
 
   const [progress, setProgress] = useState<{ current: number; max: number }>({
     current: 0,
-    max: 5,
+    max: QUESTION_MAX,
   })
 
   const questionForm = useQuestionForm()
@@ -290,7 +291,7 @@ const Page = () => {
             <Step
               name="1번"
               onEnter={() => {
-                setProgress({ current: 1, max: 5 })
+                setProgress({ current: 1, max: QUESTION_MAX })
               }}
             >
               <First data={questionMockData.data[0]} progress={progress} />
@@ -299,7 +300,7 @@ const Page = () => {
             <Step
               name="2번"
               onEnter={() => {
-                setProgress({ current: 2, max: 5 })
+                setProgress({ current: 2, max: QUESTION_MAX })
               }}
             >
               <Second data={questionMockData.data[1]} progress={progress} />
@@ -308,7 +309,7 @@ const Page = () => {
             <Step
               name="3번"
               onEnter={() => {
-                setProgress({ current: 3, max: 5 })
+                setProgress({ current: 3, max: QUESTION_MAX })
               }}
             >
               <Third data={questionMockData.data[2]} progress={progress} />
@@ -317,7 +318,7 @@ const Page = () => {
             <Step
               name="4번"
               onEnter={() => {
-                setProgress({ current: 4, max: 5 })
+                setProgress({ current: 4, max: QUESTION_MAX })
               }}
             >
               <Fourth data={questionMockData.data[3]} progress={progress} />
