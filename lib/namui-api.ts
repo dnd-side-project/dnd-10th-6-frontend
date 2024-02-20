@@ -30,9 +30,20 @@ export class NamuiApi {
   }
 
   static async getUserData() {
-    return await NamuiApi.handler<User>({
+    return await NamuiApi.handler<{ data: User }>({
       method: 'GET',
       url: '/api/v1/users/profile',
+    })
+  }
+
+  static async signUp(nickname: string) {
+    return await NamuiApi.handler<{ accessToken: string }>({
+      method: 'POST',
+      url: '/api/auth/signup',
+      baseURL: window.location.origin,
+      data: {
+        nickname,
+      },
     })
   }
 

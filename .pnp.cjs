@@ -26,6 +26,7 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
           ["@hookform/resolvers", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:3.3.4"],\
           ["@playwright/test", "npm:1.41.1"],\
           ["@radix-ui/react-dialog", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.5"],\
@@ -80,6 +81,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:18.2.0"],\
           ["react-hook-form", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.50.1"],\
+          ["react-hot-toast", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.4.1"],\
           ["recharts", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.12.0"],\
           ["semver", "npm:7.5.4"],\
           ["sharp", "npm:0.33.2"],\
@@ -3818,6 +3820,36 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@hapi/topo", "npm:5.1.0"],\
           ["@hapi/hoek", "npm:9.3.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@hookform/error-message", [\
+      ["npm:2.0.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/@hookform-error-message-npm-2.0.1-f3d86a1ac0-10c0.zip/node_modules/@hookform/error-message/",\
+        "packageDependencies": [\
+          ["@hookform/error-message", "npm:2.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/@hookform-error-message-virtual-9f502feecc/4/.yarn/berry/cache/@hookform-error-message-npm-2.0.1-f3d86a1ac0-10c0.zip/node_modules/@hookform/error-message/",\
+        "packageDependencies": [\
+          ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
+          ["@types/react", "npm:18.2.48"],\
+          ["@types/react-dom", "npm:18.2.18"],\
+          ["@types/react-hook-form", null],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:18.2.0"],\
+          ["react-hook-form", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.50.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react-hook-form",\
+          "@types/react",\
+          "react-dom",\
+          "react-hook-form",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -15770,6 +15802,28 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["goober", [\
+      ["npm:2.1.14", {\
+        "packageLocation": "../../../.yarn/berry/cache/goober-npm-2.1.14-d5c148d4a9-10c0.zip/node_modules/goober/",\
+        "packageDependencies": [\
+          ["goober", "npm:2.1.14"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:4ee8e9079ed7e0e27aac2ceb090fbf92dddbf7b6ece309c0db139343320d4e404f45c4d67ecf3f3d785d9008fee1f2073aea0e2bebf6fc50c2707cf1f7469f88#npm:2.1.14", {\
+        "packageLocation": "./.yarn/__virtual__/goober-virtual-7cd4161b53/4/.yarn/berry/cache/goober-npm-2.1.14-d5c148d4a9-10c0.zip/node_modules/goober/",\
+        "packageDependencies": [\
+          ["goober", "virtual:4ee8e9079ed7e0e27aac2ceb090fbf92dddbf7b6ece309c0db139343320d4e404f45c4d67ecf3f3d785d9008fee1f2073aea0e2bebf6fc50c2707cf1f7469f88#npm:2.1.14"],\
+          ["@types/csstype", null],\
+          ["csstype", null]\
+        ],\
+        "packagePeers": [\
+          "@types/csstype",\
+          "csstype"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["gopd", [\
       ["npm:1.0.1", {\
         "packageLocation": "../../../.yarn/berry/cache/gopd-npm-1.0.1-10c1d0b534-10c0.zip/node_modules/gopd/",\
@@ -18794,6 +18848,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["namui-wiki", "workspace:."],\
+          ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
           ["@hookform/resolvers", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:3.3.4"],\
           ["@playwright/test", "npm:1.41.1"],\
           ["@radix-ui/react-dialog", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.5"],\
@@ -18848,6 +18903,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:18.2.0"],\
           ["react-hook-form", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.50.1"],\
+          ["react-hot-toast", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.4.1"],\
           ["recharts", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.12.0"],\
           ["semver", "npm:7.5.4"],\
           ["sharp", "npm:0.33.2"],\
@@ -20901,6 +20957,33 @@ const RAW_RUNTIME_STATE =
         ],\
         "packagePeers": [\
           "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-hot-toast", [\
+      ["npm:2.4.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/react-hot-toast-npm-2.4.1-923d48e94b-10c0.zip/node_modules/react-hot-toast/",\
+        "packageDependencies": [\
+          ["react-hot-toast", "npm:2.4.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.4.1", {\
+        "packageLocation": "./.yarn/__virtual__/react-hot-toast-virtual-4ee8e9079e/4/.yarn/berry/cache/react-hot-toast-npm-2.4.1-923d48e94b-10c0.zip/node_modules/react-hot-toast/",\
+        "packageDependencies": [\
+          ["react-hot-toast", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.4.1"],\
+          ["@types/react", "npm:18.2.48"],\
+          ["@types/react-dom", "npm:18.2.18"],\
+          ["goober", "virtual:4ee8e9079ed7e0e27aac2ceb090fbf92dddbf7b6ece309c0db139343320d4e404f45c4d67ecf3f3d785d9008fee1f2073aea0e2bebf6fc50c2707cf1f7469f88#npm:2.1.14"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
           "react"\
         ],\
         "linkType": "HARD"\

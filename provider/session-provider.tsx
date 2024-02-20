@@ -51,7 +51,9 @@ export const SessionProvider = ({
   const { session: InitialSession, refetchOnWindowFocus } = props
 
   const hasInitialSession = props.session !== undefined
-  const [session, setSession] = useState<Session>(InitialSession)
+  const [session, setSession] = useState<Session>(() => {
+    return InitialSession
+  })
   const [loading, setLoading] = useState(!hasInitialSession)
 
   useBrowserLayoutEffect(() => {
@@ -61,7 +63,7 @@ export const SessionProvider = ({
   const _getSession = useCallback(async () => {
     try {
       if (session?.token?.accessToken) {
-        const newSession = await NamuiApi.getUserData()
+        const { data: newSession } = await NamuiApi.getUserData()
         setSession((prev) => ({ ...prev, user: newSession }))
       }
     } catch (error) {

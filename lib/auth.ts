@@ -5,7 +5,6 @@ export interface User {
   wikiId: string
   name?: string
   totalSurveyCnt: number
-  nickname?: string
 }
 
 export interface Token {

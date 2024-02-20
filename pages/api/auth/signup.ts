@@ -1,35 +1,33 @@
 import { AUTH } from '@/constants'
-import { BadRequestError, InternalServerError, isNamuiError } from '@/error'
-import { Provider } from '@/lib/auth'
+import { BadRequestError } from '@/error'
+import { withError } from '@/lib/server/utils'
+
 import withHandler from '@/lib/server/with-handler'
 import { serialize } from 'cookie'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { provider, code } = req.query
-    const parsedProvider = Provider.safeParse(provider)
-    if (!parsedProvider.success || !code) {
+    const { nickname } = req.body
+    if (!nickname) {
       throw new BadRequestError()
     }
     const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
-    serverURL.pathname = '/api/v1/auth/login'
-
-    const { accessToken, refreshToken, errorCode } = await fetch(serverURL, {
+    serverURL.pathname = '/api/v1/auth/signup'
+    const response = (await fetch(serverURL, {
       method: 'POST',
-      body: JSON.stringify({ provider: parsedProvider.data, code }),
+      body: JSON.stringify({ nickname: '123' }),
       headers: {
         'Content-Type': 'application/json',
+        cookie: req.headers.cookie ?? '',
       },
     })
-      .then((response) => {
-        res.setHeader('Set-Cookie', response.headers.getSetCookie())
-        return response.json()
-      })
-      .catch((err) => console.log(err))
-    if (errorCode === 'NOT_FOUND_USER') {
-      return res.status(200).redirect('/signup').json({})
-    }
+      .then((res) => res.json())
+      .catch((err) => {
+        return err
+      })) as { accessToken: string; refreshToken: string }
+
+    const { accessToken, refreshToken } = response
     res.setHeader('Set-Cookie', [
       serialize('accessToken', accessToken, {
         path: '/',
@@ -46,15 +44,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
     ])
-    res.status(200).redirect('/')
+    return res.status(200).json({ accessToken })
   } catch (err) {
-    console.log(err)
-    const error = isNamuiError(err) ? err : new InternalServerError()
-    return res.redirect(307, `/?err=${error.name}`).json({})
+    return withError(res, { status: 400 })
   }
 }
 
 export default withHandler({
-  methods: ['GET'],
+  methods: ['POST'],
   handler,
 })
