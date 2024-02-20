@@ -16,7 +16,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     serverURL.pathname = '/api/v1/auth/signup'
     const response = (await fetch(serverURL, {
       method: 'POST',
-      body: JSON.stringify({ nickname: '123' }),
+      body: JSON.stringify({ nickname }),
       headers: {
         'Content-Type': 'application/json',
         cookie: req.headers.cookie ?? '',
@@ -43,13 +43,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         sameSite: 'lax',
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
-      serialize(AUTH.OAUTH_TOKEN, '', {
-        maxAge: -1,
-        path: '/',
-      }),
       serialize(AUTH.OAUTH_PROVIDER, '', {
-        maxAge: -1,
         path: '/',
+        maxAge: -1,
+      }),
+      serialize(AUTH.OAUTH_TOKEN, '', {
+        path: '/',
+        maxAge: -1,
       }),
     ])
     return res.status(200).json({ accessToken })

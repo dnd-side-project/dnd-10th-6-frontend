@@ -33,6 +33,7 @@ export type SessionContextValue<R extends boolean = false> = R extends true
 type SessionHandler = {
   signin: (args?: { provider: ProviderType; callbackUrl?: string }) => void
   signout: () => Promise<void>
+  signup: (nickname: string) => Promise<Session | null>
 }
 interface SessionProviderProps extends SessionContextType {
   refetchOnWindowFocus?: boolean
@@ -62,9 +63,10 @@ export const SessionProvider = ({
 
   const _getSession = useCallback(async () => {
     try {
-      if (session?.token?.accessToken) {
+      if (session?.token?.accessToken || NamuiApi.hasToken()) {
         const { data: newSession } = await NamuiApi.getUserData()
         setSession((prev) => ({ ...prev, user: newSession }))
+        return newSession
       }
     } catch (error) {
       setSession(null)
@@ -100,14 +102,13 @@ export const SessionProvider = ({
       async update() {
         if (loading || !session) return
         setLoading(true)
-        const newSession = await new Promise<Session>((resolve) =>
-          resolve(null),
-        )
+        const newSession = await _getSession()
         setLoading(false)
-        setSession(newSession)
+        setSession((prev) => ({ ...prev, user: newSession }))
+        return newSession
       },
     }),
-    [session, loading],
+    [session, loading, _getSession],
   )
 
   return (
@@ -146,6 +147,15 @@ export const useSession = <R extends boolean>(options?: {
     window.location.href = window.location.origin
   }, [])
 
+  const signup: SessionHandler['signup'] = useCallback(
+    async (nickname) => {
+      const { accessToken } = await NamuiApi.signUp(nickname)
+      NamuiApi.setToken(accessToken)
+      return await value.update()
+    },
+    [value],
+  )
+
   const requiredAndNotLoading = required && value.status === 'unauthenticated'
 
   if (requiredAndNotLoading) {
@@ -155,8 +165,9 @@ export const useSession = <R extends boolean>(options?: {
       status: 'loading',
       signin,
       signout,
+      signup,
     }
   }
 
-  return { ...value, signin, signout }
+  return { ...value, signin, signout, signup }
 }

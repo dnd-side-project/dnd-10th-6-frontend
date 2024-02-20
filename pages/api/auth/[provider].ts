@@ -15,18 +15,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
     serverURL.pathname = '/api/v1/auth/login'
 
-    const { accessToken, refreshToken, errorCode } = await fetch(serverURL, {
-      method: 'POST',
-      body: JSON.stringify({ provider: parsedProvider.data, code }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
+    const { accessToken, refreshToken, errorCode } =
+      (await fetch(serverURL, {
+        method: 'POST',
+        body: JSON.stringify({ provider: parsedProvider.data, code }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then((response) => {
         res.setHeader('Set-Cookie', response.headers.getSetCookie())
         return response.json()
-      })
-      .catch((err) => console.log(err))
+      })) ?? {}
+
     if (errorCode === 'NOT_FOUND_USER') {
       return res.status(200).redirect('/signup').json({})
     }
@@ -50,7 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } catch (err) {
     console.log(err)
     const error = isNamuiError(err) ? err : new InternalServerError()
-    return res.redirect(307, `/?err=${error.name}`).json({})
+    res.status(307).redirect(307, `/?err=${error.name}`)
   }
 }
 
