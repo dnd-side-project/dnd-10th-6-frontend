@@ -1,9 +1,12 @@
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
-import { ComponentType } from 'react'
-
-function withAuth(Component: ComponentType) {
+import { ComponentType, ReactNode } from 'react'
+type HOC = {
+  (): React.JSX.Element
+  getLayout?: (page: ReactNode) => ReactNode
+}
+function withAuth(Component: ComponentType): HOC {
   const Protector = <P extends object>(props: P) => {
     const { update } = useSession()
     const router = useRouter()
@@ -20,9 +23,10 @@ function withAuth(Component: ComponentType) {
     }, [])
     return <Component {...props} />
   }
-  return Protector
+
+  return Protector as HOC
 }
 
 export default withAuth
 
-withAuth.displayName = 'test'
+withAuth.displayName = 'withAuth'

@@ -39,7 +39,6 @@ export default function NamuiWikiApp({
   const getLayout =
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
-
   useBrowserLayoutEffect(() => {
     if (!mounted) {
       setMounted(true)

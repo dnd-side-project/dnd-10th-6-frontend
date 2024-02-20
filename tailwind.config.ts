@@ -110,7 +110,13 @@ const config = {
             fontWeight: '500',
           },
         ],
-        subTitle2: '18px',
+        'subTitle2-medium': [
+          '18px',
+          {
+            lineHeight: '26px',
+            fontWeight: '500',
+          },
+        ],
         'body1-medium': [
           '16px',
           {
@@ -170,7 +176,6 @@ const config = {
       lineHeight: {
         mainTitle1: '38px',
         mainTitle2: '36px',
-        subTitle2: '26px',
         body1: '24px',
         body2: '22px',
         body3: '20px',

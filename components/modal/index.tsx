@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { cn } from '@/lib/client/utils'
 import { Close } from '@radix-ui/react-dialog'
 import { ForwardedRef, PropsWithChildren, ReactNode, forwardRef } from 'react'
 
@@ -15,7 +16,11 @@ interface ModalProps
     React.ComponentPropsWithoutRef<typeof DialogTrigger> {
   title?: string
   description?: string
-  footer?: ReactNode[]
+  footer?: {
+    item?: ReactNode[]
+    divider?: boolean
+  }
+
   trigger: React.ReactNode
 }
 
@@ -26,21 +31,24 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
       title,
       description,
       trigger,
-      footer = [
-        <Close
-          key="cancel"
-          className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
-        >
-          취소
-          <span className="sr-only">Close</span>
-        </Close>,
-        <button
-          key="confirm"
-          className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
-        >
-          다음
-        </button>,
-      ],
+      footer = {
+        divider: true,
+        item: [
+          <Close
+            key="cancel"
+            className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+          >
+            취소
+            <span className="sr-only">Close</span>
+          </Close>,
+          <button
+            key="confirm"
+            className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+          >
+            다음
+          </button>,
+        ],
+      },
     },
     ref,
   ) => {
@@ -52,8 +60,13 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         <DialogContent
           className="max-w-[80dvw]"
           footer={
-            <DialogFooter className="border-t-line-medium border-t-[1px] divide-x-[1px] divide-line-medium">
-              {[...footer].map((ele) => ele)}
+            <DialogFooter
+              className={cn(
+                footer.divider &&
+                  'border-t-line-medium border-t-[1px] divide-x-[1px] divide-line-medium',
+              )}
+            >
+              {[...(footer?.item ?? [])].map((ele) => ele)}
             </DialogFooter>
           }
         >

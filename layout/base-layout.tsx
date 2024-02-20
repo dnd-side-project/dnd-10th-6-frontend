@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, forwardRef } from 'react'
 import LocalFont from 'next/font/local'
 import { cn } from '@/lib/client/utils'
 import Header, { HeaderProps } from '@/components/header'
@@ -37,28 +37,26 @@ interface BaseLayoutProps {
   framer?: HTMLMotionProps<'main'>
 }
 
-const BaseLayout = ({
-  className,
-  children,
-  header,
-  showHeader = true,
-  framer,
-}: PropsWithChildren<BaseLayoutProps>) => {
-  return (
-    <motion.main
-      {...fadeInProps}
-      {...framer}
-      className={cn(
-        pretendard.variable,
-        pretendard.className,
-        'flex flex-col',
-        className,
-      )}
-    >
-      {showHeader && <Header {...header} />}
-      {children}
-    </motion.main>
-  )
-}
+const BaseLayout = forwardRef<HTMLElement, PropsWithChildren<BaseLayoutProps>>(
+  ({ className, children, header, showHeader = true, framer }, ref) => {
+    return (
+      <motion.main
+        ref={ref}
+        {...fadeInProps}
+        {...framer}
+        className={cn(
+          pretendard.variable,
+          pretendard.className,
+          'flex flex-col',
+          className,
+        )}
+      >
+        {showHeader && <Header {...header} bodyRef={ref} />}
+        {children}
+      </motion.main>
+    )
+  },
+)
+BaseLayout.displayName = 'BaseLayout'
 
 export default BaseLayout
