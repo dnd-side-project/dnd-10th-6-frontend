@@ -53,7 +53,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           className="max-w-[80dvw]"
           footer={
             <DialogFooter className="border-t-line-medium border-t-[1px] divide-x-[1px] divide-line-medium">
-              {...[footer]}
+              {[...footer].map((ele) => ele)}
             </DialogFooter>
           }
         >

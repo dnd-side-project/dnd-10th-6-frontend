@@ -8,31 +8,7 @@ import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
-const fetchQuestionMockData = {
-  data: [
-    {
-      id: '65d3156916f83528d804fadb',
-      title: '{{userName}}님은<br/><b>사람들과 빨리 친해지는 편</b>인가요?',
-      type: 'OX',
-      dashboardType: 'CHARACTER',
-      surveyOrder: 1,
-      options: [
-        {
-          id: '65d3156916f83528d804fac7',
-          value: '🙅‍♂️  아니요, 시간이 걸리는 편이에요',
-          text: '🙅‍♂️  아니요, 시간이 걸리는 편이에요',
-        },
-        {
-          id: '65d3156916f83528d804fac6',
-          value: '🙆‍♂️ 네, 그러는 편이에요.',
-          text: '🙆‍♂️ 네, 그러는 편이에요.',
-        },
-      ],
-    },
-  ],
-}
-
-const First = () => {
+const First = ({ data }) => {
   const { toNextStep } = useFunnelContext()
   const { trigger, control } = useFormContext<QsSchemaType>()
 
@@ -54,12 +30,12 @@ const First = () => {
             <div className="text-left">
               <div
                 dangerouslySetInnerHTML={{
-                  __html: fetchQuestionMockData.data[0].title,
+                  __html: data.title,
                 }}
               ></div>
 
               <div className="flex flex-col mt-8 space-y-2">
-                {fetchQuestionMockData.data[0].options.map((option) => (
+                {data.options.map((option) => (
                   <Controller
                     key={option.id}
                     name="firstQuestion"
