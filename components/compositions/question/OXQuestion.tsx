@@ -1,49 +1,29 @@
-import Button from '@/components/button'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
-import ProgressBar, { ProgressBarProps } from '@/components/progressbar'
 import RadioButton from '@/components/radioButton'
-import FormLayout from '@/layout/form-layout'
+
 import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
 import { QSMockDataType } from '@/pages/surveys/questions'
 
-import {
-  Controller,
-  SubmitHandler,
-  useFormContext,
-  useWatch,
-} from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 
-const Fourth = ({
-  data,
-  progress,
-}: {
+interface OXProps {
   data: QSMockDataType
-  progress: ProgressBarProps
-}) => {
-  const { handleSubmit, trigger, control } = useFormContext<QsSchemaType>()
+  questionKey: string
+}
 
-  const { fourthQuestion, fourthReason } = useWatch({ control })
-
-  const onSubmit: SubmitHandler<QsSchemaType> = (data) => {
-    console.log(data)
-  }
-
-  const isDisabled = !fourthReason || !fourthReason
+const OXQuestion = ({ data, questionKey }: OXProps) => {
+  const { control } = useFormContext<QsSchemaType>()
 
   return (
     <div className="text-left">
-      <div
-        dangerouslySetInnerHTML={{
-          __html: data.title,
-        }}
-      ></div>
-
+      <div dangerouslySetInnerHTML={{ __html: data.title }}></div>
       <div className="flex flex-col mt-8 space-y-2">
         {data.options.map((option) => (
           <Controller
             key={option.id}
-            name="fourthQuestion"
+            name={`${questionKey}`}
+            defaultValue=""
             control={control}
             render={({ field }) => (
               <RadioButton
@@ -51,10 +31,9 @@ const Fourth = ({
                 id={option.id}
                 value={option.value + ''}
                 label={option.text}
-                selected={fourthQuestion === option.value || false}
+                selected={field.value === option.value + ''}
                 onChange={(e) => {
                   field.onChange(e.target.value)
-                  trigger('fourthReason')
                 }}
               />
             )}
@@ -69,12 +48,14 @@ const Fourth = ({
         >
           <Controller
             control={control}
-            name="fourthReason"
+            defaultValue=""
+            name={`${questionKey}Reason`}
             render={({ field }) => (
               <Inputbox
                 {...field}
                 placeholder="15글자 이내로 입력해주세요"
                 maxLength={15}
+                value={field.value + ''}
               />
             )}
           />
@@ -84,4 +65,4 @@ const Fourth = ({
   )
 }
 
-export default Fourth
+export default OXQuestion

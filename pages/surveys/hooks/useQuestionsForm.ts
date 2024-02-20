@@ -35,7 +35,7 @@ export interface QuestionFormValuesProps {
   }[]
 }
 
-const QuestionSchema = z.object({
+const QsSchema = z.object({
   data: z.array(
     z.object({
       id: z.string(),
@@ -54,32 +54,27 @@ const QuestionSchema = z.object({
   ),
 })
 
-export type QuestionValues = z.infer<typeof QuestionSchema>
-
-const QsSchema = z.object({
-  firstQuestion: z.string().min(1, { message: '필수임' }),
-  firstReason: z.string().min(1, { message: '필수임' }),
-  secondQuestion: z.string().min(1, { message: '필수임' }),
-  secondReason: z.string().min(1, { message: '필수임' }),
-  thirdQuestion: z.string().min(1, { message: '필수임' }),
-  thirdReason: z.string().min(1, { message: '필수임' }),
-  fourthQuestion: z.string().min(1, { message: '필수임' }),
-  fourthReason: z.string().min(1, { message: '필수임' }),
-})
-
 export type QsSchemaType = z.infer<typeof QsSchema>
 
 const useQuestionForm = () => {
   return useForm<QsSchemaType>({
     defaultValues: {
-      firstQuestion: '',
-      firstReason: '',
-      secondQuestion: '',
-      secondReason: '',
-      thirdQuestion: '',
-      thirdReason: '',
-      fourthQuestion: '',
-      fourthReason: '',
+      data: [
+        {
+          id: '',
+          title: '',
+          type: 'OX',
+          dashboardType: 'CHARACTER',
+          surveyOrder: 0,
+          options: [
+            {
+              id: '',
+              value: '',
+              text: '',
+            },
+          ],
+        },
+      ],
     },
     resolver: zodResolver(QsSchema),
   })

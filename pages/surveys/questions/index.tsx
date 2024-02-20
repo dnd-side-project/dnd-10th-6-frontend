@@ -6,14 +6,11 @@ import { FunnelProvider } from '@/contexts/useFunnelContext'
 import createFunnel from '@/components/funnel/createFunnel'
 import useQuestionForm from '../hooks/useQuestionsForm'
 
-import First from '@/components/compositions/question/First'
-import Second from '@/components/compositions/question/Second'
-import Third from '@/components/compositions/question/Third'
-import Fourth from '@/components/compositions/question/Fourth'
 import { QUESTION_MAX } from '@/constants'
 import ProgressBar from '@/components/progressbar'
 import Button from '@/components/button'
 import FormLayout from '@/layout/form-layout'
+import OXQuestion from '@/components/compositions/question/OXQuestion'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   '1번',
@@ -270,6 +267,7 @@ const questionMockData = {
     },
   ],
 }
+
 export type QSMockDataType = (typeof questionMockData)['data'][number]
 
 const stepTextVariants: Variants = {
@@ -330,6 +328,7 @@ const Page = () => {
       header={{
         leftIcon: (
           <svg
+            className="w-5 h-5"
             width="28"
             height="28"
             viewBox="0 0 28 28"
@@ -351,11 +350,11 @@ const Page = () => {
         },
       }}
       title={
-        <div className="flex items-center space-x-1 overflow-hidden">
+        <div className="flex items-center space-x-1 overflow-hidden text-brand-main-green400 ">
           <motion.p className="w-2" ref={stepRef}>
             {stepText}
           </motion.p>
-          <span>/ 14</span>
+          <span>/{QUESTION_MAX}</span>
         </div>
       }
       button={
@@ -380,7 +379,10 @@ const Page = () => {
                   setProgress({ current: 1, max: QUESTION_MAX })
                 }}
               >
-                <First data={questionMockData.data[0]} progress={progress} />
+                <OXQuestion
+                  data={questionMockData.data[0]}
+                  questionKey="firstQuestion"
+                />
               </Step>
 
               <Step
@@ -389,7 +391,10 @@ const Page = () => {
                   setProgress({ current: 2, max: QUESTION_MAX })
                 }}
               >
-                <Second data={questionMockData.data[1]} progress={progress} />
+                <OXQuestion
+                  data={questionMockData.data[1]}
+                  questionKey="secondQuestion"
+                />
               </Step>
 
               <Step
@@ -398,7 +403,10 @@ const Page = () => {
                   setProgress({ current: 3, max: QUESTION_MAX })
                 }}
               >
-                <Third data={questionMockData.data[2]} progress={progress} />
+                <OXQuestion
+                  data={questionMockData.data[2]}
+                  questionKey="thirdQuestion"
+                />
               </Step>
 
               <Step
@@ -407,27 +415,11 @@ const Page = () => {
                   setProgress({ current: 4, max: QUESTION_MAX })
                 }}
               >
-                <Fourth data={questionMockData.data[3]} progress={progress} />
+                <OXQuestion
+                  data={questionMockData.data[3]}
+                  questionKey="fourthQuestion"
+                />
               </Step>
-
-              {/* <Step
-          name="5번"
-          onEnter={() => {
-            //프로그래스바 진척도
-          }}
-        >
-          <Fifth data={questionMockData.data[4]}/>
-        </Step>
-
-        <Step
-          name="6번"
-          onEnter={() => {
-            //프로그래스바 진척도
-          }}
-        >
-          <Sixth data={questionMockData.data[5]}/>
-        </Step>
-*/}
             </Funnel>
           </FormProvider>
         </FunnelProvider>
