@@ -65,6 +65,7 @@ export const SessionProvider = ({
       if (session?.token?.accessToken) {
         const { data: newSession } = await NamuiApi.getUserData()
         setSession((prev) => ({ ...prev, user: newSession }))
+        return newSession
       }
     } catch (error) {
       setSession(null)
@@ -100,14 +101,13 @@ export const SessionProvider = ({
       async update() {
         if (loading || !session) return
         setLoading(true)
-        const newSession = await new Promise<Session>((resolve) =>
-          resolve(null),
-        )
+        const newSession = await _getSession()
         setLoading(false)
-        setSession(newSession)
+        setSession((prev) => ({ ...prev, user: newSession }))
+        return newSession
       },
     }),
-    [session, loading],
+    [session, loading, _getSession],
   )
 
   return (

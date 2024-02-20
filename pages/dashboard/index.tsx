@@ -14,6 +14,7 @@ import Happy from '@/components/compositions/dashboard/happy'
 import Sad from '@/components/compositions/dashboard/sad'
 import KnowingFilterGroup from '@/components/knowing-filter-group'
 import TreeInfo from '@/components/compositions/dashboard/tree-info'
+import withAuth from '@/layout/HOC/with-auth'
 
 const Page = () => {
   const headerHeight = useSettingStore((state) => state.headerHeight)
@@ -53,7 +54,7 @@ const Page = () => {
   )
 }
 
-export default Page
+export default withAuth(Page)
 
 function Section({
   children,
