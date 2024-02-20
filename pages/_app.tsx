@@ -53,14 +53,15 @@ export default function NamuiWikiApp({
       }, {})
     }
   }, [errorCode, mounted, router, searchparams])
-  return getLayout(
+  return (
     <SessionProvider
       session={session}
       onSessionChange={(newSession) => {
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
+
       {mounted && (
         <Toaster
           position="top-center"
@@ -81,7 +82,7 @@ export default function NamuiWikiApp({
         />
       )}
       <CalcMobileHeight />
-    </SessionProvider>,
+    </SessionProvider>
   )
 }
 
@@ -145,7 +146,6 @@ NamuiWikiApp.getInitialProps = async (
       }
     }
   } catch (err) {}
-
   return {
     ...ctx,
     session,

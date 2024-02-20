@@ -2114,6 +2114,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/error-message@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@hookform/error-message@npm:2.0.1"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+    react-hook-form: ^7.0.0
+  checksum: 6b608bcdbd797ddb7c6cfc8c42b6bbac40066181a0c582b1f1a342bfa65fa7e8329cdb8e869a76e33988cd46fe8623d521ea597231b9d33e1f0ba3288e36c58e
+  languageName: node
+  linkType: hard
+
 "@hookform/resolvers@npm:^3.3.4":
   version: 3.3.4
   resolution: "@hookform/resolvers@npm:3.3.4"
@@ -14003,6 +14014,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "namui-wiki@workspace:."
   dependencies:
+    "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^3.3.4"
     "@playwright/test": "npm:^1.41.1"
     "@radix-ui/react-dialog": "npm:^1.0.5"

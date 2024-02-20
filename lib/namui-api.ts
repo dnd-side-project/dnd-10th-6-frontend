@@ -36,6 +36,17 @@ export class NamuiApi {
     })
   }
 
+  static async signUp(nickname: string) {
+    return await NamuiApi.handler<{ accessToken: string }>({
+      method: 'POST',
+      url: '/api/auth/signup',
+      baseURL: window.location.origin,
+      data: {
+        nickname,
+      },
+    })
+  }
+
   private static async getNewToken() {
     const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
     serverURL.pathname = '/api/v1/refresh'
