@@ -50,7 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } catch (err) {
     console.log(err)
     const error = isNamuiError(err) ? err : new InternalServerError()
-    return res.redirect(307, `/?err=${error.name}`).json({})
+    res.status(307).redirect(307, `/?err=${error.name}`)
   }
 }
 
