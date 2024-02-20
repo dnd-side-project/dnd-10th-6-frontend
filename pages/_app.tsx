@@ -13,8 +13,11 @@ import { parse, serialize } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
-import { ReactElement, ReactNode } from 'react'
-
+import { ReactElement, ReactNode, useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -29,10 +32,27 @@ export default function NamuiWikiApp({
   pageProps,
   session,
 }: AppPropsWithLayout) {
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+  const searchparams = useSearchParams()
+  const errorCode = searchparams.get('err')
   const getLayout =
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
+  useBrowserLayoutEffect(() => {
+    if (!mounted) {
+      setMounted(true)
+    }
+  }, [errorCode, mounted, router, searchparams])
+
+  useEffect(() => {
+    if (mounted && errorCode) {
+      toast.error(() => {
+        return errorCode
+      }, {})
+    }
+  }, [errorCode, mounted, router, searchparams])
   return getLayout(
     <SessionProvider
       session={session}
@@ -41,6 +61,25 @@ export default function NamuiWikiApp({
       }}
     >
       <Component {...pageProps} />
+      {mounted && (
+        <Toaster
+          position="top-center"
+          gutter={10}
+          toastOptions={{
+            ariaProps: {
+              'aria-live': 'polite',
+              role: 'alert',
+            },
+
+            error: {
+              ariaProps: {
+                'aria-live': 'assertive',
+                role: 'status',
+              },
+            },
+          }}
+        />
+      )}
       <CalcMobileHeight />
     </SessionProvider>,
   )
