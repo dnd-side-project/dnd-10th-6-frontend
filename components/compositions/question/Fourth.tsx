@@ -1,6 +1,7 @@
 import Button from '@/components/button'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
+import ProgressBar, { ProgressBarProps } from '@/components/progressbar'
 import RadioButton from '@/components/radioButton'
 import FormLayout from '@/layout/form-layout'
 import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
@@ -13,7 +14,13 @@ import {
   useWatch,
 } from 'react-hook-form'
 
-const Fourth = ({ data }: { data: QSMockDataType }) => {
+const Fourth = ({
+  data,
+  progress,
+}: {
+  data: QSMockDataType
+  progress: ProgressBarProps
+}) => {
   const { handleSubmit, trigger, control } = useFormContext<QsSchemaType>()
 
   const { fourthQuestion, fourthReason } = useWatch({ control })
@@ -27,7 +34,9 @@ const Fourth = ({ data }: { data: QSMockDataType }) => {
   return (
     <>
       <FormLayout
-        title="1/2" //프로그래스바
+        title={
+          <span className="text-body1-bold text-brand-main-green400">{`${progress.current}/${progress.max}`}</span>
+        }
         button={
           <Button
             disabled={isDisabled}
@@ -39,6 +48,7 @@ const Fourth = ({ data }: { data: QSMockDataType }) => {
         }
         content={
           <>
+            <ProgressBar {...progress} />
             <div className="text-left">
               <div
                 dangerouslySetInnerHTML={{
@@ -68,7 +78,7 @@ const Fourth = ({ data }: { data: QSMockDataType }) => {
                   />
                 ))}
               </div>
-              <div className="mt-60">
+              <div className="mt-44 py-2">
                 <InputLabel
                   className="text-sub2-medium"
                   label="이유를 말해주세요"

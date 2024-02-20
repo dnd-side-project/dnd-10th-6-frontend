@@ -1,6 +1,8 @@
 import Button from '@/components/button'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
+import ProgressBar, { ProgressBarProps } from '@/components/progressbar'
+
 import RadioButton from '@/components/radioButton'
 import { useFunnelContext } from '@/contexts/useFunnelContext'
 import FormLayout from '@/layout/form-layout'
@@ -9,7 +11,13 @@ import { QSMockDataType } from '@/pages/surveys/questions'
 
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
 
-const First = ({ data }: { data: QSMockDataType }) => {
+const First = ({
+  data,
+  progress,
+}: {
+  data: QSMockDataType
+  progress: ProgressBarProps
+}) => {
   const { toNextStep } = useFunnelContext()
   const { trigger, control } = useFormContext<QsSchemaType>()
 
@@ -20,7 +28,9 @@ const First = ({ data }: { data: QSMockDataType }) => {
   return (
     <>
       <FormLayout
-        title="1/2" //프로그래스바
+        title={
+          <span className="text-body1-bold text-brand-main-green400">{`${progress.current}/${progress.max}`}</span>
+        }
         button={
           <Button disabled={isDisabled} onClick={toNextStep} className="w-full">
             다음
@@ -28,13 +38,13 @@ const First = ({ data }: { data: QSMockDataType }) => {
         }
         content={
           <>
+            <ProgressBar {...progress} />
             <div className="text-left">
               <div
                 dangerouslySetInnerHTML={{
                   __html: data.title,
                 }}
               ></div>
-
               <div className="flex flex-col mt-8 space-y-2">
                 {data.options.map((option) => (
                   <Controller
@@ -57,7 +67,7 @@ const First = ({ data }: { data: QSMockDataType }) => {
                   />
                 ))}
               </div>
-              <div className="mt-60">
+              <div className="mt-44 py-2">
                 <InputLabel
                   className="text-sub2-medium"
                   label="이유를 말해주세요"

@@ -1,9 +1,11 @@
-import First from '@/components/compositions/question/First'
-import createFunnel from '@/components/funnel/createFunnel'
-import { FunnelProvider } from '@/contexts/useFunnelContext'
-import { ReactNode } from 'react'
-import useQuestionForm from '../hooks/useQuestionsForm'
+import { ReactNode, useState } from 'react'
 import { FormProvider } from 'react-hook-form'
+
+import { FunnelProvider } from '@/contexts/useFunnelContext'
+import createFunnel from '@/components/funnel/createFunnel'
+import useQuestionForm from '../hooks/useQuestionsForm'
+
+import First from '@/components/compositions/question/First'
 import Second from '@/components/compositions/question/Second'
 import Third from '@/components/compositions/question/Third'
 import Fourth from '@/components/compositions/question/Fourth'
@@ -268,6 +270,11 @@ export type QSMockDataType = (typeof questionMockData)['data'][number]
 const Page = () => {
   const { step, toPrevStep, toNextStep } = useFunnel()
 
+  const [progress, setProgress] = useState<{ current: number; max: number }>({
+    current: 0,
+    max: 5,
+  })
+
   const questionForm = useQuestionForm()
 
   return (
@@ -283,37 +290,37 @@ const Page = () => {
             <Step
               name="1번"
               onEnter={() => {
-                //프로그래스바 진척도
+                setProgress({ current: 1, max: 5 })
               }}
             >
-              <First data={questionMockData.data[0]} />
+              <First data={questionMockData.data[0]} progress={progress} />
             </Step>
 
             <Step
               name="2번"
               onEnter={() => {
-                //프로그래스바 진척도
+                setProgress({ current: 2, max: 5 })
               }}
             >
-              <Second data={questionMockData.data[1]} />
+              <Second data={questionMockData.data[1]} progress={progress} />
             </Step>
 
             <Step
               name="3번"
               onEnter={() => {
-                //프로그래스바 진척도
+                setProgress({ current: 3, max: 5 })
               }}
             >
-              <Third data={questionMockData.data[2]} />
+              <Third data={questionMockData.data[2]} progress={progress} />
             </Step>
 
             <Step
               name="4번"
               onEnter={() => {
-                //프로그래스바 진척도
+                setProgress({ current: 4, max: 5 })
               }}
             >
-              <Fourth data={questionMockData.data[3]} />
+              <Fourth data={questionMockData.data[3]} progress={progress} />
             </Step>
 
             {/* <Step

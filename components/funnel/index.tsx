@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface FunnelProps<T extends readonly string[]> {
   step: T[number]
@@ -33,9 +33,11 @@ export const Step = <T extends readonly string[]>({
   children,
   onEnter,
 }: StepProps<T>) => {
-  if (onEnter) {
-    onEnter()
-  }
+  useEffect(() => {
+    if (onEnter) {
+      onEnter()
+    }
+  }, [])
 
   return <>{children}</>
 }
