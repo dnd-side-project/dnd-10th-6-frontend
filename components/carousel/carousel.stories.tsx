@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import Carousel from '.'
 
+import useEmblaCarousel from 'embla-carousel-react'
 import { onBoardingItems } from '@/components/onboard'
 const meta: Meta<typeof Carousel> = {
   title: 'UI/Carousel',
@@ -27,6 +28,9 @@ type Story = StoryObj<typeof Carousel>
 export const Default: Story = {
   name: 'default',
   render: (args) => {
-    return <Carousel {...args} />
+    const ref = useEmblaCarousel({
+      skipSnaps: false,
+    })
+    return <Carousel {...args} emblaRef={ref} />
   },
 }
