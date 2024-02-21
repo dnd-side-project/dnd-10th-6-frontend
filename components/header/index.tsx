@@ -1,5 +1,12 @@
 import { useRouter } from 'next/router'
-import { ReactNode, useCallback, useEffect, useRef } from 'react'
+import {
+  ReactNode,
+  Ref,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react'
 import { motion } from 'framer-motion'
 
 import { fadeInProps } from '@/variants'
@@ -14,6 +21,7 @@ export interface HeaderProps {
   center?: ReactNode
   rightIcon?: ReactNode
   leftIcon?: ReactNode
+  bodyRef?: Ref<HTMLElement>
   options?: {
     onBackClick?: () => void
     showRight?: boolean
@@ -22,6 +30,7 @@ export interface HeaderProps {
 
 const Header = ({
   leftIcon,
+  bodyRef,
   center = (
     <div className="h-5">
       <Logo />
@@ -34,7 +43,9 @@ const Header = ({
   const headerRef = useRef<HTMLElement>(null)
   const router = useRouter()
 
-  const { scrollTop, direction } = useScrollDirection()
+  const { scrollTop, direction } = useScrollDirection({
+    ref: (bodyRef as unknown as RefObject<HTMLElement>) ?? null,
+  })
 
   const { headerHeight, setIntersecting, setHeaderHeight } = useSettingStore(
     (state) => ({
@@ -70,7 +81,7 @@ const Header = ({
       ref={headerRef}
       {...fadeInProps}
       className={cn(
-        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold',
+        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold shrink-0',
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}
     >

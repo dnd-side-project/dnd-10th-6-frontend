@@ -1,6 +1,9 @@
 import Button from '@/components/button'
 import Carousel from '@/components/carousel'
 import { useState } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import { EmblaCarouselType } from 'embla-carousel'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
 
 export const onBoardingItems = [
   <div
@@ -344,19 +347,37 @@ interface OnBoardProps {
 
 const OnBoard = ({ onStartClick }: OnBoardProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [ref, emblaApi] = useEmblaCarousel({
+    skipSnaps: false,
+  })
+
+  const changeSlideSelect = (emblaCb: EmblaCarouselType) =>
+    setSelectedIndex(emblaCb.selectedScrollSnap())
+
+  useBrowserLayoutEffect(() => {
+    if (emblaApi) {
+      emblaApi.on('select', changeSlideSelect)
+      return () => {
+        emblaApi.off('select', changeSlideSelect)
+      }
+    }
+  }, [emblaApi])
   return (
-    <div className="h-calc-h flex flex-col pb-[50px] px-5">
+    <div className="h-calc-h flex flex-col pb-4 px-5">
       <Carousel
+        emblaRef={[ref, emblaApi]}
         className="grow flex flex-col w-[calc(100%_+_40px)] -ml-5 py-9"
         slides={onBoardingItems}
         renderItem={(item) => item}
-        onSlideSelect={(index) => setSelectedIndex(index)}
       />
       <Button
-        onClick={onStartClick}
-        disabled={selectedIndex !== onBoardingItems.length - 1}
+        onClick={
+          selectedIndex !== onBoardingItems.length - 1
+            ? () => emblaApi?.scrollNext()
+            : onStartClick
+        }
       >
-        시작하기
+        {selectedIndex !== onBoardingItems.length - 1 ? '다음' : '시작하기'}
       </Button>
     </div>
   )

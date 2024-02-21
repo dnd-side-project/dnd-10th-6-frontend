@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from 'react'
 import { AnimatedOpacity, DotButton } from './carousel.components'
-import useEmblaCarousel from 'embla-carousel-react'
+import { UseEmblaCarouselType } from 'embla-carousel-react'
 import { EmblaCarouselType } from 'embla-carousel'
 import { LazyMotion, domAnimation, useScroll, m } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
@@ -15,6 +15,7 @@ import { fadeInProps } from '@/variants'
 interface CarouselProps<T> {
   className?: string
   itemClass?: string
+  emblaRef: UseEmblaCarouselType
   slides: T[]
   renderItem: (item: T, index: number) => ReactNode
   onSlideSelect?: (index: number) => void
@@ -25,12 +26,11 @@ const Carousel = <T,>({
   renderItem,
   className,
   itemClass,
+  emblaRef,
   onSlideSelect,
 }: CarouselProps<T>) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [viewportRef, embla] = useEmblaCarousel({
-    skipSnaps: false,
-  })
+  const [viewportRef, embla] = emblaRef
 
   const scrollX = useScroll({ axis: 'x', container: containerRef })
 

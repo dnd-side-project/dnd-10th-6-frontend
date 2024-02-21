@@ -3,9 +3,12 @@ import React, { useState } from 'react'
 import Modal from '@/components/modal'
 import WriteList from '@/components/compositions/header/write-list'
 import EditProfile from '@/components/compositions/header/edit-setting'
+import { Close } from '@radix-ui/react-dialog'
+import { useSession } from '@/provider/session-provider'
 
 const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
+  const { signout } = useSession()
   return (
     <Drawer
       header={{
@@ -51,6 +54,24 @@ const Setting = () => {
             }
             title="로그아웃"
             description="정말 로그아웃 하시겠어요?"
+            footer={{
+              item: [
+                <Close
+                  key="cancel"
+                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                >
+                  취소
+                  <span className="sr-only">Close</span>
+                </Close>,
+                <button
+                  onClick={signout}
+                  key="confirm"
+                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                >
+                  로그아웃
+                </button>,
+              ],
+            }}
           />
           <Modal
             trigger={

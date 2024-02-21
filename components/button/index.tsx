@@ -14,6 +14,8 @@ const buttonVariants = cva(
           'bg-text-main-whiteFF border-line-medium border text-text-main-black11 hover:bg-text-main-whiteFF hover:border-gray-300 hover:text-text-main-black11 active:border-line-medium active:bg-gray-gray100 active:text-text-main-black11 disabled:bg-text-main-whiteFF disabled:border-line-soft',
         kakao:
           'bg-brand-sub1-yellow500 h-[52px] hover:bg-main-sub1-yellow-yellow600 active:bg-main-sub1-yellow-yellow800',
+        default:
+          'bg-gray-gray50 !font-medium text-body1-medium text-text-sub-gray4f hover:bg-gray-gray100 active:bg-gray-gray200 focus-visible:bg-gray-gray200 disabled:text-text-sub-gray99',
       },
 
       rounded: {

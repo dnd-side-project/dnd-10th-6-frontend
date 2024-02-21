@@ -1,8 +1,10 @@
 import Badge from '@/components/badge'
 import Button from '@/components/button'
+import { useSession } from '@/provider/session-provider'
 import React from 'react'
 
 const TreeInfo = () => {
+  const { data } = useSession()
   return (
     <>
       <div className="bg-bg-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
@@ -68,7 +70,7 @@ const TreeInfo = () => {
         <Button className="h-11">링크 공유하기</Button>
       </div>
       <h3 className="text-mainTitle2-bold tracking-tighter font-bold mt-8 mb-5">
-        김디엔님에 대해 알아보세요!
+        {data?.user?.name ?? ''}님에 대해 알아보세요!
       </h3>
 
       <div className="flex overflow-x-scroll space-x-2 w-screen px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">

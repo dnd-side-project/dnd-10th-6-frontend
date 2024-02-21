@@ -39,7 +39,6 @@ export default function NamuiWikiApp({
   const getLayout =
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
-
   useBrowserLayoutEffect(() => {
     if (!mounted) {
       setMounted(true)
@@ -65,6 +64,7 @@ export default function NamuiWikiApp({
   return (
     <SessionProvider
       session={session}
+      onExpired={NamuiApi.signOut}
       onSessionChange={(newSession) => {
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
@@ -138,7 +138,7 @@ NamuiWikiApp.getInitialProps = async (
             return res.json() as Promise<{ accessToken: string }>
           })
           context.ctx.res?.setHeader('Set-Cookie', [
-            serialize('accessToken', res.accessToken, {
+            serialize(AUTH.ACCESS_TOKEN_KEY, res.accessToken, {
               path: '/',
               httpOnly: true,
               secure: true,
