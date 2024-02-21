@@ -6,13 +6,18 @@ interface MetaHeadProps {
   url?: string
   image?: string
 }
-const MetaHead = ({ title, description, url, image }: MetaHeadProps) => {
+const MetaHead = ({
+  title,
+  description = '남이 써주는 나의 소개서',
+  url,
+  image,
+}: MetaHeadProps) => {
   return (
     <Head>
-      <title>{title || '남의위키'}</title>
+      <title>{title || 'namuiwiki | 남의위키'}</title>
       <meta name="description" content={description || ''} />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta property="og:title" content={title || '남의위키'} />
+      <meta property="og:title" content={title || 'namuiwiki | 남의위키'} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url || 'https://namui-wiki.life/'} />
 
