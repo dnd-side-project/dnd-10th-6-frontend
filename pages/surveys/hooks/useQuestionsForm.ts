@@ -36,20 +36,16 @@ export interface QuestionFormValuesProps {
 }
 
 const QsSchema = z.object({
-  data: z.array(
+  owner: z.string(),
+  senderName: z.string(),
+  period: z.string(),
+  relation: z.string(),
+  answers: z.array(
     z.object({
-      id: z.string(),
-      title: z.string(),
-      type: z.enum([...questionType]),
-      dashboardType: z.enum([...dashboardType]),
-      surveyOrder: z.number(),
-      options: z.array(
-        z.object({
-          id: z.string(),
-          value: z.string(),
-          text: z.string(),
-        }),
-      ),
+      questionId: z.string(),
+      type: z.string(),
+      answer: z.string(),
+      reason: z.string(),
     }),
   ),
 })
@@ -59,22 +55,11 @@ export type QsSchemaType = z.infer<typeof QsSchema>
 const useQuestionForm = () => {
   return useForm<QsSchemaType>({
     defaultValues: {
-      data: [
-        {
-          id: '',
-          title: '',
-          type: 'OX',
-          dashboardType: 'CHARACTER',
-          surveyOrder: 0,
-          options: [
-            {
-              id: '',
-              value: '',
-              text: '',
-            },
-          ],
-        },
-      ],
+      owner: '',
+      senderName: '',
+      period: '',
+      relation: '',
+      answers: [],
     },
     resolver: zodResolver(QsSchema),
   })
