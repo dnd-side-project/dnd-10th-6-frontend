@@ -10,13 +10,17 @@ import { QUESTION_MAX } from '@/constants'
 import ProgressBar from '@/components/progressbar'
 import Button from '@/components/button'
 import FormLayout from '@/layout/form-layout'
-import OXQuestion from '@/components/compositions/question/OXQuestion'
+import OXQuestion from '@/components/compositions/question/ChoiceQuestion'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   '1번',
   '2번',
   '3번',
   '4번',
+  '5번',
+  '6번',
+  '7번',
+  '8번',
 ] as const)
 
 const questionMockData = {
@@ -358,6 +362,7 @@ const Page = () => {
         </div>
       }
       button={
+        //마지막 스텝 버튼만 onClick에 handleSubmit 연결, 제출하기 버튼으로 변경
         <Button disabled={false} onClick={goNext} className="w-full">
           다음
         </Button>
@@ -418,6 +423,50 @@ const Page = () => {
                 <OXQuestion
                   data={questionMockData.data[3]}
                   questionKey="fourthQuestion"
+                />
+              </Step>
+              <Step
+                name="5번"
+                onEnter={() => {
+                  setProgress({ current: 5, max: QUESTION_MAX })
+                }}
+              >
+                <OXQuestion
+                  data={questionMockData.data[4]}
+                  questionKey="fifthQuestion"
+                />
+              </Step>
+              <Step
+                name="6번"
+                onEnter={() => {
+                  setProgress({ current: 6, max: QUESTION_MAX })
+                }}
+              >
+                <OXQuestion
+                  data={questionMockData.data[5]}
+                  questionKey="sixthQuestion"
+                />
+              </Step>
+              <Step
+                name="7번"
+                onEnter={() => {
+                  setProgress({ current: 7, max: QUESTION_MAX })
+                }}
+              >
+                <OXQuestion
+                  data={questionMockData.data[6]}
+                  questionKey="seventhQuestion"
+                />
+              </Step>
+              <Step
+                name="8번"
+                onEnter={() => {
+                  setProgress({ current: 8, max: QUESTION_MAX })
+                }}
+              >
+                <OXQuestion
+                  data={questionMockData.data[7]}
+                  questionKey="eighthQuestion"
                 />
               </Step>
             </Funnel>

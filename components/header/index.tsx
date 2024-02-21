@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { ReactNode, useCallback, useEffect, useRef } from 'react'
+import { ReactNode, Ref, useCallback, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { fadeInProps } from '@/variants'
