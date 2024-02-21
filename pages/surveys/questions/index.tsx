@@ -1,6 +1,6 @@
 import { ReactNode, useMemo, useState } from 'react'
 import { Variants, motion, useAnimate } from 'framer-motion'
-import { FormProvider } from 'react-hook-form'
+import { FormProvider, SubmitHandler, useFormContext } from 'react-hook-form'
 
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 import createFunnel from '@/components/funnel/createFunnel'
@@ -13,6 +13,7 @@ import FormLayout from '@/layout/form-layout'
 import OXQuestion from '@/components/compositions/question/OXQuestion'
 import ManualQuestion from '@/components/compositions/question/\bManualQuestion'
 import { TreeSvg } from '@/pages/assets/questionTrees'
+import FinishQuestion from '@/components/compositions/question/FinishQuestion'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   '1번',
@@ -333,6 +334,11 @@ const Page = () => {
 
   const questionForm = useQuestionForm()
 
+  // const { handleSubmit } = useFormContext<QSMockDataType>()
+  // const onSubmit: SubmitHandler<QSMockDataType> = (data) => {
+  //   console.log(data)
+  // }
+
   const stepText = useMemo(() => `${step.replace('번', '')}`, [step])
 
   return (
@@ -373,9 +379,12 @@ const Page = () => {
         </div>
       }
       button={
-        //마지막 스텝 버튼만 onClick에 handleSubmit 연결, 제출하기 버튼으로 변경
-        <Button disabled={false} onClick={goNext} className="w-full">
-          다음
+        <Button
+          disabled={false}
+          onClick={step === '14번' ? handleSubmit(onSubmit) : goNext}
+          className="w-full"
+        >
+          {step === '14번' ? '제출하기' : '다음'}
         </Button>
       }
       content={
