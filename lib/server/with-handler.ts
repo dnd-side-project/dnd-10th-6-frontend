@@ -1,6 +1,5 @@
 import { Method } from 'axios'
 import { NextApiResponse, NextApiRequest } from 'next'
-import { CookieSerializeOptions, serialize } from 'cookie'
 import { withError } from './utils'
 
 interface ConfigType<T> {
@@ -9,12 +8,12 @@ interface ConfigType<T> {
   hasAuthenticated?: boolean
 }
 
-const cookieOptions: CookieSerializeOptions = {
-  maxAge: 60 * 60, // 한시간,
-  path: '/',
-  httpOnly: true,
-  secure: true,
-}
+// const cookieOptions: CookieSerializeOptions = {
+//   maxAge: 60 * 60, // 한시간,
+//   path: '/',
+//   httpOnly: true,
+//   secure: true,
+// }
 
 export default function withHandler<T = void>({
   methods,
@@ -30,21 +29,20 @@ export default function withHandler<T = void>({
     }
     try {
       if (hasAuthenticated) {
-        try {
-          return await handler(req, res)
-        } catch (error) {
-          //TODO
-          // const newToken = await getNewToken()
-          const serializedToken = serialize(
-            'access_token',
-            'newToken',
-            cookieOptions,
-          )
-
-          req.cookies['access_token'] = serializedToken
-          res.setHeader('Set-Cookie', serializedToken)
-          return await handler(req, res)
-        }
+        // try {
+        //   return await handler(req, res)
+        // } catch (error) {
+        //   //TODO
+        //   // const newToken = await getNewTokenNam()
+        //   const serializedToken = serialize(
+        //     'accessToken',
+        //     'newToken',
+        //     cookieOptions,
+        //   )
+        //   req.cookies['accessToken'] = serializedToken
+        //   res.setHeader('Set-Cookie', serializedToken)
+        //   return await handler(req, res)
+        // }
       }
       return await handler(req, res)
     } catch (error) {

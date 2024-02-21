@@ -29,18 +29,20 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const { accessToken, refreshToken } = response
     res.setHeader('Set-Cookie', [
-      serialize('accessToken', accessToken, {
+      serialize(AUTH.ACCESS_TOKEN_KEY, accessToken, {
         path: '/',
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
+        ...(process.env.NODE_ENV === 'production'
+          ? { secure: true, sameSite: 'lax' }
+          : {}),
         maxAge: AUTH.ACCESS_EXPIRED_TIME,
       }),
-      serialize('refreshToken', refreshToken, {
+      serialize(AUTH.REFRESH_TOKEN_KEY, refreshToken, {
         path: '/',
         httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
+        ...(process.env.NODE_ENV === 'production'
+          ? { secure: true, sameSite: 'lax' }
+          : {}),
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
       serialize(AUTH.OAUTH_PROVIDER, '', {

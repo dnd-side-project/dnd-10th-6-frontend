@@ -47,7 +47,7 @@ const Page = () => {
         showHeader
         ref={ref}
         className={cn(
-          'h-screen overflow-y-scroll',
+          'h-calc-h overflow-y-scroll',
           shouldShowWelcome && 'overflow-hidden',
         )}
       >

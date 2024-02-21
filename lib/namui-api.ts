@@ -49,22 +49,24 @@ export class NamuiApi {
     })
   }
 
-  private static async getNewToken() {
-    const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
-    serverURL.pathname = '/api/v1/refresh'
-    const response = await fetch(serverURL).then((res) => {
-      if (res.status > 400) {
-        throw raiseNamuiErrorFromStatus(res.status)
-      } else {
-        return res.json() as Promise<{
-          data: {
-            accessToken: 'string'
-          }
-        }>
-      }
+  static async signOut() {
+    return await NamuiApi.handler({
+      method: 'POST',
+      url: '/api/auth/signout',
+      baseURL: window.location.origin,
     })
-    NamuiApi.setToken(response.data.accessToken)
-    return response.data.accessToken
+  }
+
+  private static async getNewToken() {
+    const { accessToken } = await NamuiApi.handler<{
+      accessToken: string | null
+      message: string
+    }>({
+      method: 'POST',
+      url: '/api/auth/refresh',
+      baseURL: window.location.origin,
+    })
+    return accessToken
   }
 
   private static injectInterceptor(instance: AxiosInstance) {
@@ -98,12 +100,14 @@ export class NamuiApi {
       }
       if (error.response?.status === 401) {
         const newAccessToken = await this.getNewToken()
-        error.config.headers = {
-          ...error.config.headers,
-          [AUTH.AUTH_HEADER_KEY]: newAccessToken,
+        if (newAccessToken) {
+          error.config.headers = {
+            ...error.config.headers,
+            [AUTH.AUTH_HEADER_KEY]: newAccessToken,
+          }
+          this.setToken(newAccessToken)
+          return await this.handler(error.config)
         }
-        this.setToken(newAccessToken)
-        return await this.handler(error.config)
       }
       const errorInstance = axios.isAxiosError(error)
         ? raiseNamuiErrorFromStatus(error.status || error.response?.status)
@@ -140,7 +144,6 @@ export class NamuiApi {
   }
 
   private static async handler<Response>(config: AxiosRequestConfig) {
-    const instance = this.getInstance()
-    return instance(config) as Response
+    return (await this.getInstance()(config)) as Response
   }
 }

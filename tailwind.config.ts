@@ -21,7 +21,7 @@ const config = {
     },
     extend: {
       spacing: {
-        header: 'var(--header-height)',
+        header: 'calc(var(--header-height) - 1px)',
         'calc-h': 'calc(var(--vh,1vh)*100)',
       },
 

@@ -36,6 +36,7 @@ type SessionHandler = {
   signup: (nickname: string) => Promise<Session | null>
 }
 interface SessionProviderProps extends SessionContextType {
+  onExpired?: () => void
   refetchOnWindowFocus?: boolean
   onSessionChange?: (session: Session) => void
 }
@@ -49,7 +50,7 @@ export const SessionProvider = ({
   if (!SessionContext) {
     throw new Error('React Context is unavailable in Server Components')
   }
-  const { session: InitialSession, refetchOnWindowFocus } = props
+  const { session: InitialSession, refetchOnWindowFocus, onExpired } = props
 
   const hasInitialSession = props.session !== undefined
   const [session, setSession] = useState<Session>(() => {
@@ -70,10 +71,11 @@ export const SessionProvider = ({
       }
     } catch (error) {
       setSession(null)
+      onExpired?.()
     } finally {
       setLoading(false)
     }
-  }, [session?.token?.accessToken])
+  }, [onExpired, session?.token?.accessToken])
 
   useEffect(() => {
     _getSession()
@@ -100,7 +102,7 @@ export const SessionProvider = ({
           ? 'authenticated'
           : 'unauthenticated',
       async update() {
-        if (loading || !session) return
+        if (loading) return
         setLoading(true)
         const newSession = await _getSession()
         setLoading(false)

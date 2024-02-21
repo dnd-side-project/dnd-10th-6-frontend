@@ -31,7 +31,7 @@ const FormLayout = ({
     >
       <div className="flex-1 flex flex-col mt-4 px-5">{content}</div>
 
-      <div className="p-5 mb-4 bg-white flex justify-center">{button}</div>
+      <div className="p-5 pb-0 mb-4 bg-white flex justify-center">{button}</div>
     </BaseLayout>
   )
 }

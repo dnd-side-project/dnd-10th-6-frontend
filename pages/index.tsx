@@ -12,13 +12,12 @@ const Page = () => {
   const { signin, data } = useSession()
   const router = useRouter()
   const mounted = useMount()
-
   useBrowserLayoutEffect(() => {
     if (data?.user) {
       if (data.user && !data.user.name) {
         router.replace('/signup', undefined, { shallow: true })
       } else {
-        router.replace('/dashboard', undefined, { shallow: true })
+        router.replace('/dashboard', undefined)
       }
     }
   }, [data, router])
