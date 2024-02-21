@@ -19,6 +19,8 @@ import { useRouter } from 'next/router'
 import { useSearchParams } from 'next/navigation'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import QueryProvider from '@/contexts/query-provider'
+import { HydrationBoundary } from '@tanstack/react-query'
+import MetaHead from '@/components/meta-head'
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -70,7 +72,12 @@ export default function NamuiWikiApp({
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
-      <QueryProvider>{getLayout(<Component {...pageProps} />)}</QueryProvider>
+      <QueryProvider>
+        <HydrationBoundary state={pageProps.dehydratedState}>
+          <MetaHead />
+          {getLayout(<Component {...pageProps} />)}
+        </HydrationBoundary>
+      </QueryProvider>
 
       {mounted && (
         <Toaster

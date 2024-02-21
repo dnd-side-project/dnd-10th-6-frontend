@@ -1,5 +1,6 @@
 import { AUTH } from '@/constants'
 import { UnauthorizedError, isNamuiError } from '@/error'
+import { serverURL } from '@/lib/server/utils'
 import withHandler from '@/lib/server/with-handler'
 import { serialize } from 'cookie'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -16,7 +17,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       throw new UnauthorizedError()
     }
     // TODO:쿠키 전송 상태 확인
-    const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
     serverURL.pathname = '/api/v1/auth/refresh'
     const response = await fetch(serverURL, {
       method: 'POST',

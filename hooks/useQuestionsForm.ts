@@ -56,7 +56,7 @@ const QsSchema = z.object({
       questionId: z.string(),
       type: z.string(),
       answer: z.string(),
-      reason: z.string(),
+      reason: z.string().min(1).max(15),
     }),
   ),
 })

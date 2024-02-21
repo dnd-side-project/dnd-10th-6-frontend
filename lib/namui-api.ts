@@ -34,6 +34,13 @@ export class NamuiApi {
     })
   }
 
+  static async getPublicUserInfo(wikiId: string) {
+    return await NamuiApi.handler<{ data: { nickname: string } }>({
+      method: 'GET',
+      url: `/api/v1/users?wikiId=${wikiId}`,
+    })
+  }
+
   static async getUserData() {
     return await NamuiApi.handler<{ data: User }>({
       method: 'GET',
