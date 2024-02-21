@@ -1,345 +1,315 @@
-import First from '@/components/compositions/question/First'
-import createFunnel from '@/components/funnel/createFunnel'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { Variants, motion, useAnimate } from 'framer-motion'
+import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
+
 import { FunnelProvider } from '@/contexts/useFunnelContext'
-import { ReactNode } from 'react'
-import useQuestionForm from '../hooks/useQuestionsForm'
-import { FormProvider } from 'react-hook-form'
-import Second from '@/components/compositions/question/Second'
-import Third from '@/components/compositions/question/Third'
-import Fourth from '@/components/compositions/question/Fourth'
+import createFunnel from '@/components/funnel/createFunnel'
 
-const { Funnel, Step, useFunnel } = createFunnel([
-  '1번',
-  '2번',
-  '3번',
-  '4번',
-] as const)
+import { QUESTION_MAX } from '@/constants'
+import ProgressBar from '@/components/progressbar'
+import Button from '@/components/button'
+import FormLayout from '@/layout/form-layout'
+import { QueryClient, dehydrate, useSuspenseQuery } from '@tanstack/react-query'
+import { getQuestionQuery } from '@/queries/question'
+import useQuestionForm, { QsSchemaType } from '@/hooks/useQuestionsForm'
+import RadioButton from '@/components/radioButton'
+import InputLabel from '@/components/inputLabel'
+import Inputbox from '@/components/inputbox'
+import { GetServerSideProps } from 'next'
+import { serverURL } from '@/lib/server/utils'
 
-const questionMockData = {
-  data: [
-    {
-      id: '65d3156916f83528d804fadb',
-      title: '{{userName}}님은<br/><b>사람들과 빨리 친해지는 편</b>인가요?',
-      type: 'OX',
-      dashboardType: 'CHARACTER',
-      surveyOrder: 1,
-      options: [
-        {
-          id: '65d3156916f83528d804fac7',
-          value: '🙅‍♂️  아니요, 시간이 걸리는 편이에요',
-          text: '🙅‍♂️  아니요, 시간이 걸리는 편이에요',
-        },
-        {
-          id: '65d3156916f83528d804fac6',
-          value: '🙆‍♂️ 네, 그러는 편이에요.',
-          text: '🙆‍♂️ 네, 그러는 편이에요.',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fadc',
-      title: '{{userName}}님은<br/><b>나와 비슷한 성향</b>인가요?',
-      type: 'OX',
-      dashboardType: 'CHARACTER',
-      surveyOrder: 2,
-      options: [
-        {
-          id: '65d3156916f83528d804fac8',
-          value: '🙅‍♂️  아니요, 나와 달라요',
-          text: '🙅‍♂️  아니요, 나와 달라요',
-        },
-        {
-          id: '65d3156916f83528d804fac6',
-          value: '🙆‍♂️ 네, 그러는 편이에요.',
-          text: '🙆‍♂️ 네, 그러는 편이에요.',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fadd',
-      title: '{{userName}}님은<br/><b>MBTI에 과몰입하는 편</b>인가요?',
-      type: 'OX',
-      dashboardType: 'CHARACTER',
-      surveyOrder: 3,
-      options: [
-        {
-          id: '65d3156916f83528d804fac9',
-          value: '🙅‍♂️  아니요, 몰입하지 않아요',
-          text: '🙅‍♂️  아니요, 몰입하지 않아요',
-        },
-        {
-          id: '65d3156916f83528d804fac6',
-          value: '🙆‍♂️ 네, 그러는 편이에요.',
-          text: '🙆‍♂️ 네, 그러는 편이에요.',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fade',
-      title: '{{userName}}님은<br/><b>주말마다 약속이 있는 편</b>인가요?',
-      type: 'OX',
-      dashboardType: 'CHARACTER',
-      surveyOrder: 4,
-      options: [
-        {
-          id: '65d3156916f83528d804faca',
-          value: '🙅‍♂️  아니요, 안 그러는 편이에요',
-          text: '🙅‍♂️  아니요, 안 그러는 편이에요',
-        },
-        {
-          id: '65d3156916f83528d804fac6',
-          value: '🙆‍♂️ 네, 그러는 편이에요.',
-          text: '🙆‍♂️ 네, 그러는 편이에요.',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fadf',
-      title: '{{userName}}님에게<br/><b>가장 중요한 것</b>은 무엇일 것 같나요?',
-      type: 'MULTIPLE_CHOICE',
-      dashboardType: 'BEST_WORTH',
-      surveyOrder: 5,
-      options: [
-        {
-          id: '65d3156916f83528d804facc',
-          value: '❤️  사랑',
-          text: '❤️  사랑',
-        },
-        {
-          id: '65d3156916f83528d804facb',
-          value: '💵  돈',
-          text: '💵  돈',
-        },
-        {
-          id: '65d3156916f83528d804face',
-          value: '🧑‍🤝‍🧑  우정',
-          text: '🧑‍🤝‍🧑  우정',
-        },
-        {
-          id: '65d3156916f83528d804facd',
-          value: '👨🏼‍⚖️  명예',
-          text: '👨🏼‍⚖️  명예',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fae0',
-      title: '{{userName}}님은<br/><b>기쁠 때 어떤 행동</b>을 할 것 같나요?',
-      type: 'MULTIPLE_CHOICE',
-      dashboardType: 'HAPPY',
-      surveyOrder: 6,
-      options: [
-        {
-          id: '65d3156916f83528d804fad2',
-          value: '🍱  맛있는 음식을 먹는다',
-          text: '🍱  맛있는 음식을 먹는다',
-        },
-        {
-          id: '65d3156916f83528d804fad1',
-          value: '🏄🏼  취미생활을 즐긴다',
-          text: '🏄🏼  취미생활을 즐긴다',
-        },
-        {
-          id: '65d3156916f83528d804fad0',
-          value: '🎉  사람들에게 알리고 축하받는다',
-          text: '🎉  사람들에게 알리고 축하받는다',
-        },
-        {
-          id: '65d3156916f83528d804facf',
-          value: '👏  혼자 조용히 즐긴다',
-          text: '👏  혼자 조용히 즐긴다',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fae1',
-      title:
-        '{{userName}}님은<br/><b>슬프거나 화날 때 어떤 행동</b>을 할 것 같나요?',
-      type: 'MULTIPLE_CHOICE',
-      dashboardType: 'SAD',
-      surveyOrder: 7,
-      options: [
-        {
-          id: '65d3156916f83528d804fad4',
-          value: '🙏  사람들에게 조언을 구한다',
-          text: '🙏  사람들에게 조언을 구한다',
-        },
-        {
-          id: '65d3156916f83528d804fad3',
-          value: '😭  혼자 끙끙 앓는다',
-          text: '😭  혼자 끙끙 앓는다',
-        },
-        {
-          id: '65d3156916f83528d804fad6',
-          value: '🚴🏼  스트레스를 풀기 위해 여가생활을 즐긴다',
-          text: '🚴🏼  스트레스를 풀기 위해 여가생활을 즐긴다',
-        },
-        {
-          id: '65d3156916f83528d804fad5',
-          value: '🙌  사람들의 위로와 공감을 원한다',
-          text: '🙌  사람들의 위로와 공감을 원한다',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fae2',
-      title: '{{userName}}님에게<br/><b>얼마까지</b> 빌려줄 수 있나요?',
-      type: 'NUMERIC_CHOICE',
-      dashboardType: 'MONEY',
-      surveyOrder: 8,
-      options: [
-        {
-          id: '65d3156916f83528d804fada',
-          value: 1000000,
-          text: '💵  100만 원',
-        },
-        {
-          id: '65d3156916f83528d804fad9',
-          value: 100000,
-          text: '💵  10만 원',
-        },
-        {
-          id: '65d3156916f83528d804fad8',
-          value: 1000,
-          text: '💰  1,000원',
-        },
-        {
-          id: '65d3156916f83528d804fad7',
-          value: 0,
-          text: '💸  0원',
-        },
-      ],
-    },
-    {
-      id: '65d3156916f83528d804fae3',
-      title:
-        '{{userName}}님을<br/><b>처음 만났을 때 어떤 사람</b>으로 보였나요?',
-      type: 'SHORT_ANSWER',
-      dashboardType: 'NONE',
-      surveyOrder: 9,
-      options: [],
-    },
-    {
-      id: '65d3156916f83528d804fae4',
-      title: '{{userName}}님을<br/><b>5글자(떠오르는 단어)로 표현</b>한다면?',
-      type: 'SHORT_ANSWER',
-      dashboardType: 'NONE',
-      surveyOrder: 10,
-      options: [],
-    },
-    {
-      id: '65d3156916f83528d804fae5',
-      title: '{{userName}}님의<br/><b>이런점은 꼭 배우고 싶어요!</b>',
-      type: 'SHORT_ANSWER',
-      dashboardType: 'NONE',
-      surveyOrder: 11,
-      options: [],
-    },
-    {
-      id: '65d3156916f83528d804fae6',
-      title: '{{userName}}님이<br/><b>가장 많이 사용하는 단어는?</b>',
-      type: 'SHORT_ANSWER',
-      dashboardType: 'NONE',
-      surveyOrder: 12,
-      options: [],
-    },
-    {
-      id: '65d3156916f83528d804fae7',
-      title:
-        '{{userName}}님이<br/><b>혼자 몰래 좋아하고 있는 것</b>은 무엇일까요?',
-      type: 'SHORT_ANSWER',
-      dashboardType: 'NONE',
-      surveyOrder: 13,
-      options: [],
-    },
-    {
-      id: '65d3156916f83528d804fae8',
-      title:
-        '{{userName}}님을 보면<br/><b>어떤 캐릭터(연예인)</b>이 떠오르나요?',
-      type: 'SHORT_ANSWER',
-      dashboardType: 'NONE',
-      surveyOrder: 14,
-      options: [],
-    },
-  ],
+const stepTextVariants: Variants = {
+  initial: {
+    opacity: 0,
+    y: -20,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  },
+  exit: {
+    opacity: 0,
+    y: 20,
+  },
 }
-export type QSMockDataType = (typeof questionMockData)['data'][number]
 
-const Page = () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { wikiId } = ctx.query
+  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  serverURL.pathname = '/api/v1/users'
+  serverURL.searchParams.append('wikiId', wikiId)
+
+  const response = await fetch(serverURL).then(
+    (res) =>
+      res.json() as Promise<{
+        data?: { nickname: string }
+        errorCode?: string
+        reason?: string
+      }>,
+  )
+  if (!response.data?.nickname) return { notFound: true }
+  const {
+    data: { nickname },
+  } = response
+  const queryClient = new QueryClient()
+  try {
+    await queryClient.prefetchQuery(getQuestionQuery(nickname))
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+        nickname,
+      },
+    }
+  } catch (e) {
+    return {
+      props: {},
+    }
+  } finally {
+    queryClient.clear()
+  }
+}
+
+const Question = ({ nickname }: { nickname: string }) => {
+  const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
+  const { Funnel, Step, useFunnel } = useRef(
+    createFunnel(qs.map((item) => item.id)),
+  ).current
+
   const { step, toPrevStep, toNextStep } = useFunnel()
 
-  const questionForm = useQuestionForm()
+  const stepRef = useRef<HTMLParagraphElement>(null)
+
+  const [progress, setProgress] = useState<{ current: number; max: number }>({
+    current: 0,
+    max: QUESTION_MAX,
+  })
+
+  const questionForm = useQuestionForm({
+    defaultValues: {
+      answers: qs.map((item) => ({
+        answer: '',
+        questionId: item.id,
+        reason: '',
+        type: '',
+      })),
+    },
+  })
+
+  const { fields } = useFieldArray({
+    name: 'answers',
+    control: questionForm.control,
+  })
+
+  const { handleSubmit, setFocus } = questionForm
+  const onSubmit = (data: QsSchemaType) => {
+    console.log(data)
+  }
+
+  const countAnimation = ({
+    direction,
+    index,
+  }: {
+    direction: 'UP' | 'DOWN'
+    index: number
+  }) => {
+    if (stepRef.current) {
+      const startValue = txt[progress.current] ?? 0
+
+      const DURATION = 1500
+      const easeOutQuint = (x: number): number => {
+        return 1 - Math.pow(1 - x, 5)
+      }
+
+      const target = txt[index]
+
+      let animationId: number
+      // 최초 시작 시간
+      let start: number
+
+      const animate = () => {
+        if (!start) start = new Date().getTime()
+        // 현재시간 - 최초시작시간
+        const timestamp = new Date().getTime()
+        const progress = timestamp - start
+        if (progress >= DURATION) {
+          if (stepRef.current) {
+            stepRef.current.innerText = `${target}%`
+          }
+          return cancelAnimationFrame(animationId)
+        }
+
+        const p = progress / DURATION
+        const value = easeOutQuint(p)
+        if (stepRef.current) {
+          const dest = target - startValue
+          stepRef.current.innerText = `${(isNaN(startValue) ? 0 : startValue ?? 0) + Math.round(dest * value) ?? 0}%`
+        }
+        if (p < DURATION) {
+          animationId = requestAnimationFrame(animate)
+        }
+      }
+
+      animationId = requestAnimationFrame(animate)
+    }
+  }
+
+  const goPrev = async () => {
+    toPrevStep()
+    setProgress((prev) => ({ current: prev.current - 1, max: qs.length }))
+    countAnimation({ direction: 'DOWN', index: progress.current - 1 })
+  }
+  const goNext = async () => {
+    const formValues = questionForm.getValues().answers[progress.current]
+    if (!formValues.answer) {
+      setFocus(`answers.${progress.current}.answer`)
+      return
+    }
+    if (!formValues.reason) {
+      setFocus(`answers.${progress.current}.reason`)
+      return
+    }
+    toNextStep()
+    setProgress((prev) => ({ current: prev.current + 1, max: qs.length }))
+    countAnimation({ direction: 'UP', index: progress.current + 1 })
+  }
+
+  const txt = useMemo(() => {
+    const 상수들 = [0, 30]
+    let result: number[] = []
+    for (let i = 0; i < 5; i++) {
+      const 상수 = qs.length - 상수들.length
+      const makeRandomeArr = Array(상수)
+        .fill(0)
+        .map((item) => Math.random() * 70 + 30)
+        .sort((a, b) => a - b)
+        .map((item, idx) =>
+          Math.round(((result?.[idx + 상수들.length] ?? 0) + item) / 2),
+        )
+
+      result = [...상수들, ...makeRandomeArr, 100].sort((a, b) => a - b)
+    }
+    return result
+  }, [qs])
 
   return (
-    <>
-      <FunnelProvider
-        value={{
-          toPrevStep,
-          toNextStep,
-        }}
-      >
-        <FormProvider {...questionForm}>
-          <Funnel step={step}>
-            <Step
-              name="1번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <First data={questionMockData.data[0]} />
-            </Step>
+    <FormLayout
+      header={{
+        leftIcon: (
+          <svg
+            className="w-5 h-5"
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M18.6187 23.6187C18.277 23.9604 17.723 23.9604 17.3813 23.6187L8.38128 14.6187C8.21719 14.4546 8.125 14.2321 8.125 14C8.125 13.7679 8.21719 13.5454 8.38128 13.3813L17.3813 4.38128C17.723 4.03957 18.277 4.03957 18.6187 4.38128C18.9604 4.72299 18.9604 5.27701 18.6187 5.61872L10.2374 14L18.6187 22.3813C18.9604 22.723 18.9604 23.277 18.6187 23.6187Z"
+              fill="#111111"
+            />
+          </svg>
+        ),
+        options: {
+          onBackClick() {
+            goPrev()
+          },
+        },
+      }}
+      contentProps={{
+        className: 'overflow-y-scroll',
+      }}
+      title={
+        <div className="flex items-center overflow-hidden text-brand-main-green400 ">
+          <p className="flex justify-center items-center" ref={stepRef}>
+            0%
+          </p>
+          {/* <p className="px-1">/ {QUESTION_MAX}</p> */}
+        </div>
+      }
+      button={
+        <Button
+          disabled={false}
+          onClick={step === '14번' ? handleSubmit(onSubmit) : goNext}
+          className="w-full"
+        >
+          {step === '14번' ? '제출하기' : '다음'}
+        </Button>
+      }
+      content={
+        <FunnelProvider
+          value={{
+            toPrevStep: goPrev,
+            toNextStep: goNext,
+          }}
+        >
+          <ProgressBar current={txt[progress.current]} />
 
-            <Step
-              name="2번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Second data={questionMockData.data[1]} />
-            </Step>
-
-            <Step
-              name="3번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Third data={questionMockData.data[2]} />
-            </Step>
-
-            <Step
-              name="4번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Fourth data={questionMockData.data[3]} />
-            </Step>
-
-            {/* <Step
-              name="5번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Fifth data={questionMockData.data[4]}/>
-            </Step>
-
-            <Step
-              name="6번"
-              onEnter={() => {
-                //프로그래스바 진척도
-              }}
-            >
-              <Sixth data={questionMockData.data[5]}/>
-            </Step>
- */}
-          </Funnel>
-        </FormProvider>
-      </FunnelProvider>
-    </>
+          <FormProvider {...questionForm}>
+            <Funnel step={step}>
+              {fields.map((field, idx) => {
+                const { title, options } = qs[idx]
+                return (
+                  <Step name={field.questionId} key={step}>
+                    <div className="text-left grow flex flex-col space-y-8 overflow-y-hidden">
+                      <div dangerouslySetInnerHTML={{ __html: title }}></div>
+                      <div className="flex flex-col space-y-2 overflow-y-scroll">
+                        {options.map((option) => (
+                          <Controller
+                            key={option.id}
+                            name={`answers.${idx}.answer`}
+                            defaultValue=""
+                            control={questionForm.control}
+                            render={({ field }) => (
+                              <RadioButton
+                                {...field}
+                                id={option.id}
+                                value={option.value + ''}
+                                label={option.text}
+                                selected={field.value === option.value + ''}
+                                onChange={(e) => {
+                                  field.onChange(e.target.value)
+                                }}
+                              />
+                            )}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex grow flex-col justify-end">
+                        <InputLabel
+                          className="text-sub2-medium"
+                          label="이유를 말해주세요"
+                          required
+                        >
+                          <Controller
+                            control={questionForm.control}
+                            defaultValue=""
+                            name={`answers.${idx}.reason`}
+                            render={({ field }) => (
+                              <Inputbox
+                                {...field}
+                                placeholder="15글자 이내로 입력해주세요"
+                                maxLength={15}
+                                value={field.value + ''}
+                              />
+                            )}
+                          />
+                        </InputLabel>
+                      </div>
+                    </div>
+                  </Step>
+                )
+              })}
+            </Funnel>
+          </FormProvider>
+        </FunnelProvider>
+      }
+    />
   )
 }
 
-Page.getLayout = (page: ReactNode) => page
-export default Page
+export default Question
+
+Question.getLayout = (page: ReactNode) => page

@@ -31,3 +31,5 @@ export const parseJwt = (token: string) => {
 
   return JSON.parse(jsonPayload)
 }
+
+export const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)

@@ -7,7 +7,7 @@ import {
   useEffect,
   useRef,
 } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { fadeInProps } from '@/variants'
 import { useSettingStore } from '@/stores/setting.store'
@@ -95,7 +95,7 @@ const Header = ({
               : () => {}
         }
       >
-        {typeof leftIcon !== 'undefined' ? null : leftIcon ? (
+        {typeof leftIcon === 'undefined' ? null : leftIcon ? (
           leftIcon
         ) : (
           <svg
@@ -114,9 +114,11 @@ const Header = ({
           </svg>
         )}
       </motion.button>
-      <motion.div {...fadeInProps} className="flex justify-center">
-        {center}
-      </motion.div>
+      <AnimatePresence mode="sync">
+        <motion.div {...fadeInProps} className="flex justify-center">
+          {center}
+        </motion.div>
+      </AnimatePresence>
       <motion.div {...fadeInProps} className="flex gap-x-4 justify-end">
         {showRight
           ? rightIcon ?? (

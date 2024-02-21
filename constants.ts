@@ -7,3 +7,5 @@ export const AUTH = {
   ACCESS_TOKEN_KEY: 'accessToken' as const,
   REFRESH_TOKEN_KEY: 'refreshToken' as const,
 }
+
+export const QUESTION_MAX = 14

@@ -27,10 +27,13 @@ import Button from '@/components/button'
 import WelcomeTrees from '@/components/icons/welcome-trees'
 import { useRouter } from 'next/router'
 import Modal from '@/components/modal'
+import { useSession } from '@/provider/session-provider'
 
 const Page = () => {
   const headerHeight = useSettingStore((state) => state.headerHeight)
   const router = useRouter()
+  const { data } = useSession()
+
   // TODO: 내 정원화면 제작 후 정원페이지로 변경필요
   const [shouldShowWelcome, setShouldShowWelcome] = useState(false)
   const ref = useRef<HTMLElement>(null)
@@ -85,7 +88,7 @@ const Page = () => {
         {shouldShowWelcome && (
           <FormLayout
             header={{
-              leftIcon: false,
+              leftIcon: <></>,
               center: <></>,
               rightIcon: (
                 <button
@@ -118,7 +121,7 @@ const Page = () => {
               <div className="grow -mt-5 flex flex-col items-center justify-center px-5 text-center">
                 <WelcomeTrees />
                 <p className="text-mainTitle2-bold mt-8 mb-3">
-                  환영해요 하아얀님
+                  환영해요 {data?.user?.name}님
                 </p>
                 <p className="text-subTitle2 text-text-sub-gray4f">
                   친구에게 내 소개를 부탁해보세요

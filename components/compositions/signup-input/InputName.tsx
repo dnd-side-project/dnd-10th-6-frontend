@@ -3,7 +3,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form'
 import Inputbox from '../../inputbox'
 import InputLabel from '../../inputLabel'
 import Button from '../../button'
-import { FormValues } from '@/pages/surveys/hooks/useSurveyForm'
+import { FormValues } from '@/hooks/useSurveyForm'
 import FormLayout from '@/layout/form-layout'
 
 const InputName = () => {

@@ -1,6 +1,7 @@
 import { cn } from '@/lib/client/utils'
 import { InputHTMLAttributes, forwardRef } from 'react'
-
+import { motion } from 'framer-motion'
+import { fadeInProps } from '@/variants'
 interface RadioButtonProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   id: string
@@ -28,7 +29,12 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     ref,
   ) => {
     return (
-      <div
+      <motion.div
+        {...fadeInProps}
+        transition={{
+          delay: 0.2,
+          duration: 0.3,
+        }}
         className={cn(
           'flex items-center justify-start w-full p-4 rounded-sm border border-[#E5E5EC] transition-all duration-200',
           'focus-within:border-brand-main-green400',
@@ -68,7 +74,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           <span className="ml-2">{label}</span>
           {children}
         </label>
-      </div>
+      </motion.div>
     )
   },
 )

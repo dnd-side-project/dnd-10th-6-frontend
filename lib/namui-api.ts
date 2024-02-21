@@ -8,6 +8,11 @@ import axios, {
 import type { ProviderType, User } from '@/lib/auth'
 import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
 import { AUTH } from '@/constants'
+import { Question } from '@/model/question.entity'
+
+interface NamuiResponse<T = any> {
+  data: T
+}
 
 export class NamuiApi {
   private static instance: AxiosInstance
@@ -29,10 +34,24 @@ export class NamuiApi {
     })
   }
 
+  static async getPublicUserInfo(wikiId: string) {
+    return await NamuiApi.handler<{ data: { nickname: string } }>({
+      method: 'GET',
+      url: `/api/v1/users?wikiId=${wikiId}`,
+    })
+  }
+
   static async getUserData() {
     return await NamuiApi.handler<{ data: User }>({
       method: 'GET',
       url: '/api/v1/users/profile',
+    })
+  }
+
+  static async getQs() {
+    return await NamuiApi.handler<NamuiResponse<Question[]>>({
+      method: 'GET',
+      url: '/api/v1/questions',
     })
   }
 

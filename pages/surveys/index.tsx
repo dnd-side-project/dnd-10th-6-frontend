@@ -3,7 +3,7 @@ import createFunnel from '@/components/funnel/createFunnel'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 import InputName from '@/components/compositions/signup-input/InputName'
 import InputKnowing from '@/components/compositions/signup-input/InputKnowing'
-import useSurveyForm from './hooks/useSurveyForm'
+import useSurveyForm from '../../hooks/useSurveyForm'
 import { ReactNode } from 'react'
 
 const { Funnel, Step, useFunnel } = createFunnel([

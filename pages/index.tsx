@@ -17,7 +17,7 @@ const Page = () => {
       if (data.user && !data.user.name) {
         router.replace('/signup', undefined, { shallow: true })
       } else {
-        router.replace('/dashboard', undefined)
+        router.replace('/garden', undefined)
       }
     }
   }, [data, router])

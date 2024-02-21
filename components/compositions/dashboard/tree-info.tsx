@@ -1,5 +1,5 @@
-import Badge from '@/components/badge'
 import Button from '@/components/button'
+import Badge from '@/components/button/badge'
 import { useSession } from '@/provider/session-provider'
 import React from 'react'
 
