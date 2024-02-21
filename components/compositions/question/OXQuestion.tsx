@@ -2,7 +2,7 @@ import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
 import RadioButton from '@/components/radioButton'
 
-import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
+import { QsSchemaType } from '@/hooks/useQuestionsForm'
 import { QSMockDataType } from '@/pages/surveys/questions'
 
 import { Controller, useFormContext } from 'react-hook-form'
@@ -16,9 +16,9 @@ const OXQuestion = ({ data, questionKey }: OXProps) => {
   const { control } = useFormContext<QsSchemaType>()
 
   return (
-    <div className="text-left">
+    <div className="text-left grow flex flex-col space-y-8">
       <div dangerouslySetInnerHTML={{ __html: data.title }}></div>
-      <div className="flex flex-col mt-8 space-y-2">
+      <div className="flex flex-col space-y-2">
         {data.options.map((option) => (
           <Controller
             key={option.id}
@@ -40,7 +40,7 @@ const OXQuestion = ({ data, questionKey }: OXProps) => {
           />
         ))}
       </div>
-      <div className="mt-8">
+      <div className="mt-8 flex grow flex-col justify-end">
         <InputLabel
           className="text-sub2-medium"
           label="이유를 말해주세요"

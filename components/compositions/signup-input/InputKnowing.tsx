@@ -8,7 +8,7 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form'
-import { FormValues } from '@/pages/surveys/hooks/useSurveyForm'
+import { FormValues } from '@/hooks/useSurveyForm'
 import FormLayout from '@/layout/form-layout'
 
 const InputKnowing = () => {

@@ -9,6 +9,9 @@ interface FormLayoutProps {
   button: ReactNode
   showHeader?: boolean
   header?: HeaderProps
+  contentProps?: {
+    className?: string
+  }
   className?: string
 }
 
@@ -17,6 +20,7 @@ const FormLayout = ({
   button,
   content,
   className,
+  contentProps,
   ...rest
 }: FormLayoutProps) => {
   return (
@@ -29,7 +33,14 @@ const FormLayout = ({
         ...rest.header,
       }}
     >
-      <div className="flex-1 flex flex-col mt-4 px-5">{content}</div>
+      <div
+        className={cn(
+          'flex-1 flex flex-col mt-4 px-5',
+          contentProps?.className,
+        )}
+      >
+        {content}
+      </div>
 
       <div className="p-5 pb-0 mb-4 bg-white flex justify-center">{button}</div>
     </BaseLayout>

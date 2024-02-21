@@ -18,6 +18,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { useSearchParams } from 'next/navigation'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
+import QueryProvider from '@/contexts/query-provider'
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -69,7 +70,7 @@ export default function NamuiWikiApp({
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
-      {getLayout(<Component {...pageProps} />)}
+      <QueryProvider>{getLayout(<Component {...pageProps} />)}</QueryProvider>
 
       {mounted && (
         <Toaster

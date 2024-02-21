@@ -1,6 +1,6 @@
 import Inputbox from '@/components/inputbox'
 
-import { QsSchemaType } from '@/pages/surveys/hooks/useQuestionsForm'
+import { QsSchemaType } from '@/hooks/useQuestionsForm'
 import { QSMockDataType } from '@/pages/surveys/questions'
 
 import { Controller, useFormContext } from 'react-hook-form'
@@ -15,7 +15,7 @@ const ManualQuestion = ({ data, questionKey, img }: ManualProps) => {
   const { control } = useFormContext<QsSchemaType>()
 
   return (
-    <div className="text-left">
+    <div className="text-left grow">
       <div dangerouslySetInnerHTML={{ __html: data.title }}></div>
       <div className="flex flex-col mt-8 space-y-2">
         <Controller

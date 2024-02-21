@@ -2,6 +2,17 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+const period = ['SIX_MONTHS', 'ONE_YEAR', 'FOUR_YEARS', 'INFINITE'] as const
+
+const relation = [
+  'ELEMENTARY_SCHOOL',
+  'MIDDLE_AND_HIGH_SCHOOL',
+  'UNIVERSITY',
+  'WORK',
+  'SOCIAL',
+  'ETC',
+] as const
+
 export const dashboardType = [
   'CHARACTER',
   'BEST_WORTH',
@@ -36,10 +47,10 @@ export interface QuestionFormValuesProps {
 }
 
 const QsSchema = z.object({
-  owner: z.string(),
-  senderName: z.string(),
-  period: z.string(),
-  relation: z.string(),
+  owner: z.string().uuid(),
+  senderName: z.string().min(1),
+  period: z.enum(period),
+  relation: z.enum(relation),
   answers: z.array(
     z.object({
       questionId: z.string(),
@@ -52,16 +63,13 @@ const QsSchema = z.object({
 
 export type QsSchemaType = z.infer<typeof QsSchema>
 
-const useQuestionForm = () => {
+const useQuestionForm = (
+  options?: Parameters<typeof useForm<QsSchemaType>>[0],
+) => {
   return useForm<QsSchemaType>({
-    defaultValues: {
-      owner: '',
-      senderName: '',
-      period: '',
-      relation: '',
-      answers: [],
-    },
+    defaultValues: { answers: [] },
     resolver: zodResolver(QsSchema),
+    ...options,
   })
 }
 
