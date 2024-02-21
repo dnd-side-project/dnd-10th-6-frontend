@@ -10,7 +10,9 @@ import { QUESTION_MAX } from '@/constants'
 import ProgressBar from '@/components/progressbar'
 import Button from '@/components/button'
 import FormLayout from '@/layout/form-layout'
-import OXQuestion from '@/components/compositions/question/ChoiceQuestion'
+import OXQuestion from '@/components/compositions/question/OXQuestion'
+import ManualQuestion from '@/components/compositions/question/\bManualQuestion'
+import { TreeSvg } from '@/pages/assets/questionTrees'
 
 const { Funnel, Step, useFunnel } = createFunnel([
   '1번',
@@ -21,6 +23,12 @@ const { Funnel, Step, useFunnel } = createFunnel([
   '6번',
   '7번',
   '8번',
+  '9번',
+  '10번',
+  '11번',
+  '12번',
+  '13번',
+  '14번',
 ] as const)
 
 const questionMockData = {
@@ -354,11 +362,14 @@ const Page = () => {
         },
       }}
       title={
-        <div className="flex items-center space-x-1 overflow-hidden text-brand-main-green400 ">
-          <motion.p className="w-2" ref={stepRef}>
+        <div className="flex items-center overflow-hidden text-brand-main-green400 ">
+          <motion.p
+            className="w-4 flex justify-center items-center"
+            ref={stepRef}
+          >
             {stepText}
           </motion.p>
-          <span>/{QUESTION_MAX}</span>
+          <p className="px-1">/ {QUESTION_MAX}</p>
         </div>
       }
       button={
@@ -467,6 +478,79 @@ const Page = () => {
                 <OXQuestion
                   data={questionMockData.data[7]}
                   questionKey="eighthQuestion"
+                />
+              </Step>
+              <Step
+                name="9번"
+                onEnter={() => {
+                  setProgress({ current: 9, max: QUESTION_MAX })
+                }}
+              >
+                <ManualQuestion
+                  data={questionMockData.data[8]}
+                  questionKey="ninthQuestion"
+                  img={TreeSvg.nine}
+                />
+              </Step>
+              <Step
+                name="10번"
+                onEnter={() => {
+                  setProgress({ current: 10, max: QUESTION_MAX })
+                }}
+              >
+                <ManualQuestion
+                  data={questionMockData.data[9]}
+                  questionKey="tenthQuestion"
+                  img={TreeSvg.ten}
+                />
+              </Step>
+              <Step
+                name="11번"
+                onEnter={() => {
+                  setProgress({ current: 11, max: QUESTION_MAX })
+                }}
+              >
+                <ManualQuestion
+                  data={questionMockData.data[10]}
+                  questionKey="eleventhQuestion"
+                  img={TreeSvg.eleven}
+                />
+              </Step>
+
+              <Step
+                name="12번"
+                onEnter={() => {
+                  setProgress({ current: 12, max: QUESTION_MAX })
+                }}
+              >
+                <ManualQuestion
+                  data={questionMockData.data[11]}
+                  questionKey="twelfthQuestion"
+                  img={TreeSvg.twelve}
+                />
+              </Step>
+              <Step
+                name="13번"
+                onEnter={() => {
+                  setProgress({ current: 13, max: QUESTION_MAX })
+                }}
+              >
+                <ManualQuestion
+                  data={questionMockData.data[12]}
+                  questionKey="thirteenthQuestion"
+                  img={TreeSvg.thirteen}
+                />
+              </Step>
+              <Step
+                name="14번"
+                onEnter={() => {
+                  setProgress({ current: 14, max: QUESTION_MAX })
+                }}
+              >
+                <ManualQuestion
+                  data={questionMockData.data[13]}
+                  questionKey="fourteenthQuestion"
+                  img={TreeSvg.fourteen}
                 />
               </Step>
             </Funnel>

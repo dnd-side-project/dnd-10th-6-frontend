@@ -40,7 +40,7 @@ const OXQuestion = ({ data, questionKey }: OXProps) => {
           />
         ))}
       </div>
-      <div className="mt-44 py-2">
+      <div className="mt-8">
         <InputLabel
           className="text-sub2-medium"
           label="이유를 말해주세요"
