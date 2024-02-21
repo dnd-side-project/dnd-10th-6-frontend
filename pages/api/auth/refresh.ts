@@ -21,7 +21,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const response = await fetch(serverURL, {
       method: 'POST',
       headers: {
-        [AUTH.AUTH_HEADER_KEY]: parse.data.accessToken ?? '',
+        cookie: req.headers.cookie ?? '',
+        [AUTH.AUTH_HEADER_KEY]: parse.data.accessToken,
       },
     }).then((res) => {
       if (!res.ok) {
@@ -35,11 +36,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
 
     res.setHeader('Set-Cookie', [
-      serialize('accessToken', response.data.accessToken, {
+      serialize(AUTH.ACCESS_TOKEN_KEY, response.data.accessToken, {
         path: '/',
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: 'lax',
         maxAge: AUTH.ACCESS_EXPIRED_TIME,
       }),
     ])
@@ -48,7 +49,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     })
   } catch (err) {
     if (isNamuiError(err)) {
-      return res.status(401).json({ message: err.message })
+      return res.status(200).json({ message: err.message, accessToken: null })
     }
   }
 }

@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 
 import { userEvent } from '@storybook/testing-library'
 import { Button } from '.'
+import { SessionProvider } from '@/provider/session-provider'
 
 const meta: Meta<typeof Button> = {
   title: 'UI/Button',
@@ -22,9 +23,11 @@ const meta: Meta<typeof Button> = {
   },
   decorators: [
     (Story, args) => (
-      <div className="flex w-full p-6">
-        <Story {...args} />
-      </div>
+      <SessionProvider session={{}}>
+        <div className="flex w-full p-6">
+          <Story {...args} />
+        </div>
+      </SessionProvider>
     ),
   ],
   tags: ['UI', 'autodocs'],

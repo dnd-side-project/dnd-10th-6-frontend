@@ -14,6 +14,7 @@ export interface HeaderProps {
   center?: ReactNode
   rightIcon?: ReactNode
   leftIcon?: ReactNode
+  bodyRef?: Ref<HTMLElement>
   options?: {
     onBackClick?: () => void
     showRight?: boolean
@@ -22,6 +23,7 @@ export interface HeaderProps {
 
 const Header = ({
   leftIcon,
+  bodyRef,
   center = (
     <div className="h-5">
       <Logo />
@@ -34,7 +36,9 @@ const Header = ({
   const headerRef = useRef<HTMLElement>(null)
   const router = useRouter()
 
-  const { scrollTop, direction } = useScrollDirection()
+  const { scrollTop, direction } = useScrollDirection({
+    ref: (bodyRef as unknown as RefObject<HTMLElement>) ?? null,
+  })
 
   const { headerHeight, setIntersecting, setHeaderHeight } = useSettingStore(
     (state) => ({

@@ -1,3 +1,4 @@
+import { SessionProvider } from '@/provider/session-provider'
 import Header from '.'
 import { StoryObj, Meta } from '@storybook/react'
 
@@ -46,9 +47,11 @@ const meta: Meta<typeof Header> = {
   },
   decorators: [
     (Story, args) => (
-      <div className="flex w-full p-6">
-        <Story {...args} />
-      </div>
+      <SessionProvider session={{}}>
+        <div className="flex w-full p-6">
+          <Story {...args} />
+        </div>
+      </SessionProvider>
     ),
   ],
   tags: ['UI', 'autodocs'],

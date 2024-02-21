@@ -179,7 +179,7 @@ const WriterLanding = () => {
               fill="black"
             />
           </svg>
-          <p className="ml-3 p-2 text-center font-bold text-subTitle2 leading-subTitle2">
+          <p className="ml-3 p-2 text-center font-bold text-subTitle2-medium">
             카카오 로그인
           </p>
         </a>

@@ -11,6 +11,8 @@ const Page = () => {
       onStartClick={() => {
         Cookie.set('namui-init', new Date().toLocaleString(), {
           secure: false,
+          sameSite: 'None',
+          expires: Infinity,
           path: '/',
         })
         router.replace('/')

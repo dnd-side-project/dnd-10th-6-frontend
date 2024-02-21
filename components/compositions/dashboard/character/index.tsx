@@ -2,14 +2,18 @@ import Link from 'next/link'
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
+import { useSession } from '@/provider/session-provider'
 
 const Character = () => {
   const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
+  const { data } = useSession()
 
   return (
     <LazyMotion features={domAnimation}>
       <div>
-        <h2 className="text-mainTitle2-bold">김디엔님은 이런사람이에요</h2>
+        <h2 className="text-mainTitle2-bold">
+          {data?.user?.name ?? ''}님은 이런사람이에요
+        </h2>
         <m.div
           ref={ref}
           {...fadeInProps}
