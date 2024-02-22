@@ -94,7 +94,13 @@ const WelcomePage = () => {
           }}
           trigger={<Button>친구에게 내 소개 부탁하기</Button>}
           title="친구에게 내 소개를 부탁하시겠어요?"
-          description={`링크 공유하기를 통해\n친구에게 내 소개를 부탁할 수 있어요!`}
+          description={
+            <p>
+              링크 공유하기를 통해
+              <br />
+              친구에게 내 소개를 부탁할 수 있어요!
+            </p>
+          }
           footer={{
             divider: false,
             item: [

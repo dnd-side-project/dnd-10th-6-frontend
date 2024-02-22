@@ -21,7 +21,7 @@ interface ModalProps
   extends React.ComponentPropsWithoutRef<typeof Dialog>,
     React.ComponentPropsWithoutRef<typeof DialogTrigger> {
   title?: string
-  description?: string
+  description?: ReactNode
   footer?: {
     item?: ReactNode[]
     divider?: boolean

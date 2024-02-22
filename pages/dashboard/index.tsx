@@ -102,12 +102,12 @@ const Page = () => {
               </p>
               <h3 className="text-mainTitle1-bold">총 0그루</h3>
             </div>
-            <div className="flex flex-col space-y-8 items-center text-center">
+            <div className="flex flex-col items-center text-center">
               <TripleTrees />
-              <h3 className="text-subTitle1-bold">
+              <h3 className="text-subTitle1-bold mt-8 mb-4">
                 나무를 심어준 친구가 없어요
               </h3>
-              <p className="text-body1-medium text-text-sub-gray4f">
+              <p className="text-body1-medium text-text-sub-gray4f mb-8">
                 나에 대해 궁금하다면 링크 공유하기를 눌러
                 <br />
                 친구에게 알려달라고 부탁해보세요
@@ -120,7 +120,13 @@ const Page = () => {
                 key="selectShareModal"
                 trigger={<Button className="!w-fit px-4">링크 공유하기</Button>}
                 title="친구에게 내 소개를 부탁하시겠어요?"
-                description={`링크 공유하기를 통해\n친구에게 내 소개를 부탁할 수 있어요!`}
+                description={
+                  <p>
+                    링크 공유하기를 통해
+                    <br />
+                    친구에게 내 소개를 부탁할 수 있어요!
+                  </p>
+                }
                 footer={{
                   divider: false,
                   item: [
