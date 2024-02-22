@@ -31,8 +31,7 @@ const SignUp = () => {
   const onValid = async (values: SchemeType) => {
     await signup(values.nickname)
     router.replace({
-      pathname: '/dashboard',
-      hash: 'welcome',
+      pathname: '/welcome',
     })
   }
 
