@@ -26,7 +26,6 @@ export const shareToKaKaoLink = async () => {
   kakaoInit()
   window.Kakao?.Share.sendCustom({
     templateId: parseInt(process.env.NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID),
-    installTalk: true,
     templateArgs: {},
   })
 }
