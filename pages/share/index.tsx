@@ -14,12 +14,10 @@ const WelcomePage = () => {
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [copyModalOpen, setCopyModalOpen] = useState(false)
   const handleCopyLink = useCallback(async () => {
-    if (data?.user?.wikiId) {
-      const url = new URL(window.location.origin)
-      url.pathname = '/surveys'
-      url.searchParams.set('wikiId', data?.user?.wikiId)
-      await shareToCopyLink(url.toString())
-    }
+    const url = new URL(window.location.origin)
+
+    await shareToCopyLink(url.toString())
+
     setShareModalOpen(false)
     setCopyModalOpen(true)
   }, [data?.user?.wikiId])

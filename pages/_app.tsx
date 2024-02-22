@@ -22,6 +22,7 @@ import QueryProvider from '@/contexts/query-provider'
 import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
 import Head from 'next/head'
+
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -44,6 +45,11 @@ export default function NamuiWikiApp({
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
   useBrowserLayoutEffect(() => {
+    const callbackURL = sessionStorage.getItem('callbackUrl')
+    if (callbackURL) {
+      sessionStorage.removeItem('callbackUrl')
+      router.replace(callbackURL)
+    }
     if (!mounted) {
       setMounted(true)
     }

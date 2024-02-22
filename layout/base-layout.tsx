@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, forwardRef } from 'react'
-import LocalFont from 'next/font/local'
 import { cn } from '@/lib/client/utils'
 import Header, { HeaderProps } from '@/components/header'
 import { HTMLMotionProps, motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 
+import LocalFont from 'next/font/local'
 const pretendard = LocalFont({
   adjustFontFallback: 'Arial',
   src: [

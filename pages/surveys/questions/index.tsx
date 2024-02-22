@@ -1,11 +1,10 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
-import { Variants, motion, useAnimate } from 'framer-motion'
+import { AnimatePresence, Variants, motion } from 'framer-motion'
 import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
 
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 import createFunnel from '@/components/funnel/createFunnel'
 
-import { QUESTION_MAX } from '@/constants'
 import ProgressBar from '@/components/progressbar'
 import Button from '@/components/button'
 import FormLayout from '@/layout/form-layout'
@@ -17,6 +16,12 @@ import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
 import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
+
+import { cn } from '@/lib/client/utils'
+import ComboboxDropdown from '@/components/combobox'
+import { fadeInProps } from '@/variants'
+import { useSession } from '@/provider/session-provider'
+import { useRouter } from 'next/router'
 
 const stepTextVariants: Variants = {
   initial: {
@@ -33,60 +38,32 @@ const stepTextVariants: Variants = {
   },
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { wikiId } = ctx.query
-  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
-  serverURL.pathname = '/api/v1/users'
-  serverURL.searchParams.append('wikiId', wikiId)
-
-  const response = await fetch(serverURL).then(
-    (res) =>
-      res.json() as Promise<{
-        data?: { nickname: string }
-        errorCode?: string
-        reason?: string
-      }>,
-  )
-  if (!response.data?.nickname) return { notFound: true }
-  const {
-    data: { nickname },
-  } = response
-  const queryClient = new QueryClient()
-  try {
-    await queryClient.prefetchQuery(getQuestionQuery(nickname))
-
-    return {
-      props: {
-        dehydratedState: dehydrate(queryClient),
-        nickname,
-      },
-    }
-  } catch (e) {
-    return {
-      props: {},
-    }
-  } finally {
-    queryClient.clear()
-  }
-}
+const MotionLabel = motion(InputLabel)
 
 const Question = ({ nickname }: { nickname: string }) => {
+  const { data } = useSession()
   const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
-  const { Funnel, Step, useFunnel } = useRef(
-    createFunnel(qs.map((item) => item.id)),
-  ).current
+  const fieldList = useMemo(
+    () => ['senderName', 'knowing', ...qs.map((item) => item.id)],
+    [qs],
+  )
 
-  const { step, toPrevStep, toNextStep } = useFunnel()
+  const { Funnel, Step, useFunnel } = useRef(createFunnel(fieldList)).current
+
+  const { step, toPrevStep, toNextStep, hasNextStep, hasPrevStep } = useFunnel()
+  const router = useRouter()
 
   const stepRef = useRef<HTMLParagraphElement>(null)
 
   const [progress, setProgress] = useState<{ current: number; max: number }>({
     current: 0,
-    max: QUESTION_MAX,
+    max: fieldList.length,
   })
 
   const questionForm = useQuestionForm({
     defaultValues: {
+      owner: '',
+      senderName: '',
       answers: qs.map((item) => ({
         answer: '',
         questionId: item.id,
@@ -101,7 +78,7 @@ const Question = ({ nickname }: { nickname: string }) => {
     control: questionForm.control,
   })
 
-  const { handleSubmit, setFocus } = questionForm
+  const { handleSubmit, setFocus, setError, trigger } = questionForm
   const onSubmit = (data: QsSchemaType) => {
     console.log(data)
   }
@@ -156,29 +133,57 @@ const Question = ({ nickname }: { nickname: string }) => {
 
   const goPrev = async () => {
     toPrevStep()
-    setProgress((prev) => ({ current: prev.current - 1, max: qs.length }))
+    setProgress((prev) => ({ ...prev, current: prev.current - 1 }))
     countAnimation({ direction: 'DOWN', index: progress.current - 1 })
   }
-  const goNext = async () => {
-    const formValues = questionForm.getValues().answers[progress.current]
-    if (!formValues.answer) {
-      setFocus(`answers.${progress.current}.answer`)
-      return
+
+  const checkValidate = (formKey: (keyof QsSchemaType)[] | number) => {
+    const formValues = questionForm.getValues()
+
+    if (typeof formKey === 'number') {
+      if (!formValues.answers[formKey].answer) {
+        const currentKey = `answers.${formKey}.answer` as const
+        setFocus(currentKey)
+        setError(currentKey, {})
+        return false
+      }
+      if (!formValues.answers[formKey].reason) {
+        const currentKey = `answers.${formKey}.reason` as const
+        setFocus(currentKey)
+        setError(currentKey, {})
+        return false
+      }
+      return true
+    } else {
+      console.log(formKey)
+      return formKey.every((key) => {
+        if (!formValues[key]) {
+          setFocus(key)
+          setError(key, {})
+          return false
+        }
+        return true
+      })
     }
-    if (!formValues.reason) {
-      setFocus(`answers.${progress.current}.reason`)
-      return
-    }
+  }
+  const goNext = async (keys: (keyof QsSchemaType)[] | number) => {
+    if (!checkValidate(keys)) return
     toNextStep()
-    setProgress((prev) => ({ current: prev.current + 1, max: qs.length }))
+    setProgress((prev) => ({ ...prev, current: prev.current + 1 }))
     countAnimation({ direction: 'UP', index: progress.current + 1 })
   }
 
+  const validList: ((keyof QsSchemaType)[] | number)[] = [
+    ['senderName'] as const,
+    ['period', 'relation'] as const,
+    ...qs.map((_, i) => i),
+  ]
+
   const txt = useMemo(() => {
-    const 상수들 = [0, 30]
+    const 상수들 = [0, 0, 0, 30]
     let result: number[] = []
     for (let i = 0; i < 5; i++) {
-      const 상수 = qs.length - 상수들.length
+      const 상수 = fieldList.length - 상수들.length
       const makeRandomeArr = Array(상수)
         .fill(0)
         .map((item) => Math.random() * 70 + 30)
@@ -190,7 +195,13 @@ const Question = ({ nickname }: { nickname: string }) => {
       result = [...상수들, ...makeRandomeArr, 100].sort((a, b) => a - b)
     }
     return result
-  }, [qs])
+  }, [fieldList])
+
+  useEffect(() => {
+    if (data?.user?.name) {
+      questionForm.setValue('senderName', data.user.name)
+    }
+  }, [data?.user?.name])
 
   return (
     <FormLayout
@@ -214,7 +225,7 @@ const Question = ({ nickname }: { nickname: string }) => {
         ),
         options: {
           onBackClick() {
-            goPrev()
+            hasPrevStep ? goPrev() : router.back()
           },
         },
       }}
@@ -222,33 +233,159 @@ const Question = ({ nickname }: { nickname: string }) => {
         className: 'overflow-y-scroll',
       }}
       title={
-        <div className="flex items-center overflow-hidden text-brand-main-green400 ">
-          <p className="flex justify-center items-center" ref={stepRef}>
-            0%
-          </p>
-          {/* <p className="px-1">/ {QUESTION_MAX}</p> */}
-        </div>
+        !['senderName', 'knowing'].includes(step) ? (
+          <div className="flex items-center overflow-hidden text-brand-main-green400 ">
+            <p className="flex justify-center items-center" ref={stepRef}>
+              0%
+            </p>
+          </div>
+        ) : (
+          <div className="flex items-center text-body1-bold">정보 입력</div>
+        )
       }
       button={
         <Button
           disabled={false}
-          onClick={step === '14번' ? handleSubmit(onSubmit) : goNext}
+          onClick={
+            !hasNextStep
+              ? handleSubmit(onSubmit)
+              : () => goNext(validList[progress.current])
+          }
           className="w-full"
         >
-          {step === '14번' ? '제출하기' : '다음'}
+          {!hasNextStep ? '제출하기' : '다음'}
         </Button>
       }
       content={
         <FunnelProvider
           value={{
             toPrevStep: goPrev,
-            toNextStep: goNext,
+            toNextStep: () => goNext(validList[progress.current]),
           }}
         >
-          <ProgressBar current={txt[progress.current]} />
+          <AnimatePresence mode="wait">
+            {!['senderName', 'knowing'].includes(step) && (
+              <ProgressBar current={txt[progress.current]} />
+            )}
+          </AnimatePresence>
 
           <FormProvider {...questionForm}>
             <Funnel step={step}>
+              <Step name="senderName" key="senderName">
+                <motion.div
+                  {...fadeInProps}
+                  key="senderWrap"
+                  className="text-left grow flex flex-col overflow-y-hidden"
+                >
+                  <Controller
+                    control={questionForm.control}
+                    name="senderName"
+                    render={({ field }) => (
+                      <InputLabel className="text-body1-bold" label="이름">
+                        <Inputbox
+                          {...field}
+                          placeholder="이름을 입력해주세요"
+                          maxLength={6}
+                        />
+                        <p
+                          className={cn(
+                            'mt-3 text-body3-medium ml-2 text-text-sub-gray76',
+                            questionForm.formState.errors.senderName &&
+                              'text-inputbox-color-alert',
+                          )}
+                        >
+                          2-6자로 입력해주세요
+                        </p>
+                      </InputLabel>
+                    )}
+                  />
+                </motion.div>
+              </Step>
+              <Step name="knowing" key="knowing">
+                <MotionLabel
+                  {...fadeInProps}
+                  transition={{
+                    delay: 0.2,
+                    duration: 0.3,
+                  }}
+                  className="text-body1-bold"
+                  label="알게 된 기간"
+                >
+                  <Controller
+                    control={questionForm.control}
+                    name="period"
+                    render={({ field }) => (
+                      <ComboboxDropdown
+                        placeholder="알게 된 기간을 선택해주세요"
+                        options={[
+                          {
+                            label: '6개월미만',
+                            value: 'six_months'.toUpperCase(),
+                          },
+                          {
+                            label: '6개월 - 1년미만',
+                            value: 'one_year'.toUpperCase(),
+                          },
+                          {
+                            label: '1년 - 4년미만',
+                            value: 'four_years'.toUpperCase(),
+                          },
+                          { label: '4년이상', value: 'infinite'.toUpperCase() },
+                        ]}
+                        {...field}
+                        onChange={(value) => {
+                          field.onChange(value)
+                        }}
+                      />
+                    )}
+                  />
+                </MotionLabel>
+                <div className="mt-4">
+                  <MotionLabel
+                    {...fadeInProps}
+                    transition={{
+                      delay: 0.2,
+                      duration: 0.3,
+                    }}
+                    className="text-body1-bold"
+                    label="알게 된 경로"
+                  >
+                    <Controller
+                      control={questionForm.control}
+                      name="relation"
+                      render={({ field }) => (
+                        <ComboboxDropdown
+                          placeholder="알게 된 경로를 선택해주세요"
+                          options={[
+                            {
+                              label: '초등학교',
+                              value: 'elementary_school'.toUpperCase(),
+                            },
+                            {
+                              label: '중·고등학교',
+                              value: 'middle_and_high_school'.toUpperCase(),
+                            },
+                            {
+                              label: '대학교',
+                              value: 'university'.toUpperCase(),
+                            },
+                            { label: '직장', value: 'work'.toUpperCase() },
+                            {
+                              label: '친목모임',
+                              value: 'social'.toUpperCase(),
+                            },
+                            { label: '기타', value: 'etc'.toUpperCase() },
+                          ]}
+                          {...field}
+                          onChange={(value) => {
+                            field.onChange(value)
+                          }}
+                        />
+                      )}
+                    />
+                  </MotionLabel>
+                </div>
+              </Step>
               {fields.map((field, idx) => {
                 const { title, options } = qs[idx]
                 return (
@@ -311,5 +448,42 @@ const Question = ({ nickname }: { nickname: string }) => {
 }
 
 export default Question
-
 Question.getLayout = (page: ReactNode) => page
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { wikiId } = ctx.query
+  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  serverURL.pathname = '/api/v1/users'
+  serverURL.searchParams.append('wikiId', wikiId)
+
+  const response = await fetch(serverURL).then(
+    (res) =>
+      res.json() as Promise<{
+        data?: { nickname: string }
+        errorCode?: string
+        reason?: string
+      }>,
+  )
+  serverURL.searchParams.delete('wikiId')
+  if (!response.data?.nickname) return { notFound: true }
+  const {
+    data: { nickname },
+  } = response
+  const queryClient = new QueryClient()
+  try {
+    await queryClient.prefetchQuery(getQuestionQuery(nickname))
+
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+        nickname,
+      },
+    }
+  } catch (e) {
+    return {
+      props: {},
+    }
+  } finally {
+    queryClient.clear()
+  }
+}

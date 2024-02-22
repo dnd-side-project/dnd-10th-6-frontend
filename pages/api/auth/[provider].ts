@@ -75,7 +75,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
     ])
-    res.status(200).redirect('/dashboard')
+    res.status(200).redirect('/garden')
   } catch (err) {
     console.log(err)
     const error = isNamuiError(err) ? err : new InternalServerError()
