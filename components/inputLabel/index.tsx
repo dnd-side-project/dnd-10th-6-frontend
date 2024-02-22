@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, forwardRef } from 'react'
 
 interface InputLabelProps {
   label: string
@@ -7,15 +7,12 @@ interface InputLabelProps {
   required?: boolean
 }
 
-const InputLabel = ({
-  children,
-  label,
-  required,
-  errorMessage,
-  className,
-}: PropsWithChildren<InputLabelProps>) => {
+const InputLabel = forwardRef<
+  HTMLLabelElement,
+  PropsWithChildren<InputLabelProps>
+>(({ children, label, required, errorMessage, className }, ref) => {
   return (
-    <label>
+    <label ref={ref}>
       <div className="flex items-center mb-2">
         <h3 className={className}>{label}</h3>
         {required && (
@@ -32,6 +29,6 @@ const InputLabel = ({
       </div>
     </label>
   )
-}
+})
 
 export default InputLabel
