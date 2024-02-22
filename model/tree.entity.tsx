@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
-type Period = 'SIX_MONTHS' | 'ONE_YEAR' | 'FOUR_YEARS' | 'INFINITE'
-type Relation =
+export type Period = 'SIX_MONTHS' | 'ONE_YEAR' | 'FOUR_YEARS' | 'INFINITE'
+export type Relation =
   | 'ELEMENTARY_SCHOOL'
   | 'MIDDLE_AND_HIGH_SCHOOL'
   | 'UNIVERSITY'

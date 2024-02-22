@@ -9,6 +9,7 @@ import type { ProviderType, User } from '@/lib/auth'
 import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
 import { AUTH } from '@/constants'
 import { Question } from '@/model/question.entity'
+import { DashboardData } from '@/model/dashboard.entity'
 
 interface NamuiResponse<T = any> {
   data: T
@@ -48,6 +49,13 @@ export class NamuiApi {
     })
   }
 
+  static async getDashboard() {
+    return await NamuiApi.handler<NamuiResponse<DashboardData>>({
+      method: 'GET',
+      url: '/api/v1/dashboard',
+    })
+  }
+
   static async getQs() {
     return await NamuiApi.handler<NamuiResponse<Question[]>>({
       method: 'GET',
@@ -61,7 +69,10 @@ export class NamuiApi {
     }>({
       method: 'POST',
       url: '/api/auth/signup',
-      baseURL: window.location.origin,
+      baseURL:
+        typeof window !== 'undefined'
+          ? window.location.origin
+          : process.env.HOST,
       data: {
         nickname,
       },
@@ -72,7 +83,10 @@ export class NamuiApi {
     return await NamuiApi.handler({
       method: 'POST',
       url: '/api/auth/signout',
-      baseURL: window.location.origin,
+      baseURL:
+        typeof window !== 'undefined'
+          ? window.location.origin
+          : process.env.HOST,
     })
   }
 
@@ -83,7 +97,10 @@ export class NamuiApi {
     }>({
       method: 'POST',
       url: '/api/auth/refresh',
-      baseURL: window.location.origin,
+      baseURL:
+        typeof window !== 'undefined'
+          ? window.location.origin
+          : process.env.HOST,
     })
     return accessToken
   }
@@ -160,6 +177,9 @@ export class NamuiApi {
     if (accessToken) {
       NamuiApi.accessToken = accessToken
     }
+  }
+  static injectCookies(cookie: string) {
+    this.getInstance().defaults.headers.common.cookie = cookie
   }
 
   private static async handler<Response>(config: AxiosRequestConfig) {

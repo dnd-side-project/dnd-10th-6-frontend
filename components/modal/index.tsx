@@ -9,7 +9,13 @@ import {
 } from '@/components/ui/dialog'
 import { cn } from '@/lib/client/utils'
 import { Close } from '@radix-ui/react-dialog'
-import { ForwardedRef, PropsWithChildren, ReactNode, forwardRef } from 'react'
+import {
+  ForwardedRef,
+  PropsWithChildren,
+  ReactNode,
+  forwardRef,
+  useId,
+} from 'react'
 
 interface ModalProps
   extends React.ComponentPropsWithoutRef<typeof Dialog>,
@@ -49,11 +55,13 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           </button>,
         ],
       },
+      ...rest
     },
     ref,
   ) => {
+    const id = useId()
     return (
-      <Dialog>
+      <Dialog key={id} {...rest}>
         <DialogTrigger asChild ref={ref as ForwardedRef<HTMLButtonElement>}>
           {trigger}
         </DialogTrigger>
@@ -71,10 +79,12 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           }
         >
           <DialogHeader>
-            {title && <DialogTitle>{title}</DialogTitle>}
+            {title && (
+              <DialogTitle className="text-center">{title}</DialogTitle>
+            )}
             {description && (
               <DialogDescription
-                className="mt-2 text-xs leading-[18px] text-[#767676]"
+                className="mt-2 text-xs leading-[18px] text-[#767676] text-center"
                 style={{ whiteSpaceCollapse: 'preserve-breaks' }}
               >
                 {description}

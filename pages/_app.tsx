@@ -21,6 +21,7 @@ import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import QueryProvider from '@/contexts/query-provider'
 import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
+import Head from 'next/head'
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
@@ -72,6 +73,14 @@ export default function NamuiWikiApp({
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
+      <Head>
+        <script
+          src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
+          integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8"
+          crossOrigin="anonymous"
+          defer
+        ></script>
+      </Head>
       <QueryProvider>
         <HydrationBoundary state={pageProps.dehydratedState}>
           <MetaHead />
