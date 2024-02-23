@@ -104,7 +104,7 @@ const Question = ({ nickname }: { nickname: string }) => {
         const progress = timestamp - start
         if (progress >= DURATION) {
           if (stepRef.current) {
-            stepRef.current.innerText = `${target}%`
+            stepRef.current.innerText = `${isNaN(target) ? 100 : target}%`
           }
           cancelAnimationFrame(animationId)
           if (target === 100) router.replace('/submit')
