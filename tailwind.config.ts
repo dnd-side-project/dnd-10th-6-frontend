@@ -235,7 +235,7 @@ const config = {
       },
     },
   },
-  safelist: ['mr-auto'],
+  safelist: ['mr-auto', ...Object.values(colors.relation)],
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 

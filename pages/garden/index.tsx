@@ -1,10 +1,46 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import Button from '@/components/button'
 import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
 const Pages = () => {
+  const mockTreeCard = {
+    period: 'INFINITE',
+    relation: 'MIDDLE_AND_HIGH_SCHOOL',
+  }
+
+  const [showScrollButton, setShowScrollButton] = useState(false)
+  const [flippedCardIndex, setFlippedCardIndex] = useState(-1)
+
+  useEffect(() => {
+    function handleScroll() {
+      const scrollTop = document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const scrolledToBottom = scrollTop + windowHeight >= documentHeight
+      setShowScrollButton(scrolledToBottom)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
+  const handleCardClick = (index: number) => {
+    if (flippedCardIndex === index) {
+      setFlippedCardIndex(-1)
+    } else {
+      setFlippedCardIndex(index)
+    }
+  }
+
   return (
     <BaseLayout
       className="bg-gray-gray50"
@@ -58,16 +94,46 @@ const Pages = () => {
         </Link>
       </div>
       <section className="bg-white">
-        <p className="p-2 text-subTitle2-bold text-text-sub-gray4f">
-          받은 친구
-        </p>
-        <div className="w-full p-1  overflow-y-scroll">
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(30)].map((_, index) => (
-              <TreeCard key={index} period="e" relation="1" />
+        <div className=" w-full px-[30px] py-6">
+          <p className=" text-subTitle2-bold text-text-sub-gray4f text-left">
+            받은 친구
+          </p>
+        </div>
+        <div className="w-full justify-center items-center flex flex-col space-y-2 ">
+          <div className="grid grid-cols-4 gap-2 ">
+            {[...Array(40)].map((_, index) => (
+              <TreeCard
+                key={index}
+                period={mockTreeCard.period}
+                relation={mockTreeCard.relation}
+                isFlipped={index === flippedCardIndex}
+                onClick={() => handleCardClick(index)}
+              />
             ))}
           </div>
         </div>
+
+        {showScrollButton && (
+          <button
+            className="fixed z-[20] bottom-4 bg-white shadow-sm right-4 p-3 border rounded"
+            onClick={scrollToTop}
+          >
+            <svg
+              width="14"
+              height="16"
+              viewBox="0 0 14 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 6.38462L7 1M7 1L13 6.38462M7 1V15"
+                stroke="black"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        )}
       </section>
     </BaseLayout>
   )

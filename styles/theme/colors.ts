@@ -78,7 +78,7 @@ export const colors = {
     soft: '#F1F1F5',
     medium: '#E5E5EC',
   },
-  period: {
+  relation: {
     etc: '#D9D9D9',
     social: '#E3FFCC',
     work: '#E4EFFD',
