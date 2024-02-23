@@ -72,7 +72,7 @@ export const SessionProvider = ({
         setSession((prev) => ({ ...prev, user: newSession }))
         return newSession
       } else {
-        return session
+        return session?.user
       }
     } catch (error) {
       setSession(null)
@@ -111,7 +111,7 @@ export const SessionProvider = ({
         setLoading(true)
         const newSession = await _getSession()
         setLoading(false)
-        setSession((prev) => ({ ...prev, user: newSession }))
+        setSession((prev) => ({ ...prev, user: newSession ?? undefined }))
         return newSession
       },
     }),

@@ -60,9 +60,9 @@ const Setting = () => {
 
           <Modal
             trigger={
-              <button className="py-[14px] text-body1-bold text-text-main-black11">
+              <p className="py-[14px] text-body1-bold text-text-main-black11">
                 로그아웃
-              </button>
+              </p>
             }
             title="로그아웃"
             description="정말 로그아웃 하시겠어요?"
@@ -107,9 +107,9 @@ const Setting = () => {
               ],
             }}
             trigger={
-              <button className="py-[14px] text-body1-bold text-text-main-black11">
+              <p className="py-[14px] text-body1-bold text-text-main-black11">
                 서비스 탈퇴
-              </button>
+              </p>
             }
             title="서비스 탈퇴"
             description={`탈퇴 시 모든 정보가 사라져요.

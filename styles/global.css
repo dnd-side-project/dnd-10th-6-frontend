@@ -97,6 +97,10 @@
   transform: rotateY(180deg);
 }
 
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
 @layer base {
   * {
     @apply border-border;
