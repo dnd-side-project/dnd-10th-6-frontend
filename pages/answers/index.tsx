@@ -3,10 +3,19 @@ import { ReactNode } from 'react'
 import withAuth from '@/layout/HOC/with-auth'
 import FormLayout from '@/layout/form-layout'
 import AnswerDetail from '@/components/compositions/answers/answer-detail'
+import { useRouter } from 'next/router'
+import { useSession } from '@/provider/session-provider'
 const Pages = () => {
+  const router = useRouter()
+  const { data } = useSession()
+
   return (
     <FormLayout
       header={{
+        rightIcon: <></>,
+        center: (
+          <p className="text-body1-bold text-text-main-black11">상세보기</p>
+        ),
         leftIcon: (
           <svg
             className="w-5 h-5"
@@ -24,10 +33,11 @@ const Pages = () => {
             />
           </svg>
         ),
-        rightIcon: <></>,
-        center: (
-          <p className="text-body1-bold text-text-main-black11">상세보기</p>
-        ),
+        options: {
+          onBackClick() {
+            router.back()
+          },
+        },
       }}
       content={
         <div className="w-full flex text flex-col space-y-2">
@@ -86,7 +96,7 @@ const Pages = () => {
                 </svg>
               </div>
               <div className="flex flex-col grow space-y-2">
-                <h3 className="text-body1-bold">김미영님</h3>
+                <h3 className="text-body1-bold">{data?.user?.name}</h3>
                 <div className="flex space-x-1.5">
                   <div className="text-body3-medium bg-bg-gray1 text-text-sub-gray76 px-2 py-1 rounded-md">
                     1-4년
