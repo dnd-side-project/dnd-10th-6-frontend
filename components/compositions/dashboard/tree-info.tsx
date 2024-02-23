@@ -2,10 +2,7 @@ import Button from '@/components/button'
 import Badge from '@/components/button/badge'
 import ShareModal from '@/components/share-modal'
 import { FilterType } from '@/hooks/use-filter'
-import { useMount } from '@/hooks/use-mount'
 import { useSession } from '@/provider/session-provider'
-import { getDashboardQueryTest } from '@/queries/dashboard'
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import React from 'react'
 
 const TreeInfo = ({ filter }: { filter: FilterType }) => {
