@@ -2,57 +2,70 @@ import Button from '@/components/button'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
+import { getDashboardQuery } from '@/queries/dashboard'
+import { useQuery } from '@tanstack/react-query'
 import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
 import React from 'react'
 
 const Sad = ({ filter }: { filter: FilterType }) => {
+  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
   const { inView, ref } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
   })
   return (
     <LazyMotion features={domAnimation}>
-      <div>
-        <h2 className="text-mainTitle2-bold mb-5">
-          슬프거나 화날 때
-          <br />
-          <b className="text-brand-main-green400 break-keep">
-            스트레스를 풀기 위해 여가생활을 즐겨요
-          </b>
-        </h2>
-        <div
-          ref={ref}
-          className="flex flex-col justify-center  space-y-8 px-8 py-12 rounded-2xl shadow-basic mx-auto"
-        >
-          <Bar
-            active={inView}
-            color="#00BC68"
-            percent={90}
-            title="스트레스를 풀기 위해 여가생활을 즐겨요"
-            accent
-          />
-          <Bar
-            active={inView}
-            color="#199EF0"
-            percent={50}
-            title="혼자 조용히 즐겨요"
-          />
-          <Bar
-            active={inView}
-            color="#FFEB34"
-            percent={21}
-            title="맛있는 음식을 먹어요"
-          />
-        </div>
-        <div className="w-1/2  mx-auto mt-10">
-          <Button
-            rounded="full"
-            variant="muted"
-            className="bg-text-main-whiteFF"
-          >
-            자세히 보기
-          </Button>
-        </div>
+      <div ref={ref}>
+        {isLoading ? (
+          <>
+            <div className="h-8 skeleton w-1/4 mb-2" />
+            <div className="h-8 skeleton w-3/4 mb-5" />
+            <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6 skeleton aspect-square" />
+            <div className="w-1/2  mx-auto mt-10">
+              <div className="mx-auto !skeleton rounded-md h-8 w-32" />
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-mainTitle2-bold mb-5">
+              슬프거나 화날 때
+              <br />
+              <b className="text-brand-main-green400 break-keep">
+                스트레스를 풀기 위해 여가생활을 즐겨요
+              </b>
+            </h2>
+            <div className="flex flex-col justify-center  space-y-8 px-8 py-12 rounded-2xl shadow-basic mx-auto">
+              <Bar
+                active={inView}
+                color="#00BC68"
+                percent={90}
+                title="스트레스를 풀기 위해 여가생활을 즐겨요"
+                accent
+              />
+              <Bar
+                active={inView}
+                color="#199EF0"
+                percent={50}
+                title="혼자 조용히 즐겨요"
+              />
+              <Bar
+                active={inView}
+                color="#FFEB34"
+                percent={21}
+                title="맛있는 음식을 먹어요"
+              />
+            </div>
+            <div className="w-1/2  mx-auto mt-10">
+              <Button
+                rounded="full"
+                variant="muted"
+                className="bg-text-main-whiteFF"
+              >
+                자세히 보기
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </LazyMotion>
   )

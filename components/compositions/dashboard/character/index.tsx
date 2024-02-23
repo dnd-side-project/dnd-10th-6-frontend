@@ -5,10 +5,10 @@ import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { useSession } from '@/provider/session-provider'
 import { FilterType } from '@/hooks/use-filter'
 import { useQuery } from '@tanstack/react-query'
-import { getDashboardQueryTest } from '@/queries/dashboard'
+import { getDashboardQuery } from '@/queries/dashboard'
 
 const Character = ({ filter }: { filter: FilterType }) => {
-  const { data: statisics, isLoading } = useQuery(getDashboardQueryTest(filter))
+  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
   const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
   const { data } = useSession()
 

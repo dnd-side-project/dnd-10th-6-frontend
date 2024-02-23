@@ -1,5 +1,6 @@
 import Button from '@/components/button'
 import Badge from '@/components/button/badge'
+import ShareModal from '@/components/share-modal'
 import { FilterType } from '@/hooks/use-filter'
 import { useMount } from '@/hooks/use-mount'
 import { useSession } from '@/provider/session-provider'
@@ -17,7 +18,9 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
           <p className="text-body1 text-text-sub-gray4f">
             내 정원에 심어진 나무는
             <br />
-            <b className="text-mainTitle1-bold mt-1 text-black">총 999그루</b>
+            <b className="text-mainTitle1-bold mt-1 text-black">
+              총 {data?.user?.totalSurveyCnt ?? 0}그루
+            </b>
           </p>
           <div className="w-20 h-20 bg-text-main-whiteFF flex justify-center items-center rounded-full">
             <svg
@@ -72,7 +75,9 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             </svg>
           </div>
         </div>
-        <Button className="h-11">링크 공유하기</Button>
+        <ShareModal>
+          <Button className="h-11">링크 공유하기</Button>
+        </ShareModal>
       </div>
       <h3 className="text-mainTitle2-bold tracking-tighter font-bold mt-8 mb-5">
         {data?.user?.name ?? ''}님에 대해 알아보세요!

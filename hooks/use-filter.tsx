@@ -14,7 +14,7 @@ import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import FilterButton from '@/components/filter-button'
 
-export type KnowFilterType = 'period' | 'relation' | 'ALL'
+export type KnowFilterType = 'period' | 'relation' | 'total'
 export type FilterType = {
   type: KnowFilterType
   value: string
@@ -27,9 +27,9 @@ const filters: {
   items: { label: string; value: string }[]
 }[] = [
   {
-    type: 'period',
+    type: 'total',
     text: '전체 보기',
-    default: 'ALL',
+    default: 'total',
     items: [],
   },
   {

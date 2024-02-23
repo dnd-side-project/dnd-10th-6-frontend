@@ -1,13 +1,13 @@
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
-import { getDashboardQueryTest } from '@/queries/dashboard'
+import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
 import React, { useState } from 'react'
 
 const Money = ({ filter }: { filter: FilterType }) => {
-  const { data: statisics, isLoading } = useQuery(getDashboardQueryTest(filter))
+  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
@@ -16,11 +16,15 @@ const Money = ({ filter }: { filter: FilterType }) => {
   return (
     <LazyMotion features={domAnimation}>
       <div ref={ref}>
-        {!isLoading ? (
+        {isLoading ? (
           <>
             <div className="h-8 skeleton w-1/4 mb-2" />
             <div className="h-8 skeleton w-3/4 mb-5" />
             <div className="h-5 skeleton w-1/5" />
+            <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6 skeleton aspect-square" />
+            <div className="w-1/2  mx-auto mt-10">
+              <div className="mx-auto !skeleton rounded-md h-8 w-32" />
+            </div>
           </>
         ) : (
           <>

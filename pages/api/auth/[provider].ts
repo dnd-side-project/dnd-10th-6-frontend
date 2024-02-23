@@ -1,5 +1,10 @@
 import { AUTH } from '@/constants'
-import { BadRequestError, InternalServerError, isNamuiError } from '@/error'
+import {
+  BadRequestError,
+  InternalServerError,
+  UnauthorizedError,
+  isNamuiError,
+} from '@/error'
 import { Provider } from '@/lib/auth'
 import withHandler from '@/lib/server/with-handler'
 import { parse, serialize } from 'cookie'
@@ -23,7 +28,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     })
     // FIXME: 개발, 운영 분리 코드가 상당히 지저분함 함수화 할수 있을듯
-    const { accessToken, refreshToken, errorCode } = await response.json()
+    const { accessToken, refreshToken, errorCode, ...rest } =
+      await response.json()
+
+    if (!accessToken || !refreshToken) throw new UnauthorizedError()
     if (errorCode === 'NOT_FOUND_USER') {
       const cookies = response.headers.getSetCookie().map(
         (cookie) =>
@@ -35,6 +43,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             Expires: string
           },
       )
+
       process.env.NODE_ENV === 'development'
         ? res.setHeader(
             'Set-Cookie',
@@ -57,6 +66,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       res.status(200).redirect('/signup')
       return
     }
+
     res.setHeader('Set-Cookie', [
       serialize(AUTH.ACCESS_TOKEN_KEY, accessToken, {
         path: '/',

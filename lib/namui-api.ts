@@ -68,9 +68,12 @@ export class NamuiApi {
     return await NamuiApi.handler<NamuiResponse<DashboardData>>({
       method: 'GET',
       url: '/api/v1/dashboard',
-      params: {
-        [filter[0]]: filter[1],
-      },
+      params:
+        filter[0] === 'total'
+          ? {}
+          : {
+              [filter[0]]: filter[1],
+            },
     })
   }
 

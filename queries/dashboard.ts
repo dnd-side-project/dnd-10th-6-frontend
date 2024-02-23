@@ -36,12 +36,7 @@ export const getDashboardQueryTest = (
     queryKey: ['Dashboard', filters?.type, filters?.value],
     queryFn: (args) => {
       console.log(args)
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log('DONE!!')
-          resolve(import('@/pages/assets/mocks/dashboard.json'))
-        }, 10000)
-      })
+      return import('@/pages/assets/mocks/dashboard.json')
     },
     select: (result) => {
       return result.data?.statistics ?? []

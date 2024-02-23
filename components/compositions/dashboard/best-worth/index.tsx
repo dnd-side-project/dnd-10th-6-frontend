@@ -6,7 +6,7 @@ import { PieChart, ResponsiveContainer } from 'recharts'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
 import Button from '@/components/button'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { getDashboardQueryTest } from '@/queries/dashboard'
+import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { FilterType } from '@/hooks/use-filter'
 
@@ -138,7 +138,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
     margin: '2%',
   })
 
-  const { data: statisics, isLoading } = useQuery(getDashboardQueryTest(filter))
+  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
   const orderByMaxValueList = useMemo(() => {
     const arr = data01.sort((a, b) => b.value - a.value)
 

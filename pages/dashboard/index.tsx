@@ -4,6 +4,7 @@ import {
   HTMLAttributes,
   PropsWithChildren,
   ReactNode,
+  Suspense,
   useCallback,
   useRef,
   useState,
@@ -25,15 +26,16 @@ import Button from '@/components/button'
 import Modal from '@/components/modal'
 import { useSession } from '@/provider/session-provider'
 import { useQuery } from '@tanstack/react-query'
-import { getDashboardQueryTest } from '@/queries/dashboard'
+import { getDashboardQuery } from '@/queries/dashboard'
 import TripleTrees from '@/components/svgs/triple-trees'
 import useFilter, { Filter, FilterProvider } from '@/hooks/use-filter'
 import withAuth from '@/layout/HOC/with-auth'
+import ShareModal from '@/components/share-modal'
 
 const Page = () => {
   const { selectedFilter } = useFilter()
   const { data: statisics, isLoading } = useQuery(
-    getDashboardQueryTest(selectedFilter),
+    getDashboardQuery(selectedFilter),
   )
   const headerHeight = useSettingStore((state) => state.headerHeight)
   const { data } = useSession()
@@ -42,18 +44,6 @@ const Page = () => {
   const { direction, scrollTop } = useScrollDirection({ ref })
   const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
 
-  const [shareModalOpen, setShareModalOpen] = useState(false)
-  const [copyModalOpen, setCopyModalOpen] = useState(false)
-  const handleCopyLink = useCallback(async () => {
-    if (data?.user?.wikiId) {
-      const url = new URL(window.location.origin)
-      url.pathname = '/surveys'
-      url.searchParams.set('wikiId', data?.user?.wikiId)
-      await shareToCopyLink(url.toString())
-    }
-    setShareModalOpen(false)
-    setCopyModalOpen(true)
-  }, [data?.user?.wikiId])
   return (
     <>
       <BaseLayout
@@ -61,31 +51,31 @@ const Page = () => {
         ref={ref}
         className={cn('h-calc-h overflow-y-scroll')}
       >
-        {statisics?.length ? (
+        {isLoading || statisics?.length ? (
           <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
             <Filter className={cn(shouldShowHeader && 'top-header')} />
             <div className="flex flex-col divide-y-[12px] divide-line-soft">
               {/* 내 정원에 심어진 나무는? */}
               <Section className="pt-5">
-                <TreeInfo />
+                <TreeInfo filter={selectedFilter} />
               </Section>
               {/* 가장 중요한 것 - 파이차트 */}
               <Section>
-                <BestWorth />
+                <BestWorth filter={selectedFilter} />
               </Section>
               {/* 이런사람이에요 - 박스 */}
               <Section>
-                <Character />
+                <Character filter={selectedFilter} />
               </Section>
               <Section>
-                <Money />
+                <Money filter={selectedFilter} />
               </Section>
               {/* 기쁠 떄 */}
               <Section>
-                <Happy />
+                <Happy filter={selectedFilter} />
               </Section>
               <Section>
-                <Sad />
+                <Sad filter={selectedFilter} />
               </Section>
             </div>
           </motion.div>
@@ -107,61 +97,9 @@ const Page = () => {
                 <br />
                 친구에게 알려달라고 부탁해보세요
               </p>
-              <Modal
-                open={shareModalOpen}
-                onOpenChange={(state) => {
-                  setShareModalOpen(state)
-                }}
-                key="selectShareModal"
-                trigger={<Button className="!w-fit px-4">링크 공유하기</Button>}
-                title="친구에게 내 소개를 부탁하시겠어요?"
-                description={
-                  <span>
-                    링크 공유하기를 통해
-                    <br />
-                    친구에게 내 소개를 부탁할 수 있어요!
-                  </span>
-                }
-                footer={{
-                  divider: false,
-                  item: [
-                    <Button
-                      onClick={handleCopyLink}
-                      variant="default"
-                      key="copy-link"
-                      className="rounded-none"
-                    >
-                      링크복사
-                    </Button>,
-                    <Button
-                      key="kakao-share"
-                      className="rounded-none"
-                      onClick={shareToKaKaoLink}
-                    >
-                      카카오 공유
-                    </Button>,
-                  ],
-                }}
-              />
-              <Modal
-                open={copyModalOpen}
-                onOpenChange={setCopyModalOpen}
-                key="copyLinkModal"
-                title="링크가 복사되었어요"
-                footer={{
-                  item: [
-                    <Button
-                      onClick={() => setCopyModalOpen(false)}
-                      variant="confirm"
-                      className="border-t-[1px]"
-                      key="copy-close"
-                    >
-                      확인
-                    </Button>,
-                  ],
-                }}
-                trigger={<></>}
-              />
+              <ShareModal>
+                <Button className="!w-fit px-4">링크 공유하기</Button>
+              </ShareModal>
             </div>
           </div>
         )}
