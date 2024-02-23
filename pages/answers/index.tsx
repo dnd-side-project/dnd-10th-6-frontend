@@ -6,7 +6,9 @@ import AnswerDetail from '@/components/compositions/answers/answer-detail'
 import { useRouter } from 'next/router'
 import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
-import { cn } from '@/lib/client/utils'
+
+import RelationBadge from '@/components/badge/relation'
+import PeriodBadge from '@/components/badge/period'
 const Pages = () => {
   const router = useRouter()
   const { data } = useSession()
@@ -105,6 +107,8 @@ const Pages = () => {
   }
 
   const [surveyId, setSurveyId] = useState<string>('')
+  const parsedCreatedAt = new Date(mock.data.createdAt)
+  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
 
   useEffect(() => {
     async function fetchSurveyId() {
@@ -208,23 +212,15 @@ const Pages = () => {
                 </svg>
               </div>
               <div className="flex flex-col grow space-y-2">
-                <h3 className="text-body1-bold">{data?.user?.name}</h3>
+                <h2 className="text-subTitle1-bold">{data?.user?.name}님</h2>
                 <div className="flex space-x-1.5">
-                  <div
-                    className={cn(
-                      ' text-body3-medium bg-red-400 text-text-sub-gray76 px-2 py-1 rounded-md',
-                    )}
-                  >
-                    {mock.data.period}
-                  </div>
+                  <PeriodBadge period={mock.data.period} />
 
-                  <div className="text-body3-medium bg-bg-blue2 text-main-sub2-blue-blue900 px-2 py-1 rounded-md">
-                    {mock.data.relation}
-                  </div>
+                  <RelationBadge relation={mock.data.relation} />
                 </div>
               </div>
               <div className="self-end  text-body3-medium text-text-sub-gray76">
-                2023.01.01
+                {createdAt}
               </div>
             </div>
           </section>

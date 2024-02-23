@@ -1,22 +1,20 @@
 import { cn } from '@/lib/client/utils'
 
-const periodLabels = {
+const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월 미만',
   ONE_YEAR: '6개월-1년 미만',
   FOUR_YEARS: '1년-4년 미만',
   INFINITE: '4년 이상',
 }
 
-const PeriodBadge = ({ period }: { period: keyof typeof periodLabels }) => {
-  const label = periodLabels[period]
-
+const PeriodBadge = ({ period }: { period: string }) => {
   return (
     <div
       className={cn(
-        'w-fit rounded text-body3-medium px-3 py-1 bg-gray-gray50 text-text-sub-gray4f',
+        'w-fit rounded-md text-body3-medium px-3 py-1 bg-gray-gray50 text-text-sub-gray4f',
       )}
     >
-      {label}
+      {periods[period]}
     </div>
   )
 }
