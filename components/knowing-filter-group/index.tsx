@@ -5,15 +5,12 @@ import { cn } from '@/lib/client/utils'
 import { fadeInProps } from '@/variants'
 import FilterButton from '../filter-button'
 
-type KnowFilterType = 'period' | 'route'
+type KnowFilterType = 'PERIOD' | 'ROUTE' | 'ALL'
 const filterItems: {
-  [key in 'period' | 'route']: { label: string; value: string }[]
+  [key in KnowFilterType]: { label: string; value: string }[]
 } = {
-  period: [
-    {
-      label: '전체',
-      value: 'ALL',
-    },
+  ALL: [],
+  PERIOD: [
     {
       label: '초등학교',
       value: 'ELEMENTARY_SCHOOL',
@@ -39,11 +36,7 @@ const filterItems: {
       value: 'ETC',
     },
   ],
-  route: [
-    {
-      label: '전체',
-      value: 'ALL',
-    },
+  ROUTE: [
     {
       label: '6개월 미만',
       value: 'SIX_MONTHS',
@@ -66,11 +59,11 @@ const filterItems: {
 interface KnowingFilter extends HTMLAttributes<HTMLDivElement> {}
 
 const KnowingFilterGroup = (props: KnowingFilter) => {
-  const [knowState, setKnowState] = useState<KnowFilterType>('period')
+  const [knowState, setKnowState] = useState<KnowFilterType>('ALL')
   const [selectedFilterItem, setSelectedFilterItem] = useState('ALL')
 
   const onKnowFilterClick = (type: KnowFilterType) => () => {
-    setSelectedFilterItem('ALL')
+    setSelectedFilterItem(filterItems[type][0]?.value ?? 'ALL')
     setKnowState(type)
   }
   return (
@@ -83,18 +76,23 @@ const KnowingFilterGroup = (props: KnowingFilter) => {
     >
       <div className="h-14 flex items-center gap-x-6 px-5 bg-white z-10">
         <FilterText
+          label="전체 보기"
+          active={knowState === 'ALL'}
+          onClick={onKnowFilterClick('ALL')}
+        />
+        <FilterText
           label="알게 된 기간"
-          active={knowState === 'period'}
-          onClick={onKnowFilterClick('period')}
+          active={knowState === 'PERIOD'}
+          onClick={onKnowFilterClick('PERIOD')}
         />
         <FilterText
           label="알게 된 경로"
-          active={knowState === 'route'}
-          onClick={onKnowFilterClick('route')}
+          active={knowState === 'ROUTE'}
+          onClick={onKnowFilterClick('ROUTE')}
         />
       </div>
       <AnimatePresence mode="wait">
-        {knowState && (
+        {filterItems[knowState].length && (
           <motion.div
             key={knowState ?? 'defaultKnowState'}
             {...fadeInProps}

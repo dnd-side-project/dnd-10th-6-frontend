@@ -1,0 +1,82 @@
+{
+  "data": {
+    "statistics": [
+      {
+        "dashboardType": "BEST_WORTH",
+        "rank": [
+          {
+            "legend": "🧑‍🤝‍🧑  우정",
+            "percentage": 100
+          },
+          {
+            "legend": "👨🏼‍⚖️  명예",
+            "percentage": 0
+          },
+          {
+            "legend": "❤️  사랑",
+            "percentage": 0
+          },
+          {
+            "legend": "💵  돈",
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "dashboardType": "HAPPY",
+        "rank": [
+          {
+            "legend": "🏄🏼  취미생활을 즐긴다",
+            "percentage": 100
+          },
+          {
+            "legend": "🎉  사람들에게 알리고 축하받는다",
+            "percentage": 0
+          },
+          {
+            "legend": "👏  혼자 조용히 즐긴다",
+            "percentage": 0
+          },
+          {
+            "legend": "🍱  맛있는 음식을 먹는다",
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "dashboardType": "HAPPY",
+        "rank": [
+          {
+            "legend": "🏄🏼  취미생활을 즐긴다",
+            "percentage": 100
+          },
+          {
+            "legend": "🎉  사람들에게 알리고 축하받는다",
+            "percentage": 0
+          },
+          {
+            "legend": "👏  혼자 조용히 즐긴다",
+            "percentage": 0
+          },
+          {
+            "legend": "🍱  맛있는 음식을 먹는다",
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "dashboardType": "CHARACTER",
+        "friendly": false,
+        "similar": false,
+        "mbti": false,
+        "busy": false
+      },
+      {
+        "dashboardType": "MONEY",
+        "peopleCount": 1,
+        "moneySum": 1234,
+        "average": 0
+      }
+    ]
+  }
+}

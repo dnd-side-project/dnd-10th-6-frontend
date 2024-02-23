@@ -149,12 +149,38 @@ const config = {
         'body3-bold': [
           '14px',
           {
-            fontWeight: 'bold',
+            fontWeight: '700',
             lineHeight: '20px',
           },
         ],
-        caption1: '13px',
-        caption2: '12px',
+        'caption1-medium': [
+          '13px',
+          {
+            lineHeight: '18px',
+            fontWeight: '500',
+          },
+        ],
+        'caption1-bold': [
+          '13px',
+          {
+            lineHeight: '18px',
+            fontWeight: '700',
+          },
+        ],
+        'caption2-medium': [
+          '12px',
+          {
+            lineHeight: '18px',
+            fontWeight: '500',
+          },
+        ],
+        'caption2-bold': [
+          '12px',
+          {
+            lineHeight: '18px',
+            fontWeight: '700',
+          },
+        ],
       },
       fontWeight: {
         medium: '500',
@@ -189,8 +215,6 @@ const config = {
         body1: '24px',
         body2: '22px',
         body3: '20px',
-        caption1: '18px',
-        caption2: '18px',
       },
       keyframes: {
         'accordion-down': {
@@ -211,6 +235,7 @@ const config = {
       },
     },
   },
+  safelist: ['mr-auto'],
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 

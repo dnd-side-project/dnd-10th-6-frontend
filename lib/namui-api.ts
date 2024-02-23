@@ -64,10 +64,13 @@ export class NamuiApi {
     })
   }
 
-  static async getDashboard() {
+  static async getDashboard(filter: [key: string, value: string]) {
     return await NamuiApi.handler<NamuiResponse<DashboardData>>({
       method: 'GET',
       url: '/api/v1/dashboard',
+      params: {
+        [filter[0]]: filter[1],
+      },
     })
   }
 

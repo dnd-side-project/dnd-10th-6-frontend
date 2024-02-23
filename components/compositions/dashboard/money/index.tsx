@@ -1,9 +1,13 @@
+import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
+import { getDashboardQueryTest } from '@/queries/dashboard'
+import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
 import React, { useState } from 'react'
 
-const Money = () => {
+const Money = ({ filter }: { filter: FilterType }) => {
+  const { data: statisics, isLoading } = useQuery(getDashboardQueryTest(filter))
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
@@ -11,28 +15,38 @@ const Money = () => {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div>
-        <h2 className="text-mainTitle2-bold mb-5">
-          <b className="text-brand-main-green400">123명</b>
-          에게
-          <br />
-          <b className="text-brand-main-green400">
-            {(9999999).toLocaleString()}원
-          </b>{' '}
-          빌릴 수 있어요
-        </h2>
-        <div
-          className="text-body3-medium text-text-sub-gray76 px-2 py-1 bg-gray-gray50 w-fit rounded-md
+      <div ref={ref}>
+        {!isLoading ? (
+          <>
+            <div className="h-8 skeleton w-1/4 mb-2" />
+            <div className="h-8 skeleton w-3/4 mb-5" />
+            <div className="h-5 skeleton w-1/5" />
+          </>
+        ) : (
+          <>
+            <h2 className="text-mainTitle2-bold mb-5">
+              <b className="text-brand-main-green400">123명</b>
+              에게
+              <br />
+              <b className="text-brand-main-green400">
+                {(9999999).toLocaleString()}원
+              </b>{' '}
+              빌릴 수 있어요
+            </h2>
+            <div
+              className="text-body3-medium text-text-sub-gray76 px-2 py-1 bg-gray-gray50 w-fit rounded-md
         "
-        >
-          이용자 중 상위 99%
-        </div>
-        <div className="mt-8 mb-10 py-12 flex items-center rounded-2xl shadow-basic mx-auto">
-          <div ref={ref} className="flex mx-auto h-full space-x-12">
-            <Bar active={inView} value={75} />
-            <Bar active={inView} isMe={false} value={35} />
-          </div>
-        </div>
+            >
+              이용자 중 상위 99%
+            </div>
+            <div className="mt-8 mb-10 py-12 flex items-center rounded-2xl shadow-basic mx-auto">
+              <div className="flex mx-auto h-full space-x-12">
+                <Bar active={inView} value={75} />
+                <Bar active={inView} isMe={false} value={35} />
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </LazyMotion>
   )

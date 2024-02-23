@@ -1,9 +1,10 @@
-import KnowingFilterGroup from '@/components/knowing-filter-group'
 import Drawer from '@/components/ui/drawer'
 import React, { useState } from 'react'
 import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
+import useFilter, { Filter } from '@/hooks/use-filter'
 
 const WriteList = () => {
+  const { selectedFilter } = useFilter()
   const [openAlert, setOpenAlert] = useState(false)
   return (
     <Drawer
@@ -24,7 +25,7 @@ const WriteList = () => {
         </p>
       }
     >
-      <KnowingFilterGroup />
+      <Filter />
       <div className="p-5 flex flex-col">
         <p className="text-body3-medium text-text-sub-gray76 mb-4">
           <b className="text-brand-main-green400">999명</b>의 친구가 이유를

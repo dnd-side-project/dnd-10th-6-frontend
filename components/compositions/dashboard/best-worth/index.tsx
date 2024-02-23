@@ -6,6 +6,9 @@ import { PieChart, ResponsiveContainer } from 'recharts'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
 import Button from '@/components/button'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
+import { getDashboardQueryTest } from '@/queries/dashboard'
+import { useQuery } from '@tanstack/react-query'
+import { FilterType } from '@/hooks/use-filter'
 
 export interface Payload {
   payload: {
@@ -129,12 +132,13 @@ data01.forEach((data, idx) => {
   }
 })
 
-function BestWorth() {
+function BestWorth({ filter }: { filter: FilterType }) {
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     margin: '2%',
   })
 
+  const { data: statisics, isLoading } = useQuery(getDashboardQueryTest(filter))
   const orderByMaxValueList = useMemo(() => {
     const arr = data01.sort((a, b) => b.value - a.value)
 
@@ -143,65 +147,84 @@ function BestWorth() {
 
   return (
     <div ref={ref} className="w-full h-full flex flex-col">
-      <h2 className="text-mainTitle2-bold font-bold">
-        가장 중요한 것은 <b className="text-brand-main-green400">명예</b>
-        이네요
-      </h2>
-      <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
-        <div className="w-[180px] h-[180px] mx-auto relative">
-          {inView && (
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart barGap={0} barCategoryGap={0}>
-                <Pie
-                  data={orderByMaxValueList}
-                  activeIndex={0}
-                  activeShape={RenderActiveShape}
-                  animationBegin={0}
-                  animationDuration={700}
-                  animationEasing="ease-in-out"
-                  labelLine={false}
-                  dataKey="value"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={48}
-                  outerRadius={80}
-                >
-                  {orderByMaxValueList.map((entry, index) => (
-                    <Cell className={entry.className} key={`cell-${index}`} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          )}
-        </div>
-        <div className="flex justify-center space-x-4 w-full mt-8">
-          {data01.slice(0, 3).map((item) => (
-            <div key={item.name} className="flex items-center space-x-1">
-              <div
-                className={cn(
-                  'w-2 h-2 rounded-full',
-                  item.name === '명예'
-                    ? 'bg-brand-main-green400'
-                    : item.name === '사랑'
-                      ? 'bg-main-sub2-blue-blue600'
-                      : 'bg-brand-sub1-yellow500',
-                )}
-              />
-              <p className="font-bold text-sm text-text-main-black11">
-                {item.name}
-              </p>
-              <span className="font-medium text-sm text-text-sub-gray4f">
-                {item.value}%
-              </span>
+      {isLoading ? (
+        <>
+          <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
+          <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6 skeleton aspect-square"></div>
+          <div className="w-1/2  mx-auto mt-10">
+            <div className="mx-auto !skeleton rounded-md h-8 w-32"></div>
+          </div>
+        </>
+      ) : (
+        <>
+          <h2 className="text-mainTitle2-bold font-bold">
+            가장 중요한 것은 <b className="text-brand-main-green400">명예</b>
+            이네요
+          </h2>
+          <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
+            <div className="w-[180px] h-[180px] mx-auto relative">
+              {inView && (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart barGap={0} barCategoryGap={0}>
+                    <Pie
+                      data={orderByMaxValueList}
+                      activeIndex={0}
+                      activeShape={RenderActiveShape}
+                      animationBegin={0}
+                      animationDuration={700}
+                      animationEasing="ease-in-out"
+                      labelLine={false}
+                      dataKey="value"
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={48}
+                      outerRadius={80}
+                    >
+                      {orderByMaxValueList.map((entry, index) => (
+                        <Cell
+                          className={entry.className}
+                          key={`cell-${index}`}
+                        />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+              )}
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="w-1/2  mx-auto mt-10">
-        <Button rounded="full" variant="muted" className="bg-text-main-whiteFF">
-          자세히 보기
-        </Button>
-      </div>
+            <div className="flex justify-center space-x-4 w-full mt-8">
+              {data01.slice(0, 3).map((item) => (
+                <div key={item.name} className="flex items-center space-x-1">
+                  <div
+                    className={cn(
+                      'w-2 h-2 rounded-full',
+                      item.name === '명예'
+                        ? 'bg-brand-main-green400'
+                        : item.name === '사랑'
+                          ? 'bg-main-sub2-blue-blue600'
+                          : 'bg-brand-sub1-yellow500',
+                    )}
+                  />
+                  <p className="font-bold text-sm text-text-main-black11">
+                    {item.name}
+                  </p>
+                  <span className="font-medium text-sm text-text-sub-gray4f">
+                    {item.value}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="w-1/2  mx-auto mt-10">
+            <Button
+              rounded="full"
+              variant="muted"
+              className="bg-text-main-whiteFF"
+            >
+              자세히 보기
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   )
 }
