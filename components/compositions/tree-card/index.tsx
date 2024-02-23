@@ -33,7 +33,7 @@ const TreeCard = ({ period, relation }: TreeCardProps) => {
         onClick={handleCardClick}
       >
         <div
-          className={`card border rounded-md w-full bg-period-${relation.toLowerCase()} ${isFlipped ? 'flipped' : ''} `}
+          className={`card flex justify-center  border rounded-md w-full bg-period-${relation.toLowerCase()} ${isFlipped ? 'flipped' : ''} `}
         >
           <div
             className={cn(
@@ -44,10 +44,11 @@ const TreeCard = ({ period, relation }: TreeCardProps) => {
               {treeType.render(period as Period, relation as Relation)}
             </div>
           </div>
-          <div className="card-back px-y w-full flex flex-col justify-end items-center ">
+          <div className="card-back px-y w-full flex flex-col justify-center items-center ">
             <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
               <span className="">{userName}</span>
-              <Link href="/">
+              <Link className='pointer-events-none z-10'
+               href="/garden">
                 <button className="underline text-caption2 " onClick={() => {}}>
                   자세히보기
                 </button>

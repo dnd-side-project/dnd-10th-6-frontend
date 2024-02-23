@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import Button from '@/components/button'
@@ -9,6 +9,29 @@ const Pages = () => {
     period: 'SIX_MONTHS',
     relation: 'MIDDLE_AND_HIGH_SCHOOL',
   }
+
+  const [showScrollButton, setShowScrollButton] = useState(false)
+
+  useEffect(() => {
+    function handleScroll() {
+      const scrollTop = document.documentElement.scrollTop
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight
+      const scrolledToBottom = scrollTop + windowHeight >= documentHeight
+      setShowScrollButton(scrolledToBottom)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
   return (
     <BaseLayout
       className="bg-gray-gray50"
@@ -61,19 +84,41 @@ const Pages = () => {
           <Button className="!w-fit px-3 py-4">내 결과 보기</Button>
         </Link>
       </div>
-      <section className="bg-white ">
-        <div className="w-full px-6 py-4">
+      <section className="bg-white">
+        <div className=" w-full px-[30px] py-6">
           <p className=" text-subTitle2-bold text-text-sub-gray4f text-left">
             받은 친구
           </p>
         </div>
         <div className="w-full justify-center items-center flex flex-col space-y-2 ">
-          <div className="grid grid-cols-4 gap-2 overflow-y-scroll">
+          <div className="grid grid-cols-4 gap-2 ">
             {[...Array(40)].map((_, index) => (
               <TreeCard {...mockTreeCard} key={index} />
             ))}
           </div>
         </div>
+
+        {showScrollButton && (
+          <button
+            className="fixed z-[20] bottom-4 bg-white shadow-sm right-4 p-3 border rounded"
+            onClick={scrollToTop}
+          >
+            <svg 
+              width="14"
+              height="16"
+              viewBox="0 0 14 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 6.38462L7 1M7 1L13 6.38462M7 1V15"
+                stroke="black"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        )}
       </section>
     </BaseLayout>
   )
