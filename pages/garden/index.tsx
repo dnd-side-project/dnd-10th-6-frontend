@@ -6,15 +6,15 @@ import FormLayout from '@/layout/form-layout'
 import Button from '@/components/button'
 import { render } from 'react-dom'
 const Page = () => {
-  const treeType = new TreeType(treeCardAsset)
-  
+  const mockTreeCard = {
+    period: 'ONE_YEAR',
+    relation: 'ETC',
+  }
 
   return (
     <>
       <FormLayout
-        header={
-        {
-         
+        header={{
           leftIcon: <></>,
           center: <h3 className="text-bod1y-bold">내 정원</h3>,
           rightIcon: (
@@ -49,28 +49,26 @@ const Page = () => {
         className=" bg-gray-gray50 w-full"
         content={
           <div className="space-y-2">
-            
-              <div className=" flex justify-between items-center">
-                <div className="flex flex-col justify-center w-full">
-                  <p className="text-body1-medium text-text-sub-gray4f text-left">
-                    내 정원에 심어진 나무는
-                  </p>
-                  <h3 className="text-mainTitle1-bold">총 0그루</h3>
-                </div>
-                <div className="w-40 h-12 flex justify-center items-center">
-                  <Button className="">내 결과보기</Button>
-                </div>
+            <div className=" flex justify-between items-center">
+              <div className="flex flex-col justify-center w-full">
+                <p className="text-body1-medium text-text-sub-gray4f text-left">
+                  내 정원에 심어진 나무는
+                </p>
+                <h3 className="text-mainTitle1-bold">총 0그루</h3>
               </div>
-            
+              <div className="w-40 h-12 flex justify-center items-center">
+                <Button className="">내 결과보기</Button>
+              </div>
+            </div>
+
             <section className="bg-white">
               <p className="p-2 text-subTitle2-bold text-text-sub-gray4f">
                 받은 친구
               </p>
-              <div className="w-full p-1  overflow-y-scroll">
+              <div className="w-full  overflow-y-scroll">
                 <div className="grid grid-cols-4 gap-2">
                   {[...Array(30)].map((_, index) => (
-                    <TreeCard 
-                   />
+                    <TreeCard {...mockTreeCard} key={index} />
                   ))}
                 </div>
               </div>
