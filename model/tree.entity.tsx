@@ -14,12 +14,11 @@ type TreeAssetKey = `${Period}_${Relation}`
 export class TreeType {
   constructor(private readonly icon: Record<TreeAssetKey, ReactNode>) {}
 
-  render(period: Period, relation: Relation
-    ) {
+  render(period: Period, relation: Relation) {
     const treeAssetKey = `${period}_${relation}` as TreeAssetKey
     const treeSvg = this.icon[treeAssetKey]
 
-    return <div>{treeSvg}</div>
+    return <>{treeSvg}</>
   }
 }
 

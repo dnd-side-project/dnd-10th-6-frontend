@@ -61,13 +61,14 @@ const Pages = () => {
           <Button className="!w-fit px-3 py-4">내 결과 보기</Button>
         </Link>
       </div>
-      <section className="bg-white">
-        <p className="p-2 text-subTitle2-bold text-text-sub-gray4f">
-          받은 친구
-        </p>
-        <div className="w-full p-1 overflow-y-scroll">
-          <div className="grid grid-cols-4 gap-2 p-2">
-            
+      <section className="bg-white ">
+        <div className="w-full px-6 py-4">
+          <p className=" text-subTitle2-bold text-text-sub-gray4f text-left">
+            받은 친구
+          </p>
+        </div>
+        <div className="w-full justify-center items-center flex flex-col space-y-2 ">
+          <div className="grid grid-cols-4 gap-2 overflow-y-scroll">
             {[...Array(40)].map((_, index) => (
               <TreeCard {...mockTreeCard} key={index} />
             ))}
