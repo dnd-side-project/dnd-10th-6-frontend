@@ -1,6 +1,7 @@
+import { QsSchemaType } from '@/hooks/useQuestionsForm'
 import { NamuiApi } from '@/lib/namui-api'
 import { Question } from '@/model/question.entity'
-import { UseQueryOptions } from '@tanstack/react-query'
+import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 
 export const getQuestionQuery = (
   nickname: string,
@@ -13,4 +14,13 @@ export const getQuestionQuery = (
       title: item.title.replace('{{userName}}', nickname),
     }))
   },
+})
+
+export const submitQuestionMutaion = (
+  option: UseMutationOptions<null, Error, QsSchemaType>,
+): UseMutationOptions<null, Error, QsSchemaType> => ({
+  mutationKey: ['submit', 'question'],
+  mutationFn: NamuiApi.submitSurvey,
+  gcTime: 1000 * 60 * 60 * 24,
+  ...option,
 })

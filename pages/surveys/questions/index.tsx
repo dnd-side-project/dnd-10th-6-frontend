@@ -8,8 +8,13 @@ import createFunnel from '@/components/funnel/createFunnel'
 import ProgressBar from '@/components/progressbar'
 import Button from '@/components/button'
 import FormLayout from '@/layout/form-layout'
-import { QueryClient, dehydrate, useSuspenseQuery } from '@tanstack/react-query'
-import { getQuestionQuery } from '@/queries/question'
+import {
+  QueryClient,
+  dehydrate,
+  useMutation,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
+import { getQuestionQuery, submitQuestionMutaion } from '@/queries/question'
 import useQuestionForm, { QsSchemaType } from '@/hooks/useQuestionsForm'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
@@ -23,12 +28,23 @@ import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import SurveyForm from '@/components/survey/survey-form'
 import { NamuiApi } from '@/lib/namui-api'
+import { toastError } from '@/lib/client/alert'
 
 const MotionLabel = motion(InputLabel)
 
 const Question = ({ nickname }: { nickname: string }) => {
   const { data } = useSession()
   const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
+  const { mutate: submit } = useMutation(
+    submitQuestionMutaion({
+      onSuccess(data, variables, context) {
+        goNext()
+      },
+      onError() {
+        toastError()
+      },
+    }),
+  )
   const fieldList = useMemo(
     () => ['senderName', 'knowing', ...qs.map((item) => item.id)],
 
@@ -73,8 +89,7 @@ const Question = ({ nickname }: { nickname: string }) => {
         delete an.reason
       }
     })
-    await NamuiApi.submitSurvey(data)
-    goNext()
+    submit(data)
   }
 
   const countAnimation = ({

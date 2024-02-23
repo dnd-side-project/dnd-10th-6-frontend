@@ -48,7 +48,7 @@ export class NamuiApi {
   }
 
   static async submitSurvey(data: QsSchemaType) {
-    return await NamuiApi.handler({
+    return await NamuiApi.handler<null>({
       method: 'POST',
       url: '/api/v1/surveys',
       data,
