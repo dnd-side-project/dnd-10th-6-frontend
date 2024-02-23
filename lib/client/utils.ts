@@ -22,11 +22,13 @@ export const kakaoInit = () => {
   return !window.Kakao?.isInitialized()
 }
 
-export const shareToKaKaoLink = async () => {
+export const shareToKaKaoLink = async (url: string) => {
   kakaoInit()
   window.Kakao?.Share.sendCustom({
     templateId: parseInt(process.env.NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID),
-    templateArgs: {},
+    templateArgs: {
+      SURVEY_PATH: url,
+    },
   })
 }
 export const shareToCopyLink = async (url?: string) => {

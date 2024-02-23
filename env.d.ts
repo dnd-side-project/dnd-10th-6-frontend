@@ -1,7 +1,9 @@
 interface ShareToKakaoArg {
   templateId: number
   installTalk?: boolean
-  templateArgs: {}
+  templateArgs: {
+    SURVEY_PATH: string
+  }
   serverCallbackArgs?: {}
 }
 export declare global {

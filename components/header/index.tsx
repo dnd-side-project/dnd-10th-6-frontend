@@ -126,7 +126,7 @@ const Header = ({
         {showRight
           ? rightIcon ?? (
               <>
-                <Alert />
+                {/* <Alert /> */}
                 <Setting />
               </>
             )

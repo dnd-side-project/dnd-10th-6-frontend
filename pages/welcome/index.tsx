@@ -24,6 +24,11 @@ const WelcomePage = () => {
     setCopyModalOpen(true)
   }, [data?.user?.wikiId])
 
+  const handleShareKakao = () => {
+    if (data?.user?.wikiId) {
+      shareToKaKaoLink(`surveys?wikiId=${data?.user?.wikiId}`)
+    }
+  }
   return (
     <FormLayout
       header={{
@@ -113,7 +118,7 @@ const WelcomePage = () => {
                 링크복사
               </Button>,
               <Button
-                onClick={shareToKaKaoLink}
+                onClick={handleShareKakao}
                 key="kakao-share"
                 className="rounded-none"
               >

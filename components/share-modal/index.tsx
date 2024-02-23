@@ -19,6 +19,12 @@ const ShareModal = ({ children }: PropsWithChildren) => {
     setShareModalOpen(false)
     setCopyModalOpen(true)
   }, [data?.user?.wikiId])
+
+  const handleShareKakao = () => {
+    if (data?.user?.wikiId) {
+      shareToKaKaoLink(`surveys?wikiId=${data?.user?.wikiId}`)
+    }
+  }
   return (
     <>
       <Modal
@@ -50,7 +56,7 @@ const ShareModal = ({ children }: PropsWithChildren) => {
             <Button
               key="kakao-share"
               className="rounded-none"
-              onClick={shareToKaKaoLink}
+              onClick={handleShareKakao}
             >
               카카오 공유
             </Button>,

@@ -1,5 +1,5 @@
 import { AUTH } from '@/constants'
-import { UnauthorizedError, getErrorMessage } from '@/error'
+import { UnauthorizedError } from '@/error'
 import CalcMobileHeight from '@/contexts/calc-mobile-height'
 import BaseLayout from '@/layout/base-layout'
 import { Session, Token } from '@/lib/auth'
@@ -13,23 +13,16 @@ import { parse, serialize } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
-import { ReactElement, ReactNode, Suspense, useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { ReactElement, ReactNode, useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { useSearchParams } from 'next/navigation'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import QueryProvider from '@/contexts/query-provider'
-import {
-  HydrationBoundary,
-  QueryErrorResetBoundary,
-} from '@tanstack/react-query'
+import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
 import Head from 'next/head'
 import { toastError } from '@/lib/client/alert'
-import Script from 'next/script'
-
-import ErrorTree from '@/components/svgs/error-tree'
-import Button from '@/components/button'
 import ErrorBoundary from '@/components/error-boundary'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {

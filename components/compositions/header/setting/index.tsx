@@ -1,5 +1,5 @@
 import Drawer from '@/components/ui/drawer'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Modal from '@/components/modal'
 import WriteList from '@/components/compositions/header/write-list'
 import EditProfile from '@/components/compositions/header/edit-setting'
@@ -86,7 +86,7 @@ const Setting = () => {
               ],
             }}
           />
-          <Modal
+          {/* <Modal
             open={openWithdraw}
             onOpenChange={setOpenWithdraw}
             footer={{
@@ -115,7 +115,7 @@ const Setting = () => {
             title="서비스 탈퇴"
             description={`탈퇴 시 모든 정보가 사라져요.
             정말 탈퇴하시겠어요?`}
-          />
+          /> */}
         </section>
         <section className="py-4 px-5 flex flex-col items-start">
           <h4 className="text-body3-medium text-text-sub-gray4f py-2">
