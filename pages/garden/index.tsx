@@ -5,11 +5,15 @@ import Button from '@/components/button'
 import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
 import { useSession } from '@/provider/session-provider'
+
 const Pages = () => {
   const mockTreeCard = {
-    period: 'INFINITE',
-    relation: 'MIDDLE_AND_HIGH_SCHOOL',
+    surveyId: 'asdf',
+    relation: 'ETC',
+    period: 'SIX_MONTHS',
+    recieverName: 'string',
   }
+
   const { data } = useSession()
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [flippedCardIndex, setFlippedCardIndex] = useState(-1)

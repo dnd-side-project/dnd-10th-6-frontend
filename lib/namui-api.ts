@@ -84,6 +84,13 @@ export class NamuiApi {
     })
   }
 
+  static async getSurveyId(userId: string) {
+    return await NamuiApi.handler<NamuiResponse<string>>({
+      method: 'GET',
+      url: `/api/v1/surveys?surveyId=${userId}`,
+    })
+  }
+
   static async signUp(nickname: string) {
     return await NamuiApi.handler<{
       accessToken: string

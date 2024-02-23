@@ -12,7 +12,7 @@ interface TreeCardProps {
 
 const TreeCard = ({ period, relation, isFlipped, onClick }: TreeCardProps) => {
   const { data } = useSession()
-  const userName = data?.user?.name
+  const userName = '김나무'
 
   const bgColor = (() => {
     switch (relation) {
