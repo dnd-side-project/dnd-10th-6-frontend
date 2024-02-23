@@ -4,12 +4,17 @@ import withAuth from '@/layout/HOC/with-auth'
 import Button from '@/components/button'
 import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
+import { useSession } from '@/provider/session-provider'
+
 const Pages = () => {
   const mockTreeCard = {
-    period: 'INFINITE',
-    relation: 'MIDDLE_AND_HIGH_SCHOOL',
+    surveyId: 'asdf',
+    relation: 'ETC',
+    period: 'SIX_MONTHS',
+    recieverName: 'string',
   }
 
+  const { data } = useSession()
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [flippedCardIndex, setFlippedCardIndex] = useState(-1)
 
@@ -39,6 +44,46 @@ const Pages = () => {
     } else {
       setFlippedCardIndex(index)
     }
+  }
+
+  const totalCards = 2 // data?.user?.totalSurveyCnt ?? 0
+  const cols = 4
+  const remainder = totalCards % cols
+
+  const emptyCards = remainder !== 0 ? cols - remainder : 0
+  const cards = [...Array(totalCards)].map((_, index) => (
+    <TreeCard
+      key={index}
+      period={mockTreeCard.period}
+      relation={mockTreeCard.relation}
+      isFlipped={index === flippedCardIndex}
+      onClick={() => handleCardClick(index)}
+    />
+  ))
+
+  for (let i = 0; i < emptyCards; i++) {
+    cards.push(
+      <div key={`empty-${i}`}>
+        <div className="flex justify-center items-center rounded w-[80px] h-[90px] bg-gray-gray50 border-dashed border ">
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 34 34"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.36523 17.5469C8.55024 19.222 9.87772 22.8973 13.7077 24.1978C17.5376 25.4983 20.8343 24.6076 22.0039 23.9997"
+              stroke="#D9D9D9"
+              strokeLinecap="round"
+            />
+            <circle cx="17" cy="17" r="16.5" stroke="#D9D9D9" />
+            <circle cx="14.8053" cy="12.6139" r="1.64516" fill="#D9D9D9" />
+            <circle cx="21.3893" cy="14.8053" r="1.64516" fill="#D9D9D9" />
+          </svg>
+        </div>
+      </div>,
+    )
   }
 
   return (
@@ -87,7 +132,9 @@ const Pages = () => {
           <p className="text-body1-medium text-text-sub-gray4f">
             내 정원에 심어진 나무는
           </p>
-          <h3 className="text-mainTitle1-bold">총 0그루</h3>
+          <h3 className="text-mainTitle1-bold text-black">
+            총 {data?.user?.totalSurveyCnt ?? 0}그루
+          </h3>
         </div>
         <Link href="/dashboard">
           <Button className="!w-fit px-3 py-4">내 결과 보기</Button>
@@ -100,17 +147,7 @@ const Pages = () => {
           </p>
         </div>
         <div className="w-full justify-center items-center flex flex-col space-y-2 ">
-          <div className="grid grid-cols-4 gap-2 ">
-            {[...Array(40)].map((_, index) => (
-              <TreeCard
-                key={index}
-                period={mockTreeCard.period}
-                relation={mockTreeCard.relation}
-                isFlipped={index === flippedCardIndex}
-                onClick={() => handleCardClick(index)}
-              />
-            ))}
-          </div>
+          <div className="grid grid-cols-4 gap-2 ">{cards}</div>
         </div>
 
         {showScrollButton && (
