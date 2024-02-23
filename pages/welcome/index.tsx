@@ -7,7 +7,12 @@ import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
 
+
+
 const WelcomePage = () => {
+
+
+
   const router = useRouter()
   const { data } = useSession()
 
