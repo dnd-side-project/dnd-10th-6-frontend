@@ -96,7 +96,7 @@ const Page = () => {
           </motion.div>
         ) : (
           <div className="h-full flex justify-center items-center relative mx-5">
-            <div className="absolute top-8 left-[10px]">
+            <div className="absolute top-8 left-[10px] flex flex-col space-y-2">
               <p className="text-body1-medium text-text-sub-gray4f">
                 내 정원에 심어진 나무는
               </p>

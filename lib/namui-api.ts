@@ -35,6 +35,21 @@ export class NamuiApi {
     })
   }
 
+  static async withdraw() {
+    return await NamuiApi.handler({
+      method: 'DELETE',
+      url: '/api/v1/withdraw',
+    })
+  }
+
+  static async editProfile(nickname: string) {
+    return await NamuiApi.handler({
+      method: 'PUT',
+      url: '/api/v1/users/profile',
+      data: { nickname },
+    })
+  }
+
   static async getPublicUserInfo(wikiId: string) {
     return await NamuiApi.handler<{ data: { nickname: string } }>({
       method: 'GET',
@@ -108,8 +123,16 @@ export class NamuiApi {
   private static injectInterceptor(instance: AxiosInstance) {
     const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
       if (process.env.NODE_ENV === 'development') {
-        console.log(`[LOG-Request] : ${config.url}`)
-        console.log(`[LOG-Request] : ${config.headers}`)
+        console.log(
+          '%c[LOG-Request-URL]: ' + `%c${config.url}`,
+          'color: #00BC68;',
+          'color: #4F98E9;',
+        )
+        console.log(
+          `%c[LOG-Request-Header] : %c${config.headers}`,
+          'color: #00BC68;',
+          'color: #4F98E9;',
+        )
       }
       const accessToken = NamuiApi.accessToken
 
@@ -131,7 +154,14 @@ export class NamuiApi {
     const onErrorResponse = async (error: any) => {
       if (process.env.NODE_ENV === 'development') {
         console.log(
-          `[LOG-RESPONSE-ERROR] : PATH-${error.request.path} ${error?.message}`,
+          `%c[LOG-RESPONSE-ERROR]
+%cPATH: %c${error.request.responseURL}
+%cMessage: %c${error?.message}`,
+          'color: #DC0000;',
+          'color: #f56a6a;',
+          'color: #DC0000;',
+          'color: #f56a6a;',
+          'color: #DC0000;',
         )
       }
       if (error.response?.status === 401) {

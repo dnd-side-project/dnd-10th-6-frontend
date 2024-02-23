@@ -22,6 +22,7 @@ import QueryProvider from '@/contexts/query-provider'
 import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
 import Head from 'next/head'
+import { toastError } from '@/lib/client/alert'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -57,18 +58,7 @@ export default function NamuiWikiApp({
 
   useEffect(() => {
     if (mounted && errorCode) {
-      toast.error(
-        () => {
-          return getErrorMessage(errorCode)
-        },
-        {
-          icon: '🫠',
-          style: {
-            color: 'rgba(239,68,68,1)',
-            fontSize: '16px',
-          },
-        },
-      )
+      toastError()
     }
   }, [errorCode, mounted, router, searchparams])
   return (

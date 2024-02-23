@@ -78,3 +78,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .error-toast {
+    @apply flex gap-x-3;
+  }
+  .error-toast > div:last-child {
+    margin: 0;
+    justify-content: flex-start;
+  }
+}

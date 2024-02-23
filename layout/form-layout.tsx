@@ -6,7 +6,7 @@ import { cn } from '@/lib/client/utils'
 interface FormLayoutProps {
   title?: ReactNode
   content: ReactNode
-  button: ReactNode
+  button?: ReactNode
   showHeader?: boolean
   header?: HeaderProps
   contentProps?: {

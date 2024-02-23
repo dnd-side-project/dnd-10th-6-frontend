@@ -64,10 +64,15 @@ export const SessionProvider = ({
 
   const _getSession = useCallback(async () => {
     try {
-      if (session?.token?.accessToken || NamuiApi.hasToken()) {
+      if (
+        (session?.token?.accessToken || NamuiApi.hasToken()) &&
+        !session?.user?.wikiId
+      ) {
         const { data: newSession } = await NamuiApi.getUserData()
         setSession((prev) => ({ ...prev, user: newSession }))
         return newSession
+      } else {
+        return session
       }
     } catch (error) {
       setSession(null)

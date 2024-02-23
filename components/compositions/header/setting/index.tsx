@@ -1,14 +1,26 @@
 import Drawer from '@/components/ui/drawer'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Modal from '@/components/modal'
 import WriteList from '@/components/compositions/header/write-list'
 import EditProfile from '@/components/compositions/header/edit-setting'
 import { Close } from '@radix-ui/react-dialog'
 import { useSession } from '@/provider/session-provider'
+import { NamuiApi } from '@/lib/namui-api'
+import { toastError } from '@/lib/client/alert'
 
 const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
+  const [openWithdraw, setOpenWithdraw] = useState(false)
   const { signout } = useSession()
+  const handleWithdrawClick = async () => {
+    try {
+      await NamuiApi.withdraw()
+      window.location.reload()
+    } catch (err) {
+      toastError()
+      setOpenWithdraw(false)
+    }
+  }
   return (
     <Drawer
       header={{
@@ -74,6 +86,26 @@ const Setting = () => {
             }}
           />
           <Modal
+            open={openWithdraw}
+            onOpenChange={setOpenWithdraw}
+            footer={{
+              item: [
+                <Close
+                  key="cancel"
+                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                >
+                  취소
+                  <span className="sr-only">Close</span>
+                </Close>,
+                <button
+                  onClick={handleWithdrawClick}
+                  key="confirm"
+                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                >
+                  회원탈퇴
+                </button>,
+              ],
+            }}
             trigger={
               <button className="py-[14px] text-body1-bold text-text-main-black11">
                 서비스 탈퇴
