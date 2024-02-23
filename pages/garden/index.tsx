@@ -60,7 +60,7 @@ const Pages = () => {
   for (let i = 0; i < emptyCards; i++) {
     cards.push(
       <div key={`empty-${i}`}>
-        <div className="flex justify-center items-center rounded w-[70px] h-[80px] bg-gray-gray50 border-dashed border ">
+        <div className="flex justify-center items-center rounded w-[80px] h-[90px] bg-gray-gray50 border-dashed border ">
           <svg
             width="34"
             height="34"
