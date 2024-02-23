@@ -106,7 +106,9 @@ const Question = ({ nickname }: { nickname: string }) => {
           if (stepRef.current) {
             stepRef.current.innerText = `${target}%`
           }
-          return cancelAnimationFrame(animationId)
+          cancelAnimationFrame(animationId)
+          if (target === 100) router.replace('/submit')
+          return
         }
 
         const p = progress / DURATION
