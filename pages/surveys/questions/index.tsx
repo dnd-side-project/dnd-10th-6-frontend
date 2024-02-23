@@ -68,6 +68,11 @@ const Question = ({ nickname }: { nickname: string }) => {
 
   const { handleSubmit, setFocus, setError, trigger } = questionForm
   const onSubmit = async (data: QsSchemaType) => {
+    data.answers.forEach((an) => {
+      if (!an.reason) {
+        delete an.reason
+      }
+    })
     await NamuiApi.submitSurvey(data)
     goNext()
   }

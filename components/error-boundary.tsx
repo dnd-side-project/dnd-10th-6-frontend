@@ -1,7 +1,8 @@
 import React, { ErrorInfo, PropsWithChildren } from 'react'
 import Button from './button'
 import ErrorTree from './svgs/error-tree'
-import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { fadeInProps } from '@/variants'
 
 class ErrorBoundary extends React.Component<
   PropsWithChildren,
@@ -26,7 +27,10 @@ class ErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="h-calc-h flex flex-col justify-center items-center">
+        <motion.div
+          {...fadeInProps}
+          className="h-calc-h flex flex-col justify-center items-center"
+        >
           <ErrorTree />
           <div className="flex flex-col space-y-3 text-center mt-8 mb-14">
             <p className="text-text-main-black11 text-mainTitle2-bold">
@@ -40,7 +44,7 @@ class ErrorBoundary extends React.Component<
           <Button onClick={this.handleBack} className="!w-fit px-4">
             내 정원가기
           </Button>
-        </div>
+        </motion.div>
       )
     }
 

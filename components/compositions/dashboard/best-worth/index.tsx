@@ -9,22 +9,28 @@ import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { FilterType } from '@/hooks/use-filter'
-
+import { RANK_COLOR } from '@/constants'
 export interface Payload {
-  payload: {
-    name: string
-    value: number
-    className: string
-  }
-  cx: string
-  cy: string
+  percent: number
+  name: number
+  midAngle: number
+  middleRadius: number
+  cx: number
+  cy: number
   stroke: string
   fill: string
-  name: string
+  legend: string
+  percentage: number
+  color: string
+  innerRadius: number
+  outerRadius: number
+  maxRadius: number
   value: number
-  className: string
+  startAngle: number
+  endAngle: number
+  paddingAngle: number
+  tabIndex: number
 }
-
 const RenderActiveShape = (props: PieSectorDataItem) => {
   const {
     cx,
@@ -37,8 +43,9 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
     percent,
     name,
     payload,
+    color,
+    legend,
   } = props as PieSectorDataItem & Payload
-
   const textRef = useRef<SVGTextElement>(null)
   const IsStartAnimation = useRef(false)
   useBrowserLayoutEffect(() => {
@@ -90,14 +97,11 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
         textAnchor="middle"
         className="text-subTitle1-bold"
       >
-        {name}
+        {legend.split(' ')[2]}
       </text>
       <text
         ref={textRef}
-        className={cn(
-          payload.className,
-          'font-base font-bold text-3xl leading-10',
-        )}
+        className={cn('font-base font-bold text-3xl leading-10')}
         x={cx}
         y={cy}
         dy={25}
@@ -112,7 +116,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
         outerRadius={outerRadius}
         startAngle={startAngle}
         endAngle={endAngle}
-        className={cn(payload.className)}
+        style={{ fill: color }}
         fill={fill}
       />
     </g>
@@ -138,12 +142,27 @@ function BestWorth({ filter }: { filter: FilterType }) {
     margin: '2%',
   })
 
-  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
-  const orderByMaxValueList = useMemo(() => {
-    const arr = data01.sort((a, b) => b.value - a.value)
+  const { data: statisics, isLoading } = useQuery({
+    ...getDashboardQuery(filter),
+    select: (data) => {
+      const bestWorth = data.data?.statistics.find(
+        (item) => item.dashboardType === 'BEST_WORTH',
+      )
 
-    return arr
-  }, [])
+      return bestWorth
+    },
+  })
+
+  const orderByMaxValueList = useMemo(() => {
+    const arr = statisics?.rank?.sort((a, b) => b.percentage - a.percentage)
+
+    return arr?.map((item, index) => ({
+      ...item,
+      color:
+        RANK_COLOR[index] ??
+        `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
+    }))
+  }, [statisics])
 
   return (
     <div ref={ref} className="w-full h-full flex flex-col">
@@ -158,7 +177,10 @@ function BestWorth({ filter }: { filter: FilterType }) {
       ) : (
         <>
           <h2 className="text-mainTitle2-bold font-bold">
-            가장 중요한 것은 <b className="text-brand-main-green400">명예</b>
+            가장 중요한 것은{' '}
+            <b style={{ color: orderByMaxValueList?.[0].color }}>
+              {orderByMaxValueList?.[0].legend.split(' ')[2]}
+            </b>
             이네요
           </h2>
           <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
@@ -174,15 +196,18 @@ function BestWorth({ filter }: { filter: FilterType }) {
                       animationDuration={700}
                       animationEasing="ease-in-out"
                       labelLine={false}
-                      dataKey="value"
+                      dataKey="percentage"
                       cx="50%"
                       cy="50%"
                       innerRadius={48}
                       outerRadius={80}
                     >
-                      {orderByMaxValueList.map((entry, index) => (
+                      {orderByMaxValueList?.map((entry, index) => (
                         <Cell
-                          className={entry.className}
+                          style={{
+                            color: entry.color,
+                            backgroundColor: entry.color,
+                          }}
                           key={`cell-${index}`}
                         />
                       ))}
@@ -192,26 +217,25 @@ function BestWorth({ filter }: { filter: FilterType }) {
               )}
             </div>
             <div className="flex justify-center space-x-4 w-full mt-8">
-              {data01.slice(0, 3).map((item) => (
-                <div key={item.name} className="flex items-center space-x-1">
+              {orderByMaxValueList?.slice(0, 3).map((item) => {
+                return (
                   <div
-                    className={cn(
-                      'w-2 h-2 rounded-full',
-                      item.name === '명예'
-                        ? 'bg-brand-main-green400'
-                        : item.name === '사랑'
-                          ? 'bg-main-sub2-blue-blue600'
-                          : 'bg-brand-sub1-yellow500',
-                    )}
-                  />
-                  <p className="font-bold text-sm text-text-main-black11">
-                    {item.name}
-                  </p>
-                  <span className="font-medium text-sm text-text-sub-gray4f">
-                    {item.value}%
-                  </span>
-                </div>
-              ))}
+                    key={item.legend}
+                    className="flex items-center space-x-1"
+                  >
+                    <div
+                      className={cn('w-2 h-2 rounded-full')}
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <p className="font-bold text-sm text-text-main-black11">
+                      {item.legend.split(' ')[2]}
+                    </p>
+                    <span className="font-medium text-sm text-text-sub-gray4f">
+                      {item.percentage}%
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           </div>
           <div className="w-1/2  mx-auto mt-10">

@@ -6,8 +6,15 @@ export interface DashboardData {
   statistics: Statistic[]
 }
 
-export interface Statistic {
-  dashboardType: string
+export type MONEY = {
+  dashboardType: 'MONEY'
+  peopleCount: number
+  average: number
+  entireAverage: number
+}
+
+export type Statistic = {
+  dashboardType: 'BEST_WORTH' | 'HAPPY' | 'SAD' | 'CHARACTER' | 'MONEY'
   rank?: Rank[]
   friendly?: boolean
   similar?: boolean
@@ -15,10 +22,13 @@ export interface Statistic {
   busy?: boolean
   peopleCount?: number
   moneySum?: number
+  entireAverage?: number
   average?: number
 }
 
 export interface Rank {
   legend: string
   percentage: number
+
+  color?: string
 }

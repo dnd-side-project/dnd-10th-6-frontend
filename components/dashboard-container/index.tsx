@@ -28,9 +28,9 @@ const DashboardContainer = ({
       <Filter className={cn(shouldShowHeader && 'top-header')} />
       <div className="flex flex-col divide-y-[12px] divide-line-soft">
         {/* 내 정원에 심어진 나무는? */}
-        <section className="pt-5">
+        <Section className="pt-5">
           <TreeInfo filter={selectedFilter} />
-        </section>
+        </Section>
         {/* 가장 중요한 것 - 파이차트 */}
         <Section>
           <BestWorth filter={selectedFilter} />

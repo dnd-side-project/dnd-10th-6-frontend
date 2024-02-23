@@ -86,10 +86,10 @@ const SurveyForm = ({
     onConfirm(values)
   }
   const disabled = Object.keys(form.formState.errors).length
-  console.log(disabled, form.formState.errors)
   useEffect(() => {
     form.trigger()
   }, [])
+
   const selectedType = form.watch().type
   const Tree = TreeSvg[(index - 1) as keyof typeof TreeSvg]
   return (
@@ -205,7 +205,7 @@ const SurveyForm = ({
                           form.setValue('answer', '')
                         } else {
                           form.setValue('type', 'OPTION')
-                          form.setValue('answer', option.value + '')
+                          form.setValue('answer', target.value + '')
                         }
 
                         field.onChange(target.value)
@@ -235,7 +235,7 @@ const SurveyForm = ({
                         (item) => item === 'MANUAL',
                       ) ? (
                         <input
-                          className="ml-2 bg-transparent outline-none"
+                          className="ml-4 bg-transparent outline-none"
                           placeholder="15글자 이내로 입력해주세요"
                           maxLength={15}
                           onChange={(e) =>
@@ -288,7 +288,7 @@ const SurveyForm = ({
                           form.setValue('answer', '')
                         } else {
                           form.setValue('type', 'OPTION')
-                          form.setValue('answer', +option.value)
+                          form.setValue('answer', target.value)
                         }
 
                         field.onChange(target.value)
@@ -318,7 +318,7 @@ const SurveyForm = ({
                         (item) => item === 'MANUAL',
                       ) ? (
                         <input
-                          className="ml-2 bg-transparent outline-none"
+                          className="ml-4 bg-transparent outline-none"
                           placeholder="15글자 이내로 입력해주세요"
                           maxLength={15}
                           type="text"

@@ -1,22 +1,39 @@
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
+import { MONEY } from '@/model/dashboard.entity'
+import { useSession } from '@/provider/session-provider'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 const Money = ({ filter }: { filter: FilterType }) => {
-  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
+  const { data: statisics, isLoading } = useQuery({
+    ...getDashboardQuery(filter),
+    select(data) {
+      return data.data?.statistics.find(
+        (item) => item.dashboardType === 'MONEY',
+      ) as MONEY
+    },
+  })
+
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
   })
+  const myAvg = useMemo(() => {
+    const total = (statisics?.average ?? 0) + (statisics?.entireAverage ?? 0)
 
+    return {
+      mine: (statisics?.average ?? 0) / total,
+      entire: (statisics?.entireAverage ?? 0) / total,
+    }
+  }, [statisics])
   return (
     <LazyMotion features={domAnimation}>
       <div ref={ref}>
-        {isLoading ? (
+        {isLoading || !statisics ? (
           <>
             <div className="h-8 skeleton w-1/4 mb-2" />
             <div className="h-8 skeleton w-3/4 mb-5" />
@@ -29,24 +46,36 @@ const Money = ({ filter }: { filter: FilterType }) => {
         ) : (
           <>
             <h2 className="text-mainTitle2-bold mb-5">
-              <b className="text-brand-main-green400">123명</b>
+              <b className="text-brand-main-green400">
+                {statisics.peopleCount}명
+              </b>
               에게
               <br />
+              평균{' '}
               <b className="text-brand-main-green400">
-                {(9999999).toLocaleString()}원
+                {statisics.average.toLocaleString()}원
               </b>{' '}
               빌릴 수 있어요
             </h2>
-            <div
+            {/* <div
               className="text-body3-medium text-text-sub-gray76 px-2 py-1 bg-gray-gray50 w-fit rounded-md
         "
             >
               이용자 중 상위 99%
-            </div>
+            </div> */}
             <div className="mt-8 mb-10 py-12 flex items-center rounded-2xl shadow-basic mx-auto">
               <div className="flex mx-auto h-full space-x-12">
-                <Bar active={inView} value={75} />
-                <Bar active={inView} isMe={false} value={35} />
+                <Bar
+                  price={statisics.average ?? 0}
+                  active={inView}
+                  value={myAvg.mine * 100}
+                />
+                <Bar
+                  price={statisics.entireAverage ?? 0}
+                  active={inView}
+                  isMe={false}
+                  value={myAvg.entire * 100}
+                />
               </div>
             </div>
           </>
@@ -62,9 +91,11 @@ interface BarProps {
   active?: boolean
   isMe?: boolean
   value: number
+  price: number
 }
 
-function Bar({ active, value, isMe = true }: BarProps) {
+function Bar({ active, value, price, isMe = true }: BarProps) {
+  const { data } = useSession()
   const [isDone, setIsDone] = useState(false)
   return (
     <div className="h-full flex flex-col">
@@ -78,7 +109,7 @@ function Bar({ active, value, isMe = true }: BarProps) {
               : 'bg-gray-gray100 text-text-sub-gray76',
           )}
         >
-          {(1384843).toLocaleString()}원
+          {price.toLocaleString()}원
           <svg
             className={cn(
               'absolute left-1/2 -translate-x-1/2 -bottom-2.5',
@@ -132,7 +163,7 @@ function Bar({ active, value, isMe = true }: BarProps) {
           !isMe && 'text-text-sub-gray76 text-body1-medium opacity-50',
         )}
       >
-        {isMe ? '김디엔님' : '이용자 평균'}
+        {isMe ? (data?.user?.name ?? '') + ' 님' : '이용자 평균'}
       </p>
     </div>
   )

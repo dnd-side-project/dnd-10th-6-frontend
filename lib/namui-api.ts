@@ -168,10 +168,13 @@ export class NamuiApi {
         )
       }
       const accessToken = NamuiApi.accessToken
-
-      config.headers = {
-        ...config.headers,
-        [AUTH.AUTH_HEADER_KEY]: accessToken,
+      if (accessToken) {
+        config.headers = {
+          ...config.headers,
+          [AUTH.AUTH_HEADER_KEY]: accessToken,
+        }
+      } else {
+        delete config.headers?.[AUTH.AUTH_HEADER_KEY]
       }
 
       return config
@@ -242,6 +245,7 @@ export class NamuiApi {
   static setToken(accessToken?: string) {
     if (accessToken) {
       NamuiApi.accessToken = accessToken
+    } else {
     }
   }
   static injectCookies(cookie: string) {

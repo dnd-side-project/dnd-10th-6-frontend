@@ -29,18 +29,3 @@ export const getDashboardQuery = (
     throwOnError: false,
   }
 }
-export const getDashboardQueryTest = (
-  filters: DashboardFilter,
-): UseQueryOptions<DashboardResponse, Error, Statistic[]> => {
-  return {
-    queryKey: ['Dashboard', filters?.type, filters?.value],
-    queryFn: (args) => {
-      console.log(args)
-      return import('@/pages/assets/mocks/dashboard.json')
-    },
-    select: (result) => {
-      return result.data?.statistics ?? []
-    },
-    throwOnError: false,
-  }
-}

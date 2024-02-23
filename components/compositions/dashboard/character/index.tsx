@@ -7,15 +7,64 @@ import { FilterType } from '@/hooks/use-filter'
 import { useQuery } from '@tanstack/react-query'
 import { getDashboardQuery } from '@/queries/dashboard'
 
+const characterMap = {
+  busy: [
+    {
+      emoji: '🛌',
+      top: '주말마다',
+      bottom: '집에서 쉬는 편',
+    },
+    {
+      emoji: '🕐',
+      top: '주말마다',
+      bottom: '약속이 있는 편',
+    },
+  ],
+  friendly: [
+    { emoji: '🫢', top: '친해지는데', bottom: '시간이 걸리는 편' },
+    { emoji: '🤗', top: '사람들과', bottom: '빨리 친해지는 편' },
+  ],
+  mbti: [
+    {
+      emoji: '🙅‍♂️',
+      top: 'MBTI에',
+      bottom: '몰입하지 않는 편',
+    },
+    {
+      emoji: '🧐',
+      top: 'MBTI에 ',
+      bottom: '과몰입하는 편',
+    },
+  ],
+  similar: [
+    {
+      emoji: '🙅‍♂️',
+      top: '답변자들과',
+      bottom: '다른 성향',
+    },
+    {
+      emoji: '🙆‍♂️',
+      top: '답변자들과',
+      bottom: '비슷한 성향',
+    },
+  ],
+}
+
 const Character = ({ filter }: { filter: FilterType }) => {
-  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
+  const { data: statisics, isLoading } = useQuery({
+    ...getDashboardQuery(filter),
+    select(data) {
+      return data.data?.statistics.find(
+        (item) => item.dashboardType === 'CHARACTER',
+      )
+    },
+  })
   const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
   const { data } = useSession()
-
   return (
     <LazyMotion features={domAnimation}>
-      <div ref={ref}>
-        {isLoading ? (
+      <div>
+        {isLoading || !statisics ? (
           <>
             <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
             <div className="grid grid-cols-2 gap-4 mt-5">
@@ -31,6 +80,7 @@ const Character = ({ filter }: { filter: FilterType }) => {
               {data?.user?.name ?? ''}님은 이런사람이에요
             </h2>
             <m.div
+              ref={ref}
               {...fadeInProps}
               animate={inView ? fadeInProps.animate : {}}
               variants={{
@@ -45,28 +95,37 @@ const Character = ({ filter }: { filter: FilterType }) => {
               }}
               className="grid grid-cols-2 gap-4 mt-5"
             >
+              {statisics.busy}
               <CharacterBlock
-                emoji="🤗"
-                topText="사람들과"
-                bottomText="빨리 친해지는 편"
+                emoji={
+                  characterMap.friendly[+Boolean(statisics.friendly)]?.emoji
+                }
+                topText={
+                  characterMap.friendly[+Boolean(statisics.friendly)]?.top
+                }
+                bottomText={
+                  characterMap.friendly[+Boolean(statisics.friendly)]?.bottom
+                }
                 href="/"
               />
               <CharacterBlock
-                emoji="🙆‍♂️"
-                topText="답변자들과"
-                bottomText="비슷한 성향"
+                emoji={characterMap.similar[+Boolean(statisics.similar)]?.emoji}
+                topText={characterMap.similar[+Boolean(statisics.similar)]?.top}
+                bottomText={
+                  characterMap.similar[+Boolean(statisics.similar)]?.bottom
+                }
                 href="/"
               />
               <CharacterBlock
-                emoji="🧐"
-                topText="MBTI에"
-                bottomText="과몰입하는 편"
+                emoji={characterMap.mbti[+Boolean(statisics.mbti)]?.emoji}
+                topText={characterMap.mbti[+Boolean(statisics.mbti)]?.top}
+                bottomText={characterMap.mbti[+Boolean(statisics.mbti)]?.bottom}
                 href="/"
               />
               <CharacterBlock
-                emoji="🕑"
-                topText="주말마다"
-                bottomText="약속이 있는 편"
+                emoji={characterMap.busy[+Boolean(statisics.busy)]?.emoji}
+                topText={characterMap.busy[+Boolean(statisics.busy)]?.top}
+                bottomText={characterMap.busy[+Boolean(statisics.busy)]?.bottom}
                 href="/"
               />
             </m.div>

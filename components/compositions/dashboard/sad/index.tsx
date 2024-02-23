@@ -1,18 +1,35 @@
 import Button from '@/components/button'
+import { RANK_COLOR } from '@/constants'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 const Sad = ({ filter }: { filter: FilterType }) => {
-  const { data: statisics, isLoading } = useQuery(getDashboardQuery(filter))
+  const { data: statisics, isLoading } = useQuery({
+    ...getDashboardQuery(filter),
+    select(data) {
+      return data.data?.statistics.find((item) => item.dashboardType === 'SAD')
+    },
+  })
   const { inView, ref } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
   })
+  const orderByMaxValueList = useMemo(() => {
+    const arr = statisics?.rank?.sort((a, b) => b.percentage - a.percentage)
+
+    return arr?.map((item, index) => ({
+      ...item,
+      color:
+        RANK_COLOR[index] ??
+        `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
+      text: item.legend.split('  ')[1],
+    }))
+  }, [statisics])
   return (
     <LazyMotion features={domAnimation}>
       <div ref={ref}>
@@ -30,30 +47,28 @@ const Sad = ({ filter }: { filter: FilterType }) => {
             <h2 className="text-mainTitle2-bold mb-5">
               슬프거나 화날 때
               <br />
-              <b className="text-brand-main-green400 break-keep">
-                스트레스를 풀기 위해 여가생활을 즐겨요
+              <b
+                className="break-keep"
+                style={{
+                  color: orderByMaxValueList?.[0].color,
+                }}
+              >
+                {orderByMaxValueList?.[0].text}
               </b>
             </h2>
             <div className="flex flex-col justify-center  space-y-8 px-8 py-12 rounded-2xl shadow-basic mx-auto">
-              <Bar
-                active={inView}
-                color="#00BC68"
-                percent={90}
-                title="스트레스를 풀기 위해 여가생활을 즐겨요"
-                accent
-              />
-              <Bar
-                active={inView}
-                color="#199EF0"
-                percent={50}
-                title="혼자 조용히 즐겨요"
-              />
-              <Bar
-                active={inView}
-                color="#FFEB34"
-                percent={21}
-                title="맛있는 음식을 먹어요"
-              />
+              {orderByMaxValueList?.slice(0, 3).map((item, index) => {
+                return (
+                  <Bar
+                    key={item.legend}
+                    active={inView}
+                    color={item.color ?? ''}
+                    percent={item.percentage}
+                    title={item.text}
+                    accent={index === 0}
+                  />
+                )
+              })}
             </div>
             <div className="w-1/2  mx-auto mt-10">
               <Button

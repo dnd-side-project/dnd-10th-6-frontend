@@ -9,3 +9,4 @@ export const AUTH = {
 }
 
 export const QUESTION_MAX = 14
+export const RANK_COLOR = ['#00BC68', '#199EF0', '#FFEB34']
