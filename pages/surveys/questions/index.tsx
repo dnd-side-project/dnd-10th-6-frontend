@@ -391,22 +391,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!wikiId || typeof wikiId === 'object') return { notFound: true }
   serverURL.pathname = '/api/v1/users'
   serverURL.searchParams.append('wikiId', wikiId)
-
-  const response = await fetch(serverURL).then(
-    (res) =>
-      res.json() as Promise<{
-        data?: { nickname: string }
-        errorCode?: string
-        reason?: string
-      }>,
-  )
-  serverURL.searchParams.delete('wikiId')
-  if (!response.data?.nickname) return { notFound: true }
-  const {
-    data: { nickname },
-  } = response
   const queryClient = new QueryClient()
+
   try {
+    const response = await fetch(serverURL).then(
+      (res) =>
+        res.json() as Promise<{
+          data?: { nickname: string }
+          errorCode?: string
+          reason?: string
+        }>,
+    )
+    serverURL.searchParams.delete('wikiId')
+    if (!response.data?.nickname) return { notFound: true }
+    const {
+      data: { nickname },
+    } = response
     await queryClient.prefetchQuery(getQuestionQuery(nickname))
 
     return {
