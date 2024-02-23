@@ -181,6 +181,7 @@ const Question = ({ nickname }: { nickname: string }) => {
 
   const txt = useMemo(() => {
     const 상수들 = [0, 0, 0, 30]
+    if (fieldList.length <= 상수들.length) return []
     let result: number[] = []
     for (let i = 0; i < 5; i++) {
       const 상수 = fieldList.length - 상수들.length

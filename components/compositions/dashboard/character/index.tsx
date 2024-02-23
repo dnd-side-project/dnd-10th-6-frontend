@@ -3,58 +3,75 @@ import { m, LazyMotion, domAnimation } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { useSession } from '@/provider/session-provider'
+import { FilterType } from '@/hooks/use-filter'
+import { useQuery } from '@tanstack/react-query'
+import { getDashboardQueryTest } from '@/queries/dashboard'
 
-const Character = () => {
+const Character = ({ filter }: { filter: FilterType }) => {
+  const { data: statisics, isLoading } = useQuery(getDashboardQueryTest(filter))
   const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
   const { data } = useSession()
 
   return (
     <LazyMotion features={domAnimation}>
-      <div>
-        <h2 className="text-mainTitle2-bold">
-          {data?.user?.name ?? ''}님은 이런사람이에요
-        </h2>
-        <m.div
-          ref={ref}
-          {...fadeInProps}
-          animate={inView ? fadeInProps.animate : {}}
-          variants={{
-            ...fadeInProps.variants,
-            animate: {
-              ...fadeInProps.variants?.animate,
-              perspective: '1000px',
-              transition: {
-                staggerChildren: 0.2,
-              },
-            },
-          }}
-          className="grid grid-cols-2 gap-4 mt-5"
-        >
-          <CharacterBlock
-            emoji="🤗"
-            topText="사람들과"
-            bottomText="빨리 친해지는 편"
-            href="/"
-          />
-          <CharacterBlock
-            emoji="🙆‍♂️"
-            topText="답변자들과"
-            bottomText="비슷한 성향"
-            href="/"
-          />
-          <CharacterBlock
-            emoji="🧐"
-            topText="MBTI에"
-            bottomText="과몰입하는 편"
-            href="/"
-          />
-          <CharacterBlock
-            emoji="🕑"
-            topText="주말마다"
-            bottomText="약속이 있는 편"
-            href="/"
-          />
-        </m.div>
+      <div ref={ref}>
+        {isLoading ? (
+          <>
+            <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
+            <div className="grid grid-cols-2 gap-4 mt-5">
+              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
+              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
+              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
+              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="text-mainTitle2-bold">
+              {data?.user?.name ?? ''}님은 이런사람이에요
+            </h2>
+            <m.div
+              {...fadeInProps}
+              animate={inView ? fadeInProps.animate : {}}
+              variants={{
+                ...fadeInProps.variants,
+                animate: {
+                  ...fadeInProps.variants?.animate,
+                  perspective: '1000px',
+                  transition: {
+                    staggerChildren: 0.2,
+                  },
+                },
+              }}
+              className="grid grid-cols-2 gap-4 mt-5"
+            >
+              <CharacterBlock
+                emoji="🤗"
+                topText="사람들과"
+                bottomText="빨리 친해지는 편"
+                href="/"
+              />
+              <CharacterBlock
+                emoji="🙆‍♂️"
+                topText="답변자들과"
+                bottomText="비슷한 성향"
+                href="/"
+              />
+              <CharacterBlock
+                emoji="🧐"
+                topText="MBTI에"
+                bottomText="과몰입하는 편"
+                href="/"
+              />
+              <CharacterBlock
+                emoji="🕑"
+                topText="주말마다"
+                bottomText="약속이 있는 편"
+                href="/"
+              />
+            </m.div>
+          </>
+        )}
       </div>
     </LazyMotion>
   )

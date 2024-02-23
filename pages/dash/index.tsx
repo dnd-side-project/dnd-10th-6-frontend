@@ -4,6 +4,7 @@ import {
   HTMLAttributes,
   PropsWithChildren,
   ReactNode,
+  Suspense,
   useCallback,
   useRef,
   useState,
@@ -28,7 +29,6 @@ import { useQuery } from '@tanstack/react-query'
 import { getDashboardQueryTest } from '@/queries/dashboard'
 import TripleTrees from '@/components/svgs/triple-trees'
 import useFilter, { Filter, FilterProvider } from '@/hooks/use-filter'
-import withAuth from '@/layout/HOC/with-auth'
 
 const Page = () => {
   const { selectedFilter } = useFilter()
@@ -61,31 +61,31 @@ const Page = () => {
         ref={ref}
         className={cn('h-calc-h overflow-y-scroll')}
       >
-        {statisics?.length ? (
+        {isLoading || statisics?.length ? (
           <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
             <Filter className={cn(shouldShowHeader && 'top-header')} />
             <div className="flex flex-col divide-y-[12px] divide-line-soft">
               {/* 내 정원에 심어진 나무는? */}
               <Section className="pt-5">
-                <TreeInfo />
+                <TreeInfo filter={selectedFilter} />
               </Section>
               {/* 가장 중요한 것 - 파이차트 */}
               <Section>
-                <BestWorth />
+                <BestWorth filter={selectedFilter} />
               </Section>
               {/* 이런사람이에요 - 박스 */}
               <Section>
-                <Character />
+                <Character filter={selectedFilter} />
               </Section>
               <Section>
-                <Money />
+                <Money filter={selectedFilter} />
               </Section>
               {/* 기쁠 떄 */}
               <Section>
-                <Happy />
+                <Happy filter={selectedFilter} />
               </Section>
               <Section>
-                <Sad />
+                <Sad filter={selectedFilter} />
               </Section>
             </div>
           </motion.div>
@@ -170,11 +170,8 @@ const Page = () => {
   )
 }
 
-const DashboardWithAuth = withAuth(Page)
-DashboardWithAuth.getLayout = (page: ReactNode) => (
-  <FilterProvider>{page}</FilterProvider>
-)
-export default DashboardWithAuth
+Page.getLayout = (page: ReactNode) => <FilterProvider>{page}</FilterProvider>
+export default Page
 
 function Section({
   children,

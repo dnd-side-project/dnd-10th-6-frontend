@@ -1,10 +1,11 @@
 import Button from '@/components/button'
+import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
 import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
 import React from 'react'
 
-const Happy = () => {
+const Happy = ({ filter }: { filter: FilterType }) => {
   const { inView, ref } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',

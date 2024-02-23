@@ -1,10 +1,15 @@
 import Button from '@/components/button'
 import Badge from '@/components/button/badge'
+import { FilterType } from '@/hooks/use-filter'
+import { useMount } from '@/hooks/use-mount'
 import { useSession } from '@/provider/session-provider'
+import { getDashboardQueryTest } from '@/queries/dashboard'
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import React from 'react'
 
-const TreeInfo = () => {
+const TreeInfo = ({ filter }: { filter: FilterType }) => {
   const { data } = useSession()
+
   return (
     <>
       <div className="bg-bg-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
