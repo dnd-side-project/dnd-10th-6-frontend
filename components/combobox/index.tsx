@@ -54,7 +54,10 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-5 h-5 text-text-sub-gray76"
+            className={cn(
+              'w-5 h-5 text-text-sub-gray76 duration-300 ease-in-out',
+              isOpen && 'rotate-180',
+            )}
           >
             <path
               strokeLinecap="round"

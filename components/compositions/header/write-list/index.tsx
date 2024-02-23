@@ -19,9 +19,9 @@ const WriteList = () => {
       open={openAlert}
       onChangeOpen={setOpenAlert}
       trigger={
-        <button className="py-[14px] text-body1-bold text-text-main-black11">
+        <p className="py-[14px] text-body1-bold text-text-main-black11">
           작성 목록
-        </button>
+        </p>
       }
     >
       <KnowingFilterGroup />

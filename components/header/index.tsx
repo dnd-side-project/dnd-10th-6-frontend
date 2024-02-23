@@ -22,6 +22,7 @@ export interface HeaderProps {
   rightIcon?: ReactNode
   leftIcon?: ReactNode
   bodyRef?: Ref<HTMLElement>
+  className?: string
   options?: {
     onBackClick?: () => void
     showRight?: boolean
@@ -38,6 +39,7 @@ const Header = ({
   ),
   rightIcon,
   options,
+  className,
 }: HeaderProps) => {
   const { showRight, onBackClick } = options ?? { showRight: true }
   const headerRef = useRef<HTMLElement>(null)
@@ -82,6 +84,7 @@ const Header = ({
       {...fadeInProps}
       className={cn(
         'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold shrink-0',
+        className,
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}
     >
