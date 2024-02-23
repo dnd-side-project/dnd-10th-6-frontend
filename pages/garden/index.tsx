@@ -7,7 +7,9 @@ import TreeCard from '@/components/compositions/tree-card'
 const Pages = () => {
   return (
     <BaseLayout
+      className="bg-gray-gray50"
       header={{
+        className: 'bg-gray-gray50',
         leftIcon: null,
         rightIcon: (
           <button>
@@ -67,16 +69,6 @@ const Pages = () => {
           </div>
         </div>
       </section>
-      {/* <div className="flex flex-col items-center text-center">
-          <h3 className="text-subTitle1-bold mt-8 mb-4">
-            나무를 심어준 친구가 없어요
-          </h3>
-          <p className="text-body1-medium text-text-sub-gray4f mb-8">
-            나에 대해 궁금하다면 링크 공유하기를 눌러
-            <br />
-            친구에게 알려달라고 부탁해보세요
-          </p>
-        </div> */}
     </BaseLayout>
   )
 }
