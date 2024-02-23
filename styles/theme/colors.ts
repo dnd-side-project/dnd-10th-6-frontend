@@ -78,13 +78,13 @@ export const colors = {
     soft: '#F1F1F5',
     medium: '#E5E5EC',
   },
-  meetingPath: {
-    etc: '#005E16',
-    social: '#75E75B',
-    company: '#199EF0',
-    college: '#00BC68',
-    primary: '#FFEB34',
-    secondary: '#F77D0E',
+  period: {
+    etc: '#D9D9D9',
+    social: '#E3FFCC',
+    work: '#E4EFFD',
+    university: '#E3FFCC',
+    middle_and_high_school: '#FFF1DB',
+    elementary_school: '#FDFEC5',
   },
   bg: {
     green1: '#C5E4CC',

@@ -117,6 +117,13 @@ const config = {
             fontWeight: '500',
           },
         ],
+        'subTitle2-bold': [
+          '18px',
+          {
+            lineHeight: '26px',
+            fontWeight: '700',
+          },
+        ],
         'body1-medium': [
           '16px',
           {

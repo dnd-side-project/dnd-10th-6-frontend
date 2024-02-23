@@ -8,7 +8,7 @@ const Pages = () => {
   const router = useRouter()
   return (
     <BaseLayout showHeader={false} className={cn('h-calc-h overflow-y-scroll')}>
-      <div className="m-auto w-full flex flex-col justify-center items-center space-y-8">
+      <div className="grow -mt-5 flex flex-col items-center justify-center px-5 text-center space-y-8">
         <svg
           width="129"
           height="184"
@@ -134,12 +134,11 @@ const Pages = () => {
             다시 한번 확인해 주세요
           </p>
         </div>
-
         <Button
           onClick={() => {
             router.push('/garden')
           }}
-          className="w-32"
+          className="w-40"
         >
           내 정원가기
         </Button>
