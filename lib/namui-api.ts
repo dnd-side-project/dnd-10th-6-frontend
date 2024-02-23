@@ -10,6 +10,7 @@ import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
 import { AUTH } from '@/constants'
 import { Question } from '@/model/question.entity'
 import { DashboardData } from '@/model/dashboard.entity'
+import { QsSchemaType } from '@/hooks/useQuestionsForm'
 
 interface NamuiResponse<T = any> {
   data: T
@@ -32,6 +33,25 @@ export class NamuiApi {
         provider: provider.toUpperCase(),
         code,
       },
+    })
+  }
+
+  static async getTokenFromServer() {
+    return await NamuiApi.handler({
+      method: 'GET',
+      url: '/api/auth/access',
+      baseURL:
+        typeof window !== 'undefined'
+          ? window.location.origin
+          : process.env.HOST,
+    })
+  }
+
+  static async submitSurvey(data: QsSchemaType) {
+    return await NamuiApi.handler({
+      method: 'POST',
+      url: '/api/v1/surveys',
+      data,
     })
   }
 

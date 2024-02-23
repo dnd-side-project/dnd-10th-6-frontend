@@ -12,7 +12,7 @@ const InputLabel = forwardRef<
   PropsWithChildren<InputLabelProps>
 >(({ children, label, required, errorMessage, className }, ref) => {
   return (
-    <label ref={ref}>
+    <label ref={ref} className="w-full">
       <div className="flex items-center mb-2">
         <h3 className={className}>{label}</h3>
         {required && (

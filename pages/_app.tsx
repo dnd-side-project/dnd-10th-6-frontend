@@ -52,6 +52,7 @@ export default function NamuiWikiApp({
   const getLayout =
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
+
   useBrowserLayoutEffect(() => {
     const callbackURL = sessionStorage.getItem('callbackUrl')
     if (callbackURL) {

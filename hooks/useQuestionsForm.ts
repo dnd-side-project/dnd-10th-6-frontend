@@ -53,10 +53,11 @@ const QsSchema = z.object({
   relation: z.enum(relation),
   answers: z.array(
     z.object({
+      id: z.string(),
       questionId: z.string(),
-      type: z.string(),
-      answer: z.string(),
-      reason: z.string().min(1).max(15),
+      type: z.enum(['OPTION', 'MANUAL']),
+      answer: z.string().min(1).or(z.number()),
+      reason: z.string().optional(),
     }),
   ),
 })
