@@ -30,6 +30,7 @@ import Script from 'next/script'
 
 import ErrorTree from '@/components/svgs/error-tree'
 import Button from '@/components/button'
+import ErrorBoundary from '@/components/error-boundary'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -78,12 +79,12 @@ export default function NamuiWikiApp({
       }}
     >
       <Head>
-        <Script
+        <script
           src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
           integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8"
           crossOrigin="anonymous"
           defer
-        ></Script>
+        ></script>
         <meta
           name="viewport"
           content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;"
@@ -91,12 +92,14 @@ export default function NamuiWikiApp({
 
         <meta name="HandheldFriendly" content="true" />
       </Head>
-      <QueryProvider>
-        <HydrationBoundary state={pageProps.dehydratedState}>
-          <MetaHead />
-          {getLayout(<Component {...pageProps} />)}
-        </HydrationBoundary>
-      </QueryProvider>
+      <ErrorBoundary>
+        <QueryProvider>
+          <HydrationBoundary state={pageProps.dehydratedState}>
+            <MetaHead />
+            {getLayout(<Component {...pageProps} />)}
+          </HydrationBoundary>
+        </QueryProvider>
+      </ErrorBoundary>
 
       {mounted && (
         <Toaster
@@ -186,25 +189,4 @@ NamuiWikiApp.getInitialProps = async (
     ...ctx,
     session,
   }
-}
-{
-  /* <div className="h-calc-h flex flex-col justify-center items-center">
-                <ErrorTree />
-                <div className="flex flex-col space-y-3 text-center mt-8 mb-14">
-                  <p className="text-text-main-black11 text-mainTitle2-bold">
-                    서버에 문제가 생겼어요
-                  </p>
-                  <p className="text-text-sub-gray4f text-subTitle2-medium">
-                    잠시 후 다시 시도해 주세요
-                  </p>
-                </div>
-                <Button
-                  onClick={() => {
-                    router.push('/garden')
-                  }}
-                  className="!w-fit px-4"
-                >
-                  내 정원가기
-                </Button>
-              </div> */
 }

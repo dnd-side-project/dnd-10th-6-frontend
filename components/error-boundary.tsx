@@ -1,40 +1,48 @@
-import React from 'react'
+import React, { ErrorInfo, PropsWithChildren } from 'react'
+import Button from './button'
+import ErrorTree from './svgs/error-tree'
+import Link from 'next/link'
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+class ErrorBoundary extends React.Component<
+  PropsWithChildren,
+  { hasError: boolean }
+> {
+  constructor(props: PropsWithChildren) {
     super(props)
 
-    // Define a state variable to track whether is an error or not
     this.state = { hasError: false }
   }
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI
-
+  static getDerivedStateFromError(error: Error) {
     return { hasError: true }
   }
-  componentDidCatch(error, errorInfo) {
-    console.log(error, '!!')
-    // You can use your own error logging service here
-    console.log({ error, errorInfo })
+
+  handleBack() {
+    window.location.pathname = '/garden'
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.log(error)
   }
   render() {
-    // Check if the error is thrown
     if (this.state.hasError) {
-      // You can render any custom fallback UI
       return (
-        <div>
-          <h2>Oops, there is an error!</h2>
-          <button
-            type="button"
-            onClick={() => this.setState({ hasError: false })}
-          >
-            Try again?
-          </button>
+        <div className="h-calc-h flex flex-col justify-center items-center">
+          <ErrorTree />
+          <div className="flex flex-col space-y-3 text-center mt-8 mb-14">
+            <p className="text-text-main-black11 text-mainTitle2-bold">
+              서버에 문제가 생겼어요
+            </p>
+            <p className="text-text-sub-gray4f text-subTitle2-medium">
+              잠시 후 다시 시도해 주세요
+            </p>
+          </div>
+
+          <Button onClick={this.handleBack} className="!w-fit px-4">
+            내 정원가기
+          </Button>
         </div>
       )
     }
-
-    // Return children components in case of no error
 
     return this.props.children
   }

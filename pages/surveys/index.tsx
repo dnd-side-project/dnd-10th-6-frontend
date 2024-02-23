@@ -246,7 +246,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         reason?: string
       }>,
   )
-  console.log(response, '<<<response')
   serverURL.searchParams.delete('wikiId')
   if (!response.data?.nickname) return { notFound: true }
   return {
