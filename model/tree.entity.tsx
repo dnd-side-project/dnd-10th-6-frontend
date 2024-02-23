@@ -14,7 +14,8 @@ type TreeAssetKey = `${Period}_${Relation}`
 export class TreeType {
   constructor(private readonly icon: Record<TreeAssetKey, ReactNode>) {}
 
-  render(period: Period, relation: Relation) {
+  render(period: Period, relation: Relation
+    ) {
     const treeAssetKey = `${period}_${relation}` as TreeAssetKey
     const treeSvg = this.icon[treeAssetKey]
 
@@ -25,8 +26,8 @@ export class TreeType {
 export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   SIX_MONTHS_ELEMENTARY_SCHOOL: (
     <svg
-      width="126"
-      height="159"
+      width="current"
+      height="current"
       viewBox="0 0 126 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -82,8 +83,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   SIX_MONTHS_MIDDLE_AND_HIGH_SCHOOL: (
     <svg
-      width="126"
-      height="159"
+      width="current"
+      height="current"
       viewBox="0 0 126 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -139,8 +140,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   SIX_MONTHS_UNIVERSITY: (
     <svg
-      width="126"
-      height="159"
+      width="current"
+      height="current"
       viewBox="0 0 126 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -196,8 +197,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   SIX_MONTHS_WORK: (
     <svg
-      width="126"
-      height="159"
+      width="current"
+      height="current"
       viewBox="0 0 126 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -253,8 +254,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   SIX_MONTHS_SOCIAL: (
     <svg
-      width="126"
-      height="159"
+      width="current"
+      height="current"
       viewBox="0 0 126 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -310,8 +311,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   SIX_MONTHS_ETC: (
     <svg
-      width="126"
-      height="159"
+      width="current"
+      height="current"
       viewBox="0 0 126 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -367,8 +368,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   ONE_YEAR_ELEMENTARY_SCHOOL: (
     <svg
-      width="136"
-      height="232"
+      width="current"
+      height="current"
       viewBox="0 0 136 232"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -424,8 +425,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   ONE_YEAR_MIDDLE_AND_HIGH_SCHOOL: (
     <svg
-      width="136"
-      height="229"
+      width="current"
+      height="current"
       viewBox="0 0 136 229"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -481,8 +482,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   ONE_YEAR_UNIVERSITY: (
     <svg
-      width="136"
-      height="241"
+      width="current"
+      height="current"
       viewBox="0 0 136 241"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -538,8 +539,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   ONE_YEAR_WORK: (
     <svg
-      width="136"
-      height="235"
+      width="current"
+      height="current"
       viewBox="0 0 136 235"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -595,8 +596,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   ONE_YEAR_SOCIAL: (
     <svg
-      width="136"
-      height="238"
+      width="current"
+      height="current"
       viewBox="0 0 136 238"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -652,8 +653,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   ONE_YEAR_ETC: (
     <svg
-      width="136"
-      height="226"
+      width="current"
+      height="current"
       viewBox="0 0 136 226"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -709,8 +710,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   FOUR_YEARS_MIDDLE_AND_HIGH_SCHOOL: (
     <svg
-      width="158"
-      height="268"
+      width="current"
+      height="current"
       viewBox="0 0 158 268"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -774,8 +775,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   FOUR_YEARS_UNIVERSITY: (
     <svg
-      width="158"
-      height="268"
+      width="current"
+      height="current"
       viewBox="0 0 158 268"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -839,8 +840,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   FOUR_YEARS_WORK: (
     <svg
-      width="158"
-      height="268"
+      width="current"
+      height="current"
       viewBox="0 0 158 268"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -904,8 +905,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   FOUR_YEARS_SOCIAL: (
     <svg
-      width="158"
-      height="268"
+      width="current"
+      height="current"
       viewBox="0 0 158 268"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -969,8 +970,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   FOUR_YEARS_ELEMENTARY_SCHOOL: (
     <svg
-      width="158"
-      height="268"
+      width="current"
+      height="current"
       viewBox="0 0 158 268"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1034,8 +1035,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   FOUR_YEARS_ETC: (
     <svg
-      width="158"
-      height="268"
+      width="current"
+      height="current"
       viewBox="0 0 158 268"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1099,8 +1100,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   INFINITE_ELEMENTARY_SCHOOL: (
     <svg
-      width="111"
-      height="293"
+      width="current"
+      height="current"
       viewBox="0 0 111 293"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1155,8 +1156,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   INFINITE_WORK: (
     <svg
-      width="111"
-      height="293"
+      width="current"
+      height="current"
       viewBox="0 0 111 293"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1211,8 +1212,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   INFINITE_SOCIAL: (
     <svg
-      width="111"
-      height="293"
+      width="current"
+      height="current"
       viewBox="0 0 111 293"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1267,8 +1268,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   INFINITE_ETC: (
     <svg
-      width="111"
-      height="293"
+      width="current"
+      height="current"
       viewBox="0 0 111 293"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1323,8 +1324,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   INFINITE_MIDDLE_AND_HIGH_SCHOOL: (
     <svg
-      width="111"
-      height="293"
+      width="current"
+      height="current"
       viewBox="0 0 111 293"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1379,8 +1380,8 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   ),
   INFINITE_UNIVERSITY: (
     <svg
-      width="111"
-      height="293"
+      width="current"
+      height="current"
       viewBox="0 0 111 293"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

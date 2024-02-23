@@ -30,16 +30,16 @@ const TreeCard = ({ period, relation }: TreeCardProps) => {
     <>
       <div
         className={cn(
-          'w-[100px] h-[100px] border rounded-md relative',
-          `bg-period-${period}`,
+          'z-10 w-[70px] h-[80px] cursor-pointer relative border rounded-md ',
+          `bg-period-${period.toLowerCase()}`,
         )}
         onClick={handleCardClick}
       >
-        <div className={`card ${isFlipped ? 'flipped' : ''}`}>
-          <div className="card-front">
-         
+        <div className={`card relative ${isFlipped ? 'flipped' : ''}`}>
+          <div className="card-front z-10 ">
+            <div className="max-w-[50px] flex flex-col justify-center items-center">
               {treeType.render(period as Period, relation as Relation)}
-            
+            </div>
           </div>
           <div className="card-back">
             <div className="w-full flex flex-col justify-center items-center m-auto">

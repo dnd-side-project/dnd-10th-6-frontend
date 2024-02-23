@@ -6,8 +6,8 @@ import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
 const Pages = () => {
   const mockTreeCard = {
-    period: 'ONE_YEAR',
-    relation: 'ETC',
+    period: 'SIX_MONTHS',
+    relation: 'MIDDLE_AND_HIGH_SCHOOL',
   }
   return (
     <BaseLayout
@@ -65,9 +65,10 @@ const Pages = () => {
         <p className="p-2 text-subTitle2-bold text-text-sub-gray4f">
           받은 친구
         </p>
-        <div className="w-full p-1  overflow-y-scroll">
-          <div className="grid grid-cols-4 gap-2">
-            {[...Array(30)].map((_, index) => (
+        <div className="w-full p-1 overflow-y-scroll">
+          <div className="grid grid-cols-4 gap-2 p-2">
+            
+            {[...Array(40)].map((_, index) => (
               <TreeCard {...mockTreeCard} key={index} />
             ))}
           </div>

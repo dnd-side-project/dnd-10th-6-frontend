@@ -10,9 +10,9 @@ export async function middleware(req: NextRequest) {
       cookies.get(AUTH.OAUTH_PROVIDER),
       cookies.get(AUTH.OAUTH_TOKEN),
     ]
-    // if (!provider || !token) {
-    //   return NextResponse.redirect(new URL('/', req.url))
-    // }
+    if (!provider || !token) {
+      return NextResponse.redirect(new URL('/', req.url))
+    }
   }
   return NextResponse.next()
 }
