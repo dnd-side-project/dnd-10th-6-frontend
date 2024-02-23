@@ -6,6 +6,7 @@ import { useSession } from '@/provider/session-provider'
 import { FilterType } from '@/hooks/use-filter'
 import { useQuery } from '@tanstack/react-query'
 import { getDashboardQuery } from '@/queries/dashboard'
+import { Statistic } from '@/model/dashboard.entity'
 
 const characterMap = {
   busy: [
@@ -59,8 +60,6 @@ const Character = ({ filter }: { filter: FilterType }) => {
       )
     },
   })
-  const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
-  const { data } = useSession()
   return (
     <LazyMotion features={domAnimation}>
       <div>
@@ -75,61 +74,7 @@ const Character = ({ filter }: { filter: FilterType }) => {
             </div>
           </>
         ) : (
-          <>
-            <h2 className="text-mainTitle2-bold">
-              {data?.user?.name ?? ''}님은 이런사람이에요
-            </h2>
-            <m.div
-              ref={ref}
-              {...fadeInProps}
-              animate={inView ? fadeInProps.animate : {}}
-              variants={{
-                ...fadeInProps.variants,
-                animate: {
-                  ...fadeInProps.variants?.animate,
-                  perspective: '1000px',
-                  transition: {
-                    staggerChildren: 0.2,
-                  },
-                },
-              }}
-              className="grid grid-cols-2 gap-4 mt-5"
-            >
-              {statisics.busy}
-              <CharacterBlock
-                emoji={
-                  characterMap.friendly[+Boolean(statisics.friendly)]?.emoji
-                }
-                topText={
-                  characterMap.friendly[+Boolean(statisics.friendly)]?.top
-                }
-                bottomText={
-                  characterMap.friendly[+Boolean(statisics.friendly)]?.bottom
-                }
-                href="/"
-              />
-              <CharacterBlock
-                emoji={characterMap.similar[+Boolean(statisics.similar)]?.emoji}
-                topText={characterMap.similar[+Boolean(statisics.similar)]?.top}
-                bottomText={
-                  characterMap.similar[+Boolean(statisics.similar)]?.bottom
-                }
-                href="/"
-              />
-              <CharacterBlock
-                emoji={characterMap.mbti[+Boolean(statisics.mbti)]?.emoji}
-                topText={characterMap.mbti[+Boolean(statisics.mbti)]?.top}
-                bottomText={characterMap.mbti[+Boolean(statisics.mbti)]?.bottom}
-                href="/"
-              />
-              <CharacterBlock
-                emoji={characterMap.busy[+Boolean(statisics.busy)]?.emoji}
-                topText={characterMap.busy[+Boolean(statisics.busy)]?.top}
-                bottomText={characterMap.busy[+Boolean(statisics.busy)]?.bottom}
-                href="/"
-              />
-            </m.div>
-          </>
+          <CharacterInfo statisics={statisics} />
         )}
       </div>
     </LazyMotion>
@@ -151,6 +96,63 @@ const cardPickingVariants = {
       duration: 0.2,
     },
   },
+}
+
+function CharacterInfo({ statisics }: { statisics: Statistic }) {
+  const { data } = useSession()
+  const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
+
+  return (
+    <>
+      <h2 className="text-mainTitle2-bold">
+        {data?.user?.name ?? ''}님은 이런사람이에요
+      </h2>
+      <m.div
+        ref={ref}
+        {...fadeInProps}
+        animate={inView ? fadeInProps.animate : {}}
+        variants={{
+          ...fadeInProps.variants,
+          animate: {
+            ...fadeInProps.variants?.animate,
+            perspective: '1000px',
+            transition: {
+              staggerChildren: 0.2,
+            },
+          },
+        }}
+        className="grid grid-cols-2 gap-4 mt-5"
+      >
+        {statisics.busy}
+        <CharacterBlock
+          emoji={characterMap.friendly[+Boolean(statisics.friendly)]?.emoji}
+          topText={characterMap.friendly[+Boolean(statisics.friendly)]?.top}
+          bottomText={
+            characterMap.friendly[+Boolean(statisics.friendly)]?.bottom
+          }
+          href="/"
+        />
+        <CharacterBlock
+          emoji={characterMap.similar[+Boolean(statisics.similar)]?.emoji}
+          topText={characterMap.similar[+Boolean(statisics.similar)]?.top}
+          bottomText={characterMap.similar[+Boolean(statisics.similar)]?.bottom}
+          href="/"
+        />
+        <CharacterBlock
+          emoji={characterMap.mbti[+Boolean(statisics.mbti)]?.emoji}
+          topText={characterMap.mbti[+Boolean(statisics.mbti)]?.top}
+          bottomText={characterMap.mbti[+Boolean(statisics.mbti)]?.bottom}
+          href="/"
+        />
+        <CharacterBlock
+          emoji={characterMap.busy[+Boolean(statisics.busy)]?.emoji}
+          topText={characterMap.busy[+Boolean(statisics.busy)]?.top}
+          bottomText={characterMap.busy[+Boolean(statisics.busy)]?.bottom}
+          href="/"
+        />
+      </m.div>
+    </>
+  )
 }
 
 function CharacterBlock({
