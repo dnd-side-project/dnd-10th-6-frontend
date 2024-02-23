@@ -21,6 +21,8 @@ import ComboboxDropdown from '@/components/combobox'
 import { fadeInProps } from '@/variants'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
+import SurveyForm from '@/components/survey/survey-form'
+import { NamuiApi } from '@/lib/namui-api'
 
 const MotionLabel = motion(InputLabel)
 
@@ -29,12 +31,13 @@ const Question = ({ nickname }: { nickname: string }) => {
   const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
   const fieldList = useMemo(
     () => ['senderName', 'knowing', ...qs.map((item) => item.id)],
+
     [qs],
   )
 
-  const { Funnel, Step, useFunnel } = useRef(createFunnel(fieldList)).current
+  const { Funnel, Step, useFunnel } = createFunnel(fieldList)
 
-  const { step, toPrevStep, toNextStep, hasNextStep, hasPrevStep } = useFunnel()
+  const { step, toPrevStep, toNextStep, hasPrevStep } = useFunnel()
   const router = useRouter()
 
   const stepRef = useRef<HTMLParagraphElement>(null)
@@ -46,13 +49,14 @@ const Question = ({ nickname }: { nickname: string }) => {
 
   const questionForm = useQuestionForm({
     defaultValues: {
-      owner: '',
+      owner: router.query.wikiId! as string,
       senderName: '',
       answers: qs.map((item) => ({
+        id: '',
         answer: '',
         questionId: item.id,
         reason: '',
-        type: '',
+        type: 'OPTION',
       })),
     },
   })
@@ -63,8 +67,9 @@ const Question = ({ nickname }: { nickname: string }) => {
   })
 
   const { handleSubmit, setFocus, setError, trigger } = questionForm
-  const onSubmit = (data: QsSchemaType) => {
-    console.log(data)
+  const onSubmit = async (data: QsSchemaType) => {
+    await NamuiApi.submitSurvey(data)
+    goNext()
   }
 
   const countAnimation = ({
@@ -120,48 +125,19 @@ const Question = ({ nickname }: { nickname: string }) => {
     countAnimation({ direction: 'DOWN', index: progress.current - 1 })
   }
 
-  const checkValidate = (formKey: (keyof QsSchemaType)[] | number) => {
-    const formValues = questionForm.getValues()
-
-    if (typeof formKey === 'number') {
-      console.log(formKey, '<<formKey')
-      if (!formValues.answers[formKey].answer) {
-        const currentKey = `answers.${formKey}.answer` as const
-        setFocus(currentKey)
-        setError(currentKey, {})
-        return false
+  const goNext = async () => {
+    if (step === 'knowing') {
+      const { period, relation } = questionForm.getValues()
+      if (!period || !relation) {
+        questionForm.setFocus('period')
+        return
       }
-      if (!formValues.answers[formKey].reason) {
-        const currentKey = `answers.${formKey}.reason` as const
-        setFocus(currentKey)
-        setError(currentKey, {})
-        return false
-      }
-      return true
-    } else {
-      console.log(formKey)
-      return formKey.every((key) => {
-        if (!formValues[key]) {
-          setFocus(key)
-          setError(key, {})
-          return false
-        }
-        return true
-      })
     }
-  }
-  const goNext = async (keys: (keyof QsSchemaType)[] | number) => {
-    if (!checkValidate(keys)) return
+
     toNextStep()
     setProgress((prev) => ({ ...prev, current: prev.current + 1 }))
     countAnimation({ direction: 'UP', index: progress.current + 1 })
   }
-
-  const validList: ((keyof QsSchemaType)[] | number)[] = [
-    ['senderName'] as const,
-    ['period', 'relation'] as const,
-    ...qs.map((_, i) => i),
-  ]
 
   const txt = useMemo(() => {
     const 상수들 = [0, 0, 0, 30]
@@ -171,7 +147,7 @@ const Question = ({ nickname }: { nickname: string }) => {
       const 상수 = fieldList.length - 상수들.length
       const makeRandomeArr = Array(상수)
         .fill(0)
-        .map((item) => Math.random() * 70 + 30)
+        .map((_) => Math.random() * 70 + 30)
         .sort((a, b) => a - b)
         .map((item, idx) =>
           Math.round(((result?.[idx + 상수들.length] ?? 0) + item) / 2),
@@ -181,6 +157,11 @@ const Question = ({ nickname }: { nickname: string }) => {
     }
     return result
   }, [fieldList])
+
+  const isLastQs = useMemo(
+    () => progress.current + 1 === progress.max,
+    [progress.current],
+  )
 
   useEffect(() => {
     if (data?.user?.name) {
@@ -229,23 +210,19 @@ const Question = ({ nickname }: { nickname: string }) => {
         )
       }
       button={
-        <Button
-          disabled={false}
-          onClick={
-            !hasNextStep
-              ? handleSubmit(onSubmit)
-              : () => goNext(validList[progress.current])
-          }
-          className="w-full"
-        >
-          {!hasNextStep ? '제출하기' : '다음'}
-        </Button>
+        ['senderName', 'knowing'].includes(step) ? (
+          <Button disabled={false} onClick={goNext} className="w-full">
+            다음
+          </Button>
+        ) : (
+          false
+        )
       }
       content={
         <FunnelProvider
           value={{
             toPrevStep: goPrev,
-            toNextStep: () => goNext(validList[progress.current]),
+            toNextStep: () => goNext(),
           }}
         >
           <AnimatePresence mode="wait">
@@ -315,11 +292,14 @@ const Question = ({ nickname }: { nickname: string }) => {
                             label: '1년 - 4년미만',
                             value: 'four_years'.toUpperCase(),
                           },
-                          { label: '4년이상', value: 'infinite'.toUpperCase() },
+                          {
+                            label: '4년이상',
+                            value: 'infinite'.toUpperCase(),
+                          },
                         ]}
                         {...field}
-                        onChange={(value) => {
-                          field.onChange(value)
+                        onChange={(option) => {
+                          field.onChange(option.value)
                         }}
                       />
                     )}
@@ -362,8 +342,8 @@ const Question = ({ nickname }: { nickname: string }) => {
                             { label: '기타', value: 'etc'.toUpperCase() },
                           ]}
                           {...field}
-                          onChange={(value) => {
-                            field.onChange(value)
+                          onChange={(option) => {
+                            field.onChange(option.value)
                           }}
                         />
                       )}
@@ -372,107 +352,26 @@ const Question = ({ nickname }: { nickname: string }) => {
                 </div>
               </Step>
               {fields.map((field, idx) => {
-                const { title, options, type, name } = qs[idx]
+                const { title, options, type, name, id } = qs[idx]
 
                 return (
                   <Step name={field.questionId} key={step}>
-                    <div className="text-left grow flex flex-col space-y-8 overflow-y-hidden">
-                      <div dangerouslySetInnerHTML={{ __html: title }}></div>
-                      <div className="flex flex-col space-y-2 overflow-y-scroll">
-                        {options.map((option) => {
-                          return (
-                            <Controller
-                              key={option.id}
-                              name={`answers.${idx}.answer`}
-                              defaultValue=""
-                              control={questionForm.control}
-                              render={({ field }) => (
-                                <motion.div
-                                  {...fadeInProps}
-                                  transition={{
-                                    delay: 0.2,
-                                    duration: 0.3,
-                                  }}
-                                  className={cn(
-                                    'flex items-center justify-start w-full p-4 rounded-sm border border-[#E5E5EC] transition-all duration-200',
-                                    'focus-within:border-brand-main-green400',
-                                    'disabled:opacity-50 disabled:cursor-not-allowed',
-                                    field.value === option.value + '' &&
-                                      'border-brand-main-green400 border bg-main-green-green50',
-                                  )}
-                                >
-                                  <input
-                                    id={option.id}
-                                    name={name}
-                                    value={option.value + ''}
-                                    type="radio"
-                                    className="hidden"
-                                    onChange={(e) => {
-                                      field.onChange(e.target.value)
-                                    }}
-                                  />
-                                  <label
-                                    htmlFor={option.id}
-                                    className={cn(
-                                      'flex items-center',
-                                      'cursor-pointer',
-                                      'text-sm font-medium text-gray-700 transition-all duration-200',
-                                      'w-full pl-2',
-
-                                      field.value === option.value + '' &&
-                                        'font-bold',
-                                    )}
-                                  >
-                                    <div
-                                      className={cn(
-                                        'w-4 h-4 rounded-full bg-text-main-whiteFF border border-[#E5E5EC] transition-all duration-200 ',
-                                        'hover:border-brand-main-green400',
-                                        field.value === option.value + '' &&
-                                          'border-brand-main-green400 border-4',
-                                      )}
-                                    ></div>
-                                    {option.value + '' === 'MANUAL' ? (
-                                      field.value === option.value + '' ? (
-                                        <input />
-                                      ) : (
-                                        <span className="ml-2">
-                                          {option.text}
-                                        </span>
-                                      )
-                                    ) : (
-                                      <span className="ml-2">
-                                        {option.text}
-                                      </span>
-                                    )}
-                                  </label>
-                                </motion.div>
-                              )}
-                            />
-                          )
-                        })}
-                      </div>
-                      <div className="flex grow flex-col justify-end">
-                        <InputLabel
-                          className="text-sub2-medium"
-                          label="이유를 말해주세요"
-                          required
-                        >
-                          <Controller
-                            control={questionForm.control}
-                            defaultValue=""
-                            name={`answers.${idx}.reason`}
-                            render={({ field }) => (
-                              <Inputbox
-                                {...field}
-                                placeholder="15글자 이내로 입력해주세요"
-                                maxLength={15}
-                                value={field.value + ''}
-                              />
-                            )}
-                          />
-                        </InputLabel>
-                      </div>
-                    </div>
+                    <SurveyForm
+                      index={progress.current}
+                      isLast={isLastQs}
+                      initialValue={questionForm.getValues().answers[idx]}
+                      onConfirm={(values) => {
+                        questionForm.setValue(`answers.${idx}`, {
+                          ...values,
+                          questionId: id,
+                        })
+                        isLastQs ? handleSubmit(onSubmit)() : goNext()
+                      }}
+                      options={options}
+                      title={title}
+                      type={type}
+                      name={name}
+                    />
                   </Step>
                 )
               })}

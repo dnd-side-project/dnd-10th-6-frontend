@@ -19,18 +19,21 @@ interface CombocoxDropdownProps {
   placeholder: string
   name: string
   disabled?: boolean
-  onChange: (value: string) => void
+  value: string
+  onChange: (value: Option) => void
 }
 
 const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
-  ({ options, placeholder, disabled, onChange }, ref) => {
+  ({ options, placeholder, disabled, value, onChange }, ref) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [selectedOption, setSelectedOption] = useState<Option | null>(null)
+    const [selectedOption, setSelectedOption] = useState<Option | null>(
+      options.find((option) => option.value === value) ?? null,
+    )
 
     const handleOptionClick = (option: Option) => {
       setSelectedOption(option)
       setIsOpen(false)
-      onChange(option.value)
+      onChange(option)
     }
 
     return (
