@@ -7,6 +7,7 @@ import { Close } from '@radix-ui/react-dialog'
 import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
+import { FilterProvider } from '@/hooks/use-filter'
 
 const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
@@ -120,7 +121,9 @@ const Setting = () => {
           <h4 className="text-body3-medium text-text-sub-gray4f py-2">
             남의 위키
           </h4>
-          <WriteList />
+          <FilterProvider>
+            <WriteList />
+          </FilterProvider>
         </section>
       </div>
     </Drawer>

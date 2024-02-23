@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
-import { AnimatePresence, Variants, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
 
 import { FunnelProvider } from '@/contexts/useFunnelContext'
@@ -11,7 +11,6 @@ import FormLayout from '@/layout/form-layout'
 import { QueryClient, dehydrate, useSuspenseQuery } from '@tanstack/react-query'
 import { getQuestionQuery } from '@/queries/question'
 import useQuestionForm, { QsSchemaType } from '@/hooks/useQuestionsForm'
-import RadioButton from '@/components/radioButton'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
 import { GetServerSideProps } from 'next'
@@ -22,21 +21,6 @@ import ComboboxDropdown from '@/components/combobox'
 import { fadeInProps } from '@/variants'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
-
-const stepTextVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: -20,
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-  },
-  exit: {
-    opacity: 0,
-    y: 20,
-  },
-}
 
 const MotionLabel = motion(InputLabel)
 
@@ -84,7 +68,6 @@ const Question = ({ nickname }: { nickname: string }) => {
   }
 
   const countAnimation = ({
-    direction,
     index,
   }: {
     direction: 'UP' | 'DOWN'
@@ -141,6 +124,7 @@ const Question = ({ nickname }: { nickname: string }) => {
     const formValues = questionForm.getValues()
 
     if (typeof formKey === 'number') {
+      console.log(formKey, '<<formKey')
       if (!formValues.answers[formKey].answer) {
         const currentKey = `answers.${formKey}.answer` as const
         setFocus(currentKey)
@@ -388,32 +372,84 @@ const Question = ({ nickname }: { nickname: string }) => {
                 </div>
               </Step>
               {fields.map((field, idx) => {
-                const { title, options } = qs[idx]
+                const { title, options, type, name } = qs[idx]
+
                 return (
                   <Step name={field.questionId} key={step}>
                     <div className="text-left grow flex flex-col space-y-8 overflow-y-hidden">
                       <div dangerouslySetInnerHTML={{ __html: title }}></div>
                       <div className="flex flex-col space-y-2 overflow-y-scroll">
-                        {options.map((option) => (
-                          <Controller
-                            key={option.id}
-                            name={`answers.${idx}.answer`}
-                            defaultValue=""
-                            control={questionForm.control}
-                            render={({ field }) => (
-                              <RadioButton
-                                {...field}
-                                id={option.id}
-                                value={option.value + ''}
-                                label={option.text}
-                                selected={field.value === option.value + ''}
-                                onChange={(e) => {
-                                  field.onChange(e.target.value)
-                                }}
-                              />
-                            )}
-                          />
-                        ))}
+                        {options.map((option) => {
+                          return (
+                            <Controller
+                              key={option.id}
+                              name={`answers.${idx}.answer`}
+                              defaultValue=""
+                              control={questionForm.control}
+                              render={({ field }) => (
+                                <motion.div
+                                  {...fadeInProps}
+                                  transition={{
+                                    delay: 0.2,
+                                    duration: 0.3,
+                                  }}
+                                  className={cn(
+                                    'flex items-center justify-start w-full p-4 rounded-sm border border-[#E5E5EC] transition-all duration-200',
+                                    'focus-within:border-brand-main-green400',
+                                    'disabled:opacity-50 disabled:cursor-not-allowed',
+                                    field.value === option.value + '' &&
+                                      'border-brand-main-green400 border bg-main-green-green50',
+                                  )}
+                                >
+                                  <input
+                                    id={option.id}
+                                    name={name}
+                                    value={option.value + ''}
+                                    type="radio"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                      field.onChange(e.target.value)
+                                    }}
+                                  />
+                                  <label
+                                    htmlFor={option.id}
+                                    className={cn(
+                                      'flex items-center',
+                                      'cursor-pointer',
+                                      'text-sm font-medium text-gray-700 transition-all duration-200',
+                                      'w-full pl-2',
+
+                                      field.value === option.value + '' &&
+                                        'font-bold',
+                                    )}
+                                  >
+                                    <div
+                                      className={cn(
+                                        'w-4 h-4 rounded-full bg-text-main-whiteFF border border-[#E5E5EC] transition-all duration-200 ',
+                                        'hover:border-brand-main-green400',
+                                        field.value === option.value + '' &&
+                                          'border-brand-main-green400 border-4',
+                                      )}
+                                    ></div>
+                                    {option.value + '' === 'MANUAL' ? (
+                                      field.value === option.value + '' ? (
+                                        <input />
+                                      ) : (
+                                        <span className="ml-2">
+                                          {option.text}
+                                        </span>
+                                      )
+                                    ) : (
+                                      <span className="ml-2">
+                                        {option.text}
+                                      </span>
+                                    )}
+                                  </label>
+                                </motion.div>
+                              )}
+                            />
+                          )
+                        })}
                       </div>
                       <div className="flex grow flex-col justify-end">
                         <InputLabel

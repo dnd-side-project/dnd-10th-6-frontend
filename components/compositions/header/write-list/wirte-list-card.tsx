@@ -1,8 +1,35 @@
-import React from 'react'
+import { useInViewRef } from '@/hooks/use-in-view-ref'
+import { useAnimation, useInView } from 'framer-motion'
+import React, { useEffect } from 'react'
+import { motion } from 'framer-motion'
+const item = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+    transition: { ease: [0.78, 0.14, 0.15, 0.86] },
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { ease: [0.78, 0.14, 0.15, 0.86] },
+  },
+}
 
 const WriteListCard = () => {
+  const controls = useAnimation()
+  const { ref, inView } = useInViewRef<HTMLDivElement>()
+
+  useEffect(() => {
+    if (inView) {
+      controls.start('show')
+    }
+  }, [controls, inView])
   return (
-    <div className="py-5 flex justify-between space-x-4">
+    <motion.div
+      variants={item}
+      ref={ref}
+      className="py-5 flex justify-between space-x-4"
+    >
       <div className="aspect-square rounded-full bg-bg-gray1 h-full flex justify-center items-center">
         <svg
           width="26"
@@ -69,7 +96,7 @@ const WriteListCard = () => {
       <div className="self-end text-body3-medium text-text-sub-gray76">
         2023.01.01
       </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -1,11 +1,28 @@
 import Drawer from '@/components/ui/drawer'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
 import useFilter, { Filter } from '@/hooks/use-filter'
+import { motion } from 'framer-motion'
+import { useIntersectionObserver } from '@/hooks/use-observer'
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+}
 
 const WriteList = () => {
   const { selectedFilter } = useFilter()
   const [openAlert, setOpenAlert] = useState(false)
+  const [length, setLength] = useState(10)
+  const { ref } = useIntersectionObserver<HTMLDivElement>({
+    hasNextPage: true,
+    fetchNextPage: () => setLength((prev) => prev + 10),
+  })
+
   return (
     <Drawer
       header={{
@@ -31,13 +48,13 @@ const WriteList = () => {
           <b className="text-brand-main-green400">999명</b>의 친구가 이유를
           적었어요
         </p>
-        <WriteListCard />
-        <WriteListCard />
-        <WriteListCard />
-        <WriteListCard />
-        <WriteListCard />
-        <WriteListCard />
-        <WriteListCard />
+
+        <motion.ul initial="hidden" animate="show" variants={container}>
+          {Array.from({ length }, (v, i) => i + 1).map((item) => (
+            <WriteListCard key={item} />
+          ))}
+        </motion.ul>
+        <div ref={ref} className="h-2 w-2" />
       </div>
     </Drawer>
   )

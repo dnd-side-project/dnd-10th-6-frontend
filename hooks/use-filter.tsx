@@ -33,7 +33,7 @@ const filters: {
     items: [],
   },
   {
-    type: 'period',
+    type: 'relation',
     text: '알게 된 기간',
     default: 'ELEMENTARY_SCHOOL',
     items: [
@@ -64,7 +64,7 @@ const filters: {
     ],
   },
   {
-    type: 'relation',
+    type: 'period',
     text: '알게 된 경로',
     default: '',
     items: [
@@ -90,7 +90,7 @@ const filters: {
 
 const defaultFilterContext = {
   filterIndex: { typeIdx: 0, valueIdx: 0 },
-  selectedFilter: { type: 'period' as const, value: 'ALL' },
+  selectedFilter: { type: 'total' as const, value: 'total' },
   setFilterIndex: () => {},
 }
 
