@@ -23,7 +23,7 @@ const DashboardContainer = ({
   const { data: statisics, isLoading } = useQuery(
     getDashboardQuery(selectedFilter),
   )
-  return statisics?.length ? (
+  return isLoading || statisics?.length ? (
     <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
       <Filter className={cn(shouldShowHeader && 'top-header')} />
       <div className="flex flex-col divide-y-[12px] divide-line-soft">
