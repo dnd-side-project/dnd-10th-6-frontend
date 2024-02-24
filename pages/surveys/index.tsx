@@ -6,9 +6,7 @@ import { motion } from 'framer-motion'
 import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
 import BaseLayout from '@/layout/base-layout'
-import Link from 'next/link'
 import { NamuiApi } from '@/lib/namui-api'
-import { AUTH } from '@/constants'
 const Page = () => {
   const { signin, status } = useSession()
   const router = useRouter()

@@ -1,20 +1,15 @@
-import { ReactNode, useEffect, useLayoutEffect, useState } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 import withAuth from '@/layout/HOC/with-auth'
 import FormLayout from '@/layout/form-layout'
 import AnswerDetail from '@/components/compositions/answers/answer-detail'
 import { useRouter } from 'next/router'
+
 import { useSession } from '@/provider/session-provider'
-import { NamuiApi } from '@/lib/namui-api'
 
 import RelationBadge from '@/components/badge/relation'
 import PeriodBadge from '@/components/badge/period'
-import {
-  QueryClient,
-  dehydrate,
-  useQuery,
-  useSuspenseQuery,
-} from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { getSurveyByIdQuery } from '@/queries/surveys'
 import { GetServerSideProps } from 'next'
 const Pages = ({ surveyId }: { surveyId: string }) => {
@@ -23,102 +18,11 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
     data: { data: survey },
   } = useSuspenseQuery(getSurveyByIdQuery(surveyId))
   const router = useRouter()
-  console.log(survey)
-  const mock = {
-    data: {
-      senderName: null,
-      period: 'INFINITE',
-      relation: 'ELEMENTARY_SCHOOL',
-      createdAt: '2024-02-23T15:40:11.291',
-      questionAndAnswers: [
-        {
-          questionTitle:
-            '{{userName}}님은<br/><b>사람들과 빨리 친해지는 편</b>인가요?',
-          answer: '65d83d73222a2b0ef564e61c',
-          reason: 'adsf',
-        },
-        {
-          questionTitle: '{{userName}}님은<br/><b>나와 비슷한 성향</b>인가요?',
-          answer: '65d83d73222a2b0ef564e61c',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님은<br/><b>MBTI에 과몰입하는 편</b>인가요?',
-          answer: '65d83d73222a2b0ef564e61c',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님은<br/><b>주말마다 약속이 있는 편</b>인가요?',
-          answer: '65d83d73222a2b0ef564e61c',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님에게<br/><b>가장 중요한 것</b>은 무엇일 것 같나요?',
-          answer: '65d83d73222a2b0ef564e624',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님은<br/><b>기쁠 때 어떤 행동</b>을 할 것 같나요?',
-          answer: '65d83d73222a2b0ef564e628',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님은<br/><b>슬프거나 화날 때 어떤 행동</b>을 할 것 같나요?',
-          answer: '65d83d73222a2b0ef564e629',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님에게<br/><b>얼마까지</b> 빌려줄 수 있나요?',
-          answer: 1234,
-          reason: 'money',
-        },
-        {
-          questionTitle:
-            '{{userName}}님을<br/><b>처음 만났을 때 어떤 사람</b>으로 보였나요?',
-          answer: 'answer answer',
-          reason: 'adsf',
-        },
-        {
-          questionTitle: '{{userName}}님을<br/><b>5글자로 표현</b>한다면?',
-          answer: 'answer answer',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님의<br/><b>이런점은 꼭 배우고 싶어요!</b>',
-          answer: 'answer answer',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님이<br/><b>가장 많이 사용하는 단어는?</b>',
-          answer: 'answer answer',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님이<br/><b>혼자 몰래 좋아하고 있는 것</b>은 무엇일까요?',
-          answer: 'answer answer',
-          reason: 'adsf',
-        },
-        {
-          questionTitle:
-            '{{userName}}님을 보면<br/><b>어떤 캐릭터(연예인)</b>가 떠오르나요?',
-          answer: 'answer answer',
-          reason: 'adsf',
-        },
-      ],
-    },
-  }
 
-  const parsedCreatedAt = new Date(mock.data.createdAt)
-  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
+  const createdAt = useMemo(() => {
+    const parsedCreatedAt = new Date(survey.createdAt)
+    return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
+  }, [survey])
 
   return (
     <FormLayout
@@ -226,7 +130,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
                   index={index}
                   key={index}
                   questionTitle={item.questionTitle
-                    .replace('{{userName}}', survey.senderName)
+                    .replace('{{userName}}', data?.user?.name ?? '')
                     .replace('<br/>', ' ')}
                   answer={item.reason ? item.text : item.reason}
                   value={item.value}

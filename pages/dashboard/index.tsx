@@ -9,7 +9,6 @@ import BaseLayout from '@/layout/base-layout'
 import { FilterProvider } from '@/hooks/use-filter'
 import withAuth from '@/layout/HOC/with-auth'
 import DashboardContainer from '@/components/dashboard-container'
-import Drawer from '@/components/ui/drawer'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
 
 export const DetailQsContext = createContext<{
