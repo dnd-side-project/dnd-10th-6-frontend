@@ -14,7 +14,7 @@ const index = () => {
           <ShareModal>
             <Button>친구에게 내 소개 부탁하기</Button>
           </ShareModal>
-          <Button variant="default">작성한 소개서 보러가기</Button>
+          {/* <Button variant="default">작성한 소개서 보러가기</Button> */}
         </div>
       }
       header={{
