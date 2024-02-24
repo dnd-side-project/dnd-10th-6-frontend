@@ -229,6 +229,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
                     .replace('{{userName}}', survey.senderName)
                     .replace('<br/>', ' ')}
                   answer={item.reason ? item.text : item.reason}
+                  value={item.value}
                   reason={item.reason ?? item.text}
                 />
               ))}
