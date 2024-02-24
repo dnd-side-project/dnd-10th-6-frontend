@@ -4,6 +4,7 @@ export type QuestionType =
   | 'NUMERIC_CHOICE'
   | 'MULTIPLE_CHOICE'
   | 'SHORT_ANSWER'
+
 export interface Question {
   id: string
   title: string
@@ -12,4 +13,27 @@ export interface Question {
   dashboardType: string
   surveyOrder: number
   options: Option[]
+}
+
+export type SHORT_TYPE_LIST =
+  | 'MOST_USED_WORD'
+  | 'FIRST_IMPRESSION'
+  | 'FIVE_LETTER_WORD'
+  | 'LEARNING_ASPIRATION'
+  | 'SECRET_PLEASURE'
+  | 'CHARACTER_CELEBRITY_ASSOCIATION'
+
+export interface QuestionByType {
+  data: Daum[]
+}
+
+export interface Daum {
+  id: string
+  title: string
+  name: SHORT_TYPE_LIST
+  type: string
+  reasonRequired: boolean
+  dashboardType: string
+  surveyOrder: number
+  options: any[]
 }

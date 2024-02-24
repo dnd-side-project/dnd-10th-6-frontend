@@ -1,6 +1,6 @@
 import { cn } from '@/lib/client/utils'
 
-const periods: { [key: string]: string } = {
+export const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월 미만',
   ONE_YEAR: '6개월-1년 미만',
   FOUR_YEARS: '1년-4년 미만',

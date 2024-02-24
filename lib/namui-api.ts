@@ -8,11 +8,12 @@ import axios, {
 import type { ProviderType, User } from '@/lib/auth'
 import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
 import { AUTH } from '@/constants'
-import { Question } from '@/model/question.entity'
+import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 import { DashboardData } from '@/model/dashboard.entity'
 import { QsSchemaType } from '@/hooks/useQuestionsForm'
 import { GetSurveyResponse } from '@/model/survey.entity'
 import { SurveyByIdResponse } from '@/queries/surveys'
+import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 
 interface NamuiResponse<T = any> {
   data: T
@@ -34,6 +35,37 @@ export class NamuiApi {
       data: {
         provider: provider.toUpperCase(),
         code,
+      },
+    })
+  }
+
+  static async getQuestionByType(type: QuestionType) {
+    return await NamuiApi.handler<QuestionByType>({
+      method: 'GET',
+      url: '/api/v1/questions',
+      params: {
+        type,
+      },
+    })
+  }
+
+  static async getQuestionDetailById(
+    pageNo: number,
+    questionId: string,
+    filter: [key: string, value: string],
+  ) {
+    return await NamuiApi.handler<DetailResponse>({
+      method: 'GET',
+      url: '/api/v1/answers',
+      params: {
+        pageSize: 20,
+        pageNo,
+        questionId,
+        ...(filter[0] === 'total'
+          ? {}
+          : {
+              [filter[0]]: filter[1],
+            }),
       },
     })
   }
@@ -267,6 +299,10 @@ export class NamuiApi {
       NamuiApi.accessToken = accessToken
     } else {
     }
+  }
+  static clear() {
+    delete this.getInstance().defaults.headers.common[AUTH.AUTH_HEADER_KEY]
+    this.accessToken = ''
   }
   static injectCookies(cookie: string) {
     this.getInstance().defaults.headers.common.cookie = cookie

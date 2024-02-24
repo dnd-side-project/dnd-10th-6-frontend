@@ -91,6 +91,7 @@ const SurveyForm = ({
   }, [])
 
   const selectedType = form.watch().type
+  const answerWatch = form.watch().answer
   const Tree = TreeSvg[(index - 1) as keyof typeof TreeSvg]
   return (
     <form
@@ -351,9 +352,10 @@ const SurveyForm = ({
                 {...field}
                 placeholder={
                   name === 'FIVE_LETTER_WORD'
-                    ? '5글자 이내로 입력해주세요'
+                    ? '5글자로 입력해주세요'
                     : '15글자 이내로 입력해주세요'
                 }
+                {...(name === 'FIVE_LETTER_WORD' && { minLength: 5 })}
                 maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 15}
                 onChange={(e) => {
                   form.setValue('type', 'MANUAL')
@@ -404,7 +406,11 @@ const SurveyForm = ({
         {Tree && Tree}
         <div className="pt-5 mb-4 bg-white flex justify-center w-full">
           <Button
-            disabled={Object.keys(form.formState.errors).length !== 0}
+            disabled={
+              name === 'FIVE_LETTER_WORD'
+                ? answerWatch.toString().length !== 5
+                : Object.keys(form.formState.errors).length !== 0
+            }
             type="submit"
             className="w-full"
           >

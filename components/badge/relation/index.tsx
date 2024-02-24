@@ -1,6 +1,6 @@
 import { cn } from '@/lib/client/utils'
 
-const relations: {
+export const relations: {
   [key: string]: string
 } = {
   ELEMENTARY_SCHOOL: '초등학교',

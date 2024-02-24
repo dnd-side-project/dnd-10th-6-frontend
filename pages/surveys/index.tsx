@@ -7,6 +7,8 @@ import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
 import BaseLayout from '@/layout/base-layout'
 import Link from 'next/link'
+import { NamuiApi } from '@/lib/namui-api'
+import { AUTH } from '@/constants'
 const Page = () => {
   const { signin, status } = useSession()
   const router = useRouter()
@@ -214,12 +216,15 @@ const Page = () => {
           </svg>
           카카오 로그인
         </Button>
-        <Link
-          href={`/surveys/questions?wikiId=${router.query.wikiId}`}
+        <button
+          onClick={() => {
+            NamuiApi.clear()
+            router.replace(`/surveys/questions?wikiId=${router.query.wikiId}`)
+          }}
           className="text-text-sub-gray76 text-sm underline underline-offset-2"
         >
           비회원으로 시작하기
-        </Link>
+        </button>
       </footer>
     </div>
   )
