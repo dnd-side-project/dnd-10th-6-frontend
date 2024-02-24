@@ -134,11 +134,18 @@ function Content() {
         <div className="text-body3-medium px-2 py-1 bg-gray-gray50 rounded-md w-fit text-text-sub-gray76">
           질문
         </div>
-        <p
-          dangerouslySetInnerHTML={{
-            __html: parsedData?.pages[0]?.data?.questionTitle ?? '',
-          }}
-        ></p>
+        {isLoading ? (
+          <div className="space-y-2">
+            <p className="h-5 skeleton w-1/5"></p>
+            <p className="h-5 skeleton w-1/2"></p>
+          </div>
+        ) : (
+          <p
+            dangerouslySetInnerHTML={{
+              __html: parsedData?.pages[0]?.data?.questionTitle ?? '',
+            }}
+          ></p>
+        )}
       </div>
       <div className="flex flex-col">
         <Filter />
@@ -148,43 +155,61 @@ function Content() {
           </b>
           의 친구가 이유를 적었어요
         </p>
-        {parsedData?.pages.map((page) => (
-          <div key={page.data.answers.page}>
-            {page.data.answers.content.map((cardItem, cardIndex) => {
-              const parsedCreatedAt = new Date(cardItem.createdAt)
-              const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
-              return (
-                <motion.div
-                  key={cardItem.senderName + cardItem.answer}
-                  variants={fadeInProps.variants}
-                  className="p-4 flex justify-between space-x-4"
-                >
-                  <div className="aspect-square rounded-full bg-bg-gray1 h-full flex justify-center items-center">
-                    <CircleTree />
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, index) => (
+              <motion.div
+                key={`card-skeleton-${index}`}
+                variants={fadeInProps.variants}
+                className="p-4 flex justify-between space-x-4"
+              >
+                <div className="aspect-square rounded-full skeleton h-12  flex justify-center items-center"></div>
+                <div className="flex flex-col grow space-y-4">
+                  <div className="flex flex-col space-y-1">
+                    <h3 className="text-body1-bold skeleton h-4 w-1/5"></h3>
+                    <p className="text-body3-medium text-text-sub-gray76 skeleton h-4 w-1/2"></p>
                   </div>
-                  <div className="flex flex-col grow space-y-4">
-                    <div className="flex flex-col space-y-1">
-                      <h3 className="text-body1-bold">
-                        {cardItem.senderName}님
-                      </h3>
-                      <p className="text-body3-medium text-text-sub-gray76">
-                        {[
-                          periods[cardItem.period],
-                          relations[cardItem.relation],
-                          createdAt,
-                        ].join('·')}
-                      </p>
-                    </div>
-                    {/* <div>{cardItem.answer}</div> 뱃지들어가야함 */}
-                    <p className="text-body1-medium text-text-main-black11">
-                      {cardItem.answer}
-                    </p>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        ))}
+                  {/* <div>{cardItem.answer}</div> 뱃지들어가야함 */}
+                  <p className="text-body1-medium text-text-main-black11 skeleton w-1/3 h-4"></p>
+                </div>
+              </motion.div>
+            ))
+          : parsedData?.pages.map((page) => (
+              <div key={page.data.answers.page}>
+                {page.data.answers.content.map((cardItem, cardIndex) => {
+                  const parsedCreatedAt = new Date(cardItem.createdAt)
+                  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
+                  return (
+                    <motion.div
+                      key={cardItem.senderName + cardItem.answer}
+                      variants={fadeInProps.variants}
+                      className="p-4 flex justify-between space-x-4"
+                    >
+                      <div className="aspect-square rounded-full bg-bg-gray1 h-full flex justify-center items-center">
+                        <CircleTree />
+                      </div>
+                      <div className="flex flex-col grow space-y-4">
+                        <div className="flex flex-col space-y-1">
+                          <h3 className="text-body1-bold">
+                            {cardItem.senderName}님
+                          </h3>
+                          <p className="text-body3-medium text-text-sub-gray76">
+                            {[
+                              periods[cardItem.period],
+                              relations[cardItem.relation],
+                              createdAt,
+                            ].join('·')}
+                          </p>
+                        </div>
+                        {/* <div>{cardItem.answer}</div> 뱃지들어가야함 */}
+                        <p className="text-body1-medium text-text-main-black11">
+                          {cardItem.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            ))}
         <div ref={ref} className="w-2 h-1" />
       </div>
     </div>
