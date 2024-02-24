@@ -117,14 +117,14 @@ const Setting = () => {
             정말 탈퇴하시겠어요?`}
           /> */}
         </section>
-        <section className="py-4 px-5 flex flex-col items-start">
+        {/* <section className="py-4 px-5 flex flex-col items-start">
           <h4 className="text-body3-medium text-text-sub-gray4f py-2">
             남의 위키
           </h4>
           <FilterProvider>
             <WriteList />
           </FilterProvider>
-        </section>
+        </section> */}
       </div>
     </Drawer>
   )
