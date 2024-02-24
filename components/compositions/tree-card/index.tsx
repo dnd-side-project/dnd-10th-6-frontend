@@ -37,19 +37,12 @@ const TreeCard = ({
       case 'ETC':
         return 'bg-relation-etc'
       default:
-        return ''
     }
   })()
 
   const treeType = useRef(new TreeType(treeCardAsset)).current
-
   const handleCardClick = () => {
     onClick()
-  }
-
-  const handleDetailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    //
-    e.preventDefault()
   }
 
   return (
@@ -60,9 +53,7 @@ const TreeCard = ({
       onClick={handleCardClick}
     >
       <div
-        className={`card flex justify-center rounded-md w-full ${
-          bgColor + (isFlipped ? ' flipped' : '')
-        }`}
+        className={`card flex justify-center rounded-md w-full ${bgColor} ${isFlipped ? 'flipped' : ''}`}
       >
         <div
           className={cn(
@@ -76,14 +67,10 @@ const TreeCard = ({
         <div className="card-back px-y w-full flex flex-col justify-center items-center ">
           <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
             <span className="text-body1-bold">{senderName}</span>
-
             <Link className="z-20" href={`/answers?surveyId=${id}`}>
-              <a
-                onClick={handleDetailClick}
-                className="text-body3-medium text-text-main-black11"
-              >
-                자세히 보기
-              </a>
+              <button className="underline text-caption1-medium">
+                자세히보기
+              </button>
             </Link>
           </div>
         </div>
