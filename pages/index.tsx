@@ -4,7 +4,7 @@ import Logo from '@/components/ui/logo'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import BaseLayout from '@/layout/base-layout'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useMount } from '@/hooks/use-mount'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 
@@ -12,6 +12,17 @@ const Page = () => {
   const { signin, data } = useSession()
   const router = useRouter()
   const mounted = useMount()
+  const [isPending, setIsPending] = useState(false)
+  const pendingRef = useRef<NodeJS.Timeout>()
+
+  const handleLogin = () => {
+    setIsPending(true)
+    signin({ provider: 'kakao' })
+    pendingRef.current = setTimeout(() => {
+      setIsPending(false)
+    }, 15000)
+  }
+
   useBrowserLayoutEffect(() => {
     if (data?.user) {
       if (data.user && !data.user.name) {
@@ -19,6 +30,12 @@ const Page = () => {
       }
     }
   }, [data, router])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(pendingRef.current)
+    }
+  }, [])
   return !mounted ? (
     <>Loading...</>
   ) : (
@@ -132,7 +149,11 @@ const Page = () => {
             내 정원가기
           </Button>
         ) : (
-          <Button variant="kakao" onClick={() => signin({ provider: 'kakao' })}>
+          <Button
+            variant="kakao"
+            disabled={isPending}
+            onClick={() => !isPending && handleLogin()}
+          >
             <svg
               width="22"
               height="20"
