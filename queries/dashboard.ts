@@ -1,9 +1,5 @@
 import { NamuiApi } from '@/lib/namui-api'
-import {
-  DashboardData,
-  DashboardResponse,
-  Statistic,
-} from '@/model/dashboard.entity'
+import { DashboardResponse, Statistic } from '@/model/dashboard.entity'
 import { UseQueryOptions } from '@tanstack/react-query'
 
 export type DashboardFilter = {

@@ -70,7 +70,7 @@ const Sad = ({ filter }: { filter: FilterType }) => {
                 )
               })}
             </div>
-            <div className="w-1/2  mx-auto mt-10">
+            {/* <div className="w-1/2  mx-auto mt-10">
               <Button
                 rounded="full"
                 variant="muted"
@@ -78,7 +78,7 @@ const Sad = ({ filter }: { filter: FilterType }) => {
               >
                 자세히 보기
               </Button>
-            </div>
+            </div> */}
           </>
         )}
       </div>

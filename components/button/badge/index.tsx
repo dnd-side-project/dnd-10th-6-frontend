@@ -2,9 +2,8 @@ import { cn } from '@/lib/client/utils'
 import Link from 'next/link'
 import React, { HTMLAttributes } from 'react'
 
-interface BadgeProps extends HTMLAttributes<HTMLAnchorElement> {
+interface BadgeProps extends HTMLAttributes<HTMLButtonElement> {
   title: string
-  href: string
   scroll?: boolean
   replace?: boolean
   prefetch?: boolean
@@ -12,7 +11,7 @@ interface BadgeProps extends HTMLAttributes<HTMLAnchorElement> {
 
 const Badge = ({ title, ...rest }: BadgeProps) => {
   return (
-    <Link
+    <button
       {...rest}
       onContextMenu={(event) => {
         event.preventDefault()
@@ -39,7 +38,7 @@ const Badge = ({ title, ...rest }: BadgeProps) => {
           fill="currentColor"
         />
       </svg>
-    </Link>
+    </button>
   )
 }
 

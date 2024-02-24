@@ -191,6 +191,10 @@ const Question = ({ nickname }: { nickname: string }) => {
     }
   }, [data?.user?.name])
 
+  const senderNameWatch = questionForm.watch().senderName
+  const periodWatch = questionForm.watch().period
+  const relationWatch = questionForm.watch().relation
+
   return (
     <FormLayout
       header={{
@@ -233,7 +237,30 @@ const Question = ({ nickname }: { nickname: string }) => {
       }
       button={
         ['senderName', 'knowing'].includes(step) ? (
-          <Button disabled={false} onClick={goNext} className="w-full">
+          <Button
+            disabled={
+              step === 'senderName'
+                ? senderNameWatch.length < 2 || senderNameWatch.length > 6
+                : !periodWatch || !relationWatch
+            }
+            onClick={() => {
+              if (step === 'senderName') {
+                const value = questionForm.getValues().senderName
+                if (value.length < 2 || value.length > 6) {
+                  questionForm.setFocus('senderName')
+                  return
+                }
+              } else {
+                const value = questionForm.getValues()
+                if (!value.period || !value.relation) {
+                  questionForm.setFocus('period')
+                  return
+                }
+              }
+              goNext()
+            }}
+            className="w-full"
+          >
             다음
           </Button>
         ) : (

@@ -182,12 +182,12 @@ function CharacterBlock({
           <br />
           <b className="text-body1-bold">{bottomText}</b>
         </p>
-        <Link
+        {/* <Link
           className="text-xs underline underline-offset-2 leading-4 text-text-main-black11"
           href={href}
         >
           자세히 보기
-        </Link>
+        </Link> */}
       </div>
     </m.div>
   )
