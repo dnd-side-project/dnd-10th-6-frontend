@@ -15,7 +15,6 @@ const ManualInput = forwardRef<HTMLInputElement, ManualInputProps>(
           value={value}
           type={inputType}
           onChange={(e) => {
-            console.log(rest)
             // setValue(e.target.value)
             rest?.onChange?.(e)
           }}

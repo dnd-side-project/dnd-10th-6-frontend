@@ -27,7 +27,6 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
       return data.data
     },
   })
-  console.log(short)
 
   return (
     <>
