@@ -6,8 +6,8 @@ type HOC = {
   (): React.JSX.Element
   getLayout?: (page: ReactNode) => ReactNode
 }
-function withAuth(Component: ComponentType): HOC {
-  const Protector = <P extends object>(props: P) => {
+function withAuth<T extends object>(Component: ComponentType<T>): HOC {
+  const Protector = (props: T) => {
     const { update } = useSession()
     const router = useRouter()
 

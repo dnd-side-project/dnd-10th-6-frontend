@@ -123,19 +123,6 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
   )
 }
 
-const data01 = [
-  { name: '명예', value: 40, className: 'fill-brand-main-green400' },
-  { name: '사랑', value: 31, className: 'fill-brand-sub1-blue600' },
-  { name: '직접 입력', value: 12, className: 'fill-brand-sub1-yellow500' },
-]
-let cnt = 0
-data01.forEach((data, idx) => {
-  cnt += data.value
-  if (idx === data01.length - 1) {
-    data01.push({ name: 'none', value: 100 - cnt, className: 'fill-[#F0F0F0]' })
-  }
-})
-
 function BestWorth({ filter }: { filter: FilterType }) {
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
@@ -158,6 +145,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
 
     return arr?.map((item, index) => ({
       ...item,
+      percentage: item.percentage ?? 0,
       color:
         RANK_COLOR[index] ??
         `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,

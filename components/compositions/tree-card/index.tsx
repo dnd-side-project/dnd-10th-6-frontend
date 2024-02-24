@@ -1,7 +1,9 @@
 import { cn } from '@/lib/client/utils'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import Link from 'next/link'
-import { useSession } from '@/provider/session-provider'
+import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { fadeInProps } from '@/variants'
 
 interface TreeCardProps {
   period: string
@@ -9,6 +11,7 @@ interface TreeCardProps {
   isFlipped: boolean
   onClick: () => void
   id: string
+  senderName: string
 }
 
 const TreeCard = ({
@@ -16,11 +19,9 @@ const TreeCard = ({
   period,
   relation,
   isFlipped,
+  senderName,
   onClick,
 }: TreeCardProps) => {
-  const { data } = useSession()
-  const userName = '김나무'
-
   const bgColor = (() => {
     switch (relation) {
       case 'ELEMENTARY_SCHOOL':
@@ -39,14 +40,15 @@ const TreeCard = ({
     }
   })()
 
-  const treeType = new TreeType(treeCardAsset)
+  const treeType = useRef(new TreeType(treeCardAsset)).current
   const handleCardClick = () => {
     onClick()
   }
 
   return (
-    <div
+    <motion.div
       id={id}
+      variants={fadeInProps.variants}
       className={cn('w-[80px] h-[90px] cursor-pointer relative')}
       onClick={handleCardClick}
     >
@@ -64,8 +66,8 @@ const TreeCard = ({
         </div>
         <div className="card-back px-y w-full flex flex-col justify-center items-center ">
           <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
-            <span className="text-body1-bold">{userName}</span>
-            <Link className="z-20" href="/answers">
+            <span className="text-body1-bold">{senderName}</span>
+            <Link className="z-20" href={`/answers?surveyId=${id}`}>
               <button className="underline text-caption1-medium">
                 자세히보기
               </button>
@@ -73,7 +75,7 @@ const TreeCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
