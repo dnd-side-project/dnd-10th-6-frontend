@@ -27,11 +27,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         'Content-Type': 'application/json',
       },
     })
+
     // FIXME: 개발, 운영 분리 코드가 상당히 지저분함 함수화 할수 있을듯
     const { accessToken, refreshToken, errorCode, ...rest } =
       await response.json()
 
-    if (!accessToken || !refreshToken) throw new UnauthorizedError()
     if (errorCode === 'NOT_FOUND_USER') {
       const cookies = response.headers.getSetCookie().map(
         (cookie) =>
@@ -65,6 +65,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
       res.status(200).redirect('/signup')
       return
+    } else {
+      if (!accessToken || !refreshToken) throw new UnauthorizedError()
     }
 
     res.setHeader('Set-Cookie', [
@@ -87,7 +89,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     ])
     res.status(200).redirect('/garden')
   } catch (err) {
-    console.log(err)
     const error = isNamuiError(err) ? err : new InternalServerError()
     res.status(307).redirect(307, `/?err=${error.name}`)
   }

@@ -264,10 +264,7 @@ export class NamuiApi {
         }
       }
       const errorInstance = axios.isAxiosError(error)
-        ? raiseNamuiErrorFromStatus(
-            error.status || error.response?.status,
-            true,
-          )
+        ? raiseNamuiErrorFromStatus(error.status || error.response?.status)
         : error
 
       return Promise.reject(errorInstance)
