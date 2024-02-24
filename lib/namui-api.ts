@@ -11,6 +11,8 @@ import { AUTH } from '@/constants'
 import { Question } from '@/model/question.entity'
 import { DashboardData } from '@/model/dashboard.entity'
 import { QsSchemaType } from '@/hooks/useQuestionsForm'
+import { GetSurveyResponse } from '@/model/survey.entity'
+import { SurveyByIdResponse } from '@/queries/surveys'
 
 interface NamuiResponse<T = any> {
   data: T
@@ -32,6 +34,24 @@ export class NamuiApi {
       data: {
         provider: provider.toUpperCase(),
         code,
+      },
+    })
+  }
+
+  static async getSurveyById(id: string) {
+    return await NamuiApi.handler<SurveyByIdResponse>({
+      method: 'GET',
+      url: `/api/v1/surveys/${id}`,
+    })
+  }
+
+  static async getSurveys(pageNo: number) {
+    return await NamuiApi.handler<GetSurveyResponse>({
+      method: 'GET',
+      url: '/api/v1/surveys',
+      params: {
+        pageSize: 20,
+        pageNo,
       },
     })
   }

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 
 import withAuth from '@/layout/HOC/with-auth'
 import FormLayout from '@/layout/form-layout'
@@ -9,10 +9,21 @@ import { NamuiApi } from '@/lib/namui-api'
 
 import RelationBadge from '@/components/badge/relation'
 import PeriodBadge from '@/components/badge/period'
-const Pages = () => {
-  const router = useRouter()
+import {
+  QueryClient,
+  dehydrate,
+  useQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
+import { getSurveyByIdQuery } from '@/queries/surveys'
+import { GetServerSideProps } from 'next'
+const Pages = ({ surveyId }: { surveyId: string }) => {
   const { data } = useSession()
-
+  const {
+    data: { data: survey },
+  } = useSuspenseQuery(getSurveyByIdQuery(surveyId))
+  const router = useRouter()
+  console.log(survey)
   const mock = {
     data: {
       senderName: null,
@@ -106,24 +117,8 @@ const Pages = () => {
     },
   }
 
-  const [surveyId, setSurveyId] = useState<string>('')
   const parsedCreatedAt = new Date(mock.data.createdAt)
   const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
-
-  useEffect(() => {
-    async function fetchSurveyId() {
-      try {
-        const response = await NamuiApi.getSurveyId(surveyId)
-        setSurveyId(response.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    if (surveyId) {
-      fetchSurveyId()
-    }
-  }, [surveyId])
 
   return (
     <FormLayout
@@ -212,11 +207,11 @@ const Pages = () => {
                 </svg>
               </div>
               <div className="flex flex-col grow space-y-2">
-                <h2 className="text-subTitle1-bold">{data?.user?.name}님</h2>
+                <h2 className="text-subTitle1-bold">{survey.senderName}님</h2>
                 <div className="flex space-x-1.5">
-                  <PeriodBadge period={mock.data.period} />
+                  <PeriodBadge period={survey.period} />
 
-                  <RelationBadge relation={mock.data.relation} />
+                  <RelationBadge relation={survey.relation} />
                 </div>
               </div>
               <div className="self-end  text-body3-medium text-text-sub-gray76">
@@ -226,13 +221,15 @@ const Pages = () => {
           </section>
           <section>
             <div className="w-full space-y-4  grid grid-cols-1 divide-y justify-start">
-              {mock.data.questionAndAnswers.map((item, index) => (
+              {survey.questionAndAnswers.map((item, index) => (
                 <AnswerDetail
                   index={index}
                   key={index}
-                  questionTitle={item.questionTitle}
-                  answer={item.answer}
-                  reason={item.reason}
+                  questionTitle={item.questionTitle
+                    .replace('{{userName}}', survey.senderName)
+                    .replace('<br/>', ' ')}
+                  answer={item.reason ? item.text : item.reason}
+                  reason={item.reason ?? item.text}
                 />
               ))}
             </div>
@@ -243,7 +240,20 @@ const Pages = () => {
   )
 }
 
-const Answers = withAuth(Pages)
+const Answers = withAuth<{ surveyId: string }>(Pages)
 Answers.getLayout = (page: ReactNode) => page
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  if (!ctx.query.surveyId) {
+    return {
+      notFound: true,
+    }
+  }
+  return {
+    props: {
+      surveyId: ctx.query.surveyId,
+    },
+  }
+}
 
 export default Answers
