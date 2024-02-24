@@ -29,6 +29,7 @@ interface SurveyFormProps {
   initialValue: surveyFormType
   isLast: boolean
   index: number
+  disabled: boolean
   onConfirm: (values: surveyFormType) => void
 }
 
@@ -40,6 +41,7 @@ const SurveyForm = ({
   isLast,
   index,
   initialValue,
+  disabled,
   onConfirm,
 }: SurveyFormProps) => {
   const [numericString, setNumeric] = useState<string>(
@@ -85,7 +87,6 @@ const SurveyForm = ({
     }
     onConfirm(values)
   }
-  const disabled = Object.keys(form.formState.errors).length
   useEffect(() => {
     form.trigger()
   }, [])
@@ -407,7 +408,7 @@ const SurveyForm = ({
         <div className="pt-5 mb-4 bg-white flex justify-center w-full">
           <Button
             disabled={
-              name === 'FIVE_LETTER_WORD'
+              disabled || name === 'FIVE_LETTER_WORD'
                 ? answerWatch.toString().length !== 5
                 : Object.keys(form.formState.errors).length !== 0
             }

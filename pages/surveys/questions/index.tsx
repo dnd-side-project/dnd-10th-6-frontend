@@ -35,7 +35,7 @@ const MotionLabel = motion(InputLabel)
 const Question = ({ nickname }: { nickname: string }) => {
   const { data } = useSession()
   const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
-  const { mutate: submit } = useMutation(
+  const { mutate: submit, isPending } = useMutation(
     submitQuestionMutaion({
       onSuccess(data, variables, context) {
         goNext()
@@ -406,6 +406,7 @@ const Question = ({ nickname }: { nickname: string }) => {
                 return (
                   <Step name={field.questionId} key={step}>
                     <SurveyForm
+                      disabled={isPending}
                       index={progress.current}
                       isLast={isLastQs}
                       initialValue={questionForm.getValues().answers[idx]}
