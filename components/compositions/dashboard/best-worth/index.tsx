@@ -68,7 +68,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
         const progress = timestamp - start
         if (progress >= DURATION) {
           if (textRef.current) {
-            textRef.current.textContent = `${target}%`
+            textRef.current.textContent = `${Math.floor(target)}%`
           }
           return cancelAnimationFrame(animationId)
         }
