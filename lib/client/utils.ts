@@ -36,7 +36,7 @@ export const shareToCopyLink = async (url?: string) => {
   if (navigator?.share) {
     try {
       navigator.share({
-        url: window.location.origin,
+        url: url ?? window.location.origin,
         title: 'namuiwiki | 남의위키',
         text: '남이 써주는 나의 소개서',
       })
