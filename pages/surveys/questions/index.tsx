@@ -296,6 +296,7 @@ const Question = ({ nickname }: { nickname: string }) => {
                         <Inputbox
                           {...field}
                           placeholder="이름을 입력해주세요"
+                          minLength={2}
                           maxLength={6}
                         />
                         <p

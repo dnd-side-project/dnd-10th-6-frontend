@@ -48,7 +48,7 @@ export interface QuestionFormValuesProps {
 
 const QsSchema = z.object({
   owner: z.string().uuid(),
-  senderName: z.string().min(1),
+  senderName: z.string().min(2).max(6),
   period: z.enum(period),
   relation: z.enum(relation),
   answers: z.array(
