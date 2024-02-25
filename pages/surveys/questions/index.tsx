@@ -27,7 +27,6 @@ import { fadeInProps } from '@/variants'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import SurveyForm from '@/components/survey/survey-form'
-import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
 
 const MotionLabel = motion(InputLabel)
@@ -39,6 +38,11 @@ const Question = ({ nickname }: { nickname: string }) => {
     submitQuestionMutaion({
       onSuccess(data, variables, context) {
         goNext()
+
+        // 애니메이션과 함께 제출화면으로 이동하기 위해 추가
+        setTimeout(() => {
+          router.replace('/submit')
+        }, 1000)
       },
       onError() {
         toastError()

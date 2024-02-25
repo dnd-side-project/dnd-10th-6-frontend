@@ -3,6 +3,7 @@ import { useSession } from '@/provider/session-provider'
 import React, { PropsWithChildren, useCallback, useState } from 'react'
 import Modal from '@/components/modal'
 import Button from '@/components/button'
+import Link from 'next/link'
 
 const ShareModal = ({ children }: PropsWithChildren) => {
   const { data } = useSession()
@@ -25,6 +26,8 @@ const ShareModal = ({ children }: PropsWithChildren) => {
       shareToKaKaoLink(`surveys?wikiId=${data?.user?.wikiId}`)
     }
   }
+
+  const isLoggedIn = !!data?.user?.wikiId
   return (
     <>
       <Modal
@@ -34,33 +37,56 @@ const ShareModal = ({ children }: PropsWithChildren) => {
         }}
         key="selectShareModal"
         trigger={children}
-        title="친구에게 내 소개를 부탁하시겠어요?"
+        title={
+          isLoggedIn ? '친구에게 내 소개를 부탁하시겠어요?' : '비회원이시군요!'
+        }
         description={
-          <span>
-            링크 공유하기를 통해
-            <br />
-            친구에게 내 소개를 부탁할 수 있어요!
-          </span>
+          isLoggedIn ? (
+            <span>
+              링크 공유하기를 통해
+              <br />
+              친구에게 내 소개를 부탁할 수 있어요!
+            </span>
+          ) : (
+            <span>내 소개를 부탁하려면 로그인을 해야 해요</span>
+          )
         }
         footer={{
           divider: false,
-          item: [
-            <Button
-              onClick={handleCopyLink}
-              variant="default"
-              key="copy-link"
-              className="rounded-none"
-            >
-              링크복사
-            </Button>,
-            <Button
-              key="kakao-share"
-              className="rounded-none"
-              onClick={handleShareKakao}
-            >
-              카카오 공유
-            </Button>,
-          ],
+          item: isLoggedIn
+            ? [
+                <Button
+                  onClick={handleCopyLink}
+                  variant="default"
+                  key="copy-link"
+                  className="rounded-none"
+                >
+                  링크복사
+                </Button>,
+                <Button
+                  key="kakao-share"
+                  className="rounded-none"
+                  onClick={handleShareKakao}
+                >
+                  카카오 공유
+                </Button>,
+              ]
+            : [
+                <Button
+                  onClick={() => setShareModalOpen(false)}
+                  variant="default"
+                  key="copy-link"
+                  className="rounded-none"
+                >
+                  다음에
+                </Button>,
+                <Link href="/">
+                  <Button key="kakao-share" className="rounded-none">
+                    로그인
+                  </Button>
+                  ,
+                </Link>,
+              ],
         }}
       />
       <Modal

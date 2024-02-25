@@ -20,8 +20,8 @@ const index = () => {
       header={{
         leftIcon: <></>,
         center: <></>,
-        rightIcon: data?.user?.wikiId ? (
-          <Link href="garden">
+        rightIcon: (
+          <Link href={data?.user?.wikiId ? 'garden' : '/'}>
             <svg
               width="28"
               height="28"
@@ -37,8 +37,6 @@ const index = () => {
               />
             </svg>
           </Link>
-        ) : (
-          <></>
         ),
       }}
       content={
