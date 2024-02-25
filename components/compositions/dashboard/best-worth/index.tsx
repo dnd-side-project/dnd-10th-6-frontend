@@ -125,7 +125,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
 function BestWorth({ filter }: { filter: FilterType }) {
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
-    margin: '2%',
+    margin: '5%',
   })
 
   const { data: statisics, isLoading } = useQuery({
