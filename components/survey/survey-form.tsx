@@ -324,6 +324,7 @@ const SurveyForm = ({
                           placeholder="15글자 이내로 입력해주세요"
                           maxLength={15}
                           type="text"
+                          inputMode="numeric"
                           value={numericString}
                           onChange={(e) => {
                             const newValue = inputPriceFormat(e.target.value)
