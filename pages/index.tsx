@@ -22,7 +22,6 @@ const Page = () => {
       setIsPending(false)
     }, 15000)
   }
-
   useBrowserLayoutEffect(() => {
     if (data?.user) {
       if (data.user && !data.user.name) {
