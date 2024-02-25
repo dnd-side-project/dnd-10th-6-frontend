@@ -2,21 +2,28 @@ import Loading from '@/components/loading'
 import { AUTH } from '@/constants'
 import BaseLayout from '@/layout/base-layout'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import { useSession } from '@/provider/session-provider'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
-
-const Csrf = () => {
+/**
+ *
+ * @param {csrfCallbackUrl} 요청 화면으로 되돌아 가기 전 선행되어야 하는 화면 주소
+ * @returns
+ */
+const Csrf = ({ csrfCallbackUrl }: { csrfCallbackUrl: string }) => {
   const router = useRouter()
-  const { data } = useSession()
   useBrowserLayoutEffect(() => {
-    const callbackURL = sessionStorage.getItem('callbackUrl')
-    if (callbackURL) {
-      sessionStorage.removeItem('callbackUrl')
+    if (csrfCallbackUrl) {
+      router.replace(decodeURIComponent(csrfCallbackUrl))
+    } else {
+      const callbackURL = sessionStorage.getItem('callbackUrl')
+      let endpoint = '/'
+      if (callbackURL) {
+        sessionStorage.removeItem('callbackUrl')
+        endpoint = decodeURIComponent(callbackURL)
+      }
+      router.replace(endpoint)
     }
-
-    router.replace(callbackURL ?? data?.user?.name ? '/' : '/signup')
   }, [])
   return (
     <section className="h-calc-h flex items-center">
@@ -32,9 +39,10 @@ Csrf.getLayout = (page: ReactNode) => (
 )
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const callbackUrl = ctx.query[AUTH.LOGIN_REDIRECT_URL]
-  console.log(callbackUrl)
+  const callbackUrl = ctx.query?.[AUTH.LOGIN_REDIRECT_URL] ?? ''
   return {
-    props: {},
+    props: {
+      csrfCallbackUrl: callbackUrl,
+    },
   }
 }

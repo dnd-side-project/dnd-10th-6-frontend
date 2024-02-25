@@ -11,10 +11,15 @@ import SurveyTree from '@/components/svgs/survey-tree'
 import Modal from '@/components/modal'
 import { Close } from '@radix-ui/react-dialog'
 import Link from 'next/link'
+import { useMutation } from '@tanstack/react-query'
 
 const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
   const { signin, data } = useSession()
   const router = useRouter()
+  const { isPending, mutate } = useMutation({
+    mutationKey: ['signup'],
+    mutationFn: signin,
+  })
 
   const [openMineAlert, setOpenMineAlert] = useState(false)
 
@@ -71,9 +76,10 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
           <Button onClick={handleStart}>시작하기</Button>
         ) : (
           <Button
+            disabled={isPending}
             variant="kakao"
             onClick={() =>
-              signin({
+              mutate({
                 provider: 'kakao',
                 callbackUrl: `/surveys/questions?wikiId=${router.query.wikiId}`,
               })

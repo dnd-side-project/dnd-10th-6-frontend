@@ -31,7 +31,10 @@ export type SessionContextValue<R extends boolean = false> = R extends true
         }
 
 type SessionHandler = {
-  signin: (args?: { provider: ProviderType; callbackUrl?: string }) => void
+  signin: (args?: {
+    provider: ProviderType
+    callbackUrl?: string
+  }) => Promise<void>
   signout: () => Promise<void>
   signup: (nickname: string) => Promise<Session | null>
 }
@@ -142,7 +145,12 @@ export const useSession = <R extends boolean>(options?: {
     if (callbackUrl) {
       sessionStorage.setItem('callbackUrl', callbackUrl)
     }
-    signIn(provider, { callbackUrl })
+    return new Promise((resolve) => {
+      signIn(provider, { callbackUrl })
+      setTimeout(() => {
+        resolve()
+      }, 15000)
+    })
   }, [])
 
   const signout: SessionHandler['signout'] = useCallback(async () => {
