@@ -125,7 +125,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
 function BestWorth({ filter }: { filter: FilterType }) {
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
-    amount: 'all',
+    margin: '2%',
   })
 
   const { data: statisics, isLoading } = useQuery({
@@ -152,7 +152,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
   }, [statisics])
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div ref={ref} className="w-full h-full flex flex-col">
       {isLoading ? (
         <>
           <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
@@ -170,10 +170,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
             </b>
             이네요
           </h2>
-          <div
-            ref={ref}
-            className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6"
-          >
+          <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
             <div className="w-[180px] h-[180px] mx-auto relative">
               {inView && (
                 <ResponsiveContainer width="100%" height="100%">
