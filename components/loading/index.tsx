@@ -143,7 +143,7 @@ const Loading = () => {
       </svg>
       <h2 className="text-mainTitle2-bold mt-6 mb-5">로딩중이에요!</h2>
       <p className="text-subTitle2-medium text-text-sub-gray4f ">
-        잠시만 기다려주시면 나무위키를 확인할 수 있어요
+        잠시만 기다려주시면 남의위키를 확인할 수 있어요
       </p>
     </div>
   )
