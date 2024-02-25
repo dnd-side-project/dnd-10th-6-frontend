@@ -30,13 +30,13 @@ export async function signIn(
     throw new BadRequestError()
   }
 
-  const { callbackUrl = window.location.href, redirect = true } = options ?? {}
-  console.log(callbackUrl)
+  const { redirect = true } = options ?? {}
 
   const url = Oauth.getAuthorizationURL(provider)
   if (!url) {
     throw new BadRequestError()
   }
+
   if (redirect) {
     window.location.href = url.toString()
     if (url.toString().includes('#')) window.location.reload()

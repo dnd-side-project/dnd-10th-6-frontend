@@ -51,7 +51,6 @@ export const SessionProvider = ({
     throw new Error('React Context is unavailable in Server Components')
   }
   const { session: InitialSession, refetchOnWindowFocus, onExpired } = props
-
   const hasInitialSession = props.session !== undefined
   const [session, setSession] = useState<Session>(() => {
     return InitialSession

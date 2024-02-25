@@ -63,7 +63,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           )
         : res.setHeader('Set-Cookie', response.headers.getSetCookie())
 
-      res.status(200).redirect('/signup')
+      res.status(200).redirect(`/csrf?${AUTH.LOGIN_REDIRECT_URL}=/signup`)
       return
     } else {
       if (!accessToken || !refreshToken) throw new UnauthorizedError()
@@ -87,7 +87,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
     ])
-    res.status(200).redirect('/garden')
+    res.status(200).redirect(`/csrf?${AUTH.LOGIN_REDIRECT_URL}=/garden`)
   } catch (err) {
     const error = isNamuiError(err) ? err : new InternalServerError()
     res.status(307).redirect(307, `/?err=${error.name}`)

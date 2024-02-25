@@ -48,11 +48,6 @@ export default function NamuiWikiApp({
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
   useBrowserLayoutEffect(() => {
-    const callbackURL = sessionStorage.getItem('callbackUrl')
-    if (callbackURL) {
-      sessionStorage.removeItem('callbackUrl')
-      router.replace(callbackURL)
-    }
     if (!mounted) {
       setMounted(true)
     }
