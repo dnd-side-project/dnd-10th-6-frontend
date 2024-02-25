@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { cn } from '@/lib/client/utils'
 import { useRouter } from 'next/router'
+import { useMutation } from '@tanstack/react-query'
 
 const scheme = z.object({
   nickname: z
@@ -20,6 +21,19 @@ type SchemeType = z.infer<typeof scheme>
 const SignUp = () => {
   const id = useId()
   const { data, signup } = useSession()
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['signup'],
+    mutationFn: signup,
+    onSuccess() {
+      const callbackURL = sessionStorage.getItem('callbackUrl')
+      let endpoint = '/welcome'
+      if (callbackURL) {
+        sessionStorage.removeItem('callbackUrl')
+        endpoint = decodeURIComponent(callbackURL)
+      }
+      router.replace(endpoint)
+    },
+  })
   const router = useRouter()
   const form = useForm<SchemeType>({
     defaultValues: {
@@ -29,10 +43,7 @@ const SignUp = () => {
   })
 
   const onValid = async (values: SchemeType) => {
-    await signup(values.nickname)
-    router.replace({
-      pathname: '/welcome',
-    })
+    mutate(values.nickname)
   }
 
   return (
@@ -64,7 +75,11 @@ const SignUp = () => {
             </label>
           </>
         }
-        button={<Button type="submit">다음</Button>}
+        button={
+          <Button disabled={isPending} type="submit">
+            다음
+          </Button>
+        }
       />
     </form>
   )

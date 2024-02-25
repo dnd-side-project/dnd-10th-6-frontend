@@ -31,7 +31,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // FIXME: 개발, 운영 분리 코드가 상당히 지저분함 함수화 할수 있을듯
     const { accessToken, refreshToken, errorCode, ...rest } =
       await response.json()
-
     if (errorCode === 'NOT_FOUND_USER') {
       const cookies = response.headers.getSetCookie().map(
         (cookie) =>
@@ -87,7 +86,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         maxAge: AUTH.REFRESH_EXPIRED_TIME,
       }),
     ])
-    res.status(200).redirect(`/csrf?${AUTH.LOGIN_REDIRECT_URL}=/garden`)
+    res.status(200).redirect('/csrf')
   } catch (err) {
     const error = isNamuiError(err) ? err : new InternalServerError()
     res.status(307).redirect(307, `/?err=${error.name}`)
