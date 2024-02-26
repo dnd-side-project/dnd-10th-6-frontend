@@ -1,6 +1,12 @@
 import { Option } from '@/model/option.entity'
 import { QuestionType } from '@/model/question.entity'
-import React, { useEffect, useState } from 'react'
+import React, {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
@@ -93,6 +99,7 @@ const SurveyForm = ({
 
   const selectedType = form.watch().type
   const answerWatch = form.watch().answer
+  const reasonWatch = form.watch().reason
   const Tree = TreeSvg[(index - 1) as keyof typeof TreeSvg]
   return (
     <form
@@ -138,6 +145,7 @@ const SurveyForm = ({
                         } else {
                           form.setValue('type', 'OPTION')
                           form.setValue('answer', target.value)
+                          form.trigger('answer')
                         }
 
                         field.onChange(target.value)
@@ -203,11 +211,13 @@ const SurveyForm = ({
                       className="hidden"
                       onChange={({ target }) => {
                         if (option.value + '' === 'MANUAL') {
+                          form.setError('answer', { type: 'required' })
                           form.setValue('type', 'MANUAL')
                           form.setValue('answer', '')
                         } else {
                           form.setValue('type', 'OPTION')
                           form.setValue('answer', target.value + '')
+                          form.trigger('answer')
                         }
 
                         field.onChange(target.value)
@@ -236,13 +246,15 @@ const SurveyForm = ({
                       {[option.value, selectedType].every(
                         (item) => item === 'MANUAL',
                       ) ? (
-                        <input
+                        <AutoFocusedInput
+                          defaultValue={form.getValues().answer}
                           className="ml-4 bg-transparent outline-none"
                           placeholder="15글자 이내로 입력해주세요"
                           maxLength={15}
-                          onChange={(e) =>
+                          onChange={(e) => {
                             form.setValue('answer', e.target.value)
-                          }
+                            form.trigger('answer')
+                          }}
                         />
                       ) : (
                         <span className="ml-2">{option.text}</span>
@@ -278,7 +290,8 @@ const SurveyForm = ({
                         'border-brand-main-green400 border bg-main-green-green50',
                     )}
                   >
-                    <input
+                    <AutoFocusedInput
+                      defaultValue={form.getValues().answer}
                       id={option.id}
                       name={name}
                       value={option.id}
@@ -286,11 +299,13 @@ const SurveyForm = ({
                       className="hidden"
                       onChange={({ target }) => {
                         if (option.value + '' === 'MANUAL') {
+                          form.setError('answer', { type: 'required' })
                           form.setValue('type', 'MANUAL')
                           form.setValue('answer', '')
                         } else {
                           form.setValue('type', 'OPTION')
                           form.setValue('answer', target.value)
+                          form.trigger('answer')
                         }
 
                         field.onChange(target.value)
@@ -319,7 +334,7 @@ const SurveyForm = ({
                       {[option.value, selectedType].every(
                         (item) => item === 'MANUAL',
                       ) ? (
-                        <input
+                        <AutoFocusedInput
                           className="ml-4 bg-transparent outline-none"
                           placeholder="직접입력 (숫자만 입력)"
                           maxLength={15}
@@ -330,6 +345,7 @@ const SurveyForm = ({
                             const newValue = inputPriceFormat(e.target.value)
                             if (!newValue) return
                             form.setValue('answer', +localeToNum(newValue))
+                            form.trigger('answer')
                             return newValue
                           }}
                         />
@@ -409,9 +425,11 @@ const SurveyForm = ({
         <div className="pt-5 mb-4 bg-white flex justify-center w-full">
           <Button
             disabled={
-              disabled || name === 'FIVE_LETTER_WORD'
+              disabled ||
+              (name === 'FIVE_LETTER_WORD'
                 ? answerWatch.toString().length !== 5
-                : Object.keys(form.formState.errors).length !== 0
+                : Object.keys(form.formState.errors).length !== 0 ||
+                  (type !== 'SHORT_ANSWER' && !reasonWatch))
             }
             type="submit"
             className="w-full"
@@ -425,3 +443,15 @@ const SurveyForm = ({
 }
 
 export default SurveyForm
+
+interface AutoFocusedInputProps extends InputHTMLAttributes<HTMLInputElement> {}
+function AutoFocusedInput(props: AutoFocusedInputProps) {
+  const ref = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus()
+    }
+  }, [])
+  return <input ref={ref} {...props} />
+}
