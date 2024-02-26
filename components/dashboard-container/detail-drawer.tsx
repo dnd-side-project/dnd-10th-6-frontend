@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useRef } from 'react'
 import Drawer from '../ui/drawer'
 import { DetailQsContext } from '@/pages/dashboard'
 import useFilter, { Filter } from '@/hooks/use-filter'
@@ -11,6 +11,9 @@ import { fadeInProps } from '@/variants'
 import CircleTree from '../svgs/circle-tree'
 import { relations } from '../badge/relation'
 import { periods } from '../badge/period'
+import TreeCard from '../compositions/tree-card'
+import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
+import { tree } from 'next/dist/build/templates/app-page'
 
 export interface DetailResponse {
   data: Data
@@ -128,6 +131,28 @@ function Content() {
     hasNextPage,
     fetchNextPage,
   })
+
+  const treeType = useRef(new TreeType(treeCardAsset)).current
+
+  const bgColor = (cardItem: Content) => {
+    switch (cardItem.relation) {
+      case 'ELEMENTARY_SCHOOL':
+        return 'bg-relation-elementary_school'
+      case 'MIDDLE_AND_HIGH_SCHOOL':
+        return 'bg-relation-middle_and_high_school'
+      case 'UNIVERSITY':
+        return 'bg-relation-university'
+      case 'WORK':
+        return 'bg-relation-work'
+      case 'SOCIAL':
+        return 'bg-relation-social'
+      case 'ETC':
+        return 'bg-relation-etc'
+      default:
+        return ''
+    }
+  }
+
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">
       <div className="p-5 flex flex-col space-y-4">
@@ -177,15 +202,22 @@ function Content() {
               <div key={page.data.answers.page}>
                 {page.data.answers.content.map((cardItem, cardIndex) => {
                   const parsedCreatedAt = new Date(cardItem.createdAt)
-                  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()+1}.${parsedCreatedAt.getDate()}`
+                  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
                   return (
                     <motion.div
                       key={cardItem.senderName + cardItem.answer}
                       variants={fadeInProps.variants}
                       className="p-4 flex justify-between space-x-4"
                     >
-                      <div className="aspect-square rounded-full bg-bg-gray1 h-full flex justify-center items-center">
-                        <CircleTree />
+                      <div
+                        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+                          cardItem,
+                        )}`}
+                      >
+                        {treeType.render(
+                          cardItem.period as Period,
+                          cardItem.relation as Relation,
+                        )}
                       </div>
                       <div className="flex flex-col grow space-y-4">
                         <div className="flex flex-col space-y-1">
