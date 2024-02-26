@@ -14,13 +14,6 @@ import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
 const Pages = () => {
-  const mockTreeCard = {
-    surveyId: 'asdf',
-    relation: 'ETC',
-    period: 'SIX_MONTHS',
-    recieverName: 'string',
-  }
-
   const { data } = useSession()
   const {
     data: surveys,
