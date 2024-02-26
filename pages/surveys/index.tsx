@@ -36,7 +36,7 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
         <div className="flex flex-col items-center">
           <SurveyTree />
           <h1 className="text-mainTitle2-bold mt-6">
-            {nickname}의<br />
+            {nickname}님의<br />
             남의위키가 도착했어요
           </h1>
           <p className="text-subTitle2-medium text-text-sub-gray4f mt-3">

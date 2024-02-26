@@ -321,7 +321,7 @@ const SurveyForm = ({
                       ) ? (
                         <input
                           className="ml-4 bg-transparent outline-none"
-                          placeholder="15글자 이내로 입력해주세요"
+                          placeholder="직접입력 (숫자만 입력)"
                           maxLength={15}
                           type="text"
                           inputMode="numeric"
