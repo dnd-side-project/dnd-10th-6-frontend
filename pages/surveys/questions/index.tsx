@@ -40,9 +40,7 @@ const Question = ({ nickname }: { nickname: string }) => {
         goNext()
 
         // 애니메이션과 함께 제출화면으로 이동하기 위해 추가
-        setTimeout(() => {
-          router.replace('/submit')
-        }, 1000)
+        router.replace('/submit')
       },
       onError() {
         toastError()
@@ -151,7 +149,7 @@ const Question = ({ nickname }: { nickname: string }) => {
     countAnimation({ direction: 'DOWN', index: progress.current - 1 })
   }
 
-  const goNext = async () => {
+  const goNext = () => {
     if (step === 'knowing') {
       const { period, relation } = questionForm.getValues()
       if (!period || !relation) {
