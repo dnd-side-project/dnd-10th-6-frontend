@@ -21,7 +21,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
 
   const createdAt = useMemo(() => {
     const parsedCreatedAt = new Date(survey.createdAt)
-    return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
+    return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
   }, [survey])
 
   return (

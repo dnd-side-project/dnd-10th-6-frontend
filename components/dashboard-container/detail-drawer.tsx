@@ -177,7 +177,7 @@ function Content() {
               <div key={page.data.answers.page}>
                 {page.data.answers.content.map((cardItem, cardIndex) => {
                   const parsedCreatedAt = new Date(cardItem.createdAt)
-                  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()}.${parsedCreatedAt.getDate()}`
+                  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth()+1}.${parsedCreatedAt.getDate()}`
                   return (
                     <motion.div
                       key={cardItem.senderName + cardItem.answer}
