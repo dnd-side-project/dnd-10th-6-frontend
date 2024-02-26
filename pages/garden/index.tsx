@@ -5,14 +5,14 @@ import Button from '@/components/button'
 import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
 import { useSession } from '@/provider/session-provider'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { getSurveyQuery } from '@/queries/surveys'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { NamuiApi } from '@/lib/namui-api'
 import { GetSurveyResponse } from '@/model/survey.entity'
 import { useIntersectionObserver } from '@/hooks/use-observer'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
+import ShareModal from '@/components/share-modal'
 const Pages = () => {
   const mockTreeCard = {
     surveyId: 'asdf',
@@ -233,6 +233,11 @@ const Pages = () => {
             </svg>
           </button>
         )}
+        <div className="sticky bottom-0 py-2 px-5 pt-5 bg-gradient-to-t from-white from-85% to-transparent to-100%">
+          <ShareModal>
+            <Button>친구에게 소개서 부탁하기</Button>
+          </ShareModal>
+        </div>
       </section>
     </BaseLayout>
   )
