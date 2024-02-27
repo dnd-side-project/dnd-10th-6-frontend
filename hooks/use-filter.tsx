@@ -34,7 +34,7 @@ const filters: {
   },
   {
     type: 'relation',
-    text: '알게 된 기간',
+    text: '알게 된 경로',
     default: 'ELEMENTARY_SCHOOL',
     items: [
       {
@@ -65,7 +65,7 @@ const filters: {
   },
   {
     type: 'period',
-    text: '알게 된 경로',
+    text: '알게 된 기간',
     default: '',
     items: [
       {

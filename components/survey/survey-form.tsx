@@ -371,10 +371,10 @@ const SurveyForm = ({
                 placeholder={
                   name === 'FIVE_LETTER_WORD'
                     ? '5글자로 입력해주세요'
-                    : '15글자 이내로 입력해주세요'
+                    : '20글자 이내로 입력해주세요'
                 }
                 {...(name === 'FIVE_LETTER_WORD' && { minLength: 5 })}
-                maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 15}
+                maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 20}
                 onChange={(e) => {
                   form.setValue('type', 'MANUAL')
                   if (e.target.value) {
@@ -404,8 +404,8 @@ const SurveyForm = ({
               render={({ field }) => (
                 <Inputbox
                   {...field}
-                  placeholder="15글자 이내로 입력해주세요"
-                  maxLength={15}
+                  placeholder="20글자 이내로 입력해주세요"
+                  maxLength={20}
                   value={field.value + ''}
                   onChange={(e) => {
                     if (e.target.value) {
