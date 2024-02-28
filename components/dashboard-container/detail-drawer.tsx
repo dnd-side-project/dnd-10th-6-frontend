@@ -8,12 +8,9 @@ import { useIntersectionObserver } from '@/hooks/use-observer'
 import { useSession } from '@/provider/session-provider'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-import CircleTree from '../svgs/circle-tree'
 import { relations } from '../badge/relation'
 import { periods } from '../badge/period'
-import TreeCard from '../compositions/tree-card'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
-import { tree } from 'next/dist/build/templates/app-page'
 
 export interface DetailResponse {
   data: Data
@@ -198,14 +195,18 @@ function Content() {
                 </div>
               </motion.div>
             ))
-          : parsedData?.pages.map((page) => (
+          : parsedData?.pages.map((page, pageNo) => (
               <div key={page.data.answers.page}>
                 {page.data.answers.content.map((cardItem, cardIndex) => {
                   const parsedCreatedAt = new Date(cardItem.createdAt)
                   const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
                   return (
                     <motion.div
-                      key={cardItem.senderName + cardItem.answer}
+                      key={
+                        cardItem.senderName +
+                        cardItem.answer +
+                        `${pageNo}-${cardIndex}`
+                      }
                       variants={fadeInProps.variants}
                       className="p-4 flex justify-between space-x-4"
                     >

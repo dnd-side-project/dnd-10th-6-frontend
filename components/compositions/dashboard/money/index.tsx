@@ -1,14 +1,17 @@
+import Button from '@/components/button'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
 import { MONEY } from '@/model/dashboard.entity'
+import { DetailQsContext } from '@/pages/dashboard'
 import { useSession } from '@/provider/session-provider'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
-import React, { useMemo, useState } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 
 const Money = ({ filter }: { filter: FilterType }) => {
+  const { handle } = useContext(DetailQsContext)
   const { data: statisics, isLoading } = useQuery({
     ...getDashboardQuery(filter),
     select(data) {
@@ -80,6 +83,18 @@ const Money = ({ filter }: { filter: FilterType }) => {
             </div>
           </>
         )}
+        <div className="w-1/2  mx-auto mt-10">
+          <Button
+            onClick={() =>
+              statisics?.questionId && handle(statisics?.questionId)
+            }
+            rounded="full"
+            variant="muted"
+            className="bg-text-main-whiteFF"
+          >
+            자세히 보기
+          </Button>
+        </div>
       </div>
     </LazyMotion>
   )

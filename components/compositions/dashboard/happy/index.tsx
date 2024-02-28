@@ -3,12 +3,14 @@ import { RANK_COLOR } from '@/constants'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
+import { DetailQsContext } from '@/pages/dashboard'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 
 const Happy = ({ filter }: { filter: FilterType }) => {
+  const { handle } = useContext(DetailQsContext)
   const { data: statisics, isLoading } = useQuery({
     ...getDashboardQuery(filter),
     select(data) {
@@ -76,15 +78,18 @@ const Happy = ({ filter }: { filter: FilterType }) => {
                 )
               })}
             </div>
-            {/* <div className="w-1/2  mx-auto mt-10">
+            <div className="w-1/2  mx-auto mt-10">
               <Button
+                onClick={() =>
+                  statisics?.questionId && handle(statisics?.questionId)
+                }
                 rounded="full"
                 variant="muted"
                 className="bg-text-main-whiteFF"
               >
                 자세히 보기
               </Button>
-            </div> */}
+            </div>
           </>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useContext, useMemo, useRef } from 'react'
 import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 import { Pie, Sector } from 'recharts'
 import { Cell } from 'recharts'
@@ -9,6 +9,8 @@ import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
+import Button from '@/components/button'
+import { DetailQsContext } from '@/pages/dashboard'
 export interface Payload {
   percent: number
   name: number
@@ -123,6 +125,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
 }
 
 function BestWorth({ filter }: { filter: FilterType }) {
+  const { handle } = useContext(DetailQsContext)
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     margin: '5%',
@@ -224,15 +227,18 @@ function BestWorth({ filter }: { filter: FilterType }) {
               })}
             </div>
           </div>
-          {/* <div className="w-1/2  mx-auto mt-10">
+          <div className="w-1/2  mx-auto mt-10">
             <Button
+              onClick={() =>
+                statisics?.questionId && handle(statisics?.questionId)
+              }
               rounded="full"
               variant="muted"
               className="bg-text-main-whiteFF"
             >
               자세히 보기
             </Button>
-          </div> */}
+          </div>
         </>
       )}
     </div>

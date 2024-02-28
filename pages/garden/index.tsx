@@ -119,7 +119,7 @@ const Pages = () => {
                       item ? (
                         <TreeCard
                           senderName={item.senderName}
-                          key={item.surveyId}
+                          key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
                           id={item.surveyId}
                           period={item.period}
                           relation={item.relation}
@@ -169,6 +169,7 @@ const Pages = () => {
                     )
                   ) : (
                     <motion.div
+                      key={`empty-${pageNo + 1}-container`}
                       {...fadeInProps}
                       transition={{ staggerChildren: 0.08 }}
                       className="grid grid-cols-4 gap-2 "
@@ -176,7 +177,7 @@ const Pages = () => {
                       {page.data.content.map((item, index) => (
                         <TreeCard
                           senderName={item.senderName}
-                          key={item.surveyId}
+                          key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
                           id={item.surveyId}
                           period={item.period}
                           relation={item.relation}
@@ -189,7 +190,11 @@ const Pages = () => {
                 )}
               </motion.div>
             ) : (
-              <motion.div {...fadeInProps} className="grid grid-cols-4 gap-2 ">
+              <motion.div
+                key={`empty-container`}
+                {...fadeInProps}
+                className="grid grid-cols-4 gap-2 "
+              >
                 {Array.from({ length: 40 }, (_, v) => v + 1).map((i) => (
                   <motion.div
                     variants={fadeInProps.variants}

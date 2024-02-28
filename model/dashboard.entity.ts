@@ -11,6 +11,7 @@ export type MONEY = {
   peopleCount: number
   average: number
   entireAverage: number
+  questionId: string
 }
 
 export type Statistic = {
@@ -24,6 +25,7 @@ export type Statistic = {
   moneySum?: number
   entireAverage?: number
   average?: number
+  questionId: string
 }
 
 export interface Rank {

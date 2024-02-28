@@ -18,7 +18,7 @@ export class TreeType {
     const treeAssetKey = `${period}_${relation}` as TreeAssetKey
     const treeSvg = this.icon[treeAssetKey]
 
-    return <>{treeSvg}</>
+    return treeSvg
   }
 }
 
