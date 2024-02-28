@@ -42,7 +42,7 @@ export const drawerInOutProps: AnimationProps = {
   variants: drawerVariants,
   animate: 'animate',
   initial: 'initial',
-  exit: 'exit',
+  // exit: 'exit',
   transition: {
     type: 'tween',
     ease: 'circInOut',
