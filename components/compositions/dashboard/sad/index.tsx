@@ -1,5 +1,6 @@
 import Button from '@/components/button'
 import { RANK_COLOR } from '@/constants'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
@@ -10,7 +11,7 @@ import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
 import React, { useContext, useMemo } from 'react'
 
 const Sad = ({ filter }: { filter: FilterType }) => {
-  const { handle } = useContext(DetailQsContext)
+  const { handle } = useDetailDrawer()
   const { data: statisics, isLoading } = useQuery({
     ...getDashboardQuery(filter),
     select(data) {

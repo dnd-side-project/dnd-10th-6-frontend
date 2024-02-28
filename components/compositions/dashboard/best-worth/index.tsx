@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
 import Button from '@/components/button'
-import { DetailQsContext } from '@/pages/dashboard'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 export interface Payload {
   percent: number
   name: number
@@ -125,7 +125,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
 }
 
 function BestWorth({ filter }: { filter: FilterType }) {
-  const { handle } = useContext(DetailQsContext)
+  const { handle } = useDetailDrawer()
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     margin: '5%',

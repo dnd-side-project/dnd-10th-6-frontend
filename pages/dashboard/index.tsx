@@ -10,6 +10,7 @@ import { FilterProvider } from '@/hooks/use-filter'
 import withAuth from '@/layout/HOC/with-auth'
 import DashboardContainer from '@/components/dashboard-container'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
+import { useRouter } from 'next/router'
 
 export const DetailQsContext = createContext<{
   id: string
@@ -21,6 +22,7 @@ const Page = () => {
   const [selectedQsId, setSelectedQsId] = useState('')
   const ref = useRef<HTMLElement>(null)
 
+  const router = useRouter()
   const { direction, scrollTop } = useScrollDirection({ ref })
   const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
 
@@ -32,6 +34,12 @@ const Page = () => {
       <BaseLayout
         showHeader
         ref={ref}
+        header={{
+          options: {
+            onBackClick: () => router.replace('/garden'),
+            showRight: true,
+          },
+        }}
         className={cn('h-calc-h overflow-y-scroll')}
       >
         <DetailQsContext.Provider

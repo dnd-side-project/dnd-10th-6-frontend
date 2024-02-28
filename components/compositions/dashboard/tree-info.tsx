@@ -1,13 +1,12 @@
 import Button from '@/components/button'
 import Badge from '@/components/button/badge'
 import ShareModal from '@/components/share-modal'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { SHORT_TYPE_LIST } from '@/model/question.entity'
-import { DetailQsContext } from '@/pages/dashboard'
 import { useSession } from '@/provider/session-provider'
 import { getQuestionByTypeQuery } from '@/queries/question'
 import { useQuery } from '@tanstack/react-query'
-import React, { useContext } from 'react'
 
 const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
   FIRST_IMPRESSION: '👀 나의 첫인상은?',
@@ -19,7 +18,7 @@ const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
 }
 
 const TreeInfo = ({ filter }: { filter: FilterType }) => {
-  const { handle } = useContext(DetailQsContext)
+  const { handle } = useDetailDrawer()
   const { data } = useSession()
   const { data: short } = useQuery({
     ...getQuestionByTypeQuery('SHORT_ANSWER'),
@@ -106,7 +105,9 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             {short.slice(0, short.length / 2).map((item) => (
               <Badge
                 key={item.id}
-                onClick={() => handle(item.id)}
+                onClick={() => {
+                  handle(item.id)
+                }}
                 title={SHORT_FILTER[item.name]}
               />
             ))}

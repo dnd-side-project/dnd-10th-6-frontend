@@ -11,6 +11,7 @@ import { fadeInProps } from '@/variants'
 import { relations } from '../badge/relation'
 import { periods } from '../badge/period'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
+import { useRouter } from 'next/router'
 
 export interface DetailResponse {
   data: Data
@@ -39,7 +40,7 @@ export interface Content {
 }
 
 const DetailDrawer = () => {
-  const { handle, id } = useContext(DetailQsContext)
+  const router = useRouter()
 
   return (
     <Drawer
@@ -47,31 +48,26 @@ const DetailDrawer = () => {
         center: <p className="text-body1-bold">상세 보기</p>,
         options: {
           onBackClick() {
-            handle('')
+            router.back()
           },
           showRight: false,
         },
       }}
-      open={!!id}
-      onChangeOpen={(state) => {
-        if (!state) handle('')
-      }}
+      open={!!router.query.id}
       trigger={<></>}
     >
-      <Content />
+      {typeof router.query.id === 'string' ? (
+        <Content id={router.query.id} />
+      ) : null}
     </Drawer>
   )
 }
 
 export default DetailDrawer
-{
-  /* <Filter className={cn(shouldShowHeader && 'top-header')} /> */
-}
 
-function Content() {
+function Content({ id }: { id: string }) {
   const { selectedFilter } = useFilter()
   const { data: user } = useSession()
-  const { handle, id } = useContext(DetailQsContext)
   const {
     data: qs,
     isLoading,

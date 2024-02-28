@@ -1,4 +1,5 @@
 import Button from '@/components/button'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
@@ -11,7 +12,8 @@ import { LazyMotion, domAnimation, m } from 'framer-motion'
 import React, { useContext, useMemo, useState } from 'react'
 
 const Money = ({ filter }: { filter: FilterType }) => {
-  const { handle } = useContext(DetailQsContext)
+  const { handle } = useDetailDrawer()
+
   const { data: statisics, isLoading } = useQuery({
     ...getDashboardQuery(filter),
     select(data) {
