@@ -66,24 +66,10 @@ export default function NamuiWikiApp({
         NamuiApi.setToken(newSession?.token?.accessToken)
       }}
     >
-      <Head>
-        <script
-          src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
-          integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8"
-          crossOrigin="anonymous"
-          defer
-        ></script>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;"
-        />
-
-        <meta name="HandheldFriendly" content="true" />
-      </Head>
+      <MetaHead />
       <ErrorBoundary>
         <QueryProvider>
           <HydrationBoundary state={pageProps.dehydratedState}>
-            <MetaHead />
             {getLayout(<Component {...pageProps} />)}
           </HydrationBoundary>
         </QueryProvider>

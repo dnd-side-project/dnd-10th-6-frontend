@@ -1,0 +1,18 @@
+# Googlebot
+User-agent: Googlebot
+Allow: /
+
+# Yeti
+User-agent: Yeti
+Allow: /
+
+# *
+User-agent: *
+Disallow: /
+
+# Host
+Host: http://namui-wiki.life
+
+# Sitemaps
+Sitemap: http://namui-wiki.life/sitemap.xml
+Sitemap: http://namui-wiki.life/sitemap-0.xml

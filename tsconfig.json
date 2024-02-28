@@ -24,6 +24,7 @@
     "**/*.tsx",
     "components/colors/colors.stories.mdx",
     "components/typography/typography.stories.mdx",
+    "scripts/sitemap-common.js",
   ],
   "exclude": ["node_modules"],
 }
