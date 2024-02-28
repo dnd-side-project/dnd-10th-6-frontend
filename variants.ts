@@ -1,4 +1,3 @@
-import { isMobile } from './lib/client/utils'
 import { MotionProps, Variants } from 'framer-motion'
 
 type AnimationProps = Pick<
@@ -27,14 +26,10 @@ const drawerVariants: Variants = {
     opacity: 1,
     x: 0,
   },
-  ...(isMobile()
-    ? {}
-    : {
-        exit: {
-          opacity: 0,
-          x: '100dvw',
-        },
-      }),
+  exit: {
+    opacity: 0,
+    x: '100dvw',
+  },
 }
 
 export const fadeInProps: AnimationProps = {

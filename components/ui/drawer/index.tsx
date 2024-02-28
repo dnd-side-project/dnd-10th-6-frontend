@@ -1,6 +1,6 @@
 import { HeaderProps } from '@/components/header'
 import BaseLayout from '@/layout/base-layout'
-import { isMobile, useBrowserLayoutEffect } from '@/lib/client/utils'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import { drawerInOutProps } from '@/variants'
 import { AnimatePresence, LazyMotion, domAnimation } from 'framer-motion'
 import {
@@ -99,43 +99,27 @@ const Drawer = ({
   useEffect(() => {
     toggleOpen(open)
   }, [open, toggleOpen])
+
   return (
     <div className="flex items-center">
       <button onClick={() => toggleOpen(true)}>{trigger}</button>
       {ref.current
         ? createPortal(
             <LazyMotion features={domAnimation}>
-              {isMobile() ? (
-                <>
-                  {isMounted ? (
-                    <BaseLayout
-                      className="w-screen bg-white h-calc-h"
-                      framer={drawerInOutProps}
-                      showHeader={header?.showHeader}
-                      header={header}
-                    >
-                      <section className="flex flex-col grow overflow-y-scroll h-full">
-                        {children}
-                      </section>
-                    </BaseLayout>
-                  ) : null}
-                </>
-              ) : (
-                <AnimatePresence presenceAffectsLayout>
-                  {isMounted ? (
-                    <BaseLayout
-                      className="w-screen bg-white h-calc-h"
-                      framer={{ ...drawerInOutProps }}
-                      showHeader={header?.showHeader}
-                      header={header}
-                    >
-                      <section className="flex flex-col grow overflow-y-scroll h-full">
-                        {children}
-                      </section>
-                    </BaseLayout>
-                  ) : null}
-                </AnimatePresence>
-              )}
+              <AnimatePresence mode="wait">
+                {isMounted ? (
+                  <BaseLayout
+                    className="w-screen bg-white h-calc-h"
+                    framer={{ ...drawerInOutProps }}
+                    showHeader={header?.showHeader}
+                    header={header}
+                  >
+                    <section className="flex flex-col grow overflow-y-scroll h-full">
+                      {children}
+                    </section>
+                  </BaseLayout>
+                ) : null}
+              </AnimatePresence>
             </LazyMotion>,
             ref.current,
           )
