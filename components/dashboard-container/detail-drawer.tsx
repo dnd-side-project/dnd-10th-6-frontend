@@ -8,12 +8,10 @@ import { useIntersectionObserver } from '@/hooks/use-observer'
 import { useSession } from '@/provider/session-provider'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-import CircleTree from '../svgs/circle-tree'
 import { relations } from '../badge/relation'
 import { periods } from '../badge/period'
-import TreeCard from '../compositions/tree-card'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
-import { tree } from 'next/dist/build/templates/app-page'
+import { useRouter } from 'next/router'
 
 export interface DetailResponse {
   data: Data
@@ -42,7 +40,7 @@ export interface Content {
 }
 
 const DetailDrawer = () => {
-  const { handle, id } = useContext(DetailQsContext)
+  const router = useRouter()
 
   return (
     <Drawer
@@ -50,31 +48,26 @@ const DetailDrawer = () => {
         center: <p className="text-body1-bold">상세 보기</p>,
         options: {
           onBackClick() {
-            handle('')
+            router.back()
           },
           showRight: false,
         },
       }}
-      open={!!id}
-      onChangeOpen={(state) => {
-        if (!state) handle('')
-      }}
+      open={!!router.query.id}
       trigger={<></>}
     >
-      <Content />
+      {typeof router.query.id === 'string' ? (
+        <Content id={router.query.id} />
+      ) : null}
     </Drawer>
   )
 }
 
 export default DetailDrawer
-{
-  /* <Filter className={cn(shouldShowHeader && 'top-header')} /> */
-}
 
-function Content() {
+function Content({ id }: { id: string }) {
   const { selectedFilter } = useFilter()
   const { data: user } = useSession()
-  const { handle, id } = useContext(DetailQsContext)
   const {
     data: qs,
     isLoading,
@@ -198,14 +191,18 @@ function Content() {
                 </div>
               </motion.div>
             ))
-          : parsedData?.pages.map((page) => (
+          : parsedData?.pages.map((page, pageNo) => (
               <div key={page.data.answers.page}>
                 {page.data.answers.content.map((cardItem, cardIndex) => {
                   const parsedCreatedAt = new Date(cardItem.createdAt)
                   const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
                   return (
                     <motion.div
-                      key={cardItem.senderName + cardItem.answer}
+                      key={
+                        cardItem.senderName +
+                        cardItem.answer +
+                        `${pageNo}-${cardIndex}`
+                      }
                       variants={fadeInProps.variants}
                       className="p-4 flex justify-between space-x-4"
                     >
