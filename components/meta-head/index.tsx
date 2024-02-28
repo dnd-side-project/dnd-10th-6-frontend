@@ -14,6 +14,10 @@ const MetaHead = ({
 }: MetaHeadProps) => {
   return (
     <Head>
+      <meta
+        name="naver-site-verification"
+        content={process.env.NEXT_PUBLIC_NAVER_VERIFICATION}
+      />
       <title>{title || 'namuiwiki | 남의위키'}</title>
       <meta name="description" content={description || ''} />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -21,6 +25,7 @@ const MetaHead = ({
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url || 'https://namui-wiki.life/'} />
       <meta property="og:description" content={description || ''} />
+      <link rel="canonical" href="https://namui-wiki.life/" />
 
       <meta
         property="og:image"
