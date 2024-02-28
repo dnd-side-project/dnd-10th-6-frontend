@@ -99,7 +99,6 @@ const Drawer = ({
   useEffect(() => {
     toggleOpen(open)
   }, [open, toggleOpen])
-
   return (
     <div className="flex items-center">
       <button onClick={() => toggleOpen(true)}>{trigger}</button>
