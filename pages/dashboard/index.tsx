@@ -37,7 +37,9 @@ const Page = () => {
         header={{
           options: {
             onBackClick: () => router.replace('/garden'),
+            onCenterClick: () => router.replace('/garden'),
             showRight: true,
+            
           },
         }}
         className={cn('h-calc-h overflow-y-scroll')}

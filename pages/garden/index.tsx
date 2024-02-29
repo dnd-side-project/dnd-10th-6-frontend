@@ -90,7 +90,7 @@ const Pages = () => {
           </h3>
         </div>
         <Link href="/dashboard">
-          <Button className="!w-fit px-3 py-4">내 결과 보기</Button>
+          <button className="!w-fit px-4 py-3 rounded-md text-body3-medium  text-main-green-green800 bg-main-green-green50 ">내 결과 보기</button>
         </Link>
       </div>
       <section className="bg-white">
