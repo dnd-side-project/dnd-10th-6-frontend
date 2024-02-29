@@ -105,14 +105,14 @@ const Pages = () => {
               <motion.div
                 {...fadeInProps}
                 transition={{ staggerChildren: 0.03 }}
-                className="grid grid-cols-4 gap-2 "
+                className="grid grid-cols-3 gap-2 "
               >
                 {surveys?.pages.map((page, pageNo) =>
-                  pageNo === 0 && page.data.content.length < 20 ? (
+                  pageNo === 0 && page.data.content.length < 21 ? (
                     [
                       ...page.data.content,
                       ...Array.from(
-                        { length: 20 - page.data.content.length },
+                        { length: 21 - page.data.content.length },
                         (v) => null,
                       ),
                     ].map((item, index) =>
@@ -131,7 +131,7 @@ const Pages = () => {
                           variants={fadeInProps.variants}
                           key={`empty-${(pageNo + 1) * (index + 1)}`}
                         >
-                          <div className="flex justify-center items-center rounded w-[80px] h-[90px] bg-gray-gray50 border-dashed border ">
+                          <div className="flex justify-center items-center rounded w-[104px] h-[110px] bg-gray-gray50 border-dashed border ">
                             <svg
                               width="34"
                               height="34"
@@ -172,7 +172,7 @@ const Pages = () => {
                       key={`empty-${pageNo + 1}-container`}
                       {...fadeInProps}
                       transition={{ staggerChildren: 0.08 }}
-                      className="grid grid-cols-4 gap-2 "
+                      className="grid grid-cols-3 gap-2 "
                     >
                       {page.data.content.map((item, index) => (
                         <TreeCard
@@ -193,7 +193,7 @@ const Pages = () => {
               <motion.div
                 key={`empty-container`}
                 {...fadeInProps}
-                className="grid grid-cols-4 gap-2 "
+                className="grid grid-cols-3 gap-2 "
               >
                 {Array.from({ length: 40 }, (_, v) => v + 1).map((i) => (
                   <motion.div
@@ -201,7 +201,7 @@ const Pages = () => {
                     key={`loading-${i}`}
                     className="skeleton"
                   >
-                    <div className="flex justify-center items-center rounded w-[80px] h-[90px]"></div>
+                    <div className="flex justify-center items-center rounded w-[104px] h-[110px]"></div>
                   </motion.div>
                 ))}
               </motion.div>
