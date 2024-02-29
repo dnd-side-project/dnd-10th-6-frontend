@@ -59,18 +59,20 @@ const TreeCard = ({
       onClick={handleCardClick}
     >
       <div
-        className={`card flex justify-center rounded-md w-full ${bgColor} ${isFlipped ? 'flipped' : ''}`}
+        className={`card flex justify-center w-full ${isFlipped ? 'flipped' : ''}`}
       >
         <div
           className={cn(
-            'card-front m-auto w-full flex flex-col justify-center items-center',
+            `card-front m-auto w-full flex flex-col justify-center items-center rounded-md ${bgColor}`,
           )}
         >
-          <div className="overflow-hidden flex justify-center items-center mt-3 z-0">
+          <div className="overflow-hidden flex justify-center items-center mt-3 z-0  ">
             {treeType.render(period as Period, relation as Relation)}
           </div>
         </div>
-        <div className="card-back px-y w-full flex flex-col justify-center items-center ">
+        <div
+          className={`card-back px-y w-full flex flex-col justify-center items-center rounded-md ${bgColor}`}
+        >
           <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
             <span className="my-2 text-body1-bold">{senderName}</span>
             <Link
