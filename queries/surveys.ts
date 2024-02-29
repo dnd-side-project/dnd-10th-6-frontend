@@ -1,5 +1,6 @@
 import { NamuiApi } from '@/lib/namui-api'
 import { GetSurveyResponse } from '@/model/survey.entity'
+import { Period, Relation } from '@/model/tree.entity'
 import { UseInfiniteQueryOptions, UseQueryOptions } from '@tanstack/react-query'
 
 export const getSurveyQuery = (
@@ -16,13 +17,13 @@ export const getSurveyQuery = (
 })
 
 export interface SurveyByIdResponse {
-  data: Data
+  data: Survey
 }
 
-export interface Data {
+export interface Survey {
   senderName: any
-  period: string
-  relation: string
+  period: Period
+  relation: Relation
   createdAt: string
   questionAndAnswers: QuestionAndAnswer[]
 }
