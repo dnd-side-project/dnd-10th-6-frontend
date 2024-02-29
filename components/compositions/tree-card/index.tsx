@@ -66,9 +66,9 @@ const TreeCard = ({
         </div>
         <div className="card-back px-y w-full flex flex-col justify-center items-center ">
           <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
-            <span className="text-body1-bold">{senderName}</span>
+            <span className="my-2 text-body1-bold">{senderName}</span>
             <Link className="z-20" href={`/answers?surveyId=${id}`}>
-              <button className="underline text-caption1-medium">
+              <button className="py-2 px-3 bg-gray-gray600 text-text-main-whiteFF rounded border text-caption1-medium">
                 자세히보기
               </button>
             </Link>
