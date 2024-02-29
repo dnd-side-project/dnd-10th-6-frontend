@@ -44,7 +44,7 @@ const TreeCard = ({
   const handleCardClick = () => {
     onClick()
   }
-  const handleLinkClick = (e) => {
+  const handleLinkClick = (e: any) => {
     e.stopPropagation()
   }
 
