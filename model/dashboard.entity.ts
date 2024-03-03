@@ -13,20 +13,61 @@ export type MONEY = {
   entireAverage: number
   questionId: string
 }
+;[
+  {
+    name: 'PERSONALITY_TYPE',
+    value: false,
+    questionId: '65d8f7b8c934b525dd04755a',
+  },
+  {
+    name: 'MBTI_IMMERSION',
+    value: false,
+    questionId: '65d8f7b8c934b525dd04755b',
+  },
+  {
+    name: 'WEEKEND_COMMITMENTS',
+    value: false,
+    questionId: '65d8f7b8c934b525dd04755c',
+  },
+  {
+    name: 'FRIENDLINESS_LEVEL',
+    value: false,
+    questionId: '65d8f7b8c934b525dd047559',
+  },
+]
+export type CHARACTER_NAMES =
+  | 'PERSONALITY_TYPE'
+  | 'MBTI_IMMERSION'
+  | 'WEEKEND_COMMITMENTS'
+  | 'FRIENDLINESS_LEVEL'
 
-export type Statistic = {
-  dashboardType: 'BEST_WORTH' | 'HAPPY' | 'SAD' | 'CHARACTER' | 'MONEY'
-  rank?: Rank[]
-  friendly?: boolean
-  similar?: boolean
-  mbti?: boolean
-  busy?: boolean
-  peopleCount?: number
-  moneySum?: number
-  entireAverage?: number
-  average?: number
+export type CHARACTER_ITEMS = {
+  name: CHARACTER_NAMES
+  value: boolean
   questionId: string
 }
+
+export type CHARACTER_TYPE = {
+  dashboardType: 'CHARACTER'
+  characters: CHARACTER_ITEMS[]
+}
+
+export type Statistic =
+  | {
+      dashboardType: 'BEST_WORTH' | 'HAPPY' | 'SAD' | 'MONEY'
+      rank?: Rank[]
+      friendly?: boolean
+      similar?: boolean
+      mbti?: boolean
+      busy?: boolean
+      peopleCount?: number
+      moneySum?: number
+      entireAverage?: number
+      average?: number
+      characters?: CHARACTER_ITEMS[]
+      questionId: string
+    }
+  | CHARACTER_TYPE
 
 export interface Rank {
   legend: string

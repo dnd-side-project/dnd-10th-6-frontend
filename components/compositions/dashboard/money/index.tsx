@@ -56,7 +56,6 @@ const Money = ({ filter }: { filter: FilterType }) => {
               </b>
               에게
               <br />
-              평균{' '}
               <b className="text-brand-main-green400">
                 {statisics.average.toLocaleString()}원
               </b>{' '}
