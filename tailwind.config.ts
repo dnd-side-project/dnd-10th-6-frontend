@@ -205,6 +205,7 @@ const config = {
       boxShadow: {
         basic: '0px 4px 10px rgba(0,0,0,0.06)',
         'chat-bubble': '4px 4px 16px rgba(0, 0, 0, 0.1)',
+        onboard: '4px 8px 20px rgba(0, 0, 0, 0.08)',
       },
       dropShadow: {
         'chat-bubble': '4px 4px 16px rgba(0, 0, 0, 0.1)',

@@ -25,6 +25,18 @@ export class NamuiApi {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
   }
   private static accessToken: string = ''
+
+  static initOnBoard() {
+    return NamuiApi.handler({
+      method: 'GET',
+      url: '/api/init',
+      baseURL:
+        typeof window !== 'undefined'
+          ? window.location.origin
+          : process.env.HOST,
+    })
+  }
+
   /**
    * @NOTE 로그인 API
    */

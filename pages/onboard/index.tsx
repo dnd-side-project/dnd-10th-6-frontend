@@ -1,4 +1,5 @@
 import OnBoard from '@/components/onboard'
+import { NamuiApi } from '@/lib/namui-api'
 import Cookie from 'js-cookie'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -6,18 +7,11 @@ import { ReactNode } from 'react'
 
 const Page = () => {
   const router = useRouter()
-  return (
-    <OnBoard
-      onStartClick={() => {
-        Cookie.set('namui-init', new Date().toLocaleString(), {
-          secure: false,
-          expires: Infinity,
-          path: '/',
-        })
-        router.replace('/')
-      }}
-    />
-  )
+  const checkInit = async () => {
+    await NamuiApi.initOnBoard()
+    router.replace('/')
+  }
+  return <OnBoard onStartClick={checkInit} />
 }
 
 Page.getLayout = (page: ReactNode) => {

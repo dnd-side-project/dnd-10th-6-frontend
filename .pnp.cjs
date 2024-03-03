@@ -28,7 +28,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
           ["@hookform/resolvers", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:3.3.4"],\
-          ["@playwright/test", "npm:1.41.1"],\
+          ["@playwright/test", "npm:1.42.1"],\
           ["@radix-ui/react-dialog", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.5"],\
           ["@storybook/addon-essentials", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.6.11"],\
           ["@storybook/addon-interactions", "npm:7.6.11"],\
@@ -4721,11 +4721,11 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@playwright/test", [\
-      ["npm:1.41.1", {\
-        "packageLocation": "../../../.yarn/berry/cache/@playwright-test-npm-1.41.1-1287dca42b-10c0.zip/node_modules/@playwright/test/",\
+      ["npm:1.42.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/@playwright-test-npm-1.42.1-1e93511e64-10c0.zip/node_modules/@playwright/test/",\
         "packageDependencies": [\
-          ["@playwright/test", "npm:1.41.1"],\
-          ["playwright", "npm:1.41.1"]\
+          ["@playwright/test", "npm:1.42.1"],\
+          ["playwright", "npm:1.42.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -19008,7 +19008,7 @@ const RAW_RUNTIME_STATE =
           ["namui-wiki", "workspace:."],\
           ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
           ["@hookform/resolvers", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:3.3.4"],\
-          ["@playwright/test", "npm:1.41.1"],\
+          ["@playwright/test", "npm:1.42.1"],\
           ["@radix-ui/react-dialog", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.5"],\
           ["@storybook/addon-essentials", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.6.11"],\
           ["@storybook/addon-interactions", "npm:7.6.11"],\
@@ -20207,6 +20207,15 @@ const RAW_RUNTIME_STATE =
           ["playwright-core", "npm:1.41.1"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:1.42.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/playwright-npm-1.42.1-ad14b1d04e-10c0.zip/node_modules/playwright/",\
+        "packageDependencies": [\
+          ["playwright", "npm:1.42.1"],\
+          ["fsevents", "patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
+          ["playwright-core", "npm:1.42.1"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["playwright-core", [\
@@ -20214,6 +20223,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/unplugged/playwright-core-npm-1.41.1-f0504e52ed/node_modules/playwright-core/",\
         "packageDependencies": [\
           ["playwright-core", "npm:1.41.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:1.42.1", {\
+        "packageLocation": "./.yarn/unplugged/playwright-core-npm-1.42.1-9ffc4604de/node_modules/playwright-core/",\
+        "packageDependencies": [\
+          ["playwright-core", "npm:1.42.1"]\
         ],\
         "linkType": "HARD"\
       }]\

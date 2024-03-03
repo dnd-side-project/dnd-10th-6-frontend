@@ -52,7 +52,7 @@ const TreeCard = ({
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('w-[104px] h-[110px] cursor-pointer relative', {
+      className={cn('h-full aspect-[104/110] cursor-pointer relative', {
         'preserve-3d': isFlipped,
       })}
       style={{ transformStyle: 'preserve-3d' }}
