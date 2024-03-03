@@ -1,5 +1,6 @@
 import {
   HTMLAttributes,
+  MouseEventHandler,
   PropsWithChildren,
   forwardRef,
   useEffect,
@@ -158,11 +159,15 @@ const Confetti = (props: PropsWithChildren<ConfettiProps>) => {
 
         const particles: Particle[] = []
         const createConfetti = (event: MouseEvent) => {
+          if (!clickableRef.current) return
           const count = 20
           const deg = 0
           const spread = -1
-          const x = event.clientX + 100 * dpr
-          const y = event.clientY - 50 * dpr
+
+          const po = clickableRef.current?.getBoundingClientRect()
+          const x = event.clientX + (po.width / 2) * dpr
+          const y = event.clientY - po.height * dpr
+          console.log()
           for (let i = 0; i < count; i++) {
             particles.push(new Particle({ x, y, deg, spread }))
           }
