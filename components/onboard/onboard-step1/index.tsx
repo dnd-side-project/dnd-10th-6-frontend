@@ -8,7 +8,7 @@ const OnboardStep1 = () => {
   return (
     <div
       key="step1"
-      className="px-5 h-full flex flex-col items-center text-center space-y-[2vb] justify-center"
+      className="px-5 h-full flex flex-col items-center text-center space-y-[2vb] justify-center pb-[5vb]"
     >
       <h2 className="text-[2.3vb]">
         <b>남의위키 링크를 공유</b>해 친구에게
