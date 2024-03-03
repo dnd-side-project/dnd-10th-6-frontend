@@ -24,6 +24,7 @@ export interface HeaderProps {
   bodyRef?: Ref<HTMLElement>
   className?: string
   options?: {
+    onCenterClick?: () => void
     onBackClick?: () => void
     showRight?: boolean
   }
@@ -42,6 +43,7 @@ const Header = ({
   className,
 }: HeaderProps) => {
   const { showRight, onBackClick } = options ?? { showRight: true }
+  const { onCenterClick } = options ?? { onCenterClick: () => {} }
   const headerRef = useRef<HTMLElement>(null)
   const router = useRouter()
 
@@ -118,7 +120,17 @@ const Header = ({
         )}
       </motion.button>
       <AnimatePresence mode="sync">
-        <motion.div {...fadeInProps} className="flex justify-center">
+        <motion.div
+          {...fadeInProps}
+          onClick={() =>
+            onCenterClick
+              ? onCenterClick()
+              : typeof center === 'undefined'
+                ? router.push('/garden')
+                : () => {}
+          }
+          className="flex justify-center"
+        >
           {center}
         </motion.div>
       </AnimatePresence>

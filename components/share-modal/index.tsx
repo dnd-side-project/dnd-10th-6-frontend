@@ -3,12 +3,14 @@ import { useSession } from '@/provider/session-provider'
 import React, { PropsWithChildren, useCallback, useState } from 'react'
 import Modal from '@/components/modal'
 import Button from '@/components/button'
-import Link from 'next/link'
+
+import { useRouter } from 'next/router'
 
 const ShareModal = ({ children }: PropsWithChildren) => {
   const { data } = useSession()
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [copyModalOpen, setCopyModalOpen] = useState(false)
+  const router = useRouter()
 
   const handleCopyLink = useCallback(async () => {
     if (data?.user?.wikiId) {
@@ -80,12 +82,14 @@ const ShareModal = ({ children }: PropsWithChildren) => {
                 >
                   다음에
                 </Button>,
-                <Link href="/">
-                  <Button key="kakao-share" className="rounded-none">
-                    로그인
-                  </Button>
-                  ,
-                </Link>,
+
+                <Button
+                  onClick={() => router.push('/')}
+                  key="kakao-share"
+                  className="rounded-none"
+                >
+                  로그인
+                </Button>,
               ],
         }}
       />

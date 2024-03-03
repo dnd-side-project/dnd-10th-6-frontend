@@ -44,31 +44,43 @@ const TreeCard = ({
   const handleCardClick = () => {
     onClick()
   }
+  const handleLinkClick = (e: any) => {
+    e.stopPropagation()
+  }
 
   return (
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('w-full aspect-[80/90] cursor-pointer relative')}
+      className={cn('w-[104px] h-[110px] cursor-pointer relative', {
+        'preserve-3d': isFlipped,
+      })}
+      style={{ transformStyle: 'preserve-3d' }}
       onClick={handleCardClick}
     >
       <div
-        className={`card flex justify-center rounded-md w-full ${bgColor} ${isFlipped ? 'flipped' : ''}`}
+        className={`card flex justify-center w-full ${isFlipped ? 'flipped' : ''}`}
       >
         <div
           className={cn(
-            'card-front m-auto w-full flex flex-col justify-center items-center',
+            `card-front m-auto w-full flex flex-col justify-center items-center rounded-md ${bgColor}`,
           )}
         >
-          <div className="overflow-hidden flex justify-center items-center mt-3 z-0">
+          <div className="overflow-hidden flex justify-center items-center mt-3 z-0  ">
             {treeType.render(period as Period, relation as Relation)}
           </div>
         </div>
-        <div className="card-back px-y w-full flex flex-col justify-center items-center ">
+        <div
+          className={`card-back px-y w-full flex flex-col justify-center items-center rounded-md ${bgColor}`}
+        >
           <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
-            <span className="text-body1-bold">{senderName}</span>
-            <Link className="z-20" href={`/answers?surveyId=${id}`}>
-              <button className="underline text-caption1-medium">
+            <span className="my-2 text-body1-bold">{senderName}</span>
+            <Link
+              className="z-20"
+              href={`/answers?surveyId=${id}`}
+              onClick={handleLinkClick}
+            >
+              <button className="py-2 px-3 bg-gray-gray600 text-text-main-whiteFF rounded border text-caption1-medium">
                 자세히보기
               </button>
             </Link>
