@@ -49,7 +49,7 @@ const TreeCard = ({
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('w-[80px] h-[90px] cursor-pointer relative')}
+      className={cn('w-full aspect-[80/90] cursor-pointer relative')}
       onClick={handleCardClick}
     >
       <div

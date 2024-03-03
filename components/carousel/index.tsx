@@ -72,7 +72,7 @@ const Carousel = <T,>({
       <m.div className={cn(className)} {...fadeInProps}>
         <div className="overflow-hidden grow flex flex-col" ref={viewportRef}>
           <div
-            className="disabled-select flex grow relative"
+            className="disabled-select flex grow relative h-full"
             ref={containerRef}
           >
             {slides.map((item, index) => (

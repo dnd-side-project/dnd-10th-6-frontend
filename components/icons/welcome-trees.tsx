@@ -3,6 +3,7 @@ import React from 'react'
 const WelcomeTrees = () => {
   return (
     <svg
+      className="w-full h-full aspect-[295/147]"
       width="295"
       height="147"
       viewBox="0 0 295 147"

@@ -1,3 +1,5 @@
+import { Period, Relation } from './tree.entity'
+
 export interface GetSurveyResponse {
   data: GetSurveyData
 }
@@ -12,7 +14,7 @@ export interface GetSurveyData {
 
 export interface Survey {
   surveyId: string
-  relation: string
-  period: string
+  relation: Relation
+  period: Period
   senderName: string
 }
