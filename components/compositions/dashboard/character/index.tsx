@@ -158,7 +158,7 @@ function CharacterInfo({ statisics }: { statisics: ParsedStatistics }) {
             characterMap.friendly[+Boolean(statisics.FRIENDLINESS_LEVEL.value)]
               ?.bottom
           }
-          href={`?id=${statisics.FRIENDLINESS_LEVEL.questionId}`}
+          href={`?id=${statisics.FRIENDLINESS_LEVEL.questionId}&type=TWO_CHOICE`}
         />
         <CharacterBlock
           emoji={
@@ -173,7 +173,7 @@ function CharacterInfo({ statisics }: { statisics: ParsedStatistics }) {
             characterMap.similar[+Boolean(statisics.PERSONALITY_TYPE.value)]
               ?.bottom
           }
-          href={`?id=${statisics.PERSONALITY_TYPE.questionId}`}
+          href={`?id=${statisics.PERSONALITY_TYPE.questionId}&type=TWO_CHOICE`}
         />
         <CharacterBlock
           emoji={
@@ -185,7 +185,7 @@ function CharacterInfo({ statisics }: { statisics: ParsedStatistics }) {
           bottomText={
             characterMap.mbti[+Boolean(statisics.MBTI_IMMERSION.value)]?.bottom
           }
-          href={`?id=${statisics.MBTI_IMMERSION.questionId}`}
+          href={`?id=${statisics.MBTI_IMMERSION.questionId}&type=TWO_CHOICE`}
         />
         <CharacterBlock
           emoji={
@@ -200,7 +200,7 @@ function CharacterInfo({ statisics }: { statisics: ParsedStatistics }) {
             characterMap.busy[+Boolean(statisics.WEEKEND_COMMITMENTS.value)]
               ?.bottom
           }
-          href={`?id=${statisics.WEEKEND_COMMITMENTS.questionId}`}
+          href={`?id=${statisics.WEEKEND_COMMITMENTS.questionId}&type=TWO_CHOICE`}
         />
       </m.div>
     </>

@@ -13,28 +13,7 @@ export type MONEY = {
   entireAverage: number
   questionId: string
 }
-;[
-  {
-    name: 'PERSONALITY_TYPE',
-    value: false,
-    questionId: '65d8f7b8c934b525dd04755a',
-  },
-  {
-    name: 'MBTI_IMMERSION',
-    value: false,
-    questionId: '65d8f7b8c934b525dd04755b',
-  },
-  {
-    name: 'WEEKEND_COMMITMENTS',
-    value: false,
-    questionId: '65d8f7b8c934b525dd04755c',
-  },
-  {
-    name: 'FRIENDLINESS_LEVEL',
-    value: false,
-    questionId: '65d8f7b8c934b525dd047559',
-  },
-]
+
 export type CHARACTER_NAMES =
   | 'PERSONALITY_TYPE'
   | 'MBTI_IMMERSION'

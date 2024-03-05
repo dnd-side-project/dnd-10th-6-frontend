@@ -1,6 +1,7 @@
 export const colors = {
   brand: {
     main: {
+      200: '#E9FAEF',
       green400: '#00BC68',
     },
     sub1: {
@@ -8,7 +9,13 @@ export const colors = {
       yellow500: '#FFEB34',
       blue600: '#199EF0',
     },
+
+    alert: {
+      200: '#FFF8F8',
+      900: '#EB2A2A',
+    },
   },
+
   main: {
     green: {
       green900: '#005E16',
