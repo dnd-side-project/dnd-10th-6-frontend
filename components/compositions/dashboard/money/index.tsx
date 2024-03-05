@@ -4,12 +4,11 @@ import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
 import { MONEY } from '@/model/dashboard.entity'
-import { DetailQsContext } from '@/pages/dashboard'
 import { useSession } from '@/provider/session-provider'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 const Money = ({ filter }: { filter: FilterType }) => {
   const { handle } = useDetailDrawer()

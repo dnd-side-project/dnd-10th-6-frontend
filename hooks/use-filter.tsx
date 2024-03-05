@@ -92,6 +92,7 @@ const defaultFilterContext = {
   filterIndex: { typeIdx: 0, valueIdx: 0 },
   selectedFilter: { type: 'total' as const, value: 'total' },
   setFilterIndex: () => {},
+  clear: () => {},
 }
 
 const FilterContext = createContext<{
@@ -112,11 +113,12 @@ const useFilter = () => {
     return defaultFilterContext
   }
   const { filterIndex, selectedFilter, setFilterIndex } = context
-
+  const clear = () => setFilterIndex({ typeIdx: 0, valueIdx: 0 })
   return {
     filterIndex,
     selectedFilter,
     setFilterIndex,
+    clear,
   }
 }
 

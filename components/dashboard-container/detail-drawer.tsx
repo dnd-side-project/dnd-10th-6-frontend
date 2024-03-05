@@ -1,6 +1,5 @@
-import React, { useContext, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import Drawer from '../ui/drawer'
-import { DetailQsContext } from '@/pages/dashboard'
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 import { NamuiApi } from '@/lib/namui-api'
@@ -43,9 +42,17 @@ export interface Content {
 export type DetailType = 'TWO_CHOICE' | 'SHORT_ANSWER' | 'MULTIPLE_CHOICE'
 const DetailDrawer = () => {
   const router = useRouter()
+  const { clear } = useFilter()
 
   const detailType: DetailType =
     (router.query.type as DetailType) ?? 'MULTIPLE_CHOICE'
+
+  // 라우터 이동시 필터 초기화
+  useEffect(() => {
+    return () => {
+      clear()
+    }
+  }, [router.query])
   return (
     <Drawer
       header={{
