@@ -109,15 +109,15 @@ const DeveloperInfo = () => {
               <Logo />
             </div>
 
-            <b> Front-end github :</b>
+            {/* <b> Front-end github :</b>
             <p className="text-body3-medium text-text-sub-gray4f">
               https://github.com/dnd-side-project/dnd-10th-6-frontend
             </p>
             <b> Back-end github :</b>
             <p className="text-body3-medium text-text-sub-gray4f">
               https://github.com/dnd-side-project/dnd-10th-6-backend
-            </p>
-            <p className="mt-8 text-body3-medium text-text-sub-gray4f">
+            </p> */}
+            <p className="text-body3-medium text-text-sub-gray4f">
               Copyright 2024. GRRREW. All rights reserved.
             </p>
           </div>

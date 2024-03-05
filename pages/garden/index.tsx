@@ -75,14 +75,20 @@ const Pages = () => {
   )
 
   const [showTooltip, setShowTooltip] = useState(false)
-  const tooltipRef = useRef(null)
 
   useEffect(() => {
-    function handleClickOutside() {
-      setShowTooltip(false)
+    if (showTooltip) {
+      const handleClose = () => {
+        setShowTooltip(false)
+      }
+
+      document.addEventListener('click', handleClose)
+
+      return () => {
+        document.removeEventListener('click', handleClose)
+      }
     }
-    document.addEventListener('mousedown', handleClickOutside)
-  }, [tooltipRef])
+  }, [showTooltip])
 
   return (
     <BaseLayout
@@ -113,44 +119,52 @@ const Pages = () => {
       </div>
       <section className="bg-white grow flex flex-col">
         <div className="flex justify-start items-center px-[30px] py-4">
-          <p className=" text-subTitle2-medium text-text-sub-gray4f text-left">
+          <div className="text-subTitle2-medium text-text-sub-gray4f text-left relative">
             받은 친구
-          </p>
+            <AnimatePresence mode="wait">
+              {showTooltip && (
+                <motion.div
+                  onClick={() => setShowTooltip(false)}
+                  initial={{ scale: 0, y: 10, opacity: 0 }}
+                  animate={{ scale: 1, y: 0, opacity: 1 }}
+                  exit={{
+                    scale: 0,
+                    y: 10,
+                    opacity: 0,
+                    transformOrigin: '25% 0%',
+                  }}
+                  className="text-center absolute z-10 transform -translate-x-1/2 origin-[25%_0%]"
+                >
+                  <svg
+                    className="relative left-3 z-20"
+                    width="18"
+                    height="10"
+                    viewBox="0 0 18 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.4866 1.65177C9.6921 0.769006 8.3079 0.769005 7.51341 1.65177L8.74228e-07 10L18 10L10.4866 1.65177Z"
+                      fill="#313131"
+                    />
+                  </svg>
+
+                  <div className="w-full h-full bg-gray-gray800 py-3 px-4 z-10 rounded-lg flex-1 relative text-white text-body3-medium whitespace-nowrap">
+                    알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
           <button
-            onClick={() => setShowTooltip(true)}
+            onClick={(event) => {
+              event.stopPropagation()
+              setShowTooltip((prev) => !prev)
+            }}
             className="ml-2 focus:outline-none"
           >
             <InfoIcon />
           </button>
-          {showTooltip && (
-            <motion.div
-              //
-              ref={tooltipRef}
-              initial={{ scale: 0, y: 10, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              className="text-center absolute top-[28%] z-10 transform -translate-x-1/2"
-            >
-              <svg
-                className="relative left-3 z-20"
-                width="18"
-                height="10"
-                viewBox="0 0 18 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.4866 1.65177C9.6921 0.769006 8.3079 0.769005 7.51341 1.65177L8.74228e-07 10L18 10L10.4866 1.65177Z"
-                  fill="#313131"
-                />
-              </svg>
-
-              <div className="w-full h-full bg-gray-gray800 py-3 px-4 z-10 rounded-lg flex-1 relative">
-                <p className="text-white text-body3-medium">
-                  알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
-                </p>
-              </div>
-            </motion.div>
-          )}
         </div>
         <div className="w-full items-center flex flex-col space-y-2 pb-10 grow">
           <AnimatePresence mode="wait">
