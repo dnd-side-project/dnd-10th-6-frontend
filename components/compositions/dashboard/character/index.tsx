@@ -5,7 +5,7 @@ import { useSession } from '@/provider/session-provider'
 import { FilterType } from '@/hooks/use-filter'
 import { useQuery } from '@tanstack/react-query'
 import { getDashboardQuery } from '@/queries/dashboard'
-import { CHARACTER_NAMES } from '@/model/dashboard.entity'
+import { CHARACTER_NAMES, CHARACTER_TYPE } from '@/model/dashboard.entity'
 import { useMemo } from 'react'
 import Link from 'next/link'
 
@@ -58,7 +58,7 @@ const Character = ({ filter }: { filter: FilterType }) => {
     select(data) {
       return data.data?.statistics.find(
         (item) => item.dashboardType === 'CHARACTER',
-      )
+      ) as CHARACTER_TYPE
     },
   })
 
