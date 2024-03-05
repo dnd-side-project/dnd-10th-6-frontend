@@ -1,9 +1,9 @@
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { useSession } from '@/provider/session-provider'
 import { FilterType } from '@/hooks/use-filter'
-import { Statistic } from '@/model/dashboard.entity'
+import { CHARACTER_NAMES, CHARACTER_TYPE } from '@/model/dashboard.entity'
+import { useMemo } from 'react'
 
 const characterMap = {
   busy: [
@@ -48,15 +48,31 @@ const characterMap = {
   ],
 }
 
-const statistics: Statistic = {
+const statistics: CHARACTER_TYPE = {
   dashboardType: 'CHARACTER',
-  questionId: '65d8f7b8c934b525dd047566',
-  friendly: true,
-  similar: true,
-  mbti: false,
-  busy: true,
+  characters: [
+    {
+      name: 'PERSONALITY_TYPE',
+      value: false,
+      questionId: '65d8f7b8c934b525dd04755a',
+    },
+    {
+      name: 'MBTI_IMMERSION',
+      value: false,
+      questionId: '65d8f7b8c934b525dd04755b',
+    },
+    {
+      name: 'WEEKEND_COMMITMENTS',
+      value: false,
+      questionId: '65d8f7b8c934b525dd04755c',
+    },
+    {
+      name: 'FRIENDLINESS_LEVEL',
+      value: false,
+      questionId: '65d8f7b8c934b525dd047559',
+    },
+  ],
 }
-
 const Step3Character = ({ filter }: { filter: FilterType }) => {
   return (
     <LazyMotion features={domAnimation}>
@@ -84,10 +100,21 @@ const cardPickingVariants = {
   },
 }
 
-function CharacterInfo({ statisics }: { statisics: Statistic }) {
-  const { data } = useSession()
+function CharacterInfo({ statisics }: { statisics: CHARACTER_TYPE }) {
   const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
-
+  const parsedStatistics = useMemo(() => {
+    if (!statisics?.characters?.length) return null
+    return Object.fromEntries(
+      statisics.characters.map((item) => {
+        return [item.name, { value: item.value, questionId: item.questionId }]
+      }),
+    ) as {
+      [key in CHARACTER_NAMES]: {
+        value: boolean
+        questionId: string
+      }
+    }
+  }, [statisics])
   return (
     <>
       <h2 className="text-start text-[1.6vb] font-bold mb-[1.5vb]">
@@ -109,31 +136,73 @@ function CharacterInfo({ statisics }: { statisics: Statistic }) {
         }}
         className="grid grid-cols-2 gap-[0.4vb] mt-[0.5vb]"
       >
-        {statisics.busy}
         <CharacterBlock
-          emoji={characterMap.friendly[+Boolean(statisics.friendly)]?.emoji}
-          topText={characterMap.friendly[+Boolean(statisics.friendly)]?.top}
+          emoji={
+            characterMap.friendly[
+              +Boolean(parsedStatistics?.FRIENDLINESS_LEVEL.value)
+            ]?.emoji
+          }
+          topText={
+            characterMap.friendly[
+              +Boolean(parsedStatistics?.FRIENDLINESS_LEVEL.value)
+            ]?.top
+          }
           bottomText={
-            characterMap.friendly[+Boolean(statisics.friendly)]?.bottom
+            characterMap.friendly[
+              +Boolean(parsedStatistics?.FRIENDLINESS_LEVEL.value)
+            ]?.bottom
           }
           href="/"
         />
         <CharacterBlock
-          emoji={characterMap.similar[+Boolean(statisics.similar)]?.emoji}
-          topText={characterMap.similar[+Boolean(statisics.similar)]?.top}
-          bottomText={characterMap.similar[+Boolean(statisics.similar)]?.bottom}
+          emoji={
+            characterMap.similar[
+              +Boolean(parsedStatistics?.PERSONALITY_TYPE.value)
+            ]?.emoji
+          }
+          topText={
+            characterMap.similar[
+              +Boolean(parsedStatistics?.PERSONALITY_TYPE.value)
+            ]?.top
+          }
+          bottomText={
+            characterMap.similar[
+              +Boolean(parsedStatistics?.PERSONALITY_TYPE.value)
+            ]?.bottom
+          }
           href="/"
         />
         <CharacterBlock
-          emoji={characterMap.mbti[+Boolean(statisics.mbti)]?.emoji}
-          topText={characterMap.mbti[+Boolean(statisics.mbti)]?.top}
-          bottomText={characterMap.mbti[+Boolean(statisics.mbti)]?.bottom}
+          emoji={
+            characterMap.mbti[+Boolean(parsedStatistics?.MBTI_IMMERSION.value)]
+              ?.emoji
+          }
+          topText={
+            characterMap.mbti[+Boolean(parsedStatistics?.MBTI_IMMERSION.value)]
+              ?.top
+          }
+          bottomText={
+            characterMap.mbti[+Boolean(parsedStatistics?.MBTI_IMMERSION.value)]
+              ?.bottom
+          }
           href="/"
         />
         <CharacterBlock
-          emoji={characterMap.busy[+Boolean(statisics.busy)]?.emoji}
-          topText={characterMap.busy[+Boolean(statisics.busy)]?.top}
-          bottomText={characterMap.busy[+Boolean(statisics.busy)]?.bottom}
+          emoji={
+            characterMap.busy[
+              +Boolean(parsedStatistics?.WEEKEND_COMMITMENTS.value)
+            ]?.emoji
+          }
+          topText={
+            characterMap.busy[
+              +Boolean(parsedStatistics?.WEEKEND_COMMITMENTS.value)
+            ]?.top
+          }
+          bottomText={
+            characterMap.busy[
+              +Boolean(parsedStatistics?.WEEKEND_COMMITMENTS.value)
+            ]?.bottom
+          }
           href="/"
         />
       </m.div>

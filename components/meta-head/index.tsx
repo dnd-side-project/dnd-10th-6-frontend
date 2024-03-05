@@ -21,6 +21,10 @@ const MetaHead = ({
       <title>{title || 'namuiwiki | 남의위키'}</title>
       <meta name="description" content={description || ''} />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta
+        name="keywords"
+        content="남의위키, 편지, namuiwiki, 소개서, 첫인상, 새학기"
+      />
       <meta property="og:title" content={title || 'namuiwiki | 남의위키'} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url || 'https://namui-wiki.life/'} />

@@ -11,6 +11,7 @@ import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
 import Button from '@/components/button'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
+import { BEST_WORTH } from '@/model/dashboard.entity'
 export interface Payload {
   percent: number
   name: number
@@ -138,7 +139,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
         (item) => item.dashboardType === 'BEST_WORTH',
       )
 
-      return bestWorth
+      return bestWorth as BEST_WORTH
     },
   })
 

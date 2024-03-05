@@ -4,6 +4,7 @@ import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
+import { HAPPY_OR_SAD } from '@/model/dashboard.entity'
 import { DetailQsContext } from '@/pages/dashboard'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
@@ -15,7 +16,9 @@ const Sad = ({ filter }: { filter: FilterType }) => {
   const { data: statisics, isLoading } = useQuery({
     ...getDashboardQuery(filter),
     select(data) {
-      return data.data?.statistics.find((item) => item.dashboardType === 'SAD')
+      return data.data?.statistics.find(
+        (item) => item.dashboardType === 'SAD',
+      ) as HAPPY_OR_SAD
     },
   })
   const { inView, ref } = useInViewRef<HTMLDivElement>({
