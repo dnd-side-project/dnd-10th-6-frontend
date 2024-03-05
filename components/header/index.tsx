@@ -14,7 +14,6 @@ import { useSettingStore } from '@/stores/setting.store'
 import useScrollDirection from '@/hooks/use-scroll-direction'
 import { cn } from '@/lib/client/utils'
 import Setting from '@/components/compositions/header/setting'
-import Alert from '@/components/compositions/header/alert'
 import Logo from '../ui/logo'
 
 export interface HeaderProps {

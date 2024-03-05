@@ -4,6 +4,7 @@ import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
+import { HAPPY_OR_SAD } from '@/model/dashboard.entity'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
@@ -16,7 +17,7 @@ const Happy = ({ filter }: { filter: FilterType }) => {
     select(data) {
       return data.data?.statistics.find(
         (item) => item.dashboardType === 'HAPPY',
-      )
+      ) as HAPPY_OR_SAD
     },
   })
 

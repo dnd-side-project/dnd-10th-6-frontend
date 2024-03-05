@@ -12,7 +12,7 @@ import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 import { DashboardData } from '@/model/dashboard.entity'
 import { QsSchemaType } from '@/hooks/useQuestionsForm'
 import { GetSurveyResponse } from '@/model/survey.entity'
-import { SurveyByIdResponse } from '@/queries/surveys'
+import { SurveyByIdResponse, WritingListResponse } from '@/queries/surveys'
 import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 
 interface NamuiResponse<T = any> {
@@ -34,6 +34,25 @@ export class NamuiApi {
         typeof window !== 'undefined'
           ? window.location.origin
           : process.env.HOST,
+    })
+  }
+
+  static getMyWritingList(
+    pageNo: number,
+    filter: [key: string, value: string],
+  ) {
+    return NamuiApi.handler<WritingListResponse>({
+      method: 'GET',
+      url: '/api/v1/users/profile/surveys',
+      params: {
+        pageSize: 20,
+        pageNo,
+        ...(filter[0] === 'total'
+          ? {}
+          : {
+              [filter[0]]: filter[1],
+            }),
+      },
     })
   }
 

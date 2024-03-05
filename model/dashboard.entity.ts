@@ -36,6 +36,11 @@ export type BEST_WORTH = {
   questionId: string
   rank: Rank[]
 }
+export type HAPPY_OR_SAD = {
+  dashboardType: 'HAPPY' | 'SAD'
+  questionId: string
+  rank: Rank[]
+}
 
 export type Statistic =
   | {
@@ -54,6 +59,7 @@ export type Statistic =
     }
   | CHARACTER_TYPE
   | BEST_WORTH
+  | HAPPY_OR_SAD
 
 export interface Rank {
   legend: string

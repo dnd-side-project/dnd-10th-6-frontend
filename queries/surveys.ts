@@ -46,3 +46,23 @@ export const getSurveyByIdQuery = (
   queryKey: ['survey', id],
   queryFn: ({ queryKey }) => NamuiApi.getSurveyById(queryKey[1]),
 })
+
+export interface WritingListResponse {
+  data: WritingList
+}
+
+export interface WritingList {
+  content: Writing[]
+  page: number
+  size: number
+  totalPage: number
+  totalCount: number
+}
+
+export interface Writing {
+  surveyId: string
+  relation: Relation
+  period: Period
+  senderName: string
+  sentAt: string
+}
