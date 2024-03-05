@@ -106,7 +106,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
               <Badge
                 key={item.id}
                 onClick={() => {
-                  handle(item.id)
+                  handle(item.id, 'SHORT_ANSWER')
                 }}
                 title={SHORT_FILTER[item.name]}
               />
@@ -116,7 +116,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             {short.slice(short.length / 2, short.length).map((item) => (
               <Badge
                 key={item.id}
-                onClick={() => handle(item.id)}
+                onClick={() => handle(item.id, 'SHORT_ANSWER')}
                 title={SHORT_FILTER[item.name]}
               />
             ))}

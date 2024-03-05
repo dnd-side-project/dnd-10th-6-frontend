@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import Button from '@/components/button'
@@ -67,10 +67,13 @@ const Pages = () => {
       setFlippedCardIndex(index)
     }
   }
-
+  const totalCount = useMemo(
+    () => surveys?.pages[0].data.totalCount ?? 0,
+    [surveys],
+  )
   return (
     <BaseLayout
-      className="bg-gray-gray50"
+      className="bg-gray-gray50 h-calc-h flex flex-col"
       header={{
         className: 'bg-gray-gray50',
         leftIcon: null,
@@ -90,104 +93,76 @@ const Pages = () => {
           </h3>
         </div>
         <Link href="/dashboard">
-          <button className="!w-fit px-4 py-3 rounded-md text-body3-medium  text-main-green-green800 bg-main-green-green50 ">내 결과 보기</button>
+          <button className="!w-fit px-4 py-3 rounded-md text-body3-medium  text-main-green-green800 bg-main-green-green50 ">
+            내 결과 보기
+          </button>
         </Link>
       </div>
-      <section className="bg-white">
+      <section className="bg-white grow flex flex-col">
         <div className=" w-full px-[30px] py-6">
           <p className=" text-subTitle2-bold text-text-sub-gray4f text-left">
             받은 친구
           </p>
         </div>
-        <div className="w-full justify-center items-center flex flex-col space-y-2 pb-10">
+        <div className="w-full items-center flex flex-col space-y-2 pb-10 grow">
           <AnimatePresence mode="wait">
             {!isLoading && surveys ? (
               <motion.div
                 {...fadeInProps}
                 transition={{ staggerChildren: 0.03 }}
-                className="grid grid-cols-3 gap-2 "
+                className="grid grid-cols-3 gap-2 w-full px-5 "
               >
                 {surveys?.pages.map((page, pageNo) =>
-                  pageNo === 0 && page.data.content.length < 21 ? (
-                    [
-                      ...page.data.content,
-                      ...Array.from(
-                        { length: 21 - page.data.content.length },
-                        (v) => null,
-                      ),
-                    ].map((item, index) =>
-                      item ? (
-                        <TreeCard
-                          senderName={item.senderName}
-                          key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
-                          id={item.surveyId}
-                          period={item.period}
-                          relation={item.relation}
-                          isFlipped={index === flippedCardIndex}
-                          onClick={() => handleCardClick(index)}
-                        />
-                      ) : (
-                        <motion.div
-                          variants={fadeInProps.variants}
-                          key={`empty-${(pageNo + 1) * (index + 1)}`}
-                        >
-                          <div className="flex justify-center items-center rounded w-[104px] h-[110px] bg-gray-gray50 border-dashed border ">
-                            <svg
-                              width="34"
-                              height="34"
-                              viewBox="0 0 34 34"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M8.36523 17.5469C8.55024 19.222 9.87772 22.8973 13.7077 24.1978C17.5376 25.4983 20.8343 24.6076 22.0039 23.9997"
-                                stroke="#D9D9D9"
-                                strokeLinecap="round"
-                              />
-                              <circle
-                                cx="17"
-                                cy="17"
-                                r="16.5"
-                                stroke="#D9D9D9"
-                              />
-                              <circle
-                                cx="14.8053"
-                                cy="12.6139"
-                                r="1.64516"
-                                fill="#D9D9D9"
-                              />
-                              <circle
-                                cx="21.3893"
-                                cy="14.8053"
-                                r="1.64516"
-                                fill="#D9D9D9"
-                              />
-                            </svg>
-                          </div>
-                        </motion.div>
-                      ),
-                    )
-                  ) : (
-                    <motion.div
-                      key={`empty-${pageNo + 1}-container`}
-                      {...fadeInProps}
-                      transition={{ staggerChildren: 0.08 }}
-                      className="grid grid-cols-3 gap-2 "
-                    >
-                      {page.data.content.map((item, index) => (
-                        <TreeCard
-                          senderName={item.senderName}
-                          key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
-                          id={item.surveyId}
-                          period={item.period}
-                          relation={item.relation}
-                          isFlipped={index === flippedCardIndex}
-                          onClick={() => handleCardClick(index)}
-                        />
-                      ))}
-                    </motion.div>
-                  ),
+                  page.data.content.map((item, index) => (
+                    <TreeCard
+                      senderName={item.senderName}
+                      key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
+                      id={item.surveyId}
+                      period={item.period}
+                      relation={item.relation}
+                      isFlipped={index === flippedCardIndex}
+                      onClick={() => handleCardClick(index)}
+                    />
+                  )),
                 )}
+                {Array.from(
+                  { length: Math.abs((totalCount % 3) - 3) + 3 },
+                  () => null,
+                ).map((_, index) => (
+                  <motion.div
+                    variants={fadeInProps.variants}
+                    key={`empty-${(index + 1) * (index + 1)}`}
+                    className="h-full aspect-[104/110] flex justify-center items-center rounded-md bg-gray-gray50 border-dashed border p-[25%]"
+                  >
+                    <svg
+                      className="w-full h-full"
+                      width="34"
+                      height="34"
+                      viewBox="0 0 34 34"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.36523 17.5469C8.55024 19.222 9.87772 22.8973 13.7077 24.1978C17.5376 25.4983 20.8343 24.6076 22.0039 23.9997"
+                        stroke="#D9D9D9"
+                        strokeLinecap="round"
+                      />
+                      <circle cx="17" cy="17" r="16.5" stroke="#D9D9D9" />
+                      <circle
+                        cx="14.8053"
+                        cy="12.6139"
+                        r="1.64516"
+                        fill="#D9D9D9"
+                      />
+                      <circle
+                        cx="21.3893"
+                        cy="14.8053"
+                        r="1.64516"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
+                  </motion.div>
+                ))}
               </motion.div>
             ) : (
               <motion.div

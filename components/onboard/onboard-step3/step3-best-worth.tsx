@@ -8,7 +8,7 @@ import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
 import Button from '@/components/button'
-import { DashboardData } from '@/model/dashboard.entity'
+import { BEST_WORTH } from '@/model/dashboard.entity'
 export interface Payload {
   percent: number
   name: number
@@ -121,7 +121,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
   )
 }
 
-const statisics: DashboardData['statistics'][number] = {
+const statisics: BEST_WORTH = {
   dashboardType: 'BEST_WORTH',
   questionId: '',
   rank: [
