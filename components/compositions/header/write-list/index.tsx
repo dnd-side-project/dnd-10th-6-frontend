@@ -83,7 +83,7 @@ const WriteList = () => {
 
         <motion.ul initial="hidden" animate="show" variants={container}>
           {!isLoading && data
-            ? data.pages.map((page, pageNo) =>
+            ? data.pages.map((page) =>
                 page.data.content.map((item, index) => (
                   <WriteListCard key={index + item.surveyId} item={item} />
                 )),
