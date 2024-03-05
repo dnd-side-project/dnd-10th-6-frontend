@@ -12,6 +12,7 @@ import { relations } from '../badge/relation'
 import { periods } from '../badge/period'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { useRouter } from 'next/router'
+import { cn } from '@/lib/client/utils'
 
 export interface DetailResponse {
   data: Data
@@ -39,9 +40,12 @@ export interface Content {
   createdAt: string
 }
 
+export type DetailType = 'TWO_CHOICE' | 'SHORT_ANSWER' | 'MULTIPLE_CHOICE'
 const DetailDrawer = () => {
   const router = useRouter()
 
+  const detailType: DetailType =
+    (router.query.type as DetailType) ?? 'MULTIPLE_CHOICE'
   return (
     <Drawer
       header={{
@@ -57,15 +61,32 @@ const DetailDrawer = () => {
       trigger={<></>}
     >
       {typeof router.query.id === 'string' ? (
-        <Content id={router.query.id} />
+        <Content id={router.query.id} type={detailType} />
       ) : null}
     </Drawer>
   )
 }
 
 export default DetailDrawer
-
-function Content({ id }: { id: string }) {
+const bgColor = (cardItem: Content) => {
+  switch (cardItem.relation) {
+    case 'ELEMENTARY_SCHOOL':
+      return 'bg-relation-elementary_school'
+    case 'MIDDLE_AND_HIGH_SCHOOL':
+      return 'bg-relation-middle_and_high_school'
+    case 'UNIVERSITY':
+      return 'bg-relation-university'
+    case 'WORK':
+      return 'bg-relation-work'
+    case 'SOCIAL':
+      return 'bg-relation-social'
+    case 'ETC':
+      return 'bg-relation-etc'
+    default:
+      return ''
+  }
+}
+function Content({ id, type }: { id: string; type: DetailType }) {
   const { selectedFilter } = useFilter()
   const { data: user } = useSession()
   const {
@@ -127,25 +148,6 @@ function Content({ id }: { id: string }) {
 
   const treeType = useRef(new TreeType(treeCardAsset)).current
 
-  const bgColor = (cardItem: Content) => {
-    switch (cardItem.relation) {
-      case 'ELEMENTARY_SCHOOL':
-        return 'bg-relation-elementary_school'
-      case 'MIDDLE_AND_HIGH_SCHOOL':
-        return 'bg-relation-middle_and_high_school'
-      case 'UNIVERSITY':
-        return 'bg-relation-university'
-      case 'WORK':
-        return 'bg-relation-work'
-      case 'SOCIAL':
-        return 'bg-relation-social'
-      case 'ETC':
-        return 'bg-relation-etc'
-      default:
-        return ''
-    }
-  }
-
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">
       <div className="p-5 flex flex-col space-y-4">
@@ -196,7 +198,37 @@ function Content({ id }: { id: string }) {
                 {page.data.answers.content.map((cardItem, cardIndex) => {
                   const parsedCreatedAt = new Date(cardItem.createdAt)
                   const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
-                  return (
+                  return type === 'TWO_CHOICE' ? (
+                    <TwoChoice
+                      cardItem={cardItem}
+                      summary={[
+                        periods[cardItem.period],
+                        relations[cardItem.relation],
+                        createdAt,
+                      ].join(' · ')}
+                      treeType={treeType}
+                      key={
+                        cardItem.senderName +
+                        cardItem.answer +
+                        `${pageNo}-${cardIndex}`
+                      }
+                    />
+                  ) : type === 'MULTIPLE_CHOICE' ? (
+                    <MultipleChoice
+                      cardItem={cardItem}
+                      summary={[
+                        periods[cardItem.period],
+                        relations[cardItem.relation],
+                        createdAt,
+                      ].join(' · ')}
+                      treeType={treeType}
+                      key={
+                        cardItem.senderName +
+                        cardItem.answer +
+                        `${pageNo}-${cardIndex}`
+                      }
+                    />
+                  ) : (
                     <motion.div
                       key={
                         cardItem.senderName +
@@ -226,11 +258,10 @@ function Content({ id }: { id: string }) {
                               periods[cardItem.period],
                               relations[cardItem.relation],
                               createdAt,
-                            ].join('·')}
+                            ].join(' · ')}
                           </p>
                         </div>
-                        {/* <div>{cardItem.answer}</div> 뱃지들어가야함 */}
-                        <p className="text-body1-medium text-text-main-black11">
+                        <p className="text-body1-medium bg-gray-gray50 text-text-sub-gray76 rounded-md p-4">
                           {cardItem.answer}
                         </p>
                       </div>
@@ -242,5 +273,101 @@ function Content({ id }: { id: string }) {
         <div ref={ref} className="w-2 h-1" />
       </div>
     </div>
+  )
+}
+
+function MultipleChoice({
+  cardItem,
+  summary,
+  treeType,
+}: {
+  cardItem: Content
+  summary: string
+  treeType: TreeType
+}) {
+  return (
+    <motion.div
+      variants={fadeInProps.variants}
+      className="p-4 flex justify-between space-x-4"
+    >
+      <div
+        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+          cardItem,
+        )}`}
+      >
+        {treeType.render(
+          cardItem.period as Period,
+          cardItem.relation as Relation,
+        )}
+      </div>
+      <div className="flex flex-col grow space-y-4">
+        <div className="flex flex-col space-y-1">
+          <h3 className="text-body1-bold">{cardItem.senderName}님</h3>
+          <p className={cn('text-body3-medium text-text-sub-gray76')}>
+            {summary}
+          </p>
+        </div>
+        <div
+          className={cn(
+            'w-fit text-body3-medium px-2 py-1 rounded-md bg-gray-gray50 text-text-sub-gray76',
+          )}
+        >
+          {cardItem.answer}
+        </div>
+        <p className="text-body1-medium bg-gray-gray50 text-text-sub-gray4f rounded-md p-4">
+          {cardItem.reason}
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+
+function TwoChoice({
+  cardItem,
+  summary,
+  treeType,
+}: {
+  cardItem: Content
+  summary: string
+  treeType: TreeType
+}) {
+  const isPositiveAnswer = cardItem.answer.includes('🙆‍♂️')
+  return (
+    <motion.div
+      variants={fadeInProps.variants}
+      className="p-4 flex justify-between space-x-4"
+    >
+      <div
+        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+          cardItem,
+        )}`}
+      >
+        {treeType.render(
+          cardItem.period as Period,
+          cardItem.relation as Relation,
+        )}
+      </div>
+      <div className="flex flex-col grow space-y-4">
+        <div className="flex flex-col space-y-1">
+          <h3 className="text-body1-bold">{cardItem.senderName}님</h3>
+          <p className={cn('text-body3-medium text-text-sub-gray76')}>
+            {summary}
+          </p>
+        </div>
+        <div
+          className={cn(
+            'w-fit text-body3-medium px-2 py-1 rounded-md',
+            isPositiveAnswer
+              ? 'bg-brand-main-200 text-brand-main-green400'
+              : 'bg-brand-alert-200 text-brand-alert-900',
+          )}
+        >
+          {cardItem.answer}
+        </div>
+        <p className="text-body1-medium p-4  bg-gray-gray50 text-text-sub-gray4f rounded-md">
+          {cardItem.reason}
+        </p>
+      </div>
+    </motion.div>
   )
 }

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
@@ -6,7 +5,9 @@ import { useSession } from '@/provider/session-provider'
 import { FilterType } from '@/hooks/use-filter'
 import { useQuery } from '@tanstack/react-query'
 import { getDashboardQuery } from '@/queries/dashboard'
-import { Statistic } from '@/model/dashboard.entity'
+import { CHARACTER_NAMES } from '@/model/dashboard.entity'
+import { useMemo } from 'react'
+import Link from 'next/link'
 
 const characterMap = {
   busy: [
@@ -60,10 +61,25 @@ const Character = ({ filter }: { filter: FilterType }) => {
       )
     },
   })
+
+  const parsedStatistics = useMemo(() => {
+    if (!statisics?.characters?.length) return null
+    return Object.fromEntries(
+      statisics.characters.map((item) => {
+        return [item.name, { value: item.value, questionId: item.questionId }]
+      }),
+    ) as {
+      [key in CHARACTER_NAMES]: {
+        value: boolean
+        questionId: string
+      }
+    }
+  }, [statisics])
+
   return (
     <LazyMotion features={domAnimation}>
       <div>
-        {isLoading || !statisics ? (
+        {isLoading || !parsedStatistics ? (
           <>
             <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
             <div className="grid grid-cols-2 gap-4 mt-5">
@@ -74,7 +90,7 @@ const Character = ({ filter }: { filter: FilterType }) => {
             </div>
           </>
         ) : (
-          <CharacterInfo statisics={statisics} />
+          <CharacterInfo statisics={parsedStatistics} />
         )}
       </div>
     </LazyMotion>
@@ -97,8 +113,14 @@ const cardPickingVariants = {
     },
   },
 }
+type ParsedStatistics = {
+  [key in CHARACTER_NAMES]: {
+    value: boolean
+    questionId: string
+  }
+}
 
-function CharacterInfo({ statisics }: { statisics: Statistic }) {
+function CharacterInfo({ statisics }: { statisics: ParsedStatistics }) {
   const { data } = useSession()
   const { inView, ref } = useInViewRef<HTMLDivElement>({ once: true })
 
@@ -123,32 +145,62 @@ function CharacterInfo({ statisics }: { statisics: Statistic }) {
         }}
         className="grid grid-cols-2 gap-4 mt-5"
       >
-        {statisics.busy}
         <CharacterBlock
-          emoji={characterMap.friendly[+Boolean(statisics.friendly)]?.emoji}
-          topText={characterMap.friendly[+Boolean(statisics.friendly)]?.top}
-          bottomText={
-            characterMap.friendly[+Boolean(statisics.friendly)]?.bottom
+          emoji={
+            characterMap.friendly[+Boolean(statisics.FRIENDLINESS_LEVEL.value)]
+              ?.emoji
           }
-          href="/"
+          topText={
+            characterMap.friendly[+Boolean(statisics.FRIENDLINESS_LEVEL.value)]
+              ?.top
+          }
+          bottomText={
+            characterMap.friendly[+Boolean(statisics.FRIENDLINESS_LEVEL.value)]
+              ?.bottom
+          }
+          href={`?id=${statisics.FRIENDLINESS_LEVEL.questionId}&type=TWO_CHOICE`}
         />
         <CharacterBlock
-          emoji={characterMap.similar[+Boolean(statisics.similar)]?.emoji}
-          topText={characterMap.similar[+Boolean(statisics.similar)]?.top}
-          bottomText={characterMap.similar[+Boolean(statisics.similar)]?.bottom}
-          href="/"
+          emoji={
+            characterMap.similar[+Boolean(statisics.PERSONALITY_TYPE.value)]
+              ?.emoji
+          }
+          topText={
+            characterMap.similar[+Boolean(statisics.PERSONALITY_TYPE.value)]
+              ?.top
+          }
+          bottomText={
+            characterMap.similar[+Boolean(statisics.PERSONALITY_TYPE.value)]
+              ?.bottom
+          }
+          href={`?id=${statisics.PERSONALITY_TYPE.questionId}&type=TWO_CHOICE`}
         />
         <CharacterBlock
-          emoji={characterMap.mbti[+Boolean(statisics.mbti)]?.emoji}
-          topText={characterMap.mbti[+Boolean(statisics.mbti)]?.top}
-          bottomText={characterMap.mbti[+Boolean(statisics.mbti)]?.bottom}
-          href="/"
+          emoji={
+            characterMap.mbti[+Boolean(statisics.MBTI_IMMERSION.value)]?.emoji
+          }
+          topText={
+            characterMap.mbti[+Boolean(statisics.MBTI_IMMERSION.value)]?.top
+          }
+          bottomText={
+            characterMap.mbti[+Boolean(statisics.MBTI_IMMERSION.value)]?.bottom
+          }
+          href={`?id=${statisics.MBTI_IMMERSION.questionId}&type=TWO_CHOICE`}
         />
         <CharacterBlock
-          emoji={characterMap.busy[+Boolean(statisics.busy)]?.emoji}
-          topText={characterMap.busy[+Boolean(statisics.busy)]?.top}
-          bottomText={characterMap.busy[+Boolean(statisics.busy)]?.bottom}
-          href="/"
+          emoji={
+            characterMap.busy[+Boolean(statisics.WEEKEND_COMMITMENTS.value)]
+              ?.emoji
+          }
+          topText={
+            characterMap.busy[+Boolean(statisics.WEEKEND_COMMITMENTS.value)]
+              ?.top
+          }
+          bottomText={
+            characterMap.busy[+Boolean(statisics.WEEKEND_COMMITMENTS.value)]
+              ?.bottom
+          }
+          href={`?id=${statisics.WEEKEND_COMMITMENTS.questionId}&type=TWO_CHOICE`}
         />
       </m.div>
     </>
@@ -182,12 +234,12 @@ function CharacterBlock({
           <br />
           <b className="text-body1-bold">{bottomText}</b>
         </p>
-        {/* <Link
+        <Link
           className="text-xs underline underline-offset-2 leading-4 text-text-main-black11"
           href={href}
         >
           자세히 보기
-        </Link> */}
+        </Link>
       </div>
     </m.div>
   )

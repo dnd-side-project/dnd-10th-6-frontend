@@ -1,21 +1,26 @@
+import { DetailType } from '@/components/dashboard-container/detail-drawer'
 import { useRouter } from 'next/router'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 
 const useDetailDrawer = () => {
   const router = useRouter()
 
-  const handle = useCallback((id: string) => {
-    router.push(
-      {
-        query: {
-          id,
-          dType: 'detail',
+  const handle = useCallback(
+    (id: string, type: DetailType = 'MULTIPLE_CHOICE') => {
+      router.push(
+        {
+          query: {
+            id,
+            type,
+            dType: 'detail',
+          },
         },
-      },
-      undefined,
-      { shallow: true },
-    )
-  }, [])
+        undefined,
+        { shallow: true },
+      )
+    },
+    [],
+  )
   return { handle }
 }
 
