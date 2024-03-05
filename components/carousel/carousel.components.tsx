@@ -1,6 +1,6 @@
 import { cn } from '@/lib/client/utils'
 import { MotionValue, useTransform, m, circOut } from 'framer-motion'
-import React, { PropsWithChildren, useMemo } from 'react'
+import React, { PropsWithChildren, useEffect, useMemo } from 'react'
 
 export const DotButton = ({
   index,

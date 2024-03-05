@@ -28,7 +28,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
           ["@hookform/resolvers", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:3.3.4"],\
-          ["@playwright/test", "npm:1.41.1"],\
+          ["@playwright/test", "npm:1.42.1"],\
           ["@radix-ui/react-dialog", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.5"],\
           ["@storybook/addon-essentials", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.6.11"],\
           ["@storybook/addon-interactions", "npm:7.6.11"],\
@@ -77,6 +77,7 @@ const RAW_RUNTIME_STATE =
           ["js-cookie", "npm:3.0.5"],\
           ["lucide-react", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:0.322.0"],\
           ["next", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:14.1.0"],\
+          ["next-sitemap", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:4.2.3"],\
           ["playwright", "npm:1.41.1"],\
           ["postcss", "npm:8.4.33"],\
           ["prettier", "npm:3.2.4"],\
@@ -3393,6 +3394,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@corex/deepmerge", [\
+      ["npm:4.0.43", {\
+        "packageLocation": "../../../.yarn/berry/cache/@corex-deepmerge-npm-4.0.43-390ed1175e-10c0.zip/node_modules/@corex/deepmerge/",\
+        "packageDependencies": [\
+          ["@corex/deepmerge", "npm:4.0.43"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@discoveryjs/json-ext", [\
       ["npm:0.5.7", {\
         "packageLocation": "../../../.yarn/berry/cache/@discoveryjs-json-ext-npm-0.5.7-fe04af1f31-10c0.zip/node_modules/@discoveryjs/json-ext/",\
@@ -4531,6 +4541,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@next/env", [\
+      ["npm:13.5.6", {\
+        "packageLocation": "../../../.yarn/berry/cache/@next-env-npm-13.5.6-8fa321d68d-10c0.zip/node_modules/@next/env/",\
+        "packageDependencies": [\
+          ["@next/env", "npm:13.5.6"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:14.1.0", {\
         "packageLocation": "../../../.yarn/berry/cache/@next-env-npm-14.1.0-7b2d7071d0-10c0.zip/node_modules/@next/env/",\
         "packageDependencies": [\
@@ -4704,11 +4721,11 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@playwright/test", [\
-      ["npm:1.41.1", {\
-        "packageLocation": "../../../.yarn/berry/cache/@playwright-test-npm-1.41.1-1287dca42b-10c0.zip/node_modules/@playwright/test/",\
+      ["npm:1.42.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/@playwright-test-npm-1.42.1-1e93511e64-10c0.zip/node_modules/@playwright/test/",\
         "packageDependencies": [\
-          ["@playwright/test", "npm:1.41.1"],\
-          ["playwright", "npm:1.41.1"]\
+          ["@playwright/test", "npm:1.42.1"],\
+          ["playwright", "npm:1.42.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -18991,7 +19008,7 @@ const RAW_RUNTIME_STATE =
           ["namui-wiki", "workspace:."],\
           ["@hookform/error-message", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:2.0.1"],\
           ["@hookform/resolvers", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:3.3.4"],\
-          ["@playwright/test", "npm:1.41.1"],\
+          ["@playwright/test", "npm:1.42.1"],\
           ["@radix-ui/react-dialog", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:1.0.5"],\
           ["@storybook/addon-essentials", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:7.6.11"],\
           ["@storybook/addon-interactions", "npm:7.6.11"],\
@@ -19040,6 +19057,7 @@ const RAW_RUNTIME_STATE =
           ["js-cookie", "npm:3.0.5"],\
           ["lucide-react", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:0.322.0"],\
           ["next", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:14.1.0"],\
+          ["next-sitemap", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:4.2.3"],\
           ["playwright", "npm:1.41.1"],\
           ["postcss", "npm:8.4.33"],\
           ["prettier", "npm:3.2.4"],\
@@ -19154,6 +19172,32 @@ const RAW_RUNTIME_STATE =
           "react-dom",\
           "react",\
           "sass"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["next-sitemap", [\
+      ["npm:4.2.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/next-sitemap-npm-4.2.3-463254c2cb-10c0.zip/node_modules/next-sitemap/",\
+        "packageDependencies": [\
+          ["next-sitemap", "npm:4.2.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:4.2.3", {\
+        "packageLocation": "./.yarn/__virtual__/next-sitemap-virtual-e38fc17663/4/.yarn/berry/cache/next-sitemap-npm-4.2.3-463254c2cb-10c0.zip/node_modules/next-sitemap/",\
+        "packageDependencies": [\
+          ["next-sitemap", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:4.2.3"],\
+          ["@corex/deepmerge", "npm:4.0.43"],\
+          ["@next/env", "npm:13.5.6"],\
+          ["@types/next", null],\
+          ["fast-glob", "npm:3.3.2"],\
+          ["minimist", "npm:1.2.8"],\
+          ["next", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:14.1.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/next",\
+          "next"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -20163,6 +20207,15 @@ const RAW_RUNTIME_STATE =
           ["playwright-core", "npm:1.41.1"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:1.42.1", {\
+        "packageLocation": "../../../.yarn/berry/cache/playwright-npm-1.42.1-ad14b1d04e-10c0.zip/node_modules/playwright/",\
+        "packageDependencies": [\
+          ["playwright", "npm:1.42.1"],\
+          ["fsevents", "patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"],\
+          ["playwright-core", "npm:1.42.1"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["playwright-core", [\
@@ -20170,6 +20223,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/unplugged/playwright-core-npm-1.41.1-f0504e52ed/node_modules/playwright-core/",\
         "packageDependencies": [\
           ["playwright-core", "npm:1.41.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:1.42.1", {\
+        "packageLocation": "./.yarn/unplugged/playwright-core-npm-1.42.1-9ffc4604de/node_modules/playwright-core/",\
+        "packageDependencies": [\
+          ["playwright-core", "npm:1.42.1"]\
         ],\
         "linkType": "HARD"\
       }]\

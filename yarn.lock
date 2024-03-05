@@ -1816,6 +1816,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@corex/deepmerge@npm:^4.0.43":
+  version: 4.0.43
+  resolution: "@corex/deepmerge@npm:4.0.43"
+  checksum: 3dc31721d10c0552c667392e01a67034d9f39417d275fb2f986140592fbdb5cbcf5ac82b45bcbaf9747fd659017bc7857283019d11929e8b03e8966934ab34b9
+  languageName: node
+  linkType: hard
+
 "@discoveryjs/json-ext@npm:^0.5.3":
   version: 0.5.7
   resolution: "@discoveryjs/json-ext@npm:0.5.7"
@@ -2718,6 +2725,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/env@npm:^13.4.3":
+  version: 13.5.6
+  resolution: "@next/env@npm:13.5.6"
+  checksum: b1fefa21b698397a2f922ee53a5ecb91ff858f042b2a198652b9de49c031fc5e00d79da92ba7d84ef205e95368d5afbb0f104abaf00e9dde7985d9eae63bb4fb
+  languageName: node
+  linkType: hard
+
 "@next/eslint-plugin-next@npm:14.1.0":
   version: 14.1.0
   resolution: "@next/eslint-plugin-next@npm:14.1.0"
@@ -2853,14 +2867,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.41.1":
-  version: 1.41.1
-  resolution: "@playwright/test@npm:1.41.1"
+"@playwright/test@npm:^1.42.1":
+  version: 1.42.1
+  resolution: "@playwright/test@npm:1.42.1"
   dependencies:
-    playwright: "npm:1.41.1"
+    playwright: "npm:1.42.1"
   bin:
     playwright: cli.js
-  checksum: 72bd5bb67c512027d214b9c54c2a22a469bd19d7809771e53a5bfdcc11330591e01579bb22f807d1ebbcdcea35d625e0fc9eb9791cebcc63bf55b82dd1cdefdd
+  checksum: e5d7c1ffedabb934643edb010038edcb70d51d224fb6444844a854d94365a6179d4407a83da176cae37ccd42b62c148843e0b6f9b4c6506048e06558c00d4267
   languageName: node
   linkType: hard
 
@@ -10633,7 +10647,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1":
+"fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -14109,7 +14123,7 @@ __metadata:
   dependencies:
     "@hookform/error-message": "npm:^2.0.1"
     "@hookform/resolvers": "npm:^3.3.4"
-    "@playwright/test": "npm:^1.41.1"
+    "@playwright/test": "npm:^1.42.1"
     "@radix-ui/react-dialog": "npm:^1.0.5"
     "@storybook/addon-essentials": "npm:7.6.11"
     "@storybook/addon-interactions": "npm:7.6.11"
@@ -14158,6 +14172,7 @@ __metadata:
     js-cookie: "npm:^3.0.5"
     lucide-react: "npm:^0.322.0"
     next: "npm:14.1.0"
+    next-sitemap: "npm:^4.2.3"
     playwright: "npm:^1.41.1"
     postcss: "npm:^8"
     prettier: "npm:^3.2.4"
@@ -14214,6 +14229,23 @@ __metadata:
   version: 2.6.2
   resolution: "neo-async@npm:2.6.2"
   checksum: c2f5a604a54a8ec5438a342e1f356dff4bc33ccccdb6dc668d94fe8e5eccfc9d2c2eea6064b0967a767ba63b33763f51ccf2cd2441b461a7322656c1f06b3f5d
+  languageName: node
+  linkType: hard
+
+"next-sitemap@npm:^4.2.3":
+  version: 4.2.3
+  resolution: "next-sitemap@npm:4.2.3"
+  dependencies:
+    "@corex/deepmerge": "npm:^4.0.43"
+    "@next/env": "npm:^13.4.3"
+    fast-glob: "npm:^3.2.12"
+    minimist: "npm:^1.2.8"
+  peerDependencies:
+    next: "*"
+  bin:
+    next-sitemap: bin/next-sitemap.mjs
+    next-sitemap-cjs: bin/next-sitemap.cjs
+  checksum: 8a367c9db84ca249797ec900d06c267434265bf635a82bc0896d35bc0ce85eee0cf115d4340baa93dd20fde081e513115d38776b5e8a5b3fb604c7b34a8542ea
   languageName: node
   linkType: hard
 
@@ -15167,7 +15199,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.41.1, playwright@npm:^1.14.0, playwright@npm:^1.41.1":
+"playwright-core@npm:1.42.1":
+  version: 1.42.1
+  resolution: "playwright-core@npm:1.42.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 9bb0be6defa32eb1b01429615f10c2ad17dcf701656c081a250369c1eb3b0dcc2a0ee21188cd653cdd2303ca73ff94df0d270b178fe3897eba274793dab368ce
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.42.1":
+  version: 1.42.1
+  resolution: "playwright@npm:1.42.1"
+  dependencies:
+    fsevents: "npm:2.3.2"
+    playwright-core: "npm:1.42.1"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 91dcbfe92d75ca9eb4bfff69bb1ec28007b5a96f6187f48e52aa0f6acf8c24f6039ed6467c152964cc92f4ab64b85dc665b13c52b2fb9f7b9182ddb9db404e37
+  languageName: node
+  linkType: hard
+
+"playwright@npm:^1.14.0, playwright@npm:^1.41.1":
   version: 1.41.1
   resolution: "playwright@npm:1.41.1"
   dependencies:

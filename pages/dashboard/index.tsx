@@ -30,31 +30,30 @@ const Page = () => {
     setSelectedQsId(id)
   }
   return (
-    <>
-      <BaseLayout
-        showHeader
-        ref={ref}
-        header={{
-          options: {
-            onBackClick: () => router.replace('/garden'),
-            showRight: true,
-          },
-        }}
-        className={cn('h-calc-h overflow-y-scroll')}
+    <BaseLayout
+      showHeader
+      ref={ref}
+      header={{
+        options: {
+          onBackClick: () => router.replace('/garden'),
+          onCenterClick: () => router.replace('/garden'),
+          showRight: true,
+        },
+      }}
+      className={cn('h-calc-h overflow-y-scroll')}
+    >
+      <DetailQsContext.Provider
+        value={{ id: selectedQsId, handle: handleQsId }}
       >
-        <DetailQsContext.Provider
-          value={{ id: selectedQsId, handle: handleQsId }}
-        >
-          <FilterProvider>
-            <DashboardContainer shouldShowHeader={shouldShowHeader} />
-          </FilterProvider>
+        <FilterProvider>
+          <DashboardContainer shouldShowHeader={shouldShowHeader} />
+        </FilterProvider>
 
-          <FilterProvider>
-            <DetailDrawer />
-          </FilterProvider>
-        </DetailQsContext.Provider>
-      </BaseLayout>
-    </>
+        <FilterProvider>
+          <DetailDrawer />
+        </FilterProvider>
+      </DetailQsContext.Provider>
+    </BaseLayout>
   )
 }
 

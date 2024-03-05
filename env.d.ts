@@ -18,6 +18,7 @@ export declare global {
       readonly HOST: string
       readonly NEXT_PUBLIC_KAKAO_SHARE_TEMPLATE_ID: string
       readonly NEXT_PUBLIC_KAKAO_JS_KEY: string
+      readonly NEXT_PUBLIC_NAVER_VERIFICATION: string
     }
   }
   interface Window {

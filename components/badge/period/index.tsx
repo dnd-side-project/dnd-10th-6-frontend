@@ -11,7 +11,7 @@ const PeriodBadge = ({ period }: { period: string }) => {
   return (
     <div
       className={cn(
-        'w-fit rounded-md text-body3-medium px-3 py-1 bg-gray-gray50 text-text-sub-gray4f',
+        'w-fit h-fit rounded-md !text-caption2-medium px-2 py-1 bg-gray-gray50 text-text-sub-gray4f',
       )}
     >
       {periods[period]}

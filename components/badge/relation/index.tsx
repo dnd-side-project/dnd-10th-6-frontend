@@ -53,7 +53,7 @@ const RelationBadge = ({ relation }: { relation: string }) => {
   return (
     <div
       className={cn(
-        'w-fit rounded-md text-body3-medium px-3 py-1',
+        'w-fit h-fit rounded-md !text-caption2-medium px-2 py-1',
         bgColor(relation),
         textColor(relation),
       )}
