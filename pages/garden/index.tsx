@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import Button from '@/components/button'
@@ -13,6 +13,8 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
+import InfoIcon from '@/components/svgs/info-icon'
+
 const Pages = () => {
   const { data } = useSession()
   const {
@@ -71,6 +73,23 @@ const Pages = () => {
     () => surveys?.pages[0].data.totalCount ?? 0,
     [surveys],
   )
+
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  useEffect(() => {
+    if (showTooltip) {
+      const handleClose = () => {
+        setShowTooltip(false)
+      }
+
+      document.addEventListener('click', handleClose)
+
+      return () => {
+        document.removeEventListener('click', handleClose)
+      }
+    }
+  }, [showTooltip])
+
   return (
     <BaseLayout
       className="bg-gray-gray50 h-calc-h flex flex-col"
@@ -99,10 +118,53 @@ const Pages = () => {
         </Link>
       </div>
       <section className="bg-white grow flex flex-col">
-        <div className=" w-full px-[30px] py-6">
-          <p className=" text-subTitle2-bold text-text-sub-gray4f text-left">
+        <div className="flex justify-start items-center px-[30px] py-4">
+          <div className="text-subTitle2-medium text-text-sub-gray4f text-left relative">
             받은 친구
-          </p>
+            <AnimatePresence mode="wait">
+              {showTooltip && (
+                <motion.div
+                  onClick={() => setShowTooltip(false)}
+                  initial={{ scale: 0, y: 10, opacity: 0 }}
+                  animate={{ scale: 1, y: 0, opacity: 1 }}
+                  exit={{
+                    scale: 0,
+                    y: 10,
+                    opacity: 0,
+                    transformOrigin: '25% 0%',
+                  }}
+                  className="text-center absolute z-10 transform -translate-x-1/2 origin-[25%_0%]"
+                >
+                  <svg
+                    className="relative left-3 z-20"
+                    width="18"
+                    height="10"
+                    viewBox="0 0 18 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.4866 1.65177C9.6921 0.769006 8.3079 0.769005 7.51341 1.65177L8.74228e-07 10L18 10L10.4866 1.65177Z"
+                      fill="#313131"
+                    />
+                  </svg>
+
+                  <div className="w-full h-full bg-gray-gray800 py-3 px-4 z-10 rounded-lg flex-1 relative text-white text-body3-medium whitespace-nowrap">
+                    알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          <button
+            onClick={(event) => {
+              event.stopPropagation()
+              setShowTooltip((prev) => !prev)
+            }}
+            className="ml-2 focus:outline-none"
+          >
+            <InfoIcon />
+          </button>
         </div>
         <div className="w-full items-center flex flex-col space-y-2 pb-10 grow">
           <AnimatePresence mode="wait">

@@ -8,6 +8,7 @@ import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
 import { FilterProvider } from '@/hooks/use-filter'
+import DeveloperInfo from '../developer-info'
 
 const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
@@ -121,6 +122,7 @@ const Setting = () => {
           <h4 className="text-body3-medium text-text-sub-gray4f py-2">
             남의 위키
           </h4>
+          <DeveloperInfo />
           <FilterProvider>
             <WriteList />
           </FilterProvider>
