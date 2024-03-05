@@ -13,7 +13,7 @@ import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
-import InfoIcon from '@/components/svgs/info-icon'
+
 const Pages = () => {
   const { data } = useSession()
   const {
@@ -74,7 +74,7 @@ const Pages = () => {
   )
   return (
     <BaseLayout
-      className="bg-gray-gray50"
+      className="bg-gray-gray50 h-calc-h flex flex-col"
       header={{
         className: 'bg-gray-gray50',
         leftIcon: null,
@@ -99,48 +99,13 @@ const Pages = () => {
           </button>
         </Link>
       </div>
-      <section className="bg-white">
-        <div className="flex justify-start items-center px-[30px] py-4">
-          <p className=" text-subTitle2-medium text-text-sub-gray4f text-left">
+      <section className="bg-white grow flex flex-col">
+        <div className=" w-full px-[30px] py-6">
+          <p className=" text-subTitle2-bold text-text-sub-gray4f text-left">
             받은 친구
           </p>
-          {/* <button
-            onClick={() => setShowTooltip(true)}
-            className="ml-2 focus:outline-none"
-          >
-            <InfoIcon />
-          </button>
-          {showTooltip && (
-            <motion.div
-              //
-              ref={tooltipRef}
-              initial={{ scale: 0, y: 10, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              className="absolute z-10 text-center top-[29%]"
-            >
-              <svg
-                className="relative left-3"
-                width="18"
-                height="10"
-                viewBox="0 0 18 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.4866 1.65177C9.6921 0.769006 8.3079 0.769005 7.51341 1.65177L8.74228e-07 10L18 10L10.4866 1.65177Z"
-                  fill="#313131"
-                />
-              </svg>
-
-              <div className="w-full h-full bg-gray-gray800 py-3 px-4 rounded-lg flex-1 relative">
-                <p className="text-white text-body3-medium">
-                  알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
-                </p>
-              </div>
-            </motion.div>
-          )} */}
         </div>
-        <div className="w-full justify-center items-center flex flex-col space-y-2 pb-10">
+        <div className="w-full items-center flex flex-col space-y-2 pb-10 grow">
           <AnimatePresence mode="wait">
             {!isLoading && surveys ? (
               <motion.div
@@ -168,35 +133,35 @@ const Pages = () => {
                   <motion.div
                     variants={fadeInProps.variants}
                     key={`empty-${(index + 1) * (index + 1)}`}
+                    className="h-full aspect-[104/110] flex justify-center items-center rounded-md bg-gray-gray50 border-dashed border p-[25%]"
                   >
-                    <div className="flex justify-center items-center rounded w-[104px] h-[110px] bg-gray-gray50 border-dashed border ">
-                      <svg
-                        width="34"
-                        height="34"
-                        viewBox="0 0 34 34"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M8.36523 17.5469C8.55024 19.222 9.87772 22.8973 13.7077 24.1978C17.5376 25.4983 20.8343 24.6076 22.0039 23.9997"
-                          stroke="#D9D9D9"
-                          strokeLinecap="round"
-                        />
-                        <circle cx="17" cy="17" r="16.5" stroke="#D9D9D9" />
-                        <circle
-                          cx="14.8053"
-                          cy="12.6139"
-                          r="1.64516"
-                          fill="#D9D9D9"
-                        />
-                        <circle
-                          cx="21.3893"
-                          cy="14.8053"
-                          r="1.64516"
-                          fill="#D9D9D9"
-                        />
-                      </svg>
-                    </div>
+                    <svg
+                      className="w-full h-full"
+                      width="34"
+                      height="34"
+                      viewBox="0 0 34 34"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.36523 17.5469C8.55024 19.222 9.87772 22.8973 13.7077 24.1978C17.5376 25.4983 20.8343 24.6076 22.0039 23.9997"
+                        stroke="#D9D9D9"
+                        strokeLinecap="round"
+                      />
+                      <circle cx="17" cy="17" r="16.5" stroke="#D9D9D9" />
+                      <circle
+                        cx="14.8053"
+                        cy="12.6139"
+                        r="1.64516"
+                        fill="#D9D9D9"
+                      />
+                      <circle
+                        cx="21.3893"
+                        cy="14.8053"
+                        r="1.64516"
+                        fill="#D9D9D9"
+                      />
+                    </svg>
                   </motion.div>
                 ))}
               </motion.div>
