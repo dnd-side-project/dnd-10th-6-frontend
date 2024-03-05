@@ -31,9 +31,15 @@ export type CHARACTER_TYPE = {
   characters: CHARACTER_ITEMS[]
 }
 
+export type BEST_WORTH = {
+  dashboardType: 'BEST_WORTH'
+  questionId: string
+  rank: Rank[]
+}
+
 export type Statistic =
   | {
-      dashboardType: 'BEST_WORTH' | 'HAPPY' | 'SAD' | 'MONEY'
+      dashboardType: 'HAPPY' | 'SAD' | 'MONEY'
       rank?: Rank[]
       friendly?: boolean
       similar?: boolean
@@ -47,6 +53,7 @@ export type Statistic =
       questionId: string
     }
   | CHARACTER_TYPE
+  | BEST_WORTH
 
 export interface Rank {
   legend: string
