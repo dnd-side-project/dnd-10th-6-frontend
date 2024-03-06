@@ -25,7 +25,7 @@ const Pages = () => {
   } = useInfiniteQuery<GetSurveyResponse>({
     initialPageParam: 0,
     getNextPageParam: (page) => {
-      return page.data.totalPage <= page.data.page
+      return page.data.totalPage - 1 <= page.data.page
         ? undefined
         : page.data.page + 1
     },

@@ -109,7 +109,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
   >({
     initialPageParam: 0,
     getNextPageParam: (page) => {
-      return page.data?.answers?.totalPage <= page?.data?.answers?.page
+      return page.data?.answers?.totalPage - 1 <= page?.data?.answers?.page
         ? undefined
         : page?.data?.answers?.page + 1
     },
@@ -176,10 +176,15 @@ function Content({ id, type }: { id: string; type: DetailType }) {
       </div>
       <div className="flex flex-col">
         <Filter />
-        <p className="px-5 py-4 text-body3-medium text-text-sub-gray76">
-          <b className="text-brand-main-green400">
-            {parsedData?.pages[0]?.data?.answers?.totalCount}명
-          </b>
+        <p className="px-5 py-4 text-body3-medium text-text-sub-gray76 flex items-center">
+          {typeof parsedData?.pages[0]?.data?.answers?.totalCount !==
+          'number' ? (
+            <b className="text-brand-main-green400 skeleton w-10 h-4 block mr-1"></b>
+          ) : (
+            <b className="text-brand-main-green400">
+              {parsedData?.pages[0]?.data?.answers?.totalCount}명
+            </b>
+          )}
           의 친구가 이유를 적었어요
         </p>
         {isLoading
