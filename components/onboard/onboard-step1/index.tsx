@@ -1,5 +1,4 @@
-import React from 'react'
-import As from '@/pages/assets/icons/onboard_1.svg'
+import As from '@/icons/onboard_1.svg'
 import Image from 'next/image'
 const OnboardStep1 = () => {
   return (
