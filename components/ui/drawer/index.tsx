@@ -59,7 +59,7 @@ const Drawer = ({
           top: '0px',
           width: '100%',
           height: 'calc(var(--vh,1vh)*100)',
-          zIndex: '1000',
+          zIndex: '20',
         })
         document.body.style.overflowY = !newState ? 'hidden' : ''
 

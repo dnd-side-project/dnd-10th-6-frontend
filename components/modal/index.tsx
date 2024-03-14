@@ -66,7 +66,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           {trigger}
         </DialogTrigger>
         <DialogContent
-          className="max-w-[80dvw]"
+          className="max-w-[min(540px,80dvw)]"
           footer={
             <DialogFooter
               className={cn(
