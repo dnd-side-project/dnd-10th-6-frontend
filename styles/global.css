@@ -125,6 +125,13 @@ html {
   body {
     @apply bg-background text-foreground;
   }
+
+  #__next {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+    max-width: 1076px;
+  }
 }
 
 @layer components {

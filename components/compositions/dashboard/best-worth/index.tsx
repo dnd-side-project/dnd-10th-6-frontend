@@ -145,7 +145,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
 
   const orderByMaxValueList = useMemo(() => {
     const arr = statisics?.rank?.sort((a, b) => b.percentage - a.percentage)
-
+    console.log(statisics)
     return arr?.map((item, index) => ({
       ...item,
       percentage: item.percentage ?? 0,

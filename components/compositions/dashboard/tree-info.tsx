@@ -101,7 +101,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
 
       {short?.length ? (
         <>
-          <div className="flex overflow-x-scroll space-x-2 w-screen px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">
+          <div className="flex overflow-x-scroll space-x-2 w-[calc(100%_+_3rem)] px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">
             {short.slice(0, short.length / 2).map((item) => (
               <Badge
                 key={item.id}
@@ -112,7 +112,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
               />
             ))}
           </div>
-          <div className="mt-3 flex overflow-x-scroll overflow-y-hidden relative -left-[1.5rem] px-6 space-x-2 w-screen scrollbar-hide">
+          <div className="mt-3 flex overflow-x-scroll overflow-y-hidden relative -left-[1.5rem] px-6 space-x-2 w-[calc(100%_+_3rem)] scrollbar-hide">
             {short.slice(short.length / 2, short.length).map((item) => (
               <Badge
                 key={item.id}

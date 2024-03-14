@@ -6,15 +6,12 @@ import { EmblaCarouselType } from 'embla-carousel'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import OnboardStep2 from './onboard-step2'
 import OnboardStep3 from './onboard-step3'
-import { FilterProvider } from '@/hooks/use-filter'
 import OnboardStep1 from './onboard-step1'
 
 export const onBoardingItems = [
   <OnboardStep1 />,
   <OnboardStep2 />,
-  <FilterProvider>
-    <OnboardStep3 />
-  </FilterProvider>,
+  <OnboardStep3 />,
 ]
 interface OnBoardProps {
   onStartClick: () => void

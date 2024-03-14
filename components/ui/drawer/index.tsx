@@ -43,22 +43,29 @@ const Drawer = ({
     typeof window === 'undefined' ? null : document.createElement('div'),
   )
 
+  const bodyRef = useRef(
+    typeof window === 'undefined'
+      ? null
+      : document.getElementById('main-section'),
+  ).current
+
   const toggleOpen = useCallback(
     (state?: boolean) => {
       const newState = !state ?? isMounted
       if (ref.current) {
         if (!newState) {
           css(ref.current, {
-            position: 'fixed',
+            position: 'absolute',
             left: '0px',
             top: '0px',
-            width: '100dvw',
+            width: '100%',
             height: 'calc(var(--vh,1vh)*100)',
+            zIndex: '1000',
           })
           document.body.style.overflowY = 'hidden'
         } else {
           css(ref.current, {
-            position: 'fixed',
+            position: 'absolute',
             left: '0px',
             top: '0px',
             width: '0px',
@@ -78,9 +85,9 @@ const Drawer = ({
     if (ref.current) {
       ref.current.id = id
 
-      document.body.appendChild(ref.current)
+      bodyRef?.appendChild(ref.current)
       return () => {
-        document.body.removeChild(ref.current!)
+        bodyRef?.removeChild(ref.current!)
       }
     }
   }, [id])

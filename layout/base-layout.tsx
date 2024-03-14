@@ -47,7 +47,7 @@ const BaseLayout = forwardRef<HTMLElement, PropsWithChildren<BaseLayoutProps>>(
         className={cn(
           pretendard.variable,
           pretendard.className,
-          'flex flex-col',
+          'flex flex-col w-full',
           className,
         )}
       >
