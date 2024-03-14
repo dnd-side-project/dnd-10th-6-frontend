@@ -8,10 +8,10 @@ const Aa = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="40" height="40" fill="url(#pattern0)" />
+      <rect width="40" height="40" fill="url(#pattern8)" />
       <defs>
         <pattern
-          id="pattern0"
+          id="pattern8"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"
