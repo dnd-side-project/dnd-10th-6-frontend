@@ -20,15 +20,15 @@ const fadeInVariants: Variants = {
 const drawerVariants: Variants = {
   initial: {
     opacity: 0,
-    x: '100dvw',
+    x: '0',
   },
   animate: {
     opacity: 1,
-    x: 0,
+    x: '-100%',
   },
   exit: {
     opacity: 0,
-    x: '100dvw',
+    x: '0%',
   },
 }
 

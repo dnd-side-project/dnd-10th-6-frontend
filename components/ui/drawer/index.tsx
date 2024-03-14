@@ -53,26 +53,16 @@ const Drawer = ({
     (state?: boolean) => {
       const newState = !state ?? isMounted
       if (ref.current) {
-        if (!newState) {
-          css(ref.current, {
-            position: 'absolute',
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: 'calc(var(--vh,1vh)*100)',
-            zIndex: '1000',
-          })
-          document.body.style.overflowY = 'hidden'
-        } else {
-          css(ref.current, {
-            position: 'absolute',
-            left: '0px',
-            top: '0px',
-            width: '0px',
-            height: 'calc(var(--vh,1vh)*100)',
-          })
-          document.body.style.overflowY = ''
-        }
+        css(ref.current, {
+          position: 'absolute',
+          right: '-100%',
+          top: '0px',
+          width: '100%',
+          height: 'calc(var(--vh,1vh)*100)',
+          zIndex: '1000',
+        })
+        document.body.style.overflowY = !newState ? 'hidden' : ''
+
         const newIsMountState = state ?? !isMounted
         setIsMounted(newIsMountState)
         onChangeOpen && onChangeOpen(newIsMountState)
@@ -116,7 +106,7 @@ const Drawer = ({
               <AnimatePresence mode="wait">
                 {isMounted ? (
                   <BaseLayout
-                    className="w-screen bg-white h-calc-h"
+                    className="w-full bg-white h-calc-h"
                     framer={{ ...drawerInOutProps }}
                     showHeader={header?.showHeader}
                     header={header}
