@@ -136,10 +136,9 @@ const Header = ({
       <motion.div {...fadeInProps} className="flex gap-x-4 justify-end">
         {showRight
           ? rightIcon ?? (
-              <>
-                {/* <Alert /> */}
+              <div>
                 <Setting />
-              </>
+              </div>
             )
           : null}
       </motion.div>
@@ -148,3 +147,7 @@ const Header = ({
 }
 
 export default Header
+
+{
+  /* <Alert /> */
+}

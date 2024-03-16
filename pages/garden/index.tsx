@@ -14,6 +14,7 @@ import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
+import WriteList from '@/components/compositions/header/write-list'
 
 const Pages = () => {
   const { data } = useSession()
@@ -102,7 +103,7 @@ const Pages = () => {
         ),
       }}
     >
-      <div className="flex px-[30px] pt-8 pb-6 space-x-6 justify-between items-center">
+      <div className="flex px-[30px] pt-8 pb-6 flex-col space-y-5">
         <div className="flex flex-col space-y-2 flex-1">
           <p className="text-body1-medium text-text-sub-gray4f">
             내 정원에 심어진 나무는
@@ -111,11 +112,22 @@ const Pages = () => {
             총 {data?.user?.totalSurveyCnt ?? 0}그루
           </h3>
         </div>
-        <Link href="/dashboard">
-          <button className="!w-fit px-4 py-3 rounded-md text-body3-medium  text-main-green-green800 bg-main-green-green50 ">
-            내 결과 보기
-          </button>
-        </Link>
+        <div className="flex space-x-2">
+          <div className="flex w-full">
+            <WriteList
+              trigger={
+                <Button variant={'muted'} className="!text-body3-medium w-full">
+                  남의위키 작성목록
+                </Button>
+              }
+            />
+          </div>
+          <Link href="/dashboard" className="w-full">
+            <button className="w-full px-4 py-3 rounded-md text-body3-medium  text-main-green-green800 bg-main-green-green50 ">
+              내 결과 보기
+            </button>
+          </Link>
+        </div>
       </div>
       <section className="bg-white grow flex flex-col">
         <div className="flex justify-start items-center px-[30px] py-4">

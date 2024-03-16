@@ -98,30 +98,34 @@ const Drawer = ({
   }, [open, toggleOpen])
 
   return (
-    <div className="flex items-center">
-      <button onClick={() => toggleOpen(true)}>{trigger}</button>
-      {ref.current
-        ? createPortal(
-            <LazyMotion features={domAnimation}>
-              <AnimatePresence mode="wait">
-                {isMounted ? (
-                  <BaseLayout
-                    className="w-full bg-white h-calc-h"
-                    framer={{ ...drawerInOutProps }}
-                    showHeader={header?.showHeader}
-                    header={header}
-                  >
-                    <section className="flex flex-col grow overflow-y-scroll h-full">
-                      {children}
-                    </section>
-                  </BaseLayout>
-                ) : null}
-              </AnimatePresence>
-            </LazyMotion>,
-            ref.current,
-          )
-        : null}
-    </div>
+    <>
+      <div className="grow" onClick={() => toggleOpen(true)}>
+        {trigger}
+      </div>
+      <div className="flex items-center">
+        {ref.current
+          ? createPortal(
+              <LazyMotion features={domAnimation}>
+                <AnimatePresence mode="wait">
+                  {isMounted ? (
+                    <BaseLayout
+                      className="w-full bg-white h-calc-h"
+                      framer={{ ...drawerInOutProps }}
+                      showHeader={header?.showHeader}
+                      header={header}
+                    >
+                      <section className="flex flex-col grow overflow-y-scroll h-full">
+                        {children}
+                      </section>
+                    </BaseLayout>
+                  ) : null}
+                </AnimatePresence>
+              </LazyMotion>,
+              ref.current,
+            )
+          : null}
+      </div>
+    </>
   )
 }
 

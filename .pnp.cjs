@@ -74,6 +74,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-prettier", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.1.3"],\
           ["eslint-plugin-storybook", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:0.6.15"],\
           ["framer-motion", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:11.0.3"],\
+          ["html-to-image", "npm:1.11.11"],\
           ["js-cookie", "npm:3.0.5"],\
           ["lucide-react", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:0.322.0"],\
           ["next", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:14.1.0"],\
@@ -16238,6 +16239,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["html-to-image", [\
+      ["npm:1.11.11", {\
+        "packageLocation": "../../../.yarn/berry/cache/html-to-image-npm-1.11.11-faab8eba97-10c0.zip/node_modules/html-to-image/",\
+        "packageDependencies": [\
+          ["html-to-image", "npm:1.11.11"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["html-webpack-plugin", [\
       ["npm:5.6.0", {\
         "packageLocation": "../../../.yarn/berry/cache/html-webpack-plugin-npm-5.6.0-4225ed9587-10c0.zip/node_modules/html-webpack-plugin/",\
@@ -19054,6 +19064,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-prettier", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:5.1.3"],\
           ["eslint-plugin-storybook", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:0.6.15"],\
           ["framer-motion", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:11.0.3"],\
+          ["html-to-image", "npm:1.11.11"],\
           ["js-cookie", "npm:3.0.5"],\
           ["lucide-react", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:0.322.0"],\
           ["next", "virtual:90dbb7f2ed8b1a56cce3f1f73e506cc7e023b0347aaf251ee9326126e62c4ab536d7594f1a2d350fe3ae0a3fa18de5cdd9e511a11073e430e65622303b2a587f#npm:14.1.0"],\

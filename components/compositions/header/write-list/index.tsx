@@ -1,5 +1,5 @@
 import Drawer from '@/components/ui/drawer'
-import React, { useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { motion } from 'framer-motion'
@@ -18,7 +18,7 @@ const container = {
   },
 }
 
-const WriteList = () => {
+const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
   const { selectedFilter } = useFilter()
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery<
     WritingListResponse,
@@ -63,9 +63,11 @@ const WriteList = () => {
       open={openAlert}
       onChangeOpen={setOpenAlert}
       trigger={
-        <p className="py-[14px] text-body1-bold text-text-main-black11">
-          작성 목록
-        </p>
+        trigger ?? (
+          <p className="py-[14px] text-body1-bold text-text-main-black11">
+            작성 목록
+          </p>
+        )
       }
     >
       <Filter />

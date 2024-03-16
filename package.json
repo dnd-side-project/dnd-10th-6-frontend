@@ -25,6 +25,7 @@
     "embla-carousel": "^8.0.0-rc21",
     "embla-carousel-react": "^8.0.0-rc21",
     "framer-motion": "^11.0.3",
+    "html-to-image": "^1.11.11",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.322.0",
     "next": "14.1.0",
