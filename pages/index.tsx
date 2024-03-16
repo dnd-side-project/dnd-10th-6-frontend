@@ -58,6 +58,11 @@ const Page = () => {
             console.log(err)
           }
         }
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.download = 'my-image-name.png'
+        link.href = url
+        link.click()
       })
       .catch((err) => {
         console.log(err)
@@ -210,7 +215,7 @@ const Page = () => {
           ref={ref}
           className="absolute flex justify-center items-center w-[750px] h-[1334px] bg-white"
         >
-          <div className="flex flex-col px-[30px] py-12  items-center justify-center text-center space-y-12 shadow-2xl rounded-md">
+          <div className="flex flex-col px-[30px] py-12  items-center justify-center text-center space-y-12 shadow-sm rounded-md">
             <h1>
               하아얀님은
               <br />
