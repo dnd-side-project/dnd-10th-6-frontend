@@ -48,8 +48,6 @@ const Page = () => {
         if (navigator?.share) {
           try {
             navigator.share({
-              url: window.location.origin,
-              title: 'namuiwiki | 남의위키',
               files: [
                 new File([blob], 'image.png', {
                   type: blob.type,
