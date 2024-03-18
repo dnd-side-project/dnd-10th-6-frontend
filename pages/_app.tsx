@@ -13,7 +13,7 @@ import { parse, serialize } from 'cookie'
 import { NextPage } from 'next'
 import type { AppContext, AppInitialProps, AppProps } from 'next/app'
 import App from 'next/app'
-import { ReactElement, ReactNode, useEffect, useState } from 'react'
+import { useRef, ReactElement, ReactNode, useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
 import { useSearchParams } from 'next/navigation'
@@ -43,6 +43,7 @@ export default function NamuiWikiApp({
   pageProps,
   session,
 }: AppPropsWithLayout) {
+  const mainSectionRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
   const searchparams = useSearchParams()
@@ -50,6 +51,17 @@ export default function NamuiWikiApp({
   const getLayout =
     Component.getLayout ??
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
+
+  const handleSectionResize = () => {
+    if (!mainSectionRef.current) return
+    const rect = mainSectionRef.current.getBoundingClientRect()
+    console.log(rect, '!!!')
+    document.documentElement.style.setProperty(
+      '--section-width',
+      `${rect.width}px`,
+    )
+    document.documentElement.style.setProperty('--section-x', `${rect.x}px`)
+  }
 
   useBrowserLayoutEffect(() => {
     if (!mounted) {
@@ -62,6 +74,17 @@ export default function NamuiWikiApp({
       toastError()
     }
   }, [errorCode, mounted, router, searchparams])
+
+  useEffect(() => {
+    handleSectionResize()
+    if (mainSectionRef.current) {
+      const ele = mainSectionRef.current
+      ele.addEventListener('resize', handleSectionResize)
+      return () => {
+        ele.removeEventListener('resize', handleSectionResize)
+      }
+    }
+  }, [])
 
   return (
     <SessionProvider
@@ -166,6 +189,7 @@ export default function NamuiWikiApp({
               </div>
             </div>
             <div
+              ref={mainSectionRef}
               id="main-section"
               className="mx-auto relative overflow-x-hidden max-w-lg w-full bg-white"
             >

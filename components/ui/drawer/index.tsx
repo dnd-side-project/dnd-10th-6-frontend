@@ -55,10 +55,10 @@ const Drawer = ({
       if (ref.current) {
         css(ref.current, {
           position: 'fixed',
-          right: '-100%',
           top: '0px',
-          width: '100%',
+          width: 'var(--section-width, 100%)',
           height: 'calc(var(--vh,1vh)*100)',
+          transform: 'translateX(var(--section-width, 100%))',
           zIndex: '20',
         })
         document.body.style.overflowY = !newState ? 'hidden' : ''
