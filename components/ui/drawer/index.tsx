@@ -54,7 +54,7 @@ const Drawer = ({
       const newState = !state ?? isMounted
       if (ref.current) {
         css(ref.current, {
-          position: 'absolute',
+          position: 'fixed',
           right: '-100%',
           top: '0px',
           width: '100%',
