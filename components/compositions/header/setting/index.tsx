@@ -123,9 +123,6 @@ const Setting = () => {
             남의 위키
           </h4>
           <DeveloperInfo />
-          <FilterProvider>
-            <WriteList />
-          </FilterProvider>
         </section>
       </div>
     </Drawer>
