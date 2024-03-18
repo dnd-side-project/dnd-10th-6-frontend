@@ -11,7 +11,7 @@ const buttonVariants = cva(
         secondary:
           'text-white-500 bg-gray-gray100  hover:bg-gray-200 active:bg-gray-200 focus-visible:ring-gray-200 focus-visible:ring-offset-gray-200 focus-visible:ring-offset-2',
         muted:
-          'bg-gray-gray100 text-text-sub-gray4f hover:bg-text-main-whiteFF hover:border-gray-300 hover:text-text-main-black11 active:border-line-medium active:bg-gray-gray100 active:text-text-main-black11 disabled:bg-text-main-whiteFF disabled:border-line-soft ',
+          'border border-line-medium bg-gray-gray100 text-text-sub-gray4f hover:bg-text-main-whiteFF hover:border-gray-300 hover:text-text-main-black11 active:border-line-medium active:bg-gray-gray100 active:text-text-main-black11 disabled:bg-text-main-whiteFF disabled:border-line-soft ',
         kakao:
           'bg-brand-sub1-yellow500 h-[52px] hover:bg-main-sub1-yellow-yellow600 active:bg-main-sub1-yellow-yellow800',
         confirm:

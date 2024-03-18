@@ -116,7 +116,10 @@ const Pages = () => {
           <div className="flex w-full">
             <WriteList
               trigger={
-                <Button variant={'muted'} className="!text-body3-medium w-full">
+                <Button
+                  variant={'muted'}
+                  className="!text-body3-medium w-full border-none"
+                >
                   남의위키 작성목록
                 </Button>
               }
