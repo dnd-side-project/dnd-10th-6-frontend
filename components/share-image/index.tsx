@@ -121,6 +121,7 @@ export const ShareImage = ({
     if (ref.current === null) {
       return
     }
+    const imageName = `${senderName}_${periods[period]}_${relations[relation]}`
     toBlob(ref.current)
       .then((blob) => {
         if (typeof window === 'undefined' || !blob) return
@@ -130,7 +131,7 @@ export const ShareImage = ({
               try {
                 navigator.share({
                   files: [
-                    new File([blob], 'image.png', {
+                    new File([blob], `${imageName}.png`, {
                       type: blob.type,
                     }),
                   ],
@@ -143,7 +144,7 @@ export const ShareImage = ({
           case 'DOWNLOAD':
             const url = URL.createObjectURL(blob)
             const link = document.createElement('a')
-            link.download = `${senderName}_${periods[period]}_${relations[relation]}`
+            link.download = imageName
             link.href = url
             link.click()
         }
