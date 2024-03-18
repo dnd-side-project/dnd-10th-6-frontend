@@ -123,7 +123,7 @@ const Pages = () => {
             />
           </div>
           <Link href="/dashboard" className="w-full">
-            <button className="w-full px-4 py-3 rounded-md text-body3-medium text-main-green-green800 bg-main-green-green50 hover:text-main-green-green300 hover:bg-[#f3faf3]">
+            <button className="w-full px-4 py-3 rounded-md text-body3-medium text-main-green-green800 bg-main-green-green50 hover:text-main-green-green300 hover:bg-[#f3faf3] active:bg-main-green-green100 active:text-main-green-green800">
               내 결과 보기
             </button>
           </Link>

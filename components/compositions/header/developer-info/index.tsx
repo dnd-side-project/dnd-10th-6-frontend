@@ -43,7 +43,7 @@ const DeveloperInfo = () => {
       open={openAlert}
       onChangeOpen={setOpenAlert}
       trigger={
-        <p className="py-[14px] text-body1-bold text-text-main-black11">
+        <p className="py-[14px] text-body1-bold text-text-main-black11 cursor-pointer">
           제작 정보
         </p>
       }
