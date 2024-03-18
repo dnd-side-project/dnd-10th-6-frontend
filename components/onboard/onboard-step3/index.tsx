@@ -1,4 +1,4 @@
-import As from '@/icons/onboard_3.svg'
+import As from '/assets/icons/onboard3.svg'
 import Image from 'next/image'
 
 const OnboardStep3 = () => {
@@ -13,7 +13,7 @@ const OnboardStep3 = () => {
         <b>상세 데이터를 확인</b>할 수 있어요
       </h2>
       <div className="relative grow w-full">
-        <Image src={As} fill alt="onboard_2" />
+        <Image src={As} fill alt="onboard_3" />
       </div>
     </div>
   )

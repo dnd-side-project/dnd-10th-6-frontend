@@ -1,13 +1,11 @@
 import Drawer from '@/components/ui/drawer'
 import React, { useState } from 'react'
 import Modal from '@/components/modal'
-import WriteList from '@/components/compositions/header/write-list'
 import EditProfile from '@/components/compositions/header/edit-setting'
 import { Close } from '@radix-ui/react-dialog'
 import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
-import { FilterProvider } from '@/hooks/use-filter'
 import DeveloperInfo from '../developer-info'
 
 const Setting = () => {
