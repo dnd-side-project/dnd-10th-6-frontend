@@ -29,6 +29,7 @@ export interface Survey {
 }
 
 export interface QuestionAndAnswer {
+  questionName: string
   questionTitle: string
   text: string
   value: string

@@ -55,7 +55,6 @@ export default function NamuiWikiApp({
   const handleSectionResize = () => {
     if (!mainSectionRef.current) return
     const rect = mainSectionRef.current.getBoundingClientRect()
-    console.log(rect, '!!!')
     document.documentElement.style.setProperty(
       '--section-width',
       `${rect.width}px`,

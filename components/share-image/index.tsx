@@ -1,17 +1,32 @@
 import { toBlob } from 'html-to-image'
 import React, {
-  ReactNode,
+  PropsWithChildren,
   createContext,
-  useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import Button from '../button'
 import { useSession } from '@/provider/session-provider'
-import { parseCardItems } from './constants'
+import { parseShareCardItems } from './constants'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { cn } from '@/lib/client/utils'
+import Drawer from '../ui/drawer'
+
+type TWO_CHOICE =
+  | 'FRIENDLINESS_LEVEL'
+  | 'PERSONALITY_TYPE'
+  | 'MBTI_IMMERSION'
+  | 'WEEKEND_COMMITMENTS'
+
+type MULTIPLE_CHOICE =
+  | 'CORE_VALUE'
+  | 'HAPPY_BEHAVIOR'
+  | 'SAD_ANGRY_BEHAVIOR'
+  | 'BORROWING_LIMIT'
+
+type QS_NAMES = MULTIPLE_CHOICE | TWO_CHOICE
 
 const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월',
@@ -31,48 +46,56 @@ const relations: {
   ETC: '기타',
 }
 
-interface ShareCardProps {
-  icon: ReactNode
-  type: string
+interface ShareImageContextType {
+  imageProps?: ShareImageProps | null
+  showShareImage: (props: ShareImageProps | null) => void
 }
-
-interface ShareImageContextType extends Partial<ShareCardProps> {
-  shareImage: (cardProps: ShareCardProps) => void
-}
-
-export const ShareImageContext = createContext<ShareImageContextType>({
-  shareImage: () => {},
-})
-
 interface ShareImageProps {
+  questionName: QS_NAMES
   period: Period
   relation: Relation
   senderName: string
   reason: string
+  value: any
 }
+
+export const ShareImageContext = createContext<ShareImageContextType>({
+  imageProps: null,
+  showShareImage(props) {},
+})
 
 type ShareType = 'COPY' | 'DOWNLOAD'
 
-const ShareImage = ({
+export const ShareImageProvider = ({ children }: PropsWithChildren) => {
+  const [state, setState] = useState<ShareImageContextType>({
+    showShareImage: (props) => {},
+    imageProps: null,
+  })
+
+  return (
+    <ShareImageContext.Provider
+      value={{
+        imageProps: state.imageProps,
+        showShareImage: (props) =>
+          setState((prev) => ({ ...prev, imageProps: props })),
+      }}
+    >
+      {children}
+    </ShareImageContext.Provider>
+  )
+}
+
+export const ShareImage = ({
+  questionName,
   senderName,
   period,
   relation,
   reason,
+  value,
 }: ShareImageProps) => {
   const { data } = useSession()
-  const [isRendered, setIsRendered] = useState<
-    Partial<ShareCardProps> & { mounted: boolean }
-  >({
-    mounted: false,
-  })
-  const ref = useRef<HTMLDivElement>(null)
 
-  const handleShareImage = useCallback(
-    (cardProps: ShareCardProps) => {
-      setIsRendered({ mounted: true, ...cardProps })
-    },
-    [ref],
-  )
+  const ref = useRef<HTMLDivElement>(null)
 
   const bgColor = (() => {
     switch (relation) {
@@ -128,20 +151,27 @@ const ShareImage = ({
       .catch((err) => {
         console.log(err)
       })
-    setIsRendered({ mounted: false })
   }
-  useEffect(() => {}, [ref.current, isRendered.mounted])
+
   return (
     <>
-      <div className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594]">
-        <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit mt-20">
+      <div className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10">
+        <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow mt-20">
           <div className="flex flex-col text-center space-y-[6px]">
             <h1 className="text-subTitle2-medium text-text-main-black11">
-              하아얀님은
+              {data?.user?.name}님은
             </h1>
-            {parseCardItems.FRIENDLINESS_LEVEL[0].title}
+            {
+              parseShareCardItems[
+                questionName as keyof typeof parseShareCardItems
+              ][+value].title
+            }
             <div className="flex justify-center pt-8 pb-12">
-              {parseCardItems.FRIENDLINESS_LEVEL[0].icon}
+              {
+                parseShareCardItems[
+                  questionName as keyof typeof parseShareCardItems
+                ][+value].icon
+              }
             </div>
             <div className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
@@ -168,16 +198,24 @@ const ShareImage = ({
       <div className="sr-only">
         <div
           ref={ref}
-          className="flex items-center justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] w-[var(--section-width,100%)]"
+          className="flex items-center justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] w-[var(--section-width,100%)] px-10"
         >
-          <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit">
+          <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow">
             <div className="flex flex-col text-center space-y-[6px]">
               <h1 className="text-subTitle2-medium text-text-main-black11">
-                하아얀님은
+                {data?.user?.name}님은
               </h1>
-              {parseCardItems.FRIENDLINESS_LEVEL[0].title}
+              {
+                parseShareCardItems[
+                  questionName as keyof typeof parseShareCardItems
+                ][+value].title
+              }
               <div className="flex justify-center pt-8 pb-12">
-                {parseCardItems.FRIENDLINESS_LEVEL[0].icon}
+                {
+                  parseShareCardItems[
+                    questionName as keyof typeof parseShareCardItems
+                  ][+value].icon
+                }
               </div>
               <div className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-2">
@@ -220,4 +258,55 @@ const ShareImage = ({
   )
 }
 
-export default ShareImage
+export const ShareImageDrawer = () => {
+  const context = useContext(ShareImageContext)
+  if (!context) throw new Error('ShareImageContext')
+  const { showShareImage, imageProps } = context
+  return (
+    <Drawer
+      header={{
+        showHeader: false,
+        options: {
+          onBackClick() {},
+          showRight: false,
+        },
+      }}
+      open={!!imageProps}
+      onChangeOpen={(state) => {
+        if (!state && imageProps !== null) {
+          showShareImage(null)
+        }
+      }}
+      trigger={<></>}
+    >
+      <div className="absolute top-[14px] left-5 h-14">
+        <button onClick={() => showShareImage(null)}>
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M18.6187 23.6187C18.277 23.9604 17.723 23.9604 17.3813 23.6187L8.38128 14.6187C8.21719 14.4546 8.125 14.2321 8.125 14C8.125 13.7679 8.21719 13.5454 8.38128 13.3813L17.3813 4.38128C17.723 4.03957 18.277 4.03957 18.6187 4.38128C18.9604 4.72299 18.9604 5.27701 18.6187 5.61872L10.2374 14L18.6187 22.3813C18.9604 22.723 18.9604 23.277 18.6187 23.6187Z"
+              fill="#111111"
+            />
+          </svg>
+        </button>
+      </div>
+      {imageProps && (
+        <ShareImage
+          questionName={imageProps.questionName}
+          period={imageProps.period}
+          relation={imageProps.relation}
+          senderName={imageProps.senderName}
+          reason={imageProps.reason}
+          value={imageProps.value}
+        />
+      )}
+    </Drawer>
+  )
+}
