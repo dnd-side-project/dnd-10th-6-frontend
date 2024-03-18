@@ -54,11 +54,11 @@ const Drawer = ({
       const newState = !state ?? isMounted
       if (ref.current) {
         css(ref.current, {
-          position: 'absolute',
-          right: '-100%',
+          position: 'fixed',
           top: '0px',
-          width: '100%',
+          width: 'var(--section-width, 100%)',
           height: 'calc(var(--vh,1vh)*100)',
+          transform: 'translateX(var(--section-width, 100%))',
           zIndex: '20',
         })
         document.body.style.overflowY = !newState ? 'hidden' : ''

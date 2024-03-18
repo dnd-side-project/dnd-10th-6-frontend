@@ -28,7 +28,6 @@ import Logo from '@/components/ui/logo'
 import icons from '@/icons'
 import Image from 'next/image'
 import Link from 'next/link'
-import ShareImage from '@/components/share-image'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -170,7 +169,7 @@ export default function NamuiWikiApp({
               id="main-section"
               className="mx-auto relative overflow-x-hidden max-w-lg w-full bg-white"
             >
-              <ShareImage>{getLayout(<Component {...pageProps} />)}</ShareImage>
+              {getLayout(<Component {...pageProps} />)}
             </div>
           </HydrationBoundary>
         </QueryProvider>
