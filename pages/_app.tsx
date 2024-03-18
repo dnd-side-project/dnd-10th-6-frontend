@@ -77,7 +77,7 @@ export default function NamuiWikiApp({
           <HydrationBoundary state={pageProps.dehydratedState}>
             <div className="grow hidden lg:flex flex-col pb-8">
               <div className="grow flex flex-col justify-center">
-                <h3 className="text-[32px] leading-[42px] text-text-main-black11">
+                <h3 className="font-bold text-[32px] leading-[42px] text-text-main-black11">
                   남이 쓰는 나의 소개서
                 </h3>
                 <div className="max-w-xs max-h-24 flex items-center flex-col grow mt-3">

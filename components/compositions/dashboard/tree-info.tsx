@@ -35,7 +35,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             내 정원에 심어진 나무는
             <br />
             <b className="text-mainTitle1-bold mt-1 text-black">
-              총 {data?.user?.totalSurveyCnt ?? 0}그루
+             총 {data?.user?.totalSurveyCnt ?? 0}그루
             </b>
           </p>
           <div className="w-20 h-20 bg-text-main-whiteFF flex justify-center items-center rounded-full">
