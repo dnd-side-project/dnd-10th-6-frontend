@@ -62,7 +62,7 @@ const Setting = () => {
 
           <Modal
             trigger={
-              <p className="py-[14px] text-body1-bold text-text-main-black11">
+              <p className="py-[14px] text-body1-bold text-text-main-black11 cursor-pointer">
                 로그아웃
               </p>
             }
@@ -119,13 +119,10 @@ const Setting = () => {
           /> */}
         </section>
         <section className="py-4 px-5 flex flex-col items-start">
-          <h4 className="text-body3-medium text-text-sub-gray4f py-2">
+          <h4 className="text-body3-medium text-text-sub-gray4f py-2 ">
             남의 위키
           </h4>
           <DeveloperInfo />
-          <FilterProvider>
-            <WriteList />
-          </FilterProvider>
         </section>
       </div>
     </Drawer>
