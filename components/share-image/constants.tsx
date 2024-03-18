@@ -1352,10 +1352,9 @@ export const parseShareCardItems = {
   WEEKEND_COMMITMENTS: [
     {
       title: (
-        <div>
-          <h3>주말마다</h3>
-          <b>집에서 쉬는 편</b>
-        </div>
+        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+          주말마다 <b>집에서 쉬는 편</b>
+        </h3>
       ),
       icon: (
         <svg
@@ -1502,10 +1501,9 @@ export const parseShareCardItems = {
     },
     {
       title: (
-        <div>
-          <h3>주말마다</h3>
-          <b>약속이 있는 편</b>
-        </div>
+        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+          주말마다 <b>약속이 있는 편</b>
+        </h3>
       ),
       icon: (
         <svg
