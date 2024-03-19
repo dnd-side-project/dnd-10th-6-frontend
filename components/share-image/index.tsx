@@ -11,8 +11,9 @@ import { useSession } from '@/provider/session-provider'
 import { parseShareCardItems } from './constants'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { cn } from '@/lib/client/utils'
-import Drawer from '../ui/drawer'
+
 import Reason from '@/components/compositions/answers/reason'
+import SideDrawer from '../side-drawer'
 
 type TWO_CHOICE =
   | 'FRIENDLINESS_LEVEL'
@@ -272,7 +273,7 @@ export const ShareImageDrawer = () => {
   if (!context) throw new Error('ShareImageContext')
   const { showShareImage, imageProps } = context
   return (
-    <Drawer
+    <SideDrawer
       header={{
         showHeader: false,
         options: {
@@ -316,6 +317,6 @@ export const ShareImageDrawer = () => {
           value={imageProps.value}
         />
       )}
-    </Drawer>
+    </SideDrawer>
   )
 }

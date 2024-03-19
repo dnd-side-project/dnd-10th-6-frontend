@@ -1,7 +1,8 @@
 import Button from '@/components/button'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
-import Drawer from '@/components/ui/drawer'
+import SideDrawer from '@/components/side-drawer'
+
 import FormLayout from '@/layout/form-layout'
 import { toastError } from '@/lib/client/alert'
 import { cn } from '@/lib/client/utils'
@@ -37,7 +38,7 @@ const EditProfile = () => {
     }
   }
   return (
-    <Drawer
+    <SideDrawer
       header={{
         center: <p className="text-body1-bold">프로필 수정</p>,
         options: {
@@ -82,7 +83,7 @@ const EditProfile = () => {
 
         <Button type="submit">다음</Button>
       </form>
-    </Drawer>
+    </SideDrawer>
   )
 }
 

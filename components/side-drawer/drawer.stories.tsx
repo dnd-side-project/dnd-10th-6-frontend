@@ -1,11 +1,12 @@
 import Header from '@/components/header'
-import Drawer from '.'
+
 import { StoryObj, Meta } from '@storybook/react'
 import { SessionProvider } from '@/provider/session-provider'
+import SideDrawer from '.'
 
-const meta: Meta<typeof Drawer> = {
+const meta: Meta<typeof SideDrawer> = {
   title: 'UI/Drawer',
-  component: Drawer,
+  component: SideDrawer,
   argTypes: {},
   decorators: [
     (Story, args) => (
@@ -21,12 +22,12 @@ const meta: Meta<typeof Drawer> = {
 }
 export default meta
 
-type Story = StoryObj<typeof Drawer>
+type Story = StoryObj<typeof SideDrawer>
 
 export const Default: Story = {
   name: 'default',
 
   render: (args) => {
-    return <Drawer {...args} />
+    return <SideDrawer {...args} />
   },
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import Drawer from '../ui/drawer'
+
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 import { NamuiApi } from '@/lib/namui-api'
@@ -12,6 +12,7 @@ import { periods } from '../badge/period'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { useRouter } from 'next/router'
 import { cn } from '@/lib/client/utils'
+import SideDrawer from '../side-drawer'
 
 export interface DetailResponse {
   data: Data
@@ -54,7 +55,7 @@ const DetailDrawer = () => {
     }
   }, [router.query])
   return (
-    <Drawer
+    <SideDrawer
       header={{
         center: <p className="text-body1-bold">상세 보기</p>,
         options: {
@@ -70,7 +71,7 @@ const DetailDrawer = () => {
       {typeof router.query.id === 'string' ? (
         <Content id={router.query.id} type={detailType} />
       ) : null}
-    </Drawer>
+    </SideDrawer>
   )
 }
 

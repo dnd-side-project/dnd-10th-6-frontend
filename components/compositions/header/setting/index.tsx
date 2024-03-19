@@ -1,4 +1,3 @@
-import Drawer from '@/components/ui/drawer'
 import React, { useState } from 'react'
 import Modal from '@/components/modal'
 import EditProfile from '@/components/compositions/header/edit-setting'
@@ -7,6 +6,7 @@ import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
 import DeveloperInfo from '../developer-info'
+import SideDrawer from '@/components/side-drawer'
 
 const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
@@ -22,7 +22,7 @@ const Setting = () => {
     }
   }
   return (
-    <Drawer
+    <SideDrawer
       header={{
         center: <p className="text-body1-bold">설정</p>,
         options: {
@@ -123,7 +123,7 @@ const Setting = () => {
           <DeveloperInfo />
         </section>
       </div>
-    </Drawer>
+    </SideDrawer>
   )
 }
 

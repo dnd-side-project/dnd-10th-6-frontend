@@ -1,11 +1,11 @@
-import Drawer from '@/components/ui/drawer'
 import React, { useState } from 'react'
 import AlertCard from './alert-card'
+import SideDrawer from '@/components/side-drawer'
 
 const Alert = () => {
   const [openAlert, setOpenAlert] = useState(false)
   return (
-    <Drawer
+    <SideDrawer
       header={{
         center: <p className="text-body1-bold">알림</p>,
         options: {
@@ -50,7 +50,7 @@ const Alert = () => {
         <AlertCard isRead />
         <AlertCard isRead />
       </div>
-    </Drawer>
+    </SideDrawer>
   )
 }
 
