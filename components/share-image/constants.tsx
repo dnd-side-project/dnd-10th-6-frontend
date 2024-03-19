@@ -789,7 +789,7 @@ export const parseShareCardItems: {
         </svg>
       ),
     },
-    YES: {
+    SIMILAR_TRAIT: {
       title: () => (
         <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
           사람들과 <b>비슷한 성향</b>
