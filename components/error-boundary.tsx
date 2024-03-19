@@ -29,7 +29,7 @@ class ErrorBoundary extends React.Component<
       return (
         <motion.div
           {...fadeInProps}
-          className="h-calc-h flex flex-col justify-center items-center"
+          className="h-calc-h flex flex-col justify-center items-center w-full"
         >
           <ErrorTree />
           <div className="flex flex-col space-y-3 text-center mt-8 mb-14">

@@ -6,14 +6,12 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import Button from '../button'
 import { useSession } from '@/provider/session-provider'
 import { parseShareCardItems } from './constants'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { cn } from '@/lib/client/utils'
 import Drawer from '../ui/drawer'
 import Reason from '@/components/compositions/answers/reason'
-
 type TWO_CHOICE =
   | 'FRIENDLINESS_LEVEL'
   | 'PERSONALITY_TYPE'
@@ -26,7 +24,7 @@ type MULTIPLE_CHOICE =
   | 'SAD_ANGRY_BEHAVIOR'
   | 'BORROWING_LIMIT'
 
-type QS_NAMES = MULTIPLE_CHOICE | TWO_CHOICE
+export type QS_NAMES = MULTIPLE_CHOICE | TWO_CHOICE
 
 const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월',
@@ -52,6 +50,7 @@ interface ShareImageContextType {
 }
 interface ShareImageProps {
   questionName: QS_NAMES
+  optionName: string
   period: Period
   relation: Relation
   senderName: string
@@ -87,6 +86,7 @@ export const ShareImageProvider = ({ children }: PropsWithChildren) => {
 
 export const ShareImage = ({
   questionName,
+  optionName,
   senderName,
   period,
   relation,
@@ -156,7 +156,10 @@ export const ShareImage = ({
 
   return (
     <>
-      <div className="absolute top-0 right-5 h-14 flex items-center">
+      <div
+        key="share-image-show-header"
+        className="absolute top-0 right-5 h-14 flex items-center"
+      >
         <button
           onContextMenu={(event) => {
             event.preventDefault()
@@ -169,23 +172,19 @@ export const ShareImage = ({
         </button>
       </div>
 
-      <div className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10 items-center">
+      <div
+        key="share-image-show"
+        className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10 items-center"
+      >
         <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow">
           <div className="flex flex-col text-center space-y-[6px]">
             <h1 className="text-subTitle2-medium text-text-main-black11">
-              {data?.user?.name}님은
+              {data?.user?.name}
+              {questionName === 'BORROWING_LIMIT' ? '에게' : '님은'}
             </h1>
-            {
-              parseShareCardItems[
-                questionName as keyof typeof parseShareCardItems
-              ][+value].title
-            }
+            {parseShareCardItems[questionName]?.[optionName]?.title(value)}
             <div className="flex justify-center pt-8 pb-12">
-              {
-                parseShareCardItems[
-                  questionName as keyof typeof parseShareCardItems
-                ][+value].icon
-              }
+              {parseShareCardItems[questionName][optionName].icon}
             </div>
             <div className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
@@ -210,7 +209,7 @@ export const ShareImage = ({
           </div>
         </div>
       </div>
-      <div className="sr-only">
+      <div className="sr-only" key="share-image-sr">
         <div
           ref={ref}
           className="flex items-center justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] w-[var(--section-width,100%)] px-10"
@@ -220,17 +219,9 @@ export const ShareImage = ({
               <h1 className="text-subTitle2-medium text-text-main-black11">
                 {data?.user?.name}님은
               </h1>
-              {
-                parseShareCardItems[
-                  questionName as keyof typeof parseShareCardItems
-                ][+value].title
-              }
+              {parseShareCardItems[questionName]?.[optionName]?.title(value)}
               <div className="flex justify-center pt-8 pb-12">
-                {
-                  parseShareCardItems[
-                    questionName as keyof typeof parseShareCardItems
-                  ][+value].icon
-                }
+                {parseShareCardItems[questionName][optionName].icon}
               </div>
               <div className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-2">
@@ -314,6 +305,7 @@ export const ShareImageDrawer = () => {
           relation={imageProps.relation}
           senderName={imageProps.senderName}
           reason={imageProps.reason}
+          optionName={imageProps.optionName}
           value={imageProps.value}
         />
       )}

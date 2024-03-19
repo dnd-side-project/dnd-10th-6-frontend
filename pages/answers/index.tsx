@@ -174,11 +174,15 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
               ? () => {
                   showShareImage({
                     period: survey.period,
+                    optionName: item.optionName,
                     questionName: item.questionName as any,
                     reason: item.reason as any,
                     relation: survey.relation,
                     senderName: survey.senderName,
-                    value: item.value,
+                    value:
+                      typeof item.value === 'number'
+                        ? item.value.toLocaleString()
+                        : item.value,
                   })
                 }
               : undefined
@@ -189,7 +193,7 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
             .replace('{{userName}}', data?.user?.name ?? '')
             .replace('<br/>', ' ')}
           answer={item.reason ? item.text : item.reason}
-          value={item.value}
+          value={item.value as any}
           reason={item.reason ?? item.text}
         />
       ))}

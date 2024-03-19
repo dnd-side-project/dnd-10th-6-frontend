@@ -30,9 +30,10 @@ export interface Survey {
 
 export interface QuestionAndAnswer {
   questionName: string
+  optionName: string
   questionTitle: string
   text: string
-  value: string
+  value: string | unknown
   reason?: string
 }
 
