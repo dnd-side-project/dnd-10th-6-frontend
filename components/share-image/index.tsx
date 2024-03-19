@@ -221,7 +221,7 @@ export const ShareImage = ({
               </h1>
               {parseShareCardItems[questionName]?.[optionName]?.title(value)}
               <div className="flex justify-center pt-8 pb-12">
-                {parseShareCardItems[questionName][optionName].icon}
+                {parseShareCardItems[questionName][optionName]?.icon}
               </div>
               <div className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-2">
@@ -240,16 +240,10 @@ export const ShareImage = ({
                     </span>
                   </div>
                 </div>
-                <div className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11">
-                  {reason.split('\n').map((line) => {
-                    return (
-                      <>
-                        {line}
-                        <br />
-                      </>
-                    )
-                  })}
-                </div>
+                <Reason
+                  reason={reason}
+                  className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11"
+                />
               </div>
             </div>
           </div>
@@ -265,6 +259,7 @@ export const ShareImageDrawer = () => {
   const { showShareImage, imageProps } = context
   return (
     <Drawer
+      zIndex={21}
       header={{
         showHeader: false,
         options: {

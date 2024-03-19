@@ -63,6 +63,7 @@ const DetailDrawer = () => {
     <></>
   ) : (
     <Drawer
+      zIndex={19}
       header={{
         center: <p className="text-body1-bold">상세 보기</p>,
         options: {

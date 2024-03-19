@@ -409,7 +409,7 @@ const SurveyForm = ({
                 <label
                   htmlFor={field.name}
                   className={cn(
-                    'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100',
+                    'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100 pointer-events-none select-none touch-none',
                   )}
                 />
                 <span className="absolute right-4 bottom-[14px] text-text-sub-gray99 text-body3-medium">
@@ -456,7 +456,7 @@ const SurveyForm = ({
                   <label
                     htmlFor={field.name}
                     className={cn(
-                      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100',
+                      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100 pointer-events-none select-none touch-none',
                     )}
                   />
                   <span className="absolute right-4 bottom-[14px] text-text-sub-gray99 text-body3-medium">
