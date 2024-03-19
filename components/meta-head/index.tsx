@@ -20,7 +20,10 @@ const MetaHead = ({
       />
       <title>{title || 'namuiwiki | 남의위키'}</title>
       <meta name="description" content={description || ''} />
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta
+        name="viewport"
+        content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;"
+      />
       <meta
         name="keywords"
         content="남의위키, 편지, namuiwiki, 소개서, 첫인상, 새학기"
@@ -63,10 +66,6 @@ const MetaHead = ({
         crossOrigin="anonymous"
         defer
       ></script>
-      <meta
-        name="viewport"
-        content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;"
-      />
 
       <meta name="HandheldFriendly" content="true" />
       <meta name="msapplication-TileColor" content="#da532c" />

@@ -1,3 +1,5 @@
+import Reason from '@/components/compositions/answers/reason'
+
 interface AnswerDetailProps {
   questionTitle: string
   questionName: string
@@ -85,11 +87,7 @@ const AnswerDetail = ({
             {answer}
           </div>
         )}
-        {reason && (
-          <div className="text-body3-medium bg-bg-gray1 text-text-sub-gray76 px-2 py-4 rounded-md">
-            {reason}
-          </div>
-        )}
+        {reason && <Reason reason={reason} />}
       </div>
     </>
   )

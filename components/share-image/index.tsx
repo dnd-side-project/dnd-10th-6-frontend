@@ -3,7 +3,6 @@ import React, {
   PropsWithChildren,
   createContext,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from 'react'
@@ -13,6 +12,7 @@ import { parseShareCardItems } from './constants'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { cn } from '@/lib/client/utils'
 import Drawer from '../ui/drawer'
+import Reason from '@/components/compositions/answers/reason'
 
 type TWO_CHOICE =
   | 'FRIENDLINESS_LEVEL'
@@ -189,9 +189,10 @@ export const ShareImage = ({
                   </span>
                 </div>
               </div>
-              <div className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11">
-                {reason}
-              </div>
+              <Reason
+                reason={reason}
+                className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11"
+              />
             </div>
           </div>
         </div>
@@ -236,7 +237,14 @@ export const ShareImage = ({
                   </div>
                 </div>
                 <div className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11">
-                  {reason}
+                  {reason.split('\n').map((line) => {
+                    return (
+                      <>
+                        {line}
+                        <br />
+                      </>
+                    )
+                  })}
                 </div>
               </div>
             </div>
