@@ -53,13 +53,26 @@ export default function NamuiWikiApp({
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
   const handleSectionResize = () => {
-    if (!mainSectionRef.current) return
-    const rect = mainSectionRef.current.getBoundingClientRect()
-    document.documentElement.style.setProperty(
-      '--section-width',
-      `${rect.width}px`,
-    )
-    document.documentElement.style.setProperty('--section-x', `${rect.x}px`)
+    if (mainSectionRef.current) {
+      const rect = mainSectionRef.current.getBoundingClientRect()
+      document.documentElement.style.setProperty(
+        '--section-width',
+        `${rect.width}px`,
+      )
+      document.documentElement.style.setProperty('--section-x', `${rect.x}px`)
+    }
+
+    const viewport = document.querySelector(
+      'meta[name=viewport]',
+    ) as HTMLMetaElement
+    if (viewport) {
+      queueMicrotask(() => {
+        viewport.setAttribute(
+          'content',
+          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
+        )
+      })
+    }
   }
 
   useBrowserLayoutEffect(() => {
@@ -76,12 +89,9 @@ export default function NamuiWikiApp({
 
   useEffect(() => {
     handleSectionResize()
-    if (mainSectionRef.current) {
-      const ele = mainSectionRef.current
-      ele.addEventListener('resize', handleSectionResize)
-      return () => {
-        ele.removeEventListener('resize', handleSectionResize)
-      }
+    window.addEventListener('resize', handleSectionResize)
+    return () => {
+      window.removeEventListener('resize', handleSectionResize)
     }
   }, [])
 
