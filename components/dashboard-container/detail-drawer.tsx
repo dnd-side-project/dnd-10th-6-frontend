@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import { cn } from '@/lib/client/utils'
 import { ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
+import { useMount } from '@/hooks/use-mount'
 
 export interface DetailResponse {
   data: Data
@@ -45,6 +46,7 @@ export interface Content {
 
 export type DetailType = 'TWO_CHOICE' | 'SHORT_ANSWER' | 'MULTIPLE_CHOICE'
 const DetailDrawer = () => {
+  const isMounted = useMount()
   const router = useRouter()
   const { clear } = useFilter()
 
@@ -57,7 +59,9 @@ const DetailDrawer = () => {
       clear()
     }
   }, [router.query])
-  return (
+  return !isMounted ? (
+    <></>
+  ) : (
     <Drawer
       header={{
         center: <p className="text-body1-bold">상세 보기</p>,
