@@ -1,5 +1,5 @@
 import { cn } from '@/lib/client/utils'
-import React, { ComponentPropsWithoutRef } from 'react'
+import React, { ComponentPropsWithoutRef, Fragment } from 'react'
 
 interface ReasonProps extends ComponentPropsWithoutRef<'div'> {
   reason: string
@@ -13,12 +13,12 @@ const Reason = ({ reason, ...rest }: ReasonProps) => {
         rest.className,
       )}
     >
-      {reason.split('\n').map((line) => {
+      {reason.split('\n').map((line, index, arr) => {
         return (
-          <>
+          <Fragment key={line}>
             {line}
-            <br />
-          </>
+            {index !== arr.length - 1 && <br />}
+          </Fragment>
         )
       })}
     </div>

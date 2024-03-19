@@ -61,18 +61,6 @@ export default function NamuiWikiApp({
       )
       document.documentElement.style.setProperty('--section-x', `${rect.x}px`)
     }
-
-    const viewport = document.querySelector(
-      'meta[name=viewport]',
-    ) as HTMLMetaElement
-    if (viewport) {
-      queueMicrotask(() => {
-        viewport.setAttribute(
-          'content',
-          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
-        )
-      })
-    }
   }
 
   useBrowserLayoutEffect(() => {
@@ -89,6 +77,18 @@ export default function NamuiWikiApp({
 
   useEffect(() => {
     handleSectionResize()
+    const viewport = document.querySelector(
+      'meta[name=viewport]',
+    ) as HTMLMetaElement
+    if (viewport) {
+      queueMicrotask(() => {
+        viewport.setAttribute(
+          'content',
+          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
+        )
+      })
+    }
+
     window.addEventListener('resize', handleSectionResize)
     return () => {
       window.removeEventListener('resize', handleSectionResize)
