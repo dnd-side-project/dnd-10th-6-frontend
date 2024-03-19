@@ -156,8 +156,21 @@ export const ShareImage = ({
 
   return (
     <>
-      <div className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10">
-        <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow mt-20">
+      <div className="absolute top-0 right-5 h-14 flex items-center">
+        <button
+          onContextMenu={(event) => {
+            event.preventDefault()
+          }}
+          draggable={false}
+          onClick={handleShare('COPY')}
+          className="bg-[#111111] py-[7px] px-3 rounded-full text-caption2-medium text-white"
+        >
+          공유하기
+        </button>
+      </div>
+
+      <div className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10 items-center">
+        <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow">
           <div className="flex flex-col text-center space-y-[6px]">
             <h1 className="text-subTitle2-medium text-text-main-black11">
               {data?.user?.name}님은
@@ -251,18 +264,6 @@ export const ShareImage = ({
           </div>
         </div>
       </div>
-      <div className="absolute bottom-9 flex px-5 w-full space-x-2">
-        <Button onClick={handleShare('DOWNLOAD')} className="h-14">
-          사진 저장하기
-        </Button>
-        <Button
-          onClick={handleShare('COPY')}
-          variant={'muted'}
-          className="h-14"
-        >
-          공유하기
-        </Button>
-      </div>
     </>
   )
 }
@@ -288,7 +289,7 @@ export const ShareImageDrawer = () => {
       }}
       trigger={<></>}
     >
-      <div className="absolute top-[14px] left-5 h-14">
+      <div className="absolute top-0 left-5 h-14 flex items-center">
         <button onClick={() => showShareImage(null)}>
           <svg
             width="28"
