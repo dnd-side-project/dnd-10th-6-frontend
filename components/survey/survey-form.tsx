@@ -328,21 +328,33 @@ const SurveyForm = ({
                       {[option.value, selectedType].every(
                         (item) => item === 'MANUAL',
                       ) ? (
-                        <AutoFocusedInput
-                          className="ml-4 bg-transparent outline-none"
-                          placeholder="직접입력 (숫자만 입력)"
-                          maxLength={15}
-                          type="text"
-                          inputMode="numeric"
-                          value={numericString}
-                          onChange={(e) => {
-                            const newValue = inputPriceFormat(e.target.value)
-                            if (!newValue) return
-                            form.setValue('answer', +localeToNum(newValue))
-                            form.trigger('answer')
-                            return newValue
-                          }}
-                        />
+                        <>
+                          <AutoFocusedInput
+                            className="ml-4 bg-transparent outline-none grow"
+                            placeholder="숫자만 입력해주세요"
+                            maxLength={15}
+                            type="text"
+                            inputMode="numeric"
+                            value={numericString}
+                            onChange={(e) => {
+                              const newValue = inputPriceFormat(e.target.value)
+                              if (newValue === undefined) return
+                              if (!newValue) {
+                                form.setValue('answer', 0)
+                                return
+                              }
+                              form.setValue('answer', +localeToNum(newValue))
+                              form.trigger('answer')
+                              return newValue
+                            }}
+                          />
+                          {typeof form.getValues().answer === 'number' &&
+                            (form.getValues().answer as number) > 0 && (
+                              <span className="text-body1-medium text-text-sub-gray4f">
+                                원
+                              </span>
+                            )}
+                        </>
                       ) : (
                         <span className="ml-2">{option.text}</span>
                       )}
