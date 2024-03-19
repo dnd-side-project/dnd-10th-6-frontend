@@ -330,8 +330,8 @@ const Question = ({ nickname }: { nickname: string }) => {
                             <path d="M9 11H7V13H9V11Z" fill="#F7F7F7" />
                           </svg>
                           <p className="text-body3-medium text-text-sub-gray76">
-                            친구들이 누가 작성했는지 알 수 있도록, 나를 가장 잘
-                            나타내는 이름으로 입력해주세요
+                            누가 작성했는지 알 수 있도록, 나를 가장 잘 나타내는
+                            이름으로 입력해주세요
                           </p>
                         </div>
                       </>
