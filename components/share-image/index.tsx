@@ -184,7 +184,7 @@ export const ShareImage = ({
             </h1>
             {parseShareCardItems[questionName]?.[optionName]?.title(value)}
             <div className="flex justify-center pt-8 pb-12">
-              {parseShareCardItems[questionName][optionName].icon}
+              {parseShareCardItems[questionName][optionName]?.icon}
             </div>
             <div className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">

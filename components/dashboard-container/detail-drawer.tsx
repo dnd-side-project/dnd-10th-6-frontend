@@ -231,7 +231,10 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 questionName: page.data.questionName as any,
                                 reason: cardItem.reason,
                                 senderName: cardItem.senderName,
-                                value: cardItem.answer,
+                                value:
+                                  page.data.questionName === 'BORROWING_LIMIT'
+                                    ? parseInt(cardItem.answer).toLocaleString()
+                                    : cardItem.answer,
                               })
                           : undefined
                       }
@@ -263,7 +266,10 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 questionName: page.data.questionName as any,
                                 reason: cardItem.reason,
                                 senderName: cardItem.senderName,
-                                value: cardItem.answer,
+                                value:
+                                  page.data.questionName === 'BORROWING_LIMIT'
+                                    ? parseInt(cardItem.answer).toLocaleString()
+                                    : cardItem.answer,
                               })
                           : undefined
                       }
