@@ -1,4 +1,3 @@
-import Drawer from '@/components/ui/drawer'
 import React, { useEffect, useRef, useState } from 'react'
 import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
 import useFilter, { Filter } from '@/hooks/use-filter'
@@ -10,6 +9,7 @@ import Yh from '@/components/svgs/mimoticons/yh'
 import Es from '@/components/svgs/mimoticons/es'
 import Aa from '@/components/svgs/mimoticons/aa'
 import Logo from '@/components/svgs/logo'
+import SideDrawer from '@/components/side-drawer'
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -30,7 +30,7 @@ const DeveloperInfo = () => {
   })
 
   return (
-    <Drawer
+    <SideDrawer
       header={{
         center: <p className="text-body1-bold">제작 정보</p>,
         options: {
@@ -123,7 +123,7 @@ const DeveloperInfo = () => {
           </div>
         </div>
       </div>
-    </Drawer>
+    </SideDrawer>
   )
 }
 

@@ -1,4 +1,3 @@
-import Drawer from '@/components/ui/drawer'
 import React, { ReactNode, useState } from 'react'
 import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
 import useFilter, { Filter } from '@/hooks/use-filter'
@@ -7,6 +6,7 @@ import { useIntersectionObserver } from '@/hooks/use-observer'
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 import { WritingListResponse } from '@/queries/surveys'
 import { NamuiApi } from '@/lib/namui-api'
+import SideDrawer from '@/components/side-drawer'
 
 const container = {
   hidden: { opacity: 0 },
@@ -50,7 +50,7 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
   })
 
   return (
-    <Drawer
+    <SideDrawer
       header={{
         center: <p className="text-body1-bold">작성목록</p>,
         options: {
@@ -116,7 +116,7 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
         </motion.ul>
         <div ref={ref} className="h-2 w-2" />
       </div>
-    </Drawer>
+    </SideDrawer>
   )
 }
 

@@ -14,7 +14,7 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 
-interface DrawerProps {
+interface SideDrawerProps {
   zIndex?: number
   open?: boolean
   onChangeOpen?: (state: boolean) => void
@@ -30,14 +30,14 @@ function css(element: HTMLElement, style: Partial<CSSStyleDeclaration>) {
   }
 }
 
-const Drawer = ({
+const SideDrawer = ({
   trigger,
   open = false,
   onChangeOpen,
   zIndex,
   children,
   header,
-}: PropsWithChildren<DrawerProps>) => {
+}: PropsWithChildren<SideDrawerProps>) => {
   const id = useId()
   const [isMounted, setIsMounted] = useState(open)
 
@@ -131,4 +131,4 @@ const Drawer = ({
   )
 }
 
-export default Drawer
+export default SideDrawer

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
-import Drawer from '../ui/drawer'
+
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 import { NamuiApi } from '@/lib/namui-api'
@@ -15,6 +15,7 @@ import { cn } from '@/lib/client/utils'
 import { ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
 import { useMount } from '@/hooks/use-mount'
+import SideDrawer from '../side-drawer'
 
 export interface DetailResponse {
   data: Data
@@ -62,7 +63,7 @@ const DetailDrawer = () => {
   return !isMounted ? (
     <></>
   ) : (
-    <Drawer
+    <SideDrawer
       zIndex={19}
       header={{
         center: <p className="text-body1-bold">상세 보기</p>,
@@ -79,7 +80,7 @@ const DetailDrawer = () => {
       {typeof router.query.id === 'string' ? (
         <Content id={router.query.id} type={detailType} />
       ) : null}
-    </Drawer>
+    </SideDrawer>
   )
 }
 
