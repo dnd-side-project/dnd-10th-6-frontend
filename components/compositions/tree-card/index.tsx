@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { fadeInProps } from '@/variants'
-import BottomSheetButton from '@/components/bottom-sheet-button'
+import BottomSheetButton from '@/components/bottomsheet-button'
 
 interface TreeCardProps {
   period: string
