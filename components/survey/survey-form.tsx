@@ -1,12 +1,6 @@
 import { Option } from '@/model/option.entity'
 import { QuestionType } from '@/model/question.entity'
-import React, {
-  HTMLAttributes,
-  InputHTMLAttributes,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { InputHTMLAttributes, useEffect, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
@@ -334,21 +328,33 @@ const SurveyForm = ({
                       {[option.value, selectedType].every(
                         (item) => item === 'MANUAL',
                       ) ? (
-                        <AutoFocusedInput
-                          className="ml-4 bg-transparent outline-none"
-                          placeholder="직접입력 (숫자만 입력)"
-                          maxLength={15}
-                          type="text"
-                          inputMode="numeric"
-                          value={numericString}
-                          onChange={(e) => {
-                            const newValue = inputPriceFormat(e.target.value)
-                            if (!newValue) return
-                            form.setValue('answer', +localeToNum(newValue))
-                            form.trigger('answer')
-                            return newValue
-                          }}
-                        />
+                        <>
+                          <AutoFocusedInput
+                            className="ml-4 bg-transparent outline-none grow"
+                            placeholder="숫자만 입력해주세요"
+                            maxLength={15}
+                            type="text"
+                            inputMode="numeric"
+                            value={numericString}
+                            onChange={(e) => {
+                              const newValue = inputPriceFormat(e.target.value)
+                              if (newValue === undefined) return
+                              if (!newValue) {
+                                form.setValue('answer', 0)
+                                return
+                              }
+                              form.setValue('answer', +localeToNum(newValue))
+                              form.trigger('answer')
+                              return newValue
+                            }}
+                          />
+                          {typeof form.getValues().answer === 'number' &&
+                            (form.getValues().answer as number) > 0 && (
+                              <span className="text-body1-medium text-text-sub-gray4f">
+                                원
+                              </span>
+                            )}
+                        </>
                       ) : (
                         <span className="ml-2">{option.text}</span>
                       )}
@@ -366,26 +372,51 @@ const SurveyForm = ({
             defaultValue=""
             control={form.control}
             render={({ field }) => (
-              <Inputbox
-                {...field}
-                placeholder={
-                  name === 'FIVE_LETTER_WORD'
-                    ? '5글자로 입력해주세요'
-                    : '20글자 이내로 입력해주세요'
-                }
-                {...(name === 'FIVE_LETTER_WORD' && { minLength: 5 })}
-                maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 20}
-                onChange={(e) => {
-                  form.setValue('type', 'MANUAL')
-                  if (e.target.value) {
-                    form.setValue('id', type)
-                    form.trigger('id')
-                  } else {
-                    form.setError('id', { type: 'required' })
+              <div className="relative py-[14px] px-4">
+                <textarea
+                  {...field}
+                  id={field.name}
+                  className={cn(
+                    'flex resize-none w-full peer placeholder:text-muted border-none placeholder:text-text-sub-gray4f disabled:cursor-not-allowed  text-body3-medium  outline-none disabled:text-disabled disabled:placeholder:text-disabled bg-transparent ',
+                  )}
+                  placeholder={
+                    name === 'FIVE_LETTER_WORD'
+                      ? '5글자로 입력해주세요'
+                      : '50글자 이내로 입력해주세요'
                   }
-                  field.onChange(e)
-                }}
-              />
+                  {...(name === 'FIVE_LETTER_WORD' && { minLength: 5 })}
+                  maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 50}
+                  rows={2}
+                  value={field.value + ''}
+                  onKeyDown={(e) => {
+                    if (name === 'FIVE_LETTER_WORD') {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                      }
+                    }
+                  }}
+                  onChange={(e) => {
+                    form.setValue('type', 'MANUAL')
+                    if (e.target.value) {
+                      form.setValue('id', type)
+                      form.trigger('id')
+                    } else {
+                      form.setError('id', { type: 'required' })
+                    }
+                    field.onChange(e)
+                  }}
+                />
+                <label
+                  htmlFor={field.name}
+                  className={cn(
+                    'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100 pointer-events-none select-none touch-none',
+                  )}
+                />
+                <span className="absolute right-4 bottom-[14px] text-text-sub-gray99 text-body3-medium">
+                  {(field.value + '').length}/
+                  {name === 'FIVE_LETTER_WORD' ? 5 : 50}
+                </span>
+              </div>
             )}
           />
         </div>
@@ -402,20 +433,36 @@ const SurveyForm = ({
               defaultValue=""
               name={'reason'}
               render={({ field }) => (
-                <Inputbox
-                  {...field}
-                  placeholder="20글자 이내로 입력해주세요"
-                  maxLength={20}
-                  value={field.value + ''}
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      form.trigger('answer')
-                    } else {
-                      form.setError('answer', { type: 'required' })
-                    }
-                    field.onChange(e)
-                  }}
-                />
+                <div className="relative py-[14px] px-4">
+                  <textarea
+                    {...field}
+                    id={field.name}
+                    className={cn(
+                      'flex resize-none w-full peer placeholder:text-muted border-none placeholder:text-text-sub-gray4f disabled:cursor-not-allowed  text-body3-medium  outline-none disabled:text-disabled disabled:placeholder:text-disabled bg-transparent ',
+                    )}
+                    placeholder="50글자 이내로 입력해주세요"
+                    maxLength={50}
+                    rows={2}
+                    value={field.value + ''}
+                    onChange={(e) => {
+                      if (e.target.value) {
+                        form.trigger('answer')
+                      } else {
+                        form.setError('answer', { type: 'required' })
+                      }
+                      field.onChange(e)
+                    }}
+                  />
+                  <label
+                    htmlFor={field.name}
+                    className={cn(
+                      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100 pointer-events-none select-none touch-none',
+                    )}
+                  />
+                  <span className="absolute right-4 bottom-[14px] text-text-sub-gray99 text-body3-medium">
+                    {field.value?.length}/50
+                  </span>
+                </div>
               )}
             />
           </InputLabel>

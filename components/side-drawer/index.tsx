@@ -14,7 +14,8 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 
-interface DrawerProps {
+interface SideDrawerProps {
+  zIndex?: number
   open?: boolean
   onChangeOpen?: (state: boolean) => void
   trigger?: ReactNode
@@ -29,13 +30,14 @@ function css(element: HTMLElement, style: Partial<CSSStyleDeclaration>) {
   }
 }
 
-const Drawer = ({
+const SideDrawer = ({
   trigger,
   open = false,
   onChangeOpen,
+  zIndex,
   children,
   header,
-}: PropsWithChildren<DrawerProps>) => {
+}: PropsWithChildren<SideDrawerProps>) => {
   const id = useId()
   const [isMounted, setIsMounted] = useState(open)
 
@@ -59,7 +61,7 @@ const Drawer = ({
           width: 'var(--section-width, 100%)',
           height: 'calc(var(--vh,1vh)*100)',
           transform: 'translateX(var(--section-width, 100%))',
-          zIndex: '20',
+          zIndex: zIndex + '' ?? '20',
         })
         document.body.style.overflowY = !newState ? 'hidden' : ''
 
@@ -129,4 +131,4 @@ const Drawer = ({
   )
 }
 
-export default Drawer
+export default SideDrawer

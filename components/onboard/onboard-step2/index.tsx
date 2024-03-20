@@ -1,4 +1,4 @@
-import As from '@/icons/onboard_2.svg'
+import As from '/assets/icons/onboard2.svg'
 import Image from 'next/image'
 
 const OnboardStep2 = () => {

@@ -15,6 +15,7 @@ import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
 import WriteList from '@/components/compositions/header/write-list'
+import { FilterProvider } from '@/hooks/use-filter'
 
 const Pages = () => {
   const { data } = useSession()
@@ -114,13 +115,18 @@ const Pages = () => {
         </div>
         <div className="flex space-x-2">
           <div className="flex w-full">
-            <WriteList
-              trigger={
-                <Button variant={'muted'} className="!text-body3-medium w-full">
-                  남의위키 작성목록
-                </Button>
-              }
-            />
+            <FilterProvider>
+              <WriteList
+                trigger={
+                  <Button
+                    variant={'muted'}
+                    className="!text-body3-medium w-full border-none"
+                  >
+                    남의위키 작성목록
+                  </Button>
+                }
+              />
+            </FilterProvider>
           </div>
           <Link href="/dashboard" className="w-full">
             <button className="w-full px-4 py-3 rounded-md text-body3-medium text-main-green-green800 bg-main-green-green50 hover:text-main-green-green300 hover:bg-[#f3faf3] active:bg-main-green-green100 active:text-main-green-green800">
