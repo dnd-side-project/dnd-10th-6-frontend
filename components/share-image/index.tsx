@@ -6,7 +6,6 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import Button from '../button'
 import { useSession } from '@/provider/session-provider'
 import { parseShareCardItems } from './constants'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
@@ -27,7 +26,7 @@ type MULTIPLE_CHOICE =
   | 'SAD_ANGRY_BEHAVIOR'
   | 'BORROWING_LIMIT'
 
-type QS_NAMES = MULTIPLE_CHOICE | TWO_CHOICE
+export type QS_NAMES = MULTIPLE_CHOICE | TWO_CHOICE
 
 const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월',
@@ -53,6 +52,7 @@ interface ShareImageContextType {
 }
 interface ShareImageProps {
   questionName: QS_NAMES
+  optionName: string
   period: Period
   relation: Relation
   senderName: string
@@ -88,6 +88,7 @@ export const ShareImageProvider = ({ children }: PropsWithChildren) => {
 
 export const ShareImage = ({
   questionName,
+  optionName,
   senderName,
   period,
   relation,
@@ -157,23 +158,35 @@ export const ShareImage = ({
 
   return (
     <>
-      <div className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10">
-        <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow mt-20">
+      <div
+        key="share-image-show-header"
+        className="absolute top-0 right-5 h-14 flex items-center"
+      >
+        <button
+          onContextMenu={(event) => {
+            event.preventDefault()
+          }}
+          draggable={false}
+          onClick={handleShare('COPY')}
+          className="bg-[#111111] py-[7px] px-3 rounded-full text-caption2-medium text-white"
+        >
+          공유하기
+        </button>
+      </div>
+
+      <div
+        key="share-image-show"
+        className="flex justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] px-10 items-center"
+      >
+        <div className="rounded-3xl py-10 px-6 bg-white flex flex-col h-fit grow">
           <div className="flex flex-col text-center space-y-[6px]">
             <h1 className="text-subTitle2-medium text-text-main-black11">
-              {data?.user?.name}님은
+              {data?.user?.name}
+              {questionName === 'BORROWING_LIMIT' ? '에게' : '님은'}
             </h1>
-            {
-              parseShareCardItems[
-                questionName as keyof typeof parseShareCardItems
-              ][+value].title
-            }
+            {parseShareCardItems[questionName]?.[optionName]?.title(value)}
             <div className="flex justify-center pt-8 pb-12">
-              {
-                parseShareCardItems[
-                  questionName as keyof typeof parseShareCardItems
-                ][+value].icon
-              }
+              {parseShareCardItems[questionName][optionName]?.icon}
             </div>
             <div className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
@@ -198,7 +211,7 @@ export const ShareImage = ({
           </div>
         </div>
       </div>
-      <div className="sr-only">
+      <div className="sr-only" key="share-image-sr">
         <div
           ref={ref}
           className="flex items-center justify-center h-calc-h bg-gradient-to-b from-[#CEF9BA] to-[#58C594] w-[var(--section-width,100%)] px-10"
@@ -208,17 +221,9 @@ export const ShareImage = ({
               <h1 className="text-subTitle2-medium text-text-main-black11">
                 {data?.user?.name}님은
               </h1>
-              {
-                parseShareCardItems[
-                  questionName as keyof typeof parseShareCardItems
-                ][+value].title
-              }
+              {parseShareCardItems[questionName]?.[optionName]?.title(value)}
               <div className="flex justify-center pt-8 pb-12">
-                {
-                  parseShareCardItems[
-                    questionName as keyof typeof parseShareCardItems
-                  ][+value].icon
-                }
+                {parseShareCardItems[questionName][optionName]?.icon}
               </div>
               <div className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-2">
@@ -237,32 +242,14 @@ export const ShareImage = ({
                     </span>
                   </div>
                 </div>
-                <div className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11">
-                  {reason.split('\n').map((line) => {
-                    return (
-                      <>
-                        {line}
-                        <br />
-                      </>
-                    )
-                  })}
-                </div>
+                <Reason
+                  reason={reason}
+                  className="text-body3-medium px-4 py-3 rounded-lg bg-gray-gray50 text-start text-text-main-black11"
+                />
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="absolute bottom-9 flex px-5 w-full space-x-2">
-        <Button onClick={handleShare('DOWNLOAD')} className="h-14">
-          사진 저장하기
-        </Button>
-        <Button
-          onClick={handleShare('COPY')}
-          variant={'muted'}
-          className="h-14"
-        >
-          공유하기
-        </Button>
       </div>
     </>
   )
@@ -274,6 +261,7 @@ export const ShareImageDrawer = () => {
   const { showShareImage, imageProps } = context
   return (
     <SideDrawer
+      zIndex={21}
       header={{
         showHeader: false,
         options: {
@@ -289,7 +277,7 @@ export const ShareImageDrawer = () => {
       }}
       trigger={<></>}
     >
-      <div className="absolute top-[14px] left-5 h-14">
+      <div className="absolute top-0 left-5 h-14 flex items-center">
         <button onClick={() => showShareImage(null)}>
           <svg
             width="28"
@@ -314,6 +302,7 @@ export const ShareImageDrawer = () => {
           relation={imageProps.relation}
           senderName={imageProps.senderName}
           reason={imageProps.reason}
+          optionName={imageProps.optionName}
           value={imageProps.value}
         />
       )}

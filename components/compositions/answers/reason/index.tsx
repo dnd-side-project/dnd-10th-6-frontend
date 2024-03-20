@@ -15,7 +15,7 @@ const Reason = ({ reason, ...rest }: ReasonProps) => {
     >
       {reason.split('\n').map((line, index, arr) => {
         return (
-          <Fragment key={line}>
+          <Fragment key={line + index + arr.length}>
             {line}
             {index !== arr.length - 1 && <br />}
           </Fragment>

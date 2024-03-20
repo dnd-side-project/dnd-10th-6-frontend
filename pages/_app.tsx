@@ -53,6 +53,17 @@ export default function NamuiWikiApp({
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
   const handleSectionResize = () => {
+    const viewport = document.querySelector(
+      'meta[name=viewport]',
+    ) as HTMLMetaElement
+    if (viewport) {
+      queueMicrotask(() => {
+        viewport.setAttribute(
+          'content',
+          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
+        )
+      })
+    }
     if (mainSectionRef.current) {
       const rect = mainSectionRef.current.getBoundingClientRect()
       document.documentElement.style.setProperty(
@@ -77,17 +88,6 @@ export default function NamuiWikiApp({
 
   useEffect(() => {
     handleSectionResize()
-    const viewport = document.querySelector(
-      'meta[name=viewport]',
-    ) as HTMLMetaElement
-    if (viewport) {
-      queueMicrotask(() => {
-        viewport.setAttribute(
-          'content',
-          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
-        )
-      })
-    }
 
     window.addEventListener('resize', handleSectionResize)
     return () => {

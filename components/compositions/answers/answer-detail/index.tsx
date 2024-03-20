@@ -49,7 +49,10 @@ const AnswerDetail = ({
             <span dangerouslySetInnerHTML={{ __html: questionTitle }}></span>
           </p>
           {onShareClick && (
-            <button onClick={onShareClick}>
+            <button
+              onClick={onShareClick}
+              className="shrink-0 self-baseline"
+            >
               <svg
                 width="20"
                 height="20"

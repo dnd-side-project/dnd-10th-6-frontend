@@ -15,6 +15,7 @@ import {
 import { createPortal } from 'react-dom'
 
 interface SideDrawerProps {
+  zIndex?: number
   open?: boolean
   onChangeOpen?: (state: boolean) => void
   trigger?: ReactNode
@@ -33,6 +34,7 @@ const SideDrawer = ({
   trigger,
   open = false,
   onChangeOpen,
+  zIndex,
   children,
   header,
 }: PropsWithChildren<SideDrawerProps>) => {
@@ -59,7 +61,7 @@ const SideDrawer = ({
           width: 'var(--section-width, 100%)',
           height: 'calc(var(--vh,1vh)*100)',
           transform: 'translateX(var(--section-width, 100%))',
-          zIndex: '20',
+          zIndex: zIndex + '' ?? '20',
         })
         document.body.style.overflowY = !newState ? 'hidden' : ''
 
