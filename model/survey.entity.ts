@@ -17,4 +17,5 @@ export interface Survey {
   relation: Relation
   period: Period
   senderName: string
+  senderWikiId: string
 }
