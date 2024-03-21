@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Drawer, DrawerContent } from '../ui/drawer'
 import Image from 'next/image'
