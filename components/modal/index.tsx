@@ -44,15 +44,9 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
             key="cancel"
             className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
           >
-            취소
+            확인
             <span className="sr-only">Close</span>
           </Close>,
-          <button
-            key="confirm"
-            className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
-          >
-            다음
-          </button>,
         ],
       },
       ...rest
