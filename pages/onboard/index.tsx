@@ -1,6 +1,5 @@
 import OnBoard from '@/components/onboard'
 import { NamuiApi } from '@/lib/namui-api'
-import Cookie from 'js-cookie'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
