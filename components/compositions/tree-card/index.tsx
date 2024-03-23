@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { fadeInProps } from '@/variants'
+import BottomSheetButton from '@/components/bottomsheet-button'
 
 interface TreeCardProps {
   period: string
@@ -12,6 +13,7 @@ interface TreeCardProps {
   onClick: () => void
   id: string
   senderName: string
+  senderWikiId: string
 }
 
 const TreeCard = ({
@@ -20,6 +22,7 @@ const TreeCard = ({
   relation,
   isFlipped,
   senderName,
+  senderWikiId,
   onClick,
 }: TreeCardProps) => {
   const bgColor = (() => {
@@ -44,9 +47,6 @@ const TreeCard = ({
   const handleCardClick = () => {
     onClick()
   }
-  const handleLinkClick = (e: any) => {
-    e.stopPropagation()
-  }
 
   return (
     <motion.div
@@ -70,20 +70,13 @@ const TreeCard = ({
             {treeType.render(period as Period, relation as Relation)}
           </div>
         </div>
+
         <div
           className={`card-back px-y w-full flex flex-col justify-center items-center rounded-md ${bgColor}`}
         >
           <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
+            <BottomSheetButton id={id} senderWikiId={senderWikiId} />
             <span className="my-2 text-body1-bold">{senderName}</span>
-            <Link
-              className="z-20"
-              href={`/answers?surveyId=${id}`}
-              onClick={handleLinkClick}
-            >
-              <button className="py-2 px-3 bg-gray-gray600 text-text-main-whiteFF rounded border text-caption1-medium">
-                자세히보기
-              </button>
-            </Link>
           </div>
         </div>
       </div>

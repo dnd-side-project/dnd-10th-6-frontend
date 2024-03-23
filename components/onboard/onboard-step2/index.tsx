@@ -21,36 +21,42 @@ const surveys: InfiniteData<GetSurveyResponse, unknown> = {
             relation: 'MIDDLE_AND_HIGH_SCHOOL',
             senderName: '디엔이',
             surveyId: '',
+            senderWikiId: '',
           },
           {
             period: 'ONE_YEAR',
             relation: 'WORK',
             senderName: '디엔이',
             surveyId: '',
+            senderWikiId: '',
           },
           {
             period: 'FOUR_YEARS',
             relation: 'ETC',
             senderName: '디엔이',
             surveyId: '',
+            senderWikiId: '',
           },
           {
             period: 'INFINITE',
             relation: 'ELEMENTARY_SCHOOL',
             senderName: '디엔이',
             surveyId: '',
+            senderWikiId: '',
           },
           {
             period: 'SIX_MONTHS',
             relation: 'SOCIAL',
             senderName: '디엔이',
             surveyId: '',
+            senderWikiId: '',
           },
           {
             period: 'ONE_YEAR',
             relation: 'WORK',
             senderName: '디엔이',
             surveyId: '',
+            senderWikiId: '',
           },
         ],
       },
@@ -161,6 +167,7 @@ const OnboardStep2 = () => {
                         item ? (
                           <TreeCard
                             senderName={item.senderName}
+                            senderWikiId=""
                             key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
                             id={item.surveyId}
                             period={item.period}
@@ -213,6 +220,7 @@ const OnboardStep2 = () => {
                       >
                         {page.data.content.map((item, index) => (
                           <TreeCard
+                            senderWikiId=""
                             senderName={item.senderName}
                             key={`${item.surveyId}-${(pageNo + 1) * (index + 1)}`}
                             id={item.surveyId}
