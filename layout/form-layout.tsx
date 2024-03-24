@@ -43,7 +43,7 @@ const FormLayout = ({
       </div>
 
       {button && (
-        <div className="p-5 pb-0 mb-4 bg-white flex justify-center">
+        <div className="absolute bottom-0 w-full p-5 pb-0 mb-4 bg-white flex justify-center">
           {button}
         </div>
       )}
