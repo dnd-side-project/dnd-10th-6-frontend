@@ -366,7 +366,7 @@ const SurveyForm = ({
           />
         </div>
       ) : (
-        <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+        <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[240px]">
           <Controller
             name={`answer`}
             defaultValue=""
