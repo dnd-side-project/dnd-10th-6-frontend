@@ -98,14 +98,14 @@ const SurveyForm = ({
   return (
     <form
       onSubmit={form.handleSubmit(onValid)}
-      className="text-left relative grow flex flex-col space-y-6 overflow-y-hidden"
+      className="text-left relative h-full flex flex-col space-y-6 overflow-y-hidden"
     >
-      <div
-        className="text-subTitle1-medium"
-        dangerouslySetInnerHTML={{ __html: title }}
-      ></div>
       {type === 'OX' ? (
         <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+          <div
+            className="text-subTitle1-medium"
+            dangerouslySetInnerHTML={{ __html: title }}
+          ></div>
           <Controller
             name={`id`}
             control={form.control}
@@ -175,6 +175,10 @@ const SurveyForm = ({
         </div>
       ) : type === 'MULTIPLE_CHOICE' ? (
         <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+          <div
+            className="text-subTitle1-medium"
+            dangerouslySetInnerHTML={{ __html: title }}
+          ></div>
           <Controller
             name={`id`}
             defaultValue=""
@@ -262,6 +266,10 @@ const SurveyForm = ({
         </div>
       ) : type === 'NUMERIC_CHOICE' ? (
         <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+          <div
+            className="text-subTitle1-medium"
+            dangerouslySetInnerHTML={{ __html: title }}
+          ></div>
           <Controller
             name={`id`}
             defaultValue=""
@@ -367,6 +375,10 @@ const SurveyForm = ({
         </div>
       ) : (
         <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[240px]">
+          <div
+            className="text-subTitle1-medium"
+            dangerouslySetInnerHTML={{ __html: title }}
+          ></div>
           <Controller
             name={`answer`}
             defaultValue=""
@@ -403,7 +415,10 @@ const SurveyForm = ({
                     } else {
                       form.setError('id', { type: 'required' })
                     }
-                    field.onChange(e)
+                    const MAX_LENGTH = name === 'FIVE_LETTER_WORD' ? 5 : 50
+                    if (e.target.value.length <= MAX_LENGTH) {
+                      field.onChange(e)
+                    }
                   }}
                 />
                 <label
