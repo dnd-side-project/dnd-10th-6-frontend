@@ -7,7 +7,7 @@ import BaseLayout from '@/layout/base-layout'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useMount } from '@/hooks/use-mount'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
+import MetaHead from '@/components/meta-head'
 
 const Page = () => {
   const { signin, data } = useSession()
@@ -41,6 +41,10 @@ const Page = () => {
     <>Loading...</>
   ) : (
     <div className="h-calc-h flex flex-col px-5 py-4">
+      <MetaHead
+        description="남의위키를 통해 남이 써준 나의 소개서를 확인해보세요!"
+        url="https://namui-wiki.life/"
+      />
       <section className="grow flex flex-col text-center justify-center items-center space-y-16">
         <div className="flex flex-col space-y-4">
           <div className="h-[38px]">
