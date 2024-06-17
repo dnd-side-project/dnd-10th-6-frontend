@@ -1,4 +1,4 @@
-import { QsSchemaType } from '@/hooks/useQuestionsForm'
+import { QsSchemaType } from '@/hooks/use-questions-form'
 import { NamuiApi } from '@/lib/namui-api'
 import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'

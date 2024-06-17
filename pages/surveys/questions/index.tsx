@@ -15,7 +15,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import { getQuestionQuery, submitQuestionMutaion } from '@/queries/question'
-import useQuestionForm, { QsSchemaType } from '@/hooks/useQuestionsForm'
+import useQuestionForm, { QsSchemaType } from '@/hooks/use-questions-form'
 import InputLabel from '@/components/inputLabel'
 import Inputbox from '@/components/inputbox'
 import { GetServerSideProps } from 'next'
