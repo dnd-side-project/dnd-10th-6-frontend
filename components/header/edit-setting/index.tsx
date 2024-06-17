@@ -1,9 +1,8 @@
 import Button from '@/components/button'
-import InputLabel from '@/components/inputLabel'
-import Inputbox from '@/components/inputbox'
+
+import { Inputbox } from '@/components/ui'
 import SideDrawer from '@/components/side-drawer'
 
-import FormLayout from '@/layout/form-layout'
 import { toastError } from '@/lib/client/alert'
 import { cn } from '@/lib/client/utils'
 import { NamuiApi } from '@/lib/namui-api'
@@ -12,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+
 const scheme = z.object({
   nickname: z
     .string()
@@ -87,5 +87,3 @@ export const EditProfile = () => {
     </SideDrawer>
   )
 }
-
-

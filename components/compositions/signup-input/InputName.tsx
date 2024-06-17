@@ -1,6 +1,6 @@
 import { useFunnelContext } from '@/contexts/useFunnelContext'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
-import Inputbox from '../../inputbox'
+import { Inputbox } from '@/components/ui'
 import InputLabel from '../../inputLabel'
 import Button from '../../button'
 import { FormValues } from '@/hooks/use-survey-form'

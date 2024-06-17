@@ -1,4 +1,4 @@
-import InputBox from '.'
+import {InputBox} from '.'
 import { StoryObj, Meta } from '@storybook/react'
 import { userEvent, within } from '@storybook/testing-library'
 

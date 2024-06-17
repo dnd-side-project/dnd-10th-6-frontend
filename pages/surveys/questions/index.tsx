@@ -17,7 +17,8 @@ import {
 import { getQuestionQuery, submitQuestionMutaion } from '@/queries/question'
 import useQuestionForm, { QsSchemaType } from '@/hooks/use-questions-form'
 import InputLabel from '@/components/inputLabel'
-import Inputbox from '@/components/inputbox'
+
+import {Inputbox} from '@/components/ui'
 import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
 

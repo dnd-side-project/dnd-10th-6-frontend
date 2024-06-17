@@ -22,4 +22,4 @@ const Inputbox = forwardRef<HTMLInputElement, InputboxProps>(
 
 Inputbox.displayName = 'Inputbox'
 
-export default Inputbox
+export  {Inputbox}
