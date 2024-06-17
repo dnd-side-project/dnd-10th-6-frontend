@@ -2,9 +2,9 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Drawer, DrawerContent } from '../ui/drawer'
 import Image from 'next/image'
-import pen from '@/assets/pen.svg'
-import eye from '@/assets/eye.svg'
-import menu from '@/assets/menu.svg'
+import pen from '@/assets/icons/pen.svg'
+import eye from '@/assets/icons/eye.svg'
+import menu from '@/assets/icons/menu.svg'
 import Modal from '../modal'
 
 interface BottomSheetButtonProps {

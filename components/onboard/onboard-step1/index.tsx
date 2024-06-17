@@ -1,7 +1,9 @@
 import Confetti from '@/components/confetti'
 import Button from '@/components/button'
-import WelcomeTrees from '@/components/icons/welcome-trees'
+
 import MetaHead from '@/components/meta-head'
+import Image from 'next/image'
+import welcomeTree from '@/assets/characters/welcome-tree.webp'
 
 const OnboardStep1 = () => {
   return (
@@ -83,7 +85,7 @@ const OnboardStep1 = () => {
           />
           <div className="flex flex-col items-center justify-center text-center grow">
             <div className="w-full px-[0.6em]">
-              <WelcomeTrees />
+              <Image src={welcomeTree} alt="나무" className="w-full" />
             </div>
             <p className="text-[2vb] font-bold mt-3 mb-1">환영해요 김디엔님</p>
             <p className="text-[1vb] text-text-sub-gray4f">
