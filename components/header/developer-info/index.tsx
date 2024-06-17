@@ -20,7 +20,7 @@ const container = {
   },
 }
 
-const DeveloperInfo = () => {
+export const DeveloperInfo = () => {
   const { selectedFilter } = useFilter()
   const [openAlert, setOpenAlert] = useState(false)
   const [length, setLength] = useState(10)
@@ -108,17 +108,8 @@ const DeveloperInfo = () => {
             <div className="py-4">
               <Logo />
             </div>
-
-            {/* <b> Front-end github :</b>
             <p className="text-body3-medium text-text-sub-gray4f">
-              https://github.com/dnd-side-project/dnd-10th-6-frontend
-            </p>
-            <b> Back-end github :</b>
-            <p className="text-body3-medium text-text-sub-gray4f">
-              https://github.com/dnd-side-project/dnd-10th-6-backend
-            </p> */}
-            <p className="text-body3-medium text-text-sub-gray4f">
-              Copyright 2024. GRRREW. All rights reserved.
+              Copyright ${new Date().getFullYear()}. GRRREW. All rights reserved.
             </p>
           </div>
         </div>
@@ -127,4 +118,4 @@ const DeveloperInfo = () => {
   )
 }
 
-export default DeveloperInfo
+

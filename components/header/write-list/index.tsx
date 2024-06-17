@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react'
-import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
+
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { motion } from 'framer-motion'
 import { useIntersectionObserver } from '@/hooks/use-observer'
@@ -7,6 +7,7 @@ import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
 import { WritingListResponse } from '@/queries/surveys'
 import { NamuiApi } from '@/lib/namui-api'
 import SideDrawer from '@/components/side-drawer'
+import WriteListCard from './wirte-list-card'
 
 const container = {
   hidden: { opacity: 0 },

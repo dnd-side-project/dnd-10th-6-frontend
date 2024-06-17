@@ -19,7 +19,8 @@ const scheme = z.object({
     .max(6, { message: '2-6자로 입력해주세요' }),
 })
 type SchemeType = z.infer<typeof scheme>
-const EditProfile = () => {
+
+export const EditProfile = () => {
   const [openAlert, setOpenAlert] = useState(false)
   const { data } = useSession()
   const id = useId()
@@ -87,4 +88,4 @@ const EditProfile = () => {
   )
 }
 
-export default EditProfile
+
