@@ -99,7 +99,8 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
         {data?.user?.name ?? ''}님에 대해 알아보세요!
       </h3>
 
-      {short?.length ? (
+      {/* !DELETE */}
+      {/* {short?.length ? (
         <>
           <div className="flex overflow-x-scroll space-x-2 w-[calc(100%_+_3rem)] px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">
             {short.slice(0, short.length / 2).map((item) => (
@@ -122,7 +123,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             ))}
           </div>
         </>
-      ) : null}
+      ) : null} */}
     </>
   )
 }
