@@ -1,5 +1,7 @@
 import { cn } from '@/lib/client/utils'
 
+
+// !THINK
 export const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월 미만',
   ONE_YEAR: '6개월-1년 미만',
@@ -7,7 +9,7 @@ export const periods: { [key: string]: string } = {
   INFINITE: '4년 이상',
 }
 
-const PeriodBadge = ({ period }: { period: string }) => {
+export const PeriodBadge = ({ period }: { period: string }) => {
   return (
     <div
       className={cn(
@@ -19,4 +21,4 @@ const PeriodBadge = ({ period }: { period: string }) => {
   )
 }
 
-export default PeriodBadge
+

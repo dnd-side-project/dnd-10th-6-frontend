@@ -1,5 +1,6 @@
 import { cn } from '@/lib/client/utils'
 
+//THINK!
 export const relations: {
   [key: string]: string
 } = {
@@ -49,7 +50,7 @@ const textColor = (relation: string) => {
   }
 }
 
-const RelationBadge = ({ relation }: { relation: string }) => {
+export const RelationBadge = ({ relation }: { relation: string }) => {
   return (
     <div
       className={cn(
@@ -62,5 +63,3 @@ const RelationBadge = ({ relation }: { relation: string }) => {
     </div>
   )
 }
-
-export default RelationBadge

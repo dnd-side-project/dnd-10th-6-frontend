@@ -3,9 +3,8 @@ import { useAnimation, useInView } from 'framer-motion'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Writing } from '@/queries/surveys'
-import PeriodBadge from '@/components/badge/period'
-import RelationBadge from '@/components/badge/relation'
 import { TreeType, treeCardAsset } from '@/model/tree.entity'
+import { PeriodBadge, RelationBadge } from '@/components/badge'
 const variants = {
   hidden: {
     opacity: 0,
