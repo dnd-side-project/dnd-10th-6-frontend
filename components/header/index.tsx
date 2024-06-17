@@ -14,8 +14,8 @@ import { useSettingStore } from '@/stores/setting.store'
 import useScrollDirection from '@/hooks/use-scroll-direction'
 import { cn } from '@/lib/client/utils'
 
-import Logo from '../ui/logo'
-import Setting from './setting'
+import {Logo} from '../ui/logo'
+import {Setting} from './setting'
 
 export interface HeaderProps {
   center?: ReactNode

@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import WriteListCard from '@/components/compositions/header/write-list/wirte-list-card'
+import React, { useState } from 'react'
 import useFilter, { Filter } from '@/hooks/use-filter'
-import { motion } from 'framer-motion'
 import { useIntersectionObserver } from '@/hooks/use-observer'
 import Ch from '@/components/svgs/mimoticons/ch'
 import Yk from '@/components/svgs/mimoticons/yk'

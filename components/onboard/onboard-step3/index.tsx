@@ -1,4 +1,4 @@
-import Logo from '@/components/ui/logo'
+import { Logo } from '@/components/ui'
 import useFilter, { KnowFilterType } from '@/hooks/use-filter'
 import { cn } from '@/lib/client/utils'
 import { fadeInProps } from '@/variants'
