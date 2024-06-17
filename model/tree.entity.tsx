@@ -63,7 +63,6 @@ export const treeCardAsset: Record<TreeAssetKey, ReactNode> = {
   FOUR_YEARS_UNIVERSITY: <FourUniversity />,
   FOUR_YEARS_WORK: <FourWork />,
   FOUR_YEARS_SOCIAL: <FourSocial />,
-
   FOUR_YEARS_ETC: <FourEtc />,
   INFINITE_ELEMENTARY_SCHOOL: <InfiniteElementary />,
   INFINITE_WORK: <InfiniteWork />,

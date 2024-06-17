@@ -98,8 +98,8 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
       <h3 className="font-bold text-[1.6vb] text-st tracking-tighter mt-[2.2vb] mb-[1.4vb] text-start">
         김디엔님에 대해 알아보세요!
       </h3>
-
-      {short?.length ? (
+      {/* !DELETE */}
+      {/* {short?.length ? (
         <>
           <div className="flex overflow-x-scroll space-x-[1vb] w-[22vb] px-[0.6vb] pl-[0.6vb] scrollbar-hide avoid-min-w relative">
             {short.slice(0, short.length / 2).map((item) => (
@@ -120,7 +120,7 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
             ))}
           </div>
         </>
-      ) : null}
+      ) : null} */}
     </>
   )
 }
