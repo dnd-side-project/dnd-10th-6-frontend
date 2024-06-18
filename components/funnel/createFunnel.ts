@@ -1,4 +1,4 @@
-import useFunnel from '@/hooks/useFunnel'
+import useFunnel from '@/hooks/use-funnel'
 
 import Funnel, { Step } from '.'
 

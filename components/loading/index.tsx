@@ -39,7 +39,9 @@ const Loading = () => {
           />
         </svg>
       </section>
-      <ManyTrees />
+      <div className="ml-5 mt-5"
+      >
+      <ManyTrees /></div>
     </div>
   )
 }

@@ -13,8 +13,9 @@ import { fadeInProps } from '@/variants'
 import { useSettingStore } from '@/stores/setting.store'
 import useScrollDirection from '@/hooks/use-scroll-direction'
 import { cn } from '@/lib/client/utils'
-import Setting from '@/components/compositions/header/setting'
-import Logo from '../ui/logo'
+
+import {Logo} from '../ui/logo'
+import {Setting} from './setting'
 
 export interface HeaderProps {
   center?: ReactNode

@@ -15,9 +15,10 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import { getQuestionQuery, submitQuestionMutaion } from '@/queries/question'
-import useQuestionForm, { QsSchemaType } from '@/hooks/useQuestionsForm'
+import useQuestionForm, { QsSchemaType } from '@/hooks/use-questions-form'
 import InputLabel from '@/components/inputLabel'
-import Inputbox from '@/components/inputbox'
+
+import {Inputbox} from '@/components/ui'
 import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
 
@@ -294,23 +295,47 @@ const Question = ({ nickname }: { nickname: string }) => {
                     control={questionForm.control}
                     name="senderName"
                     render={({ field }) => (
-                      <InputLabel className="text-body1-bold" label="이름">
-                        <Inputbox
-                          {...field}
-                          placeholder="이름을 입력해주세요"
-                          minLength={2}
-                          maxLength={6}
-                        />
-                        <p
-                          className={cn(
-                            'mt-3 text-body3-medium ml-2 text-text-sub-gray76',
-                            questionForm.formState.errors.senderName &&
-                              'text-inputbox-color-alert',
-                          )}
-                        >
-                          2-6자로 입력해주세요
-                        </p>
-                      </InputLabel>
+                      <>
+                        <div className="space-y-2">
+                          <InputLabel className="text-body1-bold" label="이름">
+                            <Inputbox
+                              {...field}
+                              placeholder="이름을 입력해주세요"
+                              minLength={2}
+                              maxLength={6}
+                            />
+                          </InputLabel>
+                          <p
+                            className={cn(
+                              'text-body3-medium duration-150 pl-2',
+                              questionForm.formState.errors.senderName &&
+                                '!text-inputbox-color-alert',
+                              'text-sub-gray76 text-body3-medium',
+                            )}
+                            style={{ color: '#767676' }}
+                          >
+                            2~6자로 입력해주세요.
+                          </p>
+                        </div>
+                        <div className="py-4 px-5 bg-gray-gray50 rounded-md flex space-x-3 mt-5">
+                          <svg
+                            className="shrink-0 my-[2px]"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle cx="8" cy="8" r="8" fill="#4F4F4F" />
+                            <path d="M9 3H7V9H9V3Z" fill="#F7F7F7" />
+                            <path d="M9 11H7V13H9V11Z" fill="#F7F7F7" />
+                          </svg>
+                          <p className="text-body3-medium text-text-sub-gray76">
+                            누가 작성했는지 알 수 있도록, 나를 가장 잘 나타내는
+                            이름으로 입력해주세요
+                          </p>
+                        </div>
+                      </>
                     )}
                   />
                 </motion.div>

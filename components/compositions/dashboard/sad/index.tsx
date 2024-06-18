@@ -51,16 +51,22 @@ const Sad = ({ filter }: { filter: FilterType }) => {
         ) : (
           <>
             <h2 className="text-mainTitle2-bold mb-5">
-              슬프거나 화날 때
-              <br />
-              <b
-                className="break-keep"
-                style={{
-                  color: orderByMaxValueList?.[0].color,
-                }}
-              >
-                {orderByMaxValueList?.[0].text}
-              </b>
+              {orderByMaxValueList?.[0].text === '직접 입력' ? (
+                <span>친구가 써준 답변을 확인해보세요</span>
+              ) : (
+                <h2 className="text-mainTitle2-bold mb-5">
+                  슬프거나 화날 때 <br />
+                  <b
+                    className="break-keep"
+                    style={{
+                      color: orderByMaxValueList?.[0].color,
+                    }}
+                  >
+                    {' '}
+                    <span>{orderByMaxValueList?.[0].text}</span>
+                  </b>
+                </h2>
+              )}
             </h2>
             <div className="flex flex-col justify-center  space-y-8 px-8 py-12 rounded-2xl shadow-basic mx-auto">
               {orderByMaxValueList?.slice(0, 3).map((item, index) => {

@@ -168,11 +168,17 @@ function BestWorth({ filter }: { filter: FilterType }) {
       ) : (
         <>
           <h2 className="text-mainTitle2-bold font-bold">
-            가장 중요한 것은{' '}
-            <b style={{ color: orderByMaxValueList?.[0].color }}>
-              {orderByMaxValueList?.[0].legend.split(' ')[2]}
-            </b>
-            이네요
+            {orderByMaxValueList?.[0].legend.split(' ')[2] === '직접' ? (
+              <span>친구가 써준 답변을 확인하세요</span>
+            ) : (
+              <span>
+                가장 중요한 것은{' '}
+                <b style={{ color: orderByMaxValueList?.[0].color }}>
+                  {orderByMaxValueList?.[0].legend.split(' ')[2]}
+                </b>
+                이네요
+              </span>
+            )}
           </h2>
           <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
             <div className="w-[180px] h-[180px] mx-auto relative">

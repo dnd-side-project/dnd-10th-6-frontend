@@ -1,10 +1,11 @@
 import { useFunnelContext } from '@/contexts/useFunnelContext'
 import { Controller, useFormContext, useWatch } from 'react-hook-form'
-import Inputbox from '../../inputbox'
+import { Inputbox } from '@/components/ui'
 import InputLabel from '../../inputLabel'
 import Button from '../../button'
-import { FormValues } from '@/hooks/useSurveyForm'
+import { FormValues } from '@/hooks/use-survey-form'
 import FormLayout from '@/layout/form-layout'
+import { cn } from '@/lib/client/utils'
 
 const InputName = () => {
   const { toNextStep } = useFunnelContext()
@@ -38,13 +39,35 @@ const InputName = () => {
                 />
               )}
             />
+            <p
+              className={cn(
+                'text-body3-medium duration-150 pl-2',
+                errors.name && '!text-inputbox-color-alert',
+                'text-sub-gray76 text-body3-medium',
+              )}
+              style={{ color: '#767676' }}
+            >
+              2~6자로 입력해주세요.
+            </p>
           </InputLabel>
-          {errors.name && (
-            <span className="text-red-500">{errors.name.message}</span>
-          )}
-          <p className="ml-2 mt-2 text-body3-medium text-text-sub-gray76">
-            2-6자로 입력해주세요
-          </p>
+          <div className="py-4 px-5 bg-gray-gray50 rounded-md flex space-x-3">
+            <svg
+              className="shrink-0 my-[2px]"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="8" cy="8" r="8" fill="#4F4F4F" />
+              <path d="M9 3H7V9H9V3Z" fill="#F7F7F7" />
+              <path d="M9 11H7V13H9V11Z" fill="#F7F7F7" />
+            </svg>
+            <p className="text-body3-medium text-text-sub-gray76">
+              친구들이 원활하게 작성할 수 있도록, 나를 가장 잘 나타내는 이름으로
+              입력해주세요
+            </p>
+          </div>
         </>
       }
     />

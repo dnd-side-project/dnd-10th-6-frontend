@@ -1,5 +1,5 @@
 import Button from '@/components/button'
-import WelcomeTrees from '@/components/icons/welcome-trees'
+
 import MetaHead from '@/components/meta-head'
 import Modal from '@/components/modal'
 import FormLayout from '@/layout/form-layout'
@@ -67,7 +67,7 @@ const WelcomePage = () => {
         className="fixed top-0 left-0 z-10 w-full bg-white"
         content={
           <div className="grow -mt-5 flex flex-col items-center justify-center px-5 text-center">
-            <WelcomeTrees />
+            <img src="/assets/trees/welcome-tree.svg" alt="welcome" />
             <p className="text-mainTitle2-bold mt-8 mb-3">
               환영해요 {data?.user?.name}님
             </p>

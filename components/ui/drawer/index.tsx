@@ -1,132 +1,117 @@
-import { HeaderProps } from '@/components/header'
-import BaseLayout from '@/layout/base-layout'
-import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import { drawerInOutProps } from '@/variants'
-import { AnimatePresence, LazyMotion, domAnimation } from 'framer-motion'
-import {
-  PropsWithChildren,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react'
-import { createPortal } from 'react-dom'
+import { cn } from '@/lib/client/utils'
+import * as React from 'react'
+import { Drawer as DrawerPrimitive } from 'vaul'
 
-interface DrawerProps {
-  open?: boolean
-  onChangeOpen?: (state: boolean) => void
-  trigger?: ReactNode
-  header?: HeaderProps & { showHeader?: boolean }
-}
 
-function css(element: HTMLElement, style: Partial<CSSStyleDeclaration>) {
-  for (const property in style) {
-    if (style[property]) {
-      element.style[property] = style[property]!
-    }
-  }
-}
 
 const Drawer = ({
-  trigger,
-  open = false,
-  onChangeOpen,
-  children,
-  header,
-}: PropsWithChildren<DrawerProps>) => {
-  const id = useId()
-  const [isMounted, setIsMounted] = useState(open)
+  shouldScaleBackground = true,
+  ...props
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
+  <DrawerPrimitive.Root
+    shouldScaleBackground={shouldScaleBackground}
+    {...props}
+  />
+)
+Drawer.displayName = 'Drawer'
 
-  const ref = useRef(
-    typeof window === 'undefined' ? null : document.createElement('div'),
-  )
+const DrawerTrigger = DrawerPrimitive.Trigger
 
-  const bodyRef = useRef(
-    typeof window === 'undefined'
-      ? null
-      : document.getElementById('main-section'),
-  ).current
+const DrawerPortal = DrawerPrimitive.Portal
 
-  const toggleOpen = useCallback(
-    (state?: boolean) => {
-      const newState = !state ?? isMounted
-      if (ref.current) {
-        css(ref.current, {
-          position: 'fixed',
-          top: '0px',
-          width: 'var(--section-width, 100%)',
-          height: 'calc(var(--vh,1vh)*100)',
-          transform: 'translateX(var(--section-width, 100%))',
-          zIndex: '20',
-        })
-        document.body.style.overflowY = !newState ? 'hidden' : ''
+const DrawerClose = DrawerPrimitive.Close
 
-        const newIsMountState = state ?? !isMounted
-        setIsMounted(newIsMountState)
-        onChangeOpen && onChangeOpen(newIsMountState)
-      }
-    },
-    [isMounted, onChangeOpen],
-  )
+const DrawerOverlay = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Overlay
+    ref={ref}
+    className={cn('fixed inset-0 z-50 bg-black/80', className)}
+    {...props}
+  />
+))
+DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
-  useBrowserLayoutEffect(() => {
-    if (ref.current) {
-      ref.current.id = id
+const DrawerContent = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DrawerPortal>
+    <DrawerOverlay />
+    <DrawerPrimitive.Content
+      ref={ref}
+      className={cn(
+        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background',
+        className,
+      )}
+      {...props}
+    >
+      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      {children}
+    </DrawerPrimitive.Content>
+  </DrawerPortal>
+))
+DrawerContent.displayName = 'DrawerContent'
 
-      bodyRef?.appendChild(ref.current)
-      return () => {
-        bodyRef?.removeChild(ref.current!)
-      }
-    }
-  }, [id])
+const DrawerHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn('grid gap-1.5 p-4 text-center sm:text-left', className)}
+    {...props}
+  />
+)
+DrawerHeader.displayName = 'DrawerHeader'
 
-  useBrowserLayoutEffect(() => {
-    if (ref.current) {
-      if (isMounted) {
-        css(ref.current, {
-          display: 'block',
-          zIndex: '10',
-        })
-      }
-    }
-  }, [isMounted])
+const DrawerFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn('mt-auto flex flex-col gap-2 p-4', className)}
+    {...props}
+  />
+)
+DrawerFooter.displayName = 'DrawerFooter'
 
-  useEffect(() => {
-    toggleOpen(open)
-  }, [open, toggleOpen])
+const DrawerTitle = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Title
+    ref={ref}
+    className={cn(
+      'text-lg font-semibold leading-none tracking-tight',
+      className,
+    )}
+    {...props}
+  />
+))
+DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 
-  return (
-    <>
-      <div className="grow" onClick={() => toggleOpen(true)}>
-        {trigger}
-      </div>
-      <div className="flex items-center">
-        {ref.current
-          ? createPortal(
-              <LazyMotion features={domAnimation}>
-                <AnimatePresence mode="wait">
-                  {isMounted ? (
-                    <BaseLayout
-                      className="w-full bg-white h-calc-h"
-                      framer={{ ...drawerInOutProps }}
-                      showHeader={header?.showHeader}
-                      header={header}
-                    >
-                      <section className="flex flex-col grow overflow-y-scroll h-full">
-                        {children}
-                      </section>
-                    </BaseLayout>
-                  ) : null}
-                </AnimatePresence>
-              </LazyMotion>,
-              ref.current,
-            )
-          : null}
-      </div>
-    </>
-  )
+const DrawerDescription = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cn('text-sm text-muted-foreground', className)}
+    {...props}
+  />
+))
+DrawerDescription.displayName = DrawerPrimitive.Description.displayName
+
+export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
 }
-
-export default Drawer

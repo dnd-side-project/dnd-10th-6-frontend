@@ -11,6 +11,7 @@ import withAuth from '@/layout/HOC/with-auth'
 import DashboardContainer from '@/components/dashboard-container'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
 import { useRouter } from 'next/router'
+import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
 
 export const DetailQsContext = createContext<{
   id: string
@@ -50,7 +51,10 @@ const Page = () => {
         </FilterProvider>
 
         <FilterProvider>
-          <DetailDrawer />
+          <ShareImageProvider>
+            <DetailDrawer />
+            <ShareImageDrawer />
+          </ShareImageProvider>
         </FilterProvider>
       </DetailQsContext.Provider>
     </BaseLayout>

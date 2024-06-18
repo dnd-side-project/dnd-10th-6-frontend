@@ -23,7 +23,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
 import { toastError } from '@/lib/client/alert'
 import ErrorBoundary from '@/components/error-boundary'
-import Logo from '@/components/ui/logo'
+import {Logo} from '@/components/ui'
 
 import icons from '@/icons'
 import Image from 'next/image'
@@ -53,6 +53,17 @@ export default function NamuiWikiApp({
     ((page: ReactNode) => <BaseLayout>{page}</BaseLayout>)
 
   const handleSectionResize = () => {
+    const viewport = document.querySelector(
+      'meta[name=viewport]',
+    ) as HTMLMetaElement
+    if (viewport) {
+      queueMicrotask(() => {
+        viewport.setAttribute(
+          'content',
+          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
+        )
+      })
+    }
     if (mainSectionRef.current) {
       const rect = mainSectionRef.current.getBoundingClientRect()
       document.documentElement.style.setProperty(
@@ -77,17 +88,6 @@ export default function NamuiWikiApp({
 
   useEffect(() => {
     handleSectionResize()
-    const viewport = document.querySelector(
-      'meta[name=viewport]',
-    ) as HTMLMetaElement
-    if (viewport) {
-      queueMicrotask(() => {
-        viewport.setAttribute(
-          'content',
-          `width=${window.innerWidth}, height=${window.innerHeight}, initial-scale=1.0, maximum-scale=1.0, user-scalable=0`,
-        )
-      })
-    }
 
     window.addEventListener('resize', handleSectionResize)
     return () => {

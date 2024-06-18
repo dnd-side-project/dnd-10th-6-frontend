@@ -5,8 +5,7 @@ import AnswerDetail from '@/components/compositions/answers/answer-detail'
 import { useRouter } from 'next/router'
 import { useSession } from '@/provider/session-provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import RelationBadge from '@/components/badge/relation'
-import PeriodBadge from '@/components/badge/period'
+import {RelationBadge,PeriodBadge} from '@/components/badge'
 import { useQuery } from '@tanstack/react-query'
 import { Survey, getSurveyByIdQuery } from '@/queries/surveys'
 import { GetServerSideProps } from 'next'
@@ -174,11 +173,15 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
               ? () => {
                   showShareImage({
                     period: survey.period,
+                    optionName: item.optionName,
                     questionName: item.questionName as any,
                     reason: item.reason as any,
                     relation: survey.relation,
                     senderName: survey.senderName,
-                    value: item.value,
+                    value:
+                      typeof item.value === 'number'
+                        ? item.value.toLocaleString()
+                        : item.value,
                   })
                 }
               : undefined
@@ -189,7 +192,7 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
             .replace('{{userName}}', data?.user?.name ?? '')
             .replace('<br/>', ' ')}
           answer={item.reason ? item.text : item.reason}
-          value={item.value}
+          value={item.value as any}
           reason={item.reason ?? item.text}
         />
       ))}
