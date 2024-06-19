@@ -85,7 +85,7 @@ const OnboardStep1 = () => {
           />
           <div className="flex flex-col items-center justify-center text-center grow">
             <div className="w-full px-[0.6em]">
-              <Image src={welcomeTree} alt="나무" className="w-full" />
+              <Image src={welcomeTree} alt="나무" className="w-full p-3" />
             </div>
             <p className="text-[2vb] font-bold mt-3 mb-1">환영해요 김디엔님</p>
             <p className="text-[1vb] text-text-sub-gray4f">

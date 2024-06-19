@@ -1,4 +1,4 @@
-import OnBoard from '@/components/onboard'
+import OnBoard from '@/components/situations/onboard'
 import { NamuiApi } from '@/lib/namui-api'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'

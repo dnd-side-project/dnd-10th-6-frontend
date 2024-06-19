@@ -1,4 +1,4 @@
-import Loading from '@/components/loading'
+import Loading from '@/components/situations/loading'
 import { AUTH } from '@/constants'
 import BaseLayout from '@/layout/base-layout'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'

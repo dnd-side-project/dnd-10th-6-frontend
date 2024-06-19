@@ -1,4 +1,4 @@
-import WriterLanding from '@/components/landing/WriterLanding'
+import WriterLanding from '@/components/situations/landing'
 import { ReactNode } from 'react'
 
 const Page = () => {
