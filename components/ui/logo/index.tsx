@@ -34,7 +34,7 @@ const Logo = () => {
       viewBox="0 0 74 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="z-10 w-full h-full"
+      className="z-10 h-full w-full"
     >
       <motion.path
         variants={pathVariants}
@@ -96,4 +96,4 @@ const Logo = () => {
   )
 }
 
-export {Logo}
+export { Logo }

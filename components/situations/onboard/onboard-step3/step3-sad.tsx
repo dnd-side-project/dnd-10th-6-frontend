@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import { RANK_COLOR } from '@/constants'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
@@ -33,7 +33,7 @@ const statisics = {
   ],
 }
 
-const Step3Sad = ({ filter }: { filter: FilterType }) => {
+const Step3Sad = ({}: { filter: FilterType }) => {
   const { inView, ref } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
@@ -55,7 +55,7 @@ const Step3Sad = ({ filter }: { filter: FilterType }) => {
     <LazyMotion features={domAnimation}>
       <div ref={ref}>
         <>
-          <h2 className="text-start text-[1.6vb] font-bold mb-[1.5vb]">
+          <h2 className="mb-[1.5vb] text-start text-[1.6vb] font-bold">
             슬프거나 화날 때
             <br />
             <b
@@ -67,7 +67,7 @@ const Step3Sad = ({ filter }: { filter: FilterType }) => {
               {orderByMaxValueList?.[0].text}
             </b>
           </h2>
-          <div className="flex flex-col justify-center space-y-[1vb] px-[0.8vb] py-[2.2vb] rounded-[1.6vb] shadow-basic mx-auto">
+          <div className="mx-auto flex flex-col justify-center space-y-[1vb] rounded-[1.6vb] px-[0.8vb] py-[2.2vb] shadow-basic">
             {orderByMaxValueList?.slice(0, 3).map((item, index) => {
               return (
                 <Bar
@@ -81,12 +81,12 @@ const Step3Sad = ({ filter }: { filter: FilterType }) => {
               )
             })}
           </div>
-          <div className="w-1/2  mx-auto mt-[2vb]">
+          <div className="mx-auto  mt-[2vb] w-1/2">
             <Button
               onClick={() => {}}
               rounded="full"
-              variant="muted"
-              className="bg-text-main-whiteFF text-[1vb] h-[3vb]"
+              variant="Line-neutral"
+              className="mx-auto h-[3vb] text-[1vb]"
             >
               자세히 보기
             </Button>
@@ -119,8 +119,8 @@ function Bar({
   const 최소바크기보정값 = (80 * percent) / 100 + 10
   return (
     <div className="flex flex-col space-y-[1vb]">
-      <h3 className={cn('text-text-main-black11 text-start', font)}>{title}</h3>
-      <div className="flex space-x-[0.4vb] w-full">
+      <h3 className={cn('text-start text-text-main-black11', font)}>{title}</h3>
+      <div className="flex w-full space-x-[0.4vb]">
         <m.div
           {...rest}
           initial={{ width: '0%' }}

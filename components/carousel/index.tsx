@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useEffect, useCallback, useRef } from 'react'
+import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react'
 import type { ReactNode, PropsWithChildren } from 'react'
 import { UseEmblaCarouselType } from 'embla-carousel-react'
 import { EmblaCarouselType } from 'embla-carousel'
@@ -13,7 +13,6 @@ import {
 } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
-
 
 interface CarouselProps<T> {
   className?: string
@@ -73,9 +72,9 @@ const Carousel = <T,>({
   return (
     <LazyMotion features={domAnimation}>
       <m.div className={cn(className)} {...fadeInProps}>
-        <div className="overflow-hidden grow flex flex-col" ref={viewportRef}>
+        <div className="flex grow flex-col overflow-hidden" ref={viewportRef}>
           <div
-            className="disabled-select flex grow relative h-full"
+            className="disabled-select relative flex h-full grow"
             ref={containerRef}
           >
             {slides.map((item, index) => (
@@ -144,7 +143,7 @@ export const DotButton = ({
   return (
     <m.button
       style={{ width: x, backgroundColor }}
-      className="h-[6px] mx-[3px] flex items-center origin-center rounded-full"
+      className="mx-[3px] flex h-[6px] origin-center items-center rounded-full"
       type="button"
       onClick={onClick}
     />

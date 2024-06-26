@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import TreeCard from '@/components/compositions/tree-card'
 import Confetti from '@/components/confetti'
 import BaseLayout from '@/layout/base-layout'
@@ -68,18 +68,18 @@ const OnboardStep2 = () => {
   return (
     <div
       key="step2"
-      className="px-4 h-full flex flex-col items-center text-center gap-5 space-y-[2vb] justify-center"
+      className="flex h-full flex-col items-center justify-center gap-5 space-y-[2vb] px-4 text-center"
     >
       <h2 className="text-[2.3vb]">
         친구와 <b>알게 된 기간, 경로</b>에 따라
         <br />
         <b>나무 카드의 모양과 색</b>이 달라져요
       </h2>
-      <section className="p-[0.75vb] aspect-[1/2.1653] rounded-[3vb] shadow-onboard overflow-hidden flex flex-col w-[25vb]">
-        <div className="flex flex-col overflow-y-scroll scrollbar-hide relative grow pb-[0.5vb]">
-          <header className="flex rounded-t-[2.2vb] p-[1vb] justify-between bg-gray-gray50 w-full h-[4vb] items-center">
+      <section className="flex aspect-[1/2.1653] w-[25vb] flex-col overflow-hidden rounded-[3vb] p-[0.75vb] shadow-onboard">
+        <div className="relative flex grow flex-col overflow-y-scroll pb-[0.5vb] scrollbar-hide">
+          <header className="flex h-[4vb] w-full items-center justify-between rounded-t-[2.2vb] bg-gray-gray50 p-[1vb]">
             <svg
-              className="w-[2.4vb] h-[1.195vb]"
+              className="h-[1.195vb] w-[2.4vb]"
               width="15"
               height="6"
               viewBox="0 0 15 6"
@@ -135,33 +135,33 @@ const OnboardStep2 = () => {
               ),
             }}
           >
-            <div className="flex space-x-6 justify-between items-center px-[1.2vb] py-[1.6vb]">
-              <div className="flex flex-col space-y-[0.1vb] flex-1 text-start">
+            <div className="flex items-center justify-between space-x-6 px-[1.2vb] py-[1.6vb]">
+              <div className="flex flex-1 flex-col space-y-[0.1vb] text-start">
                 <p className="text-[0.9vb] text-text-sub-gray4f">
                   내 정원에 심어진 나무는
                 </p>
                 <h3 className="text-[1.8vb] font-bold text-black">총 6그루</h3>
               </div>
 
-              <Button className="!w-fit !h-fit rounded-[0.4vb] px-[1vb] py-[0.7vb] text-[0.9vb]">
+              <Button className="!h-fit !w-fit rounded-[0.4vb] px-[1vb] py-[0.7vb] text-[0.9vb]">
                 내 결과 보기
               </Button>
             </div>
             <section className="bg-white">
               <div className=" w-full px-[0.6vb] py-[1.2vb]">
-                <p className="font-bold text-[1.2vb] text-text-sub-gray4f text-left">
+                <p className="text-left text-[1.2vb] font-bold text-text-sub-gray4f">
                   받은 친구
                 </p>
               </div>
-              <div className="w-full justify-center items-center flex flex-col space-y-2 pb-10">
-                <div className="grid grid-cols-3 w-full gap-2 ">
+              <div className="flex w-full flex-col items-center justify-center space-y-2 pb-10">
+                <div className="grid w-full grid-cols-3 gap-2 ">
                   {surveys?.pages.map((page, pageNo) =>
                     pageNo === 0 && page.data.content.length < 20 ? (
                       [
                         ...page.data.content,
                         ...Array.from(
                           { length: 20 - page.data.content.length },
-                          (v) => null,
+                          (_) => null,
                         ),
                       ].map((item, index) =>
                         item ? (
@@ -177,7 +177,7 @@ const OnboardStep2 = () => {
                           />
                         ) : (
                           <div key={`empty-${(pageNo + 1) * (index + 1)}`}>
-                            <div className="flex justify-center items-center rounded w-full aspect-[80/90] bg-gray-gray50 border-dashed border ">
+                            <div className="flex aspect-[80/90] w-full items-center justify-center rounded border border-dashed bg-gray-gray50 ">
                               <svg
                                 width="34"
                                 height="34"
@@ -216,7 +216,7 @@ const OnboardStep2 = () => {
                     ) : (
                       <div
                         key={`empty-${pageNo + 1}-container`}
-                        className="grid grid-cols-3 w-full gap-2 "
+                        className="grid w-full grid-cols-3 gap-2 "
                       >
                         {page.data.content.map((item, index) => (
                           <TreeCard
@@ -236,8 +236,8 @@ const OnboardStep2 = () => {
                 </div>
               </div>
               <div className="sticky bottom-0 bg-gradient-to-t from-white from-85% to-transparent to-100%">
-                <Confetti className="fixed w-full h-full top-0 left-full pointer-events-none">
-                  <Button className="text-[1.4vb] rounded-sm py-[0.8vb] h-fit self-end">
+                <Confetti className="pointer-events-none fixed left-full top-0 h-full w-full">
+                  <Button className="h-fit self-end rounded-sm py-[0.8vb] text-[1.4vb]">
                     친구에게 내 소개 부탁하기
                   </Button>
                 </Confetti>
@@ -245,8 +245,8 @@ const OnboardStep2 = () => {
             </section>
           </BaseLayout>
         </div>
-        <footer className="flex w-full h-[2vb] justify-center items-end">
-          <div className="h-[0.3vb] w-1/3 bg-black rounded-full" />
+        <footer className="flex h-[2vb] w-full items-end justify-center">
+          <div className="h-[0.3vb] w-1/3 rounded-full bg-black" />
         </footer>
       </section>
     </div>

@@ -23,9 +23,9 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
 import { toastError } from '@/lib/client/alert'
 import ErrorBoundary from '@/components/error-boundary'
-import {Logo} from '@/components/ui'
+import { Logo } from '@/components/ui'
 
-import icons from '@/icons'
+import icons from '@/assets/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -107,15 +107,15 @@ export default function NamuiWikiApp({
       <ErrorBoundary>
         <QueryProvider>
           <HydrationBoundary state={pageProps.dehydratedState}>
-            <div className="grow hidden lg:flex flex-col pb-8">
-              <div className="grow flex flex-col justify-center">
-                <h3 className="font-bold text-[32px] leading-[42px] text-text-main-black11">
+            <div className="hidden grow flex-col pb-8 lg:flex">
+              <div className="flex grow flex-col justify-center">
+                <h3 className="text-[32px] font-bold leading-[42px] text-text-main-black11">
                   남이 쓰는 나의 소개서
                 </h3>
-                <div className="max-w-xs max-h-24 flex items-center flex-col grow mt-3">
+                <div className="mt-3 flex max-h-24 max-w-xs grow flex-col items-center">
                   <Logo />
                 </div>
-                <div className="flex items-center justify-center w-24 aspect-square rounded-2xl shadow-onboard mt-16">
+                <div className="mt-16 flex aspect-square w-24 items-center justify-center rounded-2xl shadow-onboard">
                   <svg
                     width="59"
                     height="78"
@@ -173,7 +173,7 @@ export default function NamuiWikiApp({
                   <Link
                     href="https://notefolio.net/ayan_note/383271"
                     target="_blank"
-                    className="w-8 h-8 rounded-md overflow-hidden"
+                    className="h-8 w-8 overflow-hidden rounded-md"
                   >
                     <Image
                       src={icons.NotePolio.src}
@@ -191,7 +191,7 @@ export default function NamuiWikiApp({
                     />
                   </Link>
                 </div>
-                <span className="text-text-sub-gray99 text-body1-medium">
+                <span className="text-body1-medium text-text-sub-gray99">
                   Copyright {new Date().getFullYear()}. GRRREW. All rights
                   reserved.
                 </span>
@@ -200,7 +200,7 @@ export default function NamuiWikiApp({
             <div
               ref={mainSectionRef}
               id="main-section"
-              className="mx-auto relative overflow-x-hidden max-w-lg w-full bg-white"
+              className="relative mx-auto w-full max-w-lg overflow-x-hidden bg-white"
             >
               {getLayout(<Component {...pageProps} />)}
             </div>
@@ -290,7 +290,7 @@ NamuiWikiApp.getInitialProps = async (
         }
       }
     }
-  } catch (err) {}
+  } catch (_) {}
 
   return {
     ...ctx,

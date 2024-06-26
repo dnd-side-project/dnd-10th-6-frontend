@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import { Logo } from '@/components/ui'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
@@ -7,7 +7,7 @@ import BaseLayout from '@/layout/base-layout'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { useMount } from '@/hooks/use-mount'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
+import MetaHead from '@/components/meta-head'
 
 const Page = () => {
   const { signin, data } = useSession()
@@ -40,8 +40,12 @@ const Page = () => {
   return !mounted ? (
     <>Loading...</>
   ) : (
-    <div className="h-calc-h flex flex-col px-5 py-4">
-      <section className="grow flex flex-col text-center justify-center items-center space-y-16">
+    <div className="flex h-calc-h flex-col px-5 py-4">
+      <MetaHead
+        description="남의위키를 통해 남이 써준 나의 소개서를 확인해보세요!"
+        url="https://namui-wiki.life/"
+      />
+      <section className="flex grow flex-col items-center justify-center space-y-16 text-center">
         <div className="flex flex-col space-y-4">
           <div className="h-[38px]">
             <Logo />
@@ -150,8 +154,9 @@ const Page = () => {
             내 정원가기
           </Button>
         ) : (
+          // TODO: variant 적용 : kakao
           <Button
-            variant="kakao"
+            variant="Line-neutral"
             disabled={isPending}
             onClick={() => !isPending && handleLogin()}
           >

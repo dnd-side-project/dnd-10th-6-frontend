@@ -81,12 +81,12 @@ const Character = ({ filter }: { filter: FilterType }) => {
       <div>
         {isLoading || !parsedStatistics ? (
           <>
-            <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
-            <div className="grid grid-cols-2 gap-4 mt-5">
-              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
-              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
-              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
-              <div className="px-5 py-6 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210] !skeleton" />
+            <div className="skeleton h-8 w-3/4 text-mainTitle2-bold font-bold" />
+            <div className="mt-5 grid grid-cols-2 gap-4">
+              <div className="!skeleton flex aspect-[160/210] flex-col rounded-2xl px-5 py-6 text-text-main-black11" />
+              <div className="!skeleton flex aspect-[160/210] flex-col rounded-2xl px-5 py-6 text-text-main-black11" />
+              <div className="!skeleton flex aspect-[160/210] flex-col rounded-2xl px-5 py-6 text-text-main-black11" />
+              <div className="!skeleton flex aspect-[160/210] flex-col rounded-2xl px-5 py-6 text-text-main-black11" />
             </div>
           </>
         ) : (
@@ -143,7 +143,7 @@ function CharacterInfo({ statisics }: { statisics: ParsedStatistics }) {
             },
           },
         }}
-        className="grid grid-cols-2 gap-4 mt-5"
+        className="mt-5 grid grid-cols-2 gap-4"
       >
         <CharacterBlock
           emoji={
@@ -225,17 +225,17 @@ function CharacterBlock({
       ref={ref}
       variants={cardPickingVariants}
       animate={inView ? cardPickingVariants.picking : {}}
-      className="px-5 py-6 bg-bg-gray1 rounded-2xl text-text-main-black11 flex flex-col aspect-[160/210]"
+      className="flex aspect-[160/210] flex-col rounded-2xl bg-bg-gray1 px-5 py-6 text-text-main-black11"
     >
-      <h3 className="text-3xl flex-1">{emoji}</h3>
-      <div className="flex flex-col gap-y-4 flex-1">
-        <p className="text-body1-medium flex-1">
+      <h3 className="flex-1 text-3xl">{emoji}</h3>
+      <div className="flex flex-1 flex-col gap-y-4">
+        <p className="flex-1 text-body1-medium">
           {topText}
           <br />
           <b className="text-body1-bold">{bottomText}</b>
         </p>
         <Link
-          className="text-xs underline underline-offset-2 leading-4 text-text-main-black11"
+          className="text-xs leading-4 text-text-main-black11 underline underline-offset-2"
           href={href}
         >
           자세히 보기

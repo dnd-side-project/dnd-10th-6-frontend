@@ -11,7 +11,7 @@ import { fadeInProps } from '@/variants'
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { useRouter } from 'next/router'
 import { cn } from '@/lib/client/utils'
-import { ShareImageContext } from '../share-image'
+import { QS_NAMES, ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
 import { useMount } from '@/hooks/use-mount'
 import SideDrawer from '../side-drawer'
@@ -131,7 +131,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
       selectedFilter?.type ?? 'period',
       selectedFilter?.value ?? 'ALL',
     ],
-    queryFn: ({ pageParam = 0, queryKey, ...rest }) => {
+    queryFn: ({ pageParam = 0, queryKey }) => {
       return NamuiApi.getQuestionDetailById(pageParam as number, queryKey[1], [
         queryKey[2],
         queryKey[3],
@@ -169,14 +169,14 @@ function Content({ id, type }: { id: string; type: DetailType }) {
 
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">
-      <div className="p-5 flex flex-col space-y-4">
-        <div className="text-body3-medium px-2 py-1 bg-gray-gray50 rounded-md w-fit text-text-sub-gray76">
+      <div className="flex flex-col space-y-4 p-5">
+        <div className="w-fit rounded-md bg-gray-gray50 px-2 py-1 text-body3-medium text-text-sub-gray76">
           질문
         </div>
         {isLoading ? (
           <div className="space-y-2">
-            <p className="h-5 skeleton w-1/5"></p>
-            <p className="h-5 skeleton w-1/2"></p>
+            <p className="skeleton h-5 w-1/5"></p>
+            <p className="skeleton h-5 w-1/2"></p>
           </div>
         ) : (
           <p
@@ -188,10 +188,10 @@ function Content({ id, type }: { id: string; type: DetailType }) {
       </div>
       <div className="flex flex-col">
         <Filter />
-        <p className="px-5 py-4 text-body3-medium text-text-sub-gray76 flex items-center">
+        <p className="flex items-center px-5 py-4 text-body3-medium text-text-sub-gray76">
           {typeof parsedData?.pages[0]?.data?.answers?.totalCount !==
           'number' ? (
-            <b className="text-brand-main-green400 skeleton w-10 h-4 block mr-1"></b>
+            <b className="skeleton mr-1 block h-4 w-10 text-brand-main-green400"></b>
           ) : (
             <b className="text-brand-main-green400">
               {parsedData?.pages[0]?.data?.answers?.totalCount}명
@@ -204,16 +204,16 @@ function Content({ id, type }: { id: string; type: DetailType }) {
               <motion.div
                 key={`card-skeleton-${index}`}
                 variants={fadeInProps.variants}
-                className="p-4 flex justify-between space-x-4"
+                className="flex justify-between space-x-4 p-4"
               >
-                <div className="aspect-square rounded-full skeleton h-12  flex justify-center items-center"></div>
-                <div className="flex flex-col grow space-y-4">
+                <div className="skeleton flex aspect-square h-12  items-center justify-center rounded-full"></div>
+                <div className="flex grow flex-col space-y-4">
                   <div className="flex flex-col space-y-1">
-                    <h3 className="text-body1-bold skeleton h-4 w-1/5"></h3>
-                    <p className="text-body3-medium text-text-sub-gray76 skeleton h-4 w-1/2"></p>
+                    <h3 className="skeleton h-4 w-1/5 text-body1-bold"></h3>
+                    <p className="skeleton h-4 w-1/2 text-body3-medium text-text-sub-gray76"></p>
                   </div>
                   {/* <div>{cardItem.answer}</div> 뱃지들어가야함 */}
-                  <p className="text-body1-medium text-text-main-black11 skeleton w-1/3 h-4"></p>
+                  <p className="skeleton h-4 w-1/3 text-body1-medium text-text-main-black11"></p>
                 </div>
               </motion.div>
             ))
@@ -235,7 +235,8 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 period: cardItem.period,
                                 relation: cardItem.relation,
                                 optionName: cardItem.optionName,
-                                questionName: page.data.questionName as any,
+                                questionName: page.data
+                                  .questionName as QS_NAMES,
                                 reason: cardItem.reason,
                                 senderName: cardItem.senderName,
                                 value:
@@ -270,7 +271,8 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 period: cardItem.period,
                                 relation: cardItem.relation,
                                 optionName: cardItem.optionName,
-                                questionName: page.data.questionName as any,
+                                questionName: page.data
+                                  .questionName as QS_NAMES,
                                 reason: cardItem.reason,
                                 senderName: cardItem.senderName,
                                 value:
@@ -300,10 +302,10 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                         `${pageNo}-${cardIndex}`
                       }
                       variants={fadeInProps.variants}
-                      className="p-4 flex justify-between space-x-4"
+                      className="flex justify-between space-x-4 p-4"
                     >
                       <div
-                        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+                        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
                           cardItem,
                         )}`}
                       >
@@ -312,7 +314,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                           cardItem.relation as Relation,
                         )}
                       </div>
-                      <div className="flex flex-col grow space-y-4">
+                      <div className="flex grow flex-col space-y-4">
                         <div className="flex flex-col space-y-1">
                           <h3 className="text-body1-bold">
                             {cardItem.senderName}님
@@ -325,7 +327,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                             ].join(' · ')}
                           </p>
                         </div>
-                        <p className="text-body1-medium bg-gray-gray50 text-text-sub-gray76 rounded-md p-4">
+                        <p className="rounded-md bg-gray-gray50 p-4 text-body1-medium text-text-sub-gray76">
                           {cardItem.answer}
                         </p>
                       </div>
@@ -334,7 +336,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                 })}
               </div>
             ))}
-        <div ref={ref} className="w-2 h-1" />
+        <div ref={ref} className="h-1 w-2" />
       </div>
     </div>
   )
@@ -354,10 +356,10 @@ function MultipleChoice({
   return (
     <motion.div
       variants={fadeInProps.variants}
-      className="p-4 flex justify-between space-x-4"
+      className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
           cardItem,
         )}`}
       >
@@ -366,7 +368,7 @@ function MultipleChoice({
           cardItem.relation as Relation,
         )}
       </div>
-      <div className="flex flex-col grow space-y-4">
+      <div className="flex grow flex-col space-y-4">
         <div className="flex flex-col space-y-1">
           <div className="flex justify-between">
             <h3 className="text-body1-bold">{cardItem.senderName}님</h3>
@@ -407,12 +409,12 @@ function MultipleChoice({
         </div>
         <div
           className={cn(
-            'w-fit text-body3-medium px-2 py-1 rounded-md bg-gray-gray50 text-text-sub-gray76',
+            'w-fit rounded-md bg-gray-gray50 px-2 py-1 text-body3-medium text-text-sub-gray76',
           )}
         >
           {cardItem.answer}
         </div>
-        <p className="text-body1-medium bg-gray-gray50 text-text-sub-gray4f rounded-md p-4">
+        <p className="rounded-md bg-gray-gray50 p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
         </p>
       </div>
@@ -435,10 +437,10 @@ function TwoChoice({
   return (
     <motion.div
       variants={fadeInProps.variants}
-      className="p-4 flex justify-between space-x-4"
+      className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
           cardItem,
         )}`}
       >
@@ -447,7 +449,7 @@ function TwoChoice({
           cardItem.relation as Relation,
         )}
       </div>
-      <div className="flex flex-col grow space-y-4">
+      <div className="flex grow flex-col space-y-4">
         <div className="flex flex-col space-y-1">
           <div className="flex justify-between">
             <h3 className="text-body1-bold">{cardItem.senderName}님</h3>
@@ -489,7 +491,7 @@ function TwoChoice({
         </div>
         <div
           className={cn(
-            'w-fit text-body3-medium px-2 py-1 rounded-md',
+            'w-fit rounded-md px-2 py-1 text-body3-medium',
             isPositiveAnswer
               ? 'bg-brand-main-200 text-brand-main-green400'
               : 'bg-brand-alert-200 text-brand-alert-900',
@@ -497,7 +499,7 @@ function TwoChoice({
         >
           {cardItem.answer}
         </div>
-        <p className="text-body1-medium p-4  bg-gray-gray50 text-text-sub-gray4f rounded-md">
+        <p className="rounded-md bg-gray-gray50  p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
         </p>
       </div>

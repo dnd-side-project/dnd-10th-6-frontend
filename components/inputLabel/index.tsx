@@ -13,7 +13,7 @@ const InputLabel = forwardRef<
 >(({ children, label, required, errorMessage, className }, ref) => {
   return (
     <label ref={ref} className="w-full">
-      <div className="flex items-center mb-2">
+      <div className="mb-2 flex items-center">
         <h3 className={className}>{label}</h3>
         {required && (
           <span className="ml-2 text-body3-medium text-brand-main-green400">
@@ -21,14 +21,16 @@ const InputLabel = forwardRef<
           </span>
         )}
       </div>
-      <div className="w-full h-fit relative ">
+      <div className="relative h-fit w-full ">
         {children}
         {errorMessage && (
-          <p className="text-caption1 text-red-500 mt-1">{errorMessage}</p>
+          <p className="text-caption1 mt-1 text-red-500">{errorMessage}</p>
         )}
       </div>
     </label>
   )
 })
+
+InputLabel.displayName = 'InputLabel'
 
 export default InputLabel

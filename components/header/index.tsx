@@ -14,8 +14,8 @@ import { useSettingStore } from '@/stores/setting.store'
 import useScrollDirection from '@/hooks/use-scroll-direction'
 import { cn } from '@/lib/client/utils'
 
-import {Logo} from '../ui/logo'
-import {Setting} from './setting'
+import { Logo } from '../ui/logo'
+import { Setting } from './setting'
 import Image from 'next/image'
 import back from '@/assets/icons/back.svg'
 export interface HeaderProps {
@@ -86,7 +86,7 @@ const Header = ({
       ref={headerRef}
       {...fadeInProps}
       className={cn(
-        'w-full z-10 grid grid-cols-3 items-center px-5 h-14 bg-white sticky duration-300 text-body1-bold shrink-0',
+        'sticky z-10 grid h-14 w-full shrink-0 grid-cols-3 items-center bg-white px-5 text-body1-bold duration-300',
         className,
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}
@@ -122,7 +122,7 @@ const Header = ({
           {center}
         </motion.div>
       </AnimatePresence>
-      <motion.div {...fadeInProps} className="flex gap-x-4 justify-end">
+      <motion.div {...fadeInProps} className="flex justify-end gap-x-4">
         {showRight
           ? rightIcon ?? (
               <div>

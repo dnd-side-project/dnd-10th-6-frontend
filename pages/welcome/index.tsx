@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 
 import MetaHead from '@/components/meta-head'
 import Modal from '@/components/modal'
@@ -7,6 +7,7 @@ import { shareToCopyLink, shareToKaKaoLink } from '@/lib/client/utils'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
+import Image from 'next/image'
 
 const WelcomePage = () => {
   const router = useRouter()
@@ -64,11 +65,11 @@ const WelcomePage = () => {
             </button>
           ),
         }}
-        className="fixed top-0 left-0 z-10 w-full bg-white"
+        className="fixed left-0 top-0 z-10 w-full bg-white"
         content={
-          <div className="grow -mt-5 flex flex-col items-center justify-center px-5 text-center">
-            <img src="/assets/trees/welcome-tree.svg" alt="welcome" />
-            <p className="text-mainTitle2-bold mt-8 mb-3">
+          <div className="-mt-5 flex grow flex-col items-center justify-center px-5 text-center">
+            <Image src="/assets/trees/welcome-tree.svg" alt="welcome" />
+            <p className="mb-3 mt-8 text-mainTitle2-bold">
               환영해요 {data?.user?.name}님
             </p>
             <p className="text-subTitle2-medium text-text-sub-gray4f">
@@ -84,9 +85,10 @@ const WelcomePage = () => {
               title="링크가 복사되었어요"
               footer={{
                 item: [
+                  // TODO : variant 적용 : confirm
                   <Button
                     onClick={() => setCopyModalOpen(false)}
-                    variant="confirm"
+                    variant="Line-neutral"
                     className="border-t-[1px]"
                     key="copy-close"
                   >
@@ -116,9 +118,10 @@ const WelcomePage = () => {
             footer={{
               divider: false,
               item: [
+                // TODO : variant 적용 : default
                 <Button
                   onClick={handleCopyLink}
-                  variant="default"
+                  variant="Line-neutral"
                   key="copy-link"
                   className="rounded-none"
                 >

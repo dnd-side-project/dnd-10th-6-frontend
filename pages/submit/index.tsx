@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import ShareModal from '@/components/share-modal'
 import FormLayout from '@/layout/form-layout'
 import { useSession } from '@/provider/session-provider'
@@ -10,7 +10,7 @@ const index = () => {
   return (
     <FormLayout
       button={
-        <div className="flex flex-col w-full space-y-3">
+        <div className="flex w-full flex-col space-y-3">
           <ShareModal>
             <Button>친구에게 내 소개 부탁하기</Button>
           </ShareModal>
@@ -41,7 +41,7 @@ const index = () => {
       }}
       content={
         <>
-          <div className="grow flex flex-col items-center justify-center px-5 text-center space-y-8">
+          <div className="flex grow flex-col items-center justify-center space-y-8 px-5 text-center">
             <svg
               width="139"
               height="185"
@@ -158,7 +158,7 @@ const index = () => {
                 fill="#111111"
               />
             </svg>
-            <div className="w-full flex flex-col justify-center items-center space-y-2">
+            <div className="flex w-full flex-col items-center justify-center space-y-2">
               <h1 className="text-mainTitle2-bold ">
                 남의위키 작성이 끝났어요{' '}
               </h1>

@@ -1,14 +1,16 @@
 import type { Config } from 'tailwindcss'
-import { colors } from './styles/theme/colors'
+import { namuiColors } from './constants/colors/namui-colors'
+import { defaultColors } from './constants/colors/default'
+import { fontSize } from './constants/styles'
 
 const config = {
   darkMode: ['class'],
   content: [
-    './pages/**/*.{ts,tsx}',
+    // './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-    './layout/**/*.{ts,tsx}',
+    // './app/**/*.{ts,tsx}',
+    // './src/**/*.{ts,tsx}',
+    // './layout/**/*.{ts,tsx}',
   ],
   prefix: '',
   theme: {
@@ -26,7 +28,8 @@ const config = {
       },
 
       colors: {
-        ...colors,
+        ...defaultColors,
+        ...namuiColors,
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -63,11 +66,12 @@ const config = {
         line: {
           DEFAULT: 'var(--black)',
           muted: 'var(--line)',
-          ...colors.line,
+          ...namuiColors.line,
         },
         disabled: 'var(--disabled)',
       },
       fontSize: {
+        ...fontSize,
         'mainTitle1-bold': [
           '28px',
           {
@@ -236,7 +240,7 @@ const config = {
       },
     },
   },
-  safelist: ['mr-auto', ...Object.values(colors.relation)],
+  safelist: ['mr-auto', ...Object.values(namuiColors.relation)],
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 

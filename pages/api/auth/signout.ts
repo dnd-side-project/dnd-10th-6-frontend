@@ -8,7 +8,7 @@ const EXPIRED_TOKEN_KEY_LIST = [
   AUTH.ACCESS_TOKEN_KEY,
   AUTH.REFRESH_TOKEN_KEY,
 ]
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(_: NextApiRequest, res: NextApiResponse) {
   res.setHeader(
     'Set-Cookie',
     EXPIRED_TOKEN_KEY_LIST.map((key) =>

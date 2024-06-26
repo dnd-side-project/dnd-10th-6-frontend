@@ -5,9 +5,9 @@ import { Close } from '@radix-ui/react-dialog'
 import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
-import {DeveloperInfo} from '@/components/header/developer-info'
+import { DeveloperInfo } from '@/components/header/developer-info'
 import SideDrawer from '@/components/side-drawer'
-import {EditProfile} from '@/components/header/edit-setting'
+import { EditProfile } from '@/components/header/edit-setting'
 
 export const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
@@ -17,7 +17,7 @@ export const Setting = () => {
     try {
       await NamuiApi.withdraw()
       window.location.reload()
-    } catch (err) {
+    } catch (_) {
       toastError()
       setOpenWithdraw(false)
     }
@@ -53,15 +53,15 @@ export const Setting = () => {
       }
     >
       <div className="flex flex-col divide-y-[1px] divide-line-medium">
-        <section className="py-4 px-5 flex flex-col items-start">
-          <h4 className="text-body3-medium text-text-sub-gray4f py-2">
+        <section className="flex flex-col items-start px-5 py-4">
+          <h4 className="py-2 text-body3-medium text-text-sub-gray4f">
             계정 관리
           </h4>
           <EditProfile />
 
           <Modal
             trigger={
-              <p className="py-[14px] text-body1-bold text-text-main-black11 cursor-pointer">
+              <p className="cursor-pointer py-[14px] text-body1-bold text-text-main-black11">
                 로그아웃
               </p>
             }
@@ -71,7 +71,7 @@ export const Setting = () => {
               item: [
                 <Close
                   key="cancel"
-                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
                 >
                   취소
                   <span className="sr-only">Close</span>
@@ -79,21 +79,21 @@ export const Setting = () => {
                 <button
                   onClick={signout}
                   key="confirm"
-                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
                 >
                   로그아웃
                 </button>,
               ],
             }}
           />
-          {/* <Modal
+          <Modal
             open={openWithdraw}
             onOpenChange={setOpenWithdraw}
             footer={{
               item: [
                 <Close
                   key="cancel"
-                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
                 >
                   취소
                   <span className="sr-only">Close</span>
@@ -101,7 +101,7 @@ export const Setting = () => {
                 <button
                   onClick={handleWithdrawClick}
                   key="confirm"
-                  className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
                 >
                   회원탈퇴
                 </button>,
@@ -115,10 +115,10 @@ export const Setting = () => {
             title="서비스 탈퇴"
             description={`탈퇴 시 모든 정보가 사라져요.
             정말 탈퇴하시겠어요?`}
-          /> */}
+          />
         </section>
-        <section className="py-4 px-5 flex flex-col items-start">
-          <h4 className="text-body3-medium text-text-sub-gray4f py-2 ">
+        <section className="flex flex-col items-start px-5 py-4">
+          <h4 className="py-2 text-body3-medium text-text-sub-gray4f ">
             남의 위키
           </h4>
           <DeveloperInfo />

@@ -5,7 +5,7 @@ export const toastError = () => {
     (t) => (
       <div
         onClick={() => toast.dismiss(t.id)}
-        className="text-body3-bold text-white text-start mr-auto"
+        className="mr-auto text-start text-body3-bold text-white"
       >
         서버에 문제가 생겼어요
       </div>

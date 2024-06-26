@@ -15,7 +15,7 @@ import { GetSurveyResponse } from '@/model/survey.entity'
 import { SurveyByIdResponse, WritingListResponse } from '@/queries/surveys'
 import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 
-interface NamuiResponse<T = any> {
+interface NamuiResponse<T = unknown> {
   data: T
 }
 

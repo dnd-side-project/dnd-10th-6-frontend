@@ -9,11 +9,11 @@ const AlertCard = ({ isRead = false }: AlertCardProps) => {
   return (
     <div
       className={cn(
-        'py-5 flex justify-between space-x-4 px-5',
+        'flex justify-between space-x-4 px-5 py-5',
         !isRead && 'bg-[#E2F6E9]',
       )}
     >
-      <div className="aspect-square rounded-full bg-bg-gray1 h-9 flex justify-center items-center">
+      <div className="flex aspect-square h-9 items-center justify-center rounded-full bg-bg-gray1">
         <svg
           width="26"
           height="34"
@@ -65,13 +65,13 @@ const AlertCard = ({ isRead = false }: AlertCardProps) => {
           />
         </svg>
       </div>
-      <div className="flex flex-col grow space-y-2">
+      <div className="flex grow flex-col space-y-2">
         <h3 className="text-body1-medium">김미영님이 소개서를 작성했어요</h3>
         <div className="flex space-x-1.5">
-          <div className="text-body3-medium bg-bg-gray1 text-text-sub-gray76 px-2 py-1 rounded-md">
+          <div className="rounded-md bg-bg-gray1 px-2 py-1 text-body3-medium text-text-sub-gray76">
             1-4년
           </div>
-          <div className="text-body3-medium bg-bg-blue2 text-main-sub2-blue-blue900 px-2 py-1 rounded-md">
+          <div className="rounded-md bg-bg-blue2 px-2 py-1 text-body3-medium text-main-sub2-blue-blue900">
             직장
           </div>
         </div>

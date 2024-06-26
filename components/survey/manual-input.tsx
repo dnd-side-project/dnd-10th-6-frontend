@@ -7,7 +7,7 @@ interface ManualInputProps
 const ManualInput = forwardRef<HTMLInputElement, ManualInputProps>(
   ({ qsType, ...rest }, ref) => {
     const inputType = qsType === 'NUMERIC_CHOICE' ? 'number' : 'string'
-    const [value, setValue] = useState('')
+    const [value, _] = useState('')
     return (
       <div>
         <input
@@ -25,4 +25,5 @@ const ManualInput = forwardRef<HTMLInputElement, ManualInputProps>(
   },
 )
 
+ManualInput.displayName = 'ManualInput'
 export default ManualInput

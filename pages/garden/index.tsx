@@ -1,7 +1,7 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
 import { useSession } from '@/provider/session-provider'
@@ -32,7 +32,7 @@ const Pages = () => {
         : page.data.page + 1
     },
     queryKey: ['survey'],
-    queryFn: ({ pageParam = 0, ...rest }) => {
+    queryFn: ({ pageParam = 0 }) => {
       return NamuiApi.getSurveys(pageParam as number)
     },
   })
@@ -94,7 +94,7 @@ const Pages = () => {
 
   return (
     <BaseLayout
-      className="bg-gray-gray50 h-calc-h flex flex-col"
+      className="flex h-calc-h flex-col bg-gray-gray50"
       header={{
         className: 'bg-gray-gray50',
         leftIcon: null,
@@ -104,8 +104,8 @@ const Pages = () => {
         ),
       }}
     >
-      <div className="flex px-[30px] pt-8 pb-6 flex-col space-y-5">
-        <div className="flex flex-col space-y-2 flex-1">
+      <div className="flex flex-col space-y-5 px-[30px] pb-6 pt-8">
+        <div className="flex flex-1 flex-col space-y-2">
           <p className="text-body1-medium text-text-sub-gray4f">
             내 정원에 심어진 나무는
           </p>
@@ -119,8 +119,8 @@ const Pages = () => {
               <WriteList
                 trigger={
                   <Button
-                    variant={'muted'}
-                    className="!text-body3-medium w-full border-none"
+                    // variant={'muted'}
+                    className="w-full border-none !text-body3-medium"
                   >
                     남의위키 작성목록
                   </Button>
@@ -129,15 +129,15 @@ const Pages = () => {
             </FilterProvider>
           </div>
           <Link href="/dashboard" className="w-full">
-            <button className="w-full px-4 py-3 rounded-md text-body3-medium text-main-green-green800 bg-main-green-green50 hover:text-main-green-green300 hover:bg-[#f3faf3] active:bg-main-green-green100 active:text-main-green-green800">
+            <button className="w-full rounded-md bg-main-green-green50 px-4 py-3 text-body3-medium text-main-green-green800 hover:bg-[#f3faf3] hover:text-main-green-green300 active:bg-main-green-green100 active:text-main-green-green800">
               내 결과 보기
             </button>
           </Link>
         </div>
       </div>
-      <section className="bg-white grow flex flex-col">
-        <div className="flex justify-start items-center px-[30px] py-4">
-          <div className="text-subTitle2-medium text-text-sub-gray4f text-left relative">
+      <section className="flex grow flex-col bg-white">
+        <div className="flex items-center justify-start px-[30px] py-4">
+          <div className="relative text-left text-subTitle2-medium text-text-sub-gray4f">
             받은 친구
             <AnimatePresence mode="wait">
               {showTooltip && (
@@ -151,7 +151,7 @@ const Pages = () => {
                     opacity: 0,
                     transformOrigin: '25% 0%',
                   }}
-                  className="text-center absolute z-10 transform -translate-x-1/2 origin-[25%_0%]"
+                  className="absolute z-10 origin-[25%_0%] -translate-x-1/2 transform text-center"
                 >
                   <svg
                     className="relative left-3 z-20"
@@ -167,7 +167,7 @@ const Pages = () => {
                     />
                   </svg>
 
-                  <div className="w-full h-full bg-gray-gray800 py-3 px-4 z-10 rounded-lg flex-1 relative text-white text-body3-medium whitespace-nowrap">
+                  <div className="relative z-10 h-full w-full flex-1 whitespace-nowrap rounded-lg bg-gray-gray800 px-4 py-3 text-body3-medium text-white">
                     알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
                   </div>
                 </motion.div>
@@ -184,13 +184,13 @@ const Pages = () => {
             <InfoIcon />
           </button>
         </div>
-        <div className="w-full items-center flex flex-col space-y-2 pb-10 grow">
+        <div className="flex w-full grow flex-col items-center space-y-2 pb-10">
           <AnimatePresence mode="wait">
             {!isLoading && surveys ? (
               <motion.div
                 {...fadeInProps}
                 transition={{ staggerChildren: 0.03 }}
-                className="grid grid-cols-3 gap-2 w-full px-5 "
+                className="grid w-full grid-cols-3 gap-2 px-5 "
               >
                 {surveys?.pages.map((page, pageNo) =>
                   page.data.content.map((item, index) => (
@@ -213,10 +213,10 @@ const Pages = () => {
                   <motion.div
                     variants={fadeInProps.variants}
                     key={`empty-${(index + 1) * (index + 1)}`}
-                    className="h-full aspect-[104/110] flex justify-center items-center rounded-md bg-gray-gray50 border-dashed border p-[25%]"
+                    className="flex aspect-[104/110] h-full items-center justify-center rounded-md border border-dashed bg-gray-gray50 p-[25%]"
                   >
                     <svg
-                      className="w-full h-full"
+                      className="h-full w-full"
                       width="34"
                       height="34"
                       viewBox="0 0 34 34"
@@ -257,7 +257,7 @@ const Pages = () => {
                     key={`loading-${i}`}
                     className="skeleton"
                   >
-                    <div className="flex justify-center items-center rounded w-[104px] h-[110px]"></div>
+                    <div className="flex h-[110px] w-[104px] items-center justify-center rounded"></div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -268,7 +268,7 @@ const Pages = () => {
 
         {showScrollButton && (
           <button
-            className="fixed z-[20] bottom-4 bg-white shadow-sm right-4 p-3 border rounded"
+            className="fixed bottom-4 right-4 z-[20] rounded border bg-white p-3 shadow-sm"
             onClick={scrollToTop}
           >
             <svg
@@ -287,7 +287,7 @@ const Pages = () => {
             </svg>
           </button>
         )}
-        <div className="sticky bottom-0 py-2 px-5 pt-5 bg-gradient-to-t from-white from-85% to-transparent to-100%">
+        <div className="sticky bottom-0 bg-gradient-to-t from-white from-85% to-transparent to-100% px-5 py-2 pt-5">
           <ShareModal>
             <Button>친구에게 소개서 부탁하기</Button>
           </ShareModal>

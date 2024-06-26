@@ -18,7 +18,7 @@ const MetaHead = ({
         name="naver-site-verification"
         content={process.env.NEXT_PUBLIC_NAVER_VERIFICATION}
       />
-      <title>{title || 'namuiwiki | 남의위키'}</title>
+      <title>{title || '남의위키 | namuiwiki'}</title>
       <meta name="description" content={description || ''} />
       <meta
         name="viewport"
@@ -28,7 +28,7 @@ const MetaHead = ({
         name="keywords"
         content="남의위키, 편지, namuiwiki, 소개서, 첫인상, 새학기"
       />
-      <meta property="og:title" content={title || 'namuiwiki | 남의위키'} />
+      <meta property="og:title" content={title || '남의위키 | namuiwiki'} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url || 'https://namui-wiki.life/'} />
       <meta property="og:description" content={description || ''} />

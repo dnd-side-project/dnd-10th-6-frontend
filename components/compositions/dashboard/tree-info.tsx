@@ -1,5 +1,4 @@
-import Button from '@/components/button'
-import Badge from '@/components/button/badge'
+import { Button, Badge } from '@/components/ui'
 import ShareModal from '@/components/share-modal'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
@@ -19,7 +18,7 @@ const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
   MOST_USED_WORD: '💬 내가 가장 많이 사용하는 단어는?',
 }
 
-const TreeInfo = ({ filter }: { filter: FilterType }) => {
+const TreeInfo = ({}: { filter: FilterType }) => {
   const { handle } = useDetailDrawer()
   const { data } = useSession()
   const { data: short } = useQuery({
@@ -31,16 +30,16 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
 
   return (
     <>
-      <div className="bg-bg-gray1 pt-[30px] pb-10 px-6 rounded-2xl gap-y-6 flex flex-col">
-        <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-y-6 rounded-2xl bg-bg-gray1 px-6 pb-10 pt-[30px]">
+        <div className="flex items-center justify-between">
           <p className="text-body1 text-text-sub-gray4f">
             내 정원에 심어진 나무는
             <br />
-            <b className="text-mainTitle1-bold mt-1 text-black">
+            <b className="mt-1 text-mainTitle1-bold text-black">
               총 {data?.user?.totalSurveyCnt ?? 0}그루
             </b>
           </p>
-          <div className="w-20 h-20 bg-text-main-whiteFF flex justify-center items-center rounded-full">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-text-main-whiteFF">
             <Image src={tree} alt="tree" />
           </div>
         </div>
@@ -48,14 +47,14 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
           <Button className="h-11">링크 공유하기</Button>
         </ShareModal>
       </div>
-      <h3 className="text-mainTitle2-bold tracking-tighter font-bold mt-8 mb-5">
+      <h3 className="mb-5 mt-8 text-mainTitle2-bold font-bold tracking-tighter">
         {data?.user?.name ?? ''}님에 대해 알아보세요!
       </h3>
 
       {/* !DELETE */}
-      {/* {short?.length ? (
+      {short?.length ? (
         <>
-          <div className="flex overflow-x-scroll space-x-2 w-[calc(100%_+_3rem)] px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">
+          <div className="avoid-min-w relative -left-[1.5rem] flex w-[calc(100%_+_3rem)] space-x-2 overflow-x-scroll px-6 pl-6 scrollbar-hide">
             {short.slice(0, short.length / 2).map((item) => (
               <Badge
                 key={item.id}
@@ -66,7 +65,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
               />
             ))}
           </div>
-          <div className="mt-3 flex overflow-x-scroll overflow-y-hidden relative -left-[1.5rem] px-6 space-x-2 w-[calc(100%_+_3rem)] scrollbar-hide">
+          <div className="relative -left-[1.5rem] mt-3 flex w-[calc(100%_+_3rem)] space-x-2 overflow-y-hidden overflow-x-scroll px-6 scrollbar-hide">
             {short.slice(short.length / 2, short.length).map((item) => (
               <Badge
                 key={item.id}
@@ -76,7 +75,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             ))}
           </div>
         </>
-      ) : null} */}
+      ) : null}
     </>
   )
 }

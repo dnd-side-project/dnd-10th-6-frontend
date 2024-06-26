@@ -4,7 +4,7 @@ import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 import createFunnel from '@/components/funnel/createFunnel'
 import ProgressBar from '@/components/progressbar'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import FormLayout from '@/layout/form-layout'
 import {
   QueryClient,
@@ -37,7 +37,7 @@ const Question = ({ nickname }: { nickname: string }) => {
   const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
   const { mutate: submit, isPending } = useMutation(
     submitQuestionMutaion({
-      onSuccess(data, variables, context) {
+      onSuccess() {
         goNext()
 
         // 애니메이션과 함께 제출화면으로 이동하기 위해 추가
@@ -85,7 +85,7 @@ const Question = ({ nickname }: { nickname: string }) => {
     control: questionForm.control,
   })
 
-  const { handleSubmit, setFocus, setError, trigger } = questionForm
+  const { handleSubmit } = questionForm
   const onSubmit = async (data: QsSchemaType) => {
     data.answers.forEach((an) => {
       if (!an.reason) {
@@ -203,7 +203,7 @@ const Question = ({ nickname }: { nickname: string }) => {
       header={{
         leftIcon: (
           <svg
-            className="w-5 h-5"
+            className="h-5 w-5"
             width="28"
             height="28"
             viewBox="0 0 28 28"
@@ -230,7 +230,7 @@ const Question = ({ nickname }: { nickname: string }) => {
       title={
         !['senderName', 'knowing'].includes(step) ? (
           <div className="flex items-center overflow-hidden text-brand-main-green400 ">
-            <p className="flex justify-center items-center" ref={stepRef}>
+            <p className="flex items-center justify-center" ref={stepRef}>
               0%
             </p>
           </div>
@@ -289,7 +289,7 @@ const Question = ({ nickname }: { nickname: string }) => {
                 <motion.div
                   {...fadeInProps}
                   key="senderWrap"
-                  className="text-left grow flex flex-col overflow-y-hidden"
+                  className="flex grow flex-col overflow-y-hidden text-left"
                 >
                   <Controller
                     control={questionForm.control}
@@ -307,7 +307,7 @@ const Question = ({ nickname }: { nickname: string }) => {
                           </InputLabel>
                           <p
                             className={cn(
-                              'text-body3-medium duration-150 pl-2',
+                              'pl-2 text-body3-medium duration-150',
                               questionForm.formState.errors.senderName &&
                                 '!text-inputbox-color-alert',
                               'text-sub-gray76 text-body3-medium',
@@ -317,11 +317,11 @@ const Question = ({ nickname }: { nickname: string }) => {
                             2~6자로 입력해주세요.
                           </p>
                         </div>
-                        <div className="py-4 px-5 bg-gray-gray50 rounded-md flex space-x-3 mt-5">
+                        <div className="mt-5 flex space-x-3 rounded-md bg-gray-gray50 px-5 py-4">
                           <Image
                             src={caution}
                             alt="caution"
-                            className="w-4 h-4 shrink-0 my-[2px]"
+                            className="my-[2px] h-4 w-4 shrink-0"
                           />
                           <p className="text-body3-medium text-text-sub-gray76">
                             누가 작성했는지 알 수 있도록, 나를 가장 잘 나타내는
@@ -486,7 +486,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         nickname,
       },
     }
-  } catch (e) {
+  } catch (_) {
     return {
       props: {},
     }

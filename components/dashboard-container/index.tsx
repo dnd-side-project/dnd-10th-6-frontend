@@ -7,7 +7,7 @@ import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
 import TripleTrees from '../svgs/triple-trees'
 import ShareModal from '../share-modal'
-import Button from '../button'
+import { Button } from '@/components/ui'
 import BestWorth from '@/components/compositions/dashboard/best-worth'
 import Character from '@/components/compositions/dashboard/character'
 import Money from '@/components/compositions/dashboard/money'
@@ -24,7 +24,7 @@ const DashboardContainer = ({
     getDashboardQuery(selectedFilter),
   )
   return (
-    <motion.div {...fadeInProps} className="flex flex-col pb-[50px] grow">
+    <motion.div {...fadeInProps} className="flex grow flex-col pb-[50px]">
       <Filter className={cn(shouldShowHeader && 'top-header')} />
       <AnimatePresence mode="wait">
         {isLoading || statisics?.length ? (
@@ -60,10 +60,10 @@ const DashboardContainer = ({
           <motion.div
             key="empty"
             {...fadeInProps}
-            className="h-full flex flex-col justify-center items-center relative mx-5 space-y-6 text-center"
+            className="relative mx-5 flex h-full flex-col items-center justify-center space-y-6 text-center"
           >
             <TripleTrees />
-            <h3 className="text-subTitle1-bold mt-8 mb-4">
+            <h3 className="mb-4 mt-8 text-subTitle1-bold">
               나무를 심어준 친구가 없어요
             </h3>
             <p className="text-body1-medium text-text-sub-gray4f">
@@ -72,7 +72,7 @@ const DashboardContainer = ({
               친구에게 알려달라고 부탁해보세요
             </p>
             <ShareModal>
-              <Button className="w-28 h-11">링크 공유하기</Button>
+              <Button className="h-11 w-28">링크 공유하기</Button>
             </ShareModal>
           </motion.div>
         )}
@@ -91,7 +91,7 @@ function Section({
     <section
       {...props}
       className={cn(
-        'pt-10 pb-12 px-6 flex flex-col overflow-x-hidden bg-text-main-whiteFF',
+        'flex flex-col overflow-x-hidden bg-text-main-whiteFF px-6 pb-12 pt-10',
         props.className,
       )}
     >
