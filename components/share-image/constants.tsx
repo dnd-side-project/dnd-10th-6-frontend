@@ -25,8 +25,6 @@ import leisure from '@/assets/instagram/enjoy-leisure.svg'
 import sadManual from '@/assets/instagram/sad-manual.svg'
 import borrowingLimit from '@/assets/instagram/borrowing-limit.svg'
 
-
-
 export const parseShareCardItems: {
   [key in QS_NAMES]: {
     [key: string]: {
@@ -114,9 +112,7 @@ export const parseShareCardItems: {
           가장 중요한 것은 <b>명예</b>이네요
         </h3>
       ),
-      icon: (
-      <Image src={honor} alt="honor" />
-      ),
+      icon: <Image src={honor} alt="honor" />,
     },
     MONEY: {
       title: () => (
@@ -124,9 +120,7 @@ export const parseShareCardItems: {
           가장 중요한 것은 <b>돈</b>이네요
         </h3>
       ),
-      icon: (
-        <Image src={money} alt="money" />
-      ),
+      icon: <Image src={money} alt="money" />,
     },
     FRIENDSHIP: {
       title: () => (
@@ -134,8 +128,7 @@ export const parseShareCardItems: {
           가장 중요한 것은 <b>우정</b>이네요
         </h3>
       ),
-      icon: (
-        <Image src={friendship} alt="friendship" />      ),
+      icon: <Image src={friendship} alt="friendship" />,
     },
     LOVE: {
       title: () => (
@@ -143,9 +136,7 @@ export const parseShareCardItems: {
           가장 중요한 것은 <b>사랑</b>이네요
         </h3>
       ),
-      icon: (
-        <Image src={love} alt="love" />
-      ),
+      icon: <Image src={love} alt="love" />,
     },
     MANUAL: {
       title: (answer: string) => (
@@ -153,9 +144,7 @@ export const parseShareCardItems: {
           가장 중요한 것은 <b>{answer}</b>이네요
         </h3>
       ),
-      icon: (
-        <Image src={manual} alt="manual" />
-      ),
+      icon: <Image src={manual} alt="manual" />,
     },
   },
   HAPPY_BEHAVIOR: {
@@ -165,9 +154,7 @@ export const parseShareCardItems: {
           기쁠 때 <b>혼자 조용히 즐겨요</b>
         </h3>
       ),
-      icon: ( <Image src={sufferAlone} alt="alone" />
-    
-      ),
+      icon: <Image src={sufferAlone} alt="alone" />,
     },
     CELEBRATE_WITH_OTHERS: {
       title: () => (
@@ -175,9 +162,7 @@ export const parseShareCardItems: {
           기쁠 때 <b>사람들에게 알리고 축하받아요</b>
         </h3>
       ),
-      icon: (
-      <Image src={together} alt="together" />
-      ),
+      icon: <Image src={together} alt="together" />,
     },
     ENJOY_HOBBIES: {
       title: () => (
@@ -185,9 +170,7 @@ export const parseShareCardItems: {
           기쁠 때 <b>취미생활을 즐겨요</b>
         </h3>
       ),
-      icon: (
-        <Image src={hobby} alt="hobby" />
-      ),
+      icon: <Image src={hobby} alt="hobby" />,
     },
     ENJOY_FOOD: {
       title: () => (
@@ -195,10 +178,7 @@ export const parseShareCardItems: {
           기쁠 때 <b>맛있는 음식을 먹어요</b>
         </h3>
       ),
-      icon: (
-        <Image src={food} alt="food" />
-      ),
-      
+      icon: <Image src={food} alt="food" />,
     },
 
     MANUAL: {
@@ -207,9 +187,7 @@ export const parseShareCardItems: {
           기쁠 때 <b>{answer}</b>
         </h3>
       ),
-      icon: (
-      <Image src={enjoyManual} alt="enjoy-manual" />
-      ),
+      icon: <Image src={enjoyManual} alt="enjoy-manual" />,
     },
   },
   SAD_ANGRY_BEHAVIOR: {
@@ -220,10 +198,7 @@ export const parseShareCardItems: {
           <b>혼자 끙끙 앓아요</b>
         </h3>
       ),
-      icon: (
-      <Image src={sufferAlone} alt="suffer-alone" />
-      
-      ),
+      icon: <Image src={sufferAlone} alt="suffer-alone" />,
     },
     SEEK_ADVICE: {
       title: () => (
@@ -231,9 +206,7 @@ export const parseShareCardItems: {
           슬프거나 화날 때 <b>사람들에게 조언을 구해요</b>
         </h3>
       ),
-      icon: (
-      <Image src={advice} alt="advice"/>
-      ),
+      icon: <Image src={advice} alt="advice" />,
     },
     SEEK_COMFORT: {
       title: () => (
@@ -241,9 +214,7 @@ export const parseShareCardItems: {
           슬프거나 화날 때 <b>사람들에게 위로와 공감을 원해요</b>
         </h3>
       ),
-      icon: (
-        <Image src={comfort} alt="comfort"/>
-      ),
+      icon: <Image src={comfort} alt="comfort" />,
     },
     ENJOY_LEISURE: {
       title: () => (
@@ -251,9 +222,7 @@ export const parseShareCardItems: {
           슬프거나 화날 때 <b>스트레스를 풀기 위해 여가생활을 즐겨요</b>
         </h3>
       ),
-      icon: (
-        <Image src={leisure} alt="leisure"/>
-      ),
+      icon: <Image src={leisure} alt="leisure" />,
     },
     MANUAL: {
       title: (answer: string) => (
@@ -261,9 +230,7 @@ export const parseShareCardItems: {
           슬프거나 화날 때 <b>{answer}</b>
         </h3>
       ),
-      icon: (
-        <Image src={sadManual} alt="sad-manual"/>
-      ),
+      icon: <Image src={sadManual} alt="sad-manual" />,
     },
   },
   BORROWING_LIMIT: {
@@ -273,10 +240,7 @@ export const parseShareCardItems: {
           <b>1,000원</b> 빌려줄 수 있어요
         </h3>
       ),
-      icon: (
-
-        <Image src={borrowingLimit} alt="borrowingLimit" />
-      ),
+      icon: <Image src={borrowingLimit} alt="borrowingLimit" />,
     },
     MONEY_0: {
       title: () => (
@@ -284,9 +248,7 @@ export const parseShareCardItems: {
           <b>0원</b> 빌려줄 수 있어요
         </h3>
       ),
-      icon: (
-        <Image src={borrowingLimit} alt="borrowingLimit" />
-      ),
+      icon: <Image src={borrowingLimit} alt="borrowingLimit" />,
     },
     MONEY_1M: {
       title: () => (
@@ -294,9 +256,7 @@ export const parseShareCardItems: {
           <b>1,000,000원</b> 빌려줄 수 있어요
         </h3>
       ),
-      icon: (
-        <Image src={borrowingLimit} alt="borrowingLimit" />
-      ),
+      icon: <Image src={borrowingLimit} alt="borrowingLimit" />,
     },
     MONEY_100K: {
       title: () => (
@@ -304,9 +264,7 @@ export const parseShareCardItems: {
           <b>100,000원</b> 빌려줄 수 있어요
         </h3>
       ),
-      icon: (
-        <Image src={borrowingLimit} alt="borrowingLimit" />
-      ),
+      icon: <Image src={borrowingLimit} alt="borrowingLimit" />,
     },
     MANUAL_NUMERIC: {
       title: (answer: string) => (
@@ -314,9 +272,7 @@ export const parseShareCardItems: {
           <b>{answer}원</b> 빌려줄 수 있어요
         </h3>
       ),
-      icon: (
-        <Image src={borrowingLimit} alt="borrowingLimit" />
-      ),
+      icon: <Image src={borrowingLimit} alt="borrowingLimit" />,
     },
   },
 }
