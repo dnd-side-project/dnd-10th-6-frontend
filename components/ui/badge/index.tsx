@@ -18,8 +18,8 @@ export const Badge = ({ title, ...rest }: BadgeProps) => {
       }}
       className={cn(
         'h-14 rounded-full border border-line-medium',
-        'w-fit flex items-center px-5 grow whitespace-nowrap avoid-min-w duration-150 ease-easeOutQuint select-none',
-        'active:border-gray-gray800 active:bg-gray-gray100 active:scale-[0.98]',
+        'avoid-min-w flex w-fit grow select-none items-center whitespace-nowrap px-5 duration-150 ease-easeOutQuint',
+        'active:scale-[0.98] active:border-gray-gray800 active:bg-gray-gray100',
         rest.className,
       )}
     >

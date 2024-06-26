@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
 import { namuiColors } from './constants/colors/namui-colors'
 import { defaultColors } from './constants/colors/default'
+import { fontSize } from './constants/styles'
 
 const config = {
   darkMode: ['class'],
@@ -70,6 +71,7 @@ const config = {
         disabled: 'var(--disabled)',
       },
       fontSize: {
+        ...fontSize,
         'mainTitle1-bold': [
           '28px',
           {

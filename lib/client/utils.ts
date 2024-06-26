@@ -1,9 +1,18 @@
 import { type ClassValue, clsx } from 'clsx'
+import { extendTailwindMerge } from 'tailwind-merge'
 import { useLayoutEffect } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { fontSize } from '@/constants'
+
+export const twm = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': Object.keys(fontSize).map((item) => 'text-' + item),
+    },
+  },
+})
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twm(clsx(inputs))
 }
 
 export const isMobile = () =>

@@ -58,5 +58,4 @@ const OneUniversity = () => {
   )
 }
 
-
 export default OneUniversity

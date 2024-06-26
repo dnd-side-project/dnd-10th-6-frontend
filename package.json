@@ -75,6 +75,5 @@
     "storybook": "7.6.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
-  },
-  "packageManager": "yarn@4.0.2"
+  }
 }

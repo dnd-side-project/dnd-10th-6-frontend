@@ -25,7 +25,7 @@ import { toastError } from '@/lib/client/alert'
 import ErrorBoundary from '@/components/error-boundary'
 import { Logo } from '@/components/ui'
 
-import icons from '@/icons'
+import icons from '@/assets/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 

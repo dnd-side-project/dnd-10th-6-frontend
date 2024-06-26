@@ -71,14 +71,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           buttonVariants({ variant, rounded }),
           className,
           'w-full',
-          isPending && 'cursor-progress w-20',
+          isPending && 'w-20 cursor-progress',
         )}
         {...rest}
         style={{
           ...rest.style,
         }}
       >
-        <div className="whitespace-nowrap w-fit mx-auto">
+        <div className="mx-auto w-fit whitespace-nowrap">
           <AnimatePresence mode="wait">
             {isPending ? (
               <motion.svg
@@ -120,3 +120,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     )
   },
 )
+
+Button.displayName = 'Button'
