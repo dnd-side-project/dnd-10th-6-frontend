@@ -23,7 +23,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import MetaHead from '@/components/meta-head'
 import { toastError } from '@/lib/client/alert'
 import ErrorBoundary from '@/components/error-boundary'
-import {Logo} from '@/components/ui'
+import { Logo } from '@/components/ui'
 
 import icons from '@/icons'
 import Image from 'next/image'

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { AUTH } from './constants'
+import { AUTH } from '@/constants'
 
 export async function middleware(req: NextRequest) {
   const url = req.nextUrl.clone()
