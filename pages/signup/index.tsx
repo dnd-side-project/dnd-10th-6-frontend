@@ -65,7 +65,7 @@ const SignUp = () => {
               />
               <p
                 className={cn(
-                  'text-body3-medium duration-150 pl-2',
+                  'pl-2 text-body3-medium duration-150',
                   form.formState.errors.nickname &&
                     '!text-inputbox-color-alert',
                   'text-sub-gray76 text-body3-medium',
@@ -75,9 +75,9 @@ const SignUp = () => {
                 2~6자로 입력해주세요.
               </p>
             </label>
-            <div className="py-4 px-5 bg-gray-gray50 rounded-md flex space-x-3 mt-5">
+            <div className="mt-5 flex space-x-3 rounded-md bg-gray-gray50 px-5 py-4">
               <svg
-                className="shrink-0 my-[2px]"
+                className="my-[2px] shrink-0"
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"

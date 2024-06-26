@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useState } from 'react'
+import { RefObject, useCallback, useEffect, useRef } from 'react'
 import { InfiniteQueryObserverResult } from '@tanstack/react-query'
 
 interface IuseIntersectionObserverProps<T extends HTMLElement> {
@@ -16,13 +16,16 @@ export const useIntersectionObserver = <T extends HTMLElement>({
 }: IuseIntersectionObserverProps<T>) => {
   const targetRef = useRef<T>(ref?.current ?? null)
 
-  const observerCallback: IntersectionObserverCallback = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && hasNextPage) {
-        fetchNextPage()
-      }
-    })
-  }
+  const observerCallback: IntersectionObserverCallback = useCallback(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && hasNextPage) {
+          fetchNextPage()
+        }
+      })
+    },
+    [fetchNextPage, hasNextPage],
+  )
 
   useEffect(() => {
     if (!targetRef.current) return

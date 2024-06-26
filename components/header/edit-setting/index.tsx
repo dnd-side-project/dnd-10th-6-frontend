@@ -34,7 +34,7 @@ export const EditProfile = () => {
     try {
       await NamuiApi.editProfile(values.nickname)
       setOpenAlert(false)
-    } catch (err) {
+    } catch (_) {
       toastError()
     }
   }
@@ -52,16 +52,16 @@ export const EditProfile = () => {
       open={openAlert}
       onChangeOpen={setOpenAlert}
       trigger={
-        <p className="py-[14px] text-body1-bold text-text-main-black11 cursor-pointer">
+        <p className="cursor-pointer py-[14px] text-body1-bold text-text-main-black11">
           프로필 편집
         </p>
       }
     >
       <form
         onSubmit={form.handleSubmit(onValid)}
-        className="flex-1 flex flex-col mt-4 px-5 mb-4"
+        className="mb-4 mt-4 flex flex-1 flex-col px-5"
       >
-        <label htmlFor={id} className=" space-y-2 grow">
+        <label htmlFor={id} className=" grow space-y-2">
           <span className="text-body1-medium">이름</span>
           <Inputbox
             maxLength={6}

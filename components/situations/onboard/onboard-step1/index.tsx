@@ -9,17 +9,17 @@ const OnboardStep1 = () => {
   return (
     <div
       key="step1"
-      className="px-5 h-full flex flex-col items-center text-center space-y-[2vb] justify-center"
+      className="flex h-full flex-col items-center justify-center space-y-[2vb] px-5 text-center"
     >
       <h2 className="text-[2.3vb]">
         <b>남의위키 링크를 공유</b>해 친구에게
         <br />
         나에 대해 알려달라고 부탁해보세요
       </h2>
-      <section className="p-[0.75vb] aspect-[1/2.1653] rounded-[3vb] shadow-onboard overflow-hidden flex flex-col w-[25vb]">
-        <header className="flex justify-between w-full h-[4vb] items-center">
+      <section className="flex aspect-[1/2.1653] w-[25vb] flex-col overflow-hidden rounded-[3vb] p-[0.75vb] shadow-onboard">
+        <header className="flex h-[4vb] w-full items-center justify-between">
           <svg
-            className="w-[2.4vb] h-[1.195vb]"
+            className="h-[1.195vb] w-[2.4vb]"
             width="15"
             height="6"
             viewBox="0 0 15 6"
@@ -62,9 +62,9 @@ const OnboardStep1 = () => {
             />
           </svg>
         </header>
-        <div className="flex flex-col overflow-y-scroll scrollbar-hide relative grow pb-[0.5vb]">
+        <div className="relative flex grow flex-col overflow-y-scroll pb-[0.5vb] scrollbar-hide">
           <svg
-            className="absolute w-[2vb] h-[2vb] right-0"
+            className="absolute right-0 h-[2vb] w-[2vb]"
             width="28"
             height="28"
             viewBox="0 0 28 28"
@@ -83,11 +83,11 @@ const OnboardStep1 = () => {
             description="남의위키를 통해 남이 써준 나의 소개서를 확인해보세요!"
             url="https://namui-wiki.life/welcome"
           />
-          <div className="flex flex-col items-center justify-center text-center grow">
+          <div className="flex grow flex-col items-center justify-center text-center">
             <div className="w-full px-[0.6em]">
               <Image src={welcomeTree} alt="나무" className="w-full p-3" />
             </div>
-            <p className="text-[2vb] font-bold mt-3 mb-1">환영해요 김디엔님</p>
+            <p className="mb-1 mt-3 text-[2vb] font-bold">환영해요 김디엔님</p>
             <p className="text-[1vb] text-text-sub-gray4f">
               친구에게 내 소개를 부탁해보세요
               <br />
@@ -96,15 +96,15 @@ const OnboardStep1 = () => {
             </p>
           </div>
           <div className="relative">
-            <Confetti className="fixed w-full h-full top-0 left-0 pointer-events-none">
-              <Button className="text-[1.4vb] rounded-sm py-[0.8vb] h-fit self-end">
+            <Confetti className="pointer-events-none fixed left-0 top-0 h-full w-full">
+              <Button className="h-fit self-end rounded-sm py-[0.8vb] text-[1.4vb]">
                 친구에게 내 소개 부탁하기
               </Button>
             </Confetti>
           </div>
         </div>
-        <footer className="flex w-full h-[2vb] justify-center items-end">
-          <div className="h-[0.3vb] w-1/3 bg-black rounded-full" />
+        <footer className="flex h-[2vb] w-full items-end justify-center">
+          <div className="h-[0.3vb] w-1/3 rounded-full bg-black" />
         </footer>
       </section>
     </div>

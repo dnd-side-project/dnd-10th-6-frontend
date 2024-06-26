@@ -6,7 +6,6 @@ import React, {
   PropsWithChildren,
   SetStateAction,
   createContext,
-  memo,
   useContext,
   useState,
 } from 'react'
@@ -146,16 +145,15 @@ export const FilterProvider = ({ children }: PropsWithChildren) => {
 }
 
 export const Filter = (props?: { className?: string }) => {
-  const { filterIndex, selectedFilter, setFilterIndex } =
-    useFilter() ?? defaultFilterContext
+  const { filterIndex, setFilterIndex } = useFilter() ?? defaultFilterContext
   return (
     <div
       className={cn(
-        'sticky top-0 bg-white mb-3 duration-300 z-10',
+        'sticky top-0 z-10 mb-3 bg-white duration-300',
         props?.className,
       )}
     >
-      <div className="h-14 flex items-center gap-x-6 px-5 bg-white z-10">
+      <div className="z-10 flex h-14 items-center gap-x-6 bg-white px-5">
         {filters.map((filter, index) => (
           <FilterText
             key={filter.text}
@@ -180,7 +178,7 @@ export const Filter = (props?: { className?: string }) => {
               },
             }}
             className={cn(
-              'h-[48px] flex overflow-x-scroll px-5 space-x-2 overflow-y-hidden w-screen scrollbar-hide items-center -z-[1] bg-white',
+              '-z-[1] flex h-[48px] w-screen items-center space-x-2 overflow-y-hidden overflow-x-scroll bg-white px-5 scrollbar-hide',
             )}
           >
             {filters[filterIndex.typeIdx].items.map((item, idx) => (

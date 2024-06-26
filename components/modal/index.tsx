@@ -42,7 +42,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         item: [
           <Close
             key="cancel"
-            className="flex-1 py-[14px] px-4 text-brand-sub1-blue600 bg-transparent rounded-none active:bg-bg-gray1 duration-150"
+            className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
           >
             확인
             <span className="sr-only">Close</span>
@@ -65,7 +65,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
             <DialogFooter
               className={cn(
                 footer.divider &&
-                  'border-t-line-medium border-t-[1px] divide-x-[1px] divide-line-medium',
+                  'divide-x-[1px] divide-line-medium border-t-[1px] border-t-line-medium',
               )}
             >
               {[...(footer?.item ?? [])].map((ele) => ele)}
@@ -78,7 +78,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
             )}
             {description && (
               <DialogDescription
-                className="mt-2 text-xs leading-[18px] text-[#767676] text-center"
+                className="mt-2 text-center text-xs leading-[18px] text-[#767676]"
                 style={{ whiteSpaceCollapse: 'preserve-breaks' }}
               >
                 {description}

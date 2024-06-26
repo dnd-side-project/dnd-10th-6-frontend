@@ -31,29 +31,29 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
   }
 
   return (
-    <div className="h-calc-h flex flex-col px-5 py-4">
-      <section className="grow flex flex-col text-center justify-center items-center space-y-16">
+    <div className="flex h-calc-h flex-col px-5 py-4">
+      <section className="flex grow flex-col items-center justify-center space-y-16 text-center">
         <div className="flex flex-col items-center">
           <SurveyTree />
-          <h1 className="text-mainTitle2-bold mt-6">
+          <h1 className="mt-6 text-mainTitle2-bold">
             {nickname}님의
             <br />
             남의위키가 도착했어요
           </h1>
-          <p className="text-subTitle2-medium text-text-sub-gray4f mt-3">
+          <p className="mt-3 text-subTitle2-medium text-text-sub-gray4f">
             남의위키를 통해
             <br />
             내가 본 친구의 모습을 알려주세요
           </p>
         </div>
       </section>
-      <footer className="flex flex-col space-y-3 items-center relative">
+      <footer className="relative flex flex-col items-center space-y-3">
         <motion.div
           initial={{ scale: 0, y: 10, opacity: 0 }}
           animate={{ scale: 1, y: 0, opacity: 1 }}
-          className="absolute text-center -top-[85%]"
+          className="absolute -top-[85%] text-center"
         >
-          <div className="w-full h-full bg-white shadow-chat-bubble py-4 px-3  rounded-lg flex-1 relative">
+          <div className="relative h-full w-full flex-1 rounded-lg bg-white  px-3 py-4 shadow-chat-bubble">
             <p className="text-body3-medium text-black">
               <b>비회원</b>으로 시작하면 <br />
               내가 작성한 <b>남의위키를 볼 수 없어요!</b>
@@ -76,9 +76,10 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
         {data?.user?.wikiId ? (
           <Button onClick={handleStart}>시작하기</Button>
         ) : (
+          // variant 적용: kakao
           <Button
             disabled={isPending}
-            variant="kakao"
+            variant="Line-neutral"
             onClick={() =>
               mutate({
                 provider: 'kakao',
@@ -107,7 +108,7 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
             NamuiApi.clear()
             router.replace(`/surveys/questions?wikiId=${router.query.wikiId}`)
           }}
-          className="text-text-sub-gray76 text-sm underline underline-offset-2"
+          className="text-sm text-text-sub-gray76 underline underline-offset-2"
         >
           비회원으로 시작하기
         </button>
@@ -121,18 +122,20 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
           divider: false,
           item: [
             [
-              <Close className="flex-[1_0_50%]">
+              // TODO : variant 적용 kakao
+              <Close className="flex-[1_0_50%]" key="survey-footer">
                 <Button
-                  variant="default"
+                  variant="Line-neutral"
                   key="copy-link"
-                  className="rounded-none h-full"
+                  className="h-full rounded-none"
                 >
                   닫기
                   <span className="sr-only">Close</span>
                 </Button>
               </Close>,
               <Link
-                className="py-[14px] px-4 h-full rounded-none border-none duration-150 text-center text-white bg-green-500 hover:bg-green-600 active:bg-green-800 focus-visible:ring-offset-2  border-[1px] border-transparent shadow-sm w-full flex-[1_0_50%]"
+                key="survey-footer-link"
+                className="h-full w-full flex-[1_0_50%] rounded-none border-[1px] border-none border-transparent bg-green-500 px-4 py-[14px] text-center text-white  shadow-sm duration-150 hover:bg-green-600 focus-visible:ring-offset-2 active:bg-green-800"
                 href="/garden"
               >
                 내 정원가기

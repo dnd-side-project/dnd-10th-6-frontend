@@ -26,7 +26,7 @@ const Csrf = ({ csrfCallbackUrl }: { csrfCallbackUrl: string }) => {
     }
   }, [])
   return (
-    <section className="h-calc-h flex items-center">
+    <section className="flex h-calc-h items-center">
       <Loading />
     </section>
   )

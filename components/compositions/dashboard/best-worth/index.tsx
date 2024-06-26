@@ -44,8 +44,6 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
     endAngle,
     fill,
     percent,
-    name,
-    payload,
     color,
     legend,
   } = props as PieSectorDataItem & Payload
@@ -104,7 +102,7 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
       </text>
       <text
         ref={textRef}
-        className={cn('font-base font-bold text-3xl leading-10')}
+        className={cn('font-base text-3xl font-bold leading-10')}
         x={cx}
         y={cy}
         dy={25}
@@ -157,13 +155,13 @@ function BestWorth({ filter }: { filter: FilterType }) {
   }, [statisics])
 
   return (
-    <div ref={ref} className="w-full h-full flex flex-col">
+    <div ref={ref} className="flex h-full w-full flex-col">
       {isLoading ? (
         <>
-          <div className="text-mainTitle2-bold font-bold h-8 skeleton w-3/4" />
-          <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6 skeleton aspect-square"></div>
-          <div className="w-1/2  mx-auto mt-10">
-            <div className="mx-auto !skeleton rounded-md h-8 w-32"></div>
+          <div className="skeleton h-8 w-3/4 text-mainTitle2-bold font-bold" />
+          <div className="skeleton mt-8 flex aspect-square flex-col items-center justify-center rounded-2xl px-6 py-12 shadow-basic"></div>
+          <div className="mx-auto  mt-10 w-1/2">
+            <div className="!skeleton mx-auto h-8 w-32 rounded-md"></div>
           </div>
         </>
       ) : (
@@ -181,8 +179,8 @@ function BestWorth({ filter }: { filter: FilterType }) {
               </span>
             )}
           </h2>
-          <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6">
-            <div className="w-[180px] h-[180px] mx-auto relative">
+          <div className="mt-8 flex flex-col items-center justify-center rounded-2xl px-6 py-12 shadow-basic">
+            <div className="relative mx-auto h-[180px] w-[180px]">
               {inView && (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart barGap={0} barCategoryGap={0}>
@@ -213,7 +211,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
                 </ResponsiveContainer>
               )}
             </div>
-            <div className="flex justify-center space-x-4 w-full mt-8">
+            <div className="mt-8 flex w-full justify-center space-x-4">
               {orderByMaxValueList?.slice(0, 3).map((item) => {
                 return (
                   <div
@@ -221,13 +219,13 @@ function BestWorth({ filter }: { filter: FilterType }) {
                     className="flex items-center space-x-1"
                   >
                     <div
-                      className={cn('w-2 h-2 rounded-full')}
+                      className={cn('h-2 w-2 rounded-full')}
                       style={{ backgroundColor: item.color }}
                     />
-                    <p className="font-bold text-sm text-text-main-black11">
+                    <p className="text-sm font-bold text-text-main-black11">
                       {item.legend.split(' ')[2]}
                     </p>
-                    <span className="font-medium text-sm text-text-sub-gray4f">
+                    <span className="text-sm font-medium text-text-sub-gray4f">
                       {item.percentage}%
                     </span>
                   </div>
@@ -235,7 +233,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
               })}
             </div>
           </div>
-          <div className="mx-auto mt-10 w-1/2 flex justify-center">
+          <div className="mx-auto mt-10 flex w-1/2 justify-center">
             <Button
               onClick={() =>
                 statisics?.questionId && handle(statisics?.questionId)

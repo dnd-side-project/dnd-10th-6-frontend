@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 const Page = () => {
   return (
-    <div className="h-calc-h flex flex-col px-5 py-4">
+    <div className="flex h-calc-h flex-col px-5 py-4">
       <WriterLanding />
     </div>
   )

@@ -9,9 +9,9 @@ import OnboardStep3 from './onboard-step3'
 import OnboardStep1 from './onboard-step1'
 
 export const onBoardingItems = [
-  <OnboardStep1 />,
-  <OnboardStep2 />,
-  <OnboardStep3 />,
+  <OnboardStep1 key="onboarding-step1" />,
+  <OnboardStep2 key="onboarding-step2" />,
+  <OnboardStep3 key="onboarding-step3" />,
 ]
 interface OnBoardProps {
   onStartClick: () => void
@@ -35,10 +35,10 @@ const OnBoard = ({ onStartClick }: OnBoardProps) => {
     }
   }, [emblaApi])
   return (
-    <div className="h-calc-h flex flex-col pb-4 px-5">
+    <div className="flex h-calc-h flex-col px-5 pb-4">
       <Carousel
         emblaRef={[ref, emblaApi]}
-        className="flex flex-col w-[calc(100%_+_40px)] overflow-hidden -ml-5 pt-[10vb] pb-8 h-full"
+        className="-ml-5 flex h-full w-[calc(100%_+_40px)] flex-col overflow-hidden pb-8 pt-[10vb]"
         slides={onBoardingItems}
         renderItem={(item) => item}
       />

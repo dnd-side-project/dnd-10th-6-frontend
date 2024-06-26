@@ -5,20 +5,20 @@ import AnswerDetail from '@/components/compositions/answers/answer-detail'
 import { useRouter } from 'next/router'
 import { useSession } from '@/provider/session-provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import {RelationBadge,PeriodBadge} from '@/components/badge'
+import { RelationBadge, PeriodBadge } from '@/components/badge'
 import { useQuery } from '@tanstack/react-query'
 import { Survey, getSurveyByIdQuery } from '@/queries/surveys'
 import { GetServerSideProps } from 'next'
 import { fadeInProps } from '@/variants'
 import { TreeType, treeCardAsset } from '@/model/tree.entity'
 import {
+  QS_NAMES,
   ShareImageContext,
   ShareImageDrawer,
   ShareImageProvider,
 } from '@/components/share-image'
 import { parseShareCardItems } from '@/components/share-image/constants'
 const Pages = ({ surveyId }: { surveyId: string }) => {
-  const { data } = useSession()
   const { data: { data: survey } = {}, isLoading } = useQuery(
     getSurveyByIdQuery(surveyId),
   )
@@ -61,7 +61,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
           ),
           leftIcon: (
             <svg
-              className="w-5 h-5"
+              className="h-5 w-5"
               width="28"
               height="28"
               viewBox="0 0 28 28"
@@ -88,18 +88,18 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
               <motion.div
                 key={surveyId + 'detail'}
                 {...fadeInProps}
-                className="w-full flex text flex-col space-y-2"
+                className="text flex w-full flex-col space-y-2"
               >
                 <section>
-                  <div className="py-5 flex justify-between space-x-4">
+                  <div className="flex justify-between space-x-4 py-5">
                     <div
-                      className={`aspect-square w-[58px] h-[58px] rounded-full flex justify-center items-center ${bgColor(
+                      className={`flex aspect-square h-[58px] w-[58px] items-center justify-center rounded-full ${bgColor(
                         survey,
                       )}`}
                     >
                       {treeType.render(survey.period, survey.relation)}
                     </div>
-                    <div className="flex flex-col grow space-y-2">
+                    <div className="flex grow flex-col space-y-2">
                       <h2 className="text-subTitle1-bold">
                         {survey.senderName}님
                       </h2>
@@ -125,24 +125,24 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
                 className="flex flex-col space-y-4"
               >
                 <section>
-                  <div className="py-5 flex justify-between space-x-4">
-                    <div className="aspect-square rounded-full flex justify-center items-center skeleton h-14"></div>
-                    <div className="flex flex-col grow space-y-2">
-                      <div className="h-7 skeleton w-1/2" />
+                  <div className="flex justify-between space-x-4 py-5">
+                    <div className="skeleton flex aspect-square h-14 items-center justify-center rounded-full"></div>
+                    <div className="flex grow flex-col space-y-2">
+                      <div className="skeleton h-7 w-1/2" />
                       <div className="flex space-x-2">
-                        <div className="h-6 skeleton w-3/5" />
-                        <div className="h-6 skeleton w-1/3" />
+                        <div className="skeleton h-6 w-3/5" />
+                        <div className="skeleton h-6 w-1/3" />
                       </div>
                     </div>
-                    <div className="self-end skeleton h-6 w-1/4" />
+                    <div className="skeleton h-6 w-1/4 self-end" />
                   </div>
                 </section>
-                <section className="w-full grid grid-cols-1 divide-y justify-start divide-line-soft">
+                <section className="grid w-full grid-cols-1 justify-start divide-y divide-line-soft">
                   {Array.from({ length: 10 }).map((_, index) => (
                     <motion.div
                       key={`card-skeleton-${index}`}
                       variants={fadeInProps.variants}
-                      className="py-8 flex flex-col justify-between space-y-4"
+                      className="flex flex-col justify-between space-y-4 py-8"
                     >
                       <h3 className="skeleton h-6 w-3/4"></h3>
                       <h3 className="skeleton h-6 w-1/5"></h3>
@@ -164,7 +164,7 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
   const { showShareImage } = useContext(ShareImageContext)
   const { data } = useSession()
   return (
-    <div className="w-full space-y-4  grid grid-cols-1 divide-y justify-start">
+    <div className="grid w-full  grid-cols-1 justify-start space-y-4 divide-y">
       {survey.questionAndAnswers.map((item, index) => (
         <AnswerDetail
           questionName={item.questionName}
@@ -174,8 +174,8 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
                   showShareImage({
                     period: survey.period,
                     optionName: item.optionName,
-                    questionName: item.questionName as any,
-                    reason: item.reason as any,
+                    questionName: item.questionName as QS_NAMES,
+                    reason: item.reason as QS_NAMES,
                     relation: survey.relation,
                     senderName: survey.senderName,
                     value:
@@ -192,7 +192,7 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
             .replace('{{userName}}', data?.user?.name ?? '')
             .replace('<br/>', ' ')}
           answer={item.reason ? item.text : item.reason}
-          value={item.value as any}
+          value={item.value as string | boolean}
           reason={item.reason ?? item.text}
         />
       ))}

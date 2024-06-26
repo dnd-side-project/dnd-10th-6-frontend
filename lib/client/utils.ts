@@ -49,7 +49,7 @@ export const shareToCopyLink = async (url?: string) => {
         title: 'namuiwiki | 남의위키',
         text: url ?? window.location.origin,
       })
-    } catch (err) {
+    } catch (_) {
       await navigator.clipboard?.writeText(url ?? window.location.origin)
     }
   } else {

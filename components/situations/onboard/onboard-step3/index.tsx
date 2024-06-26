@@ -83,18 +83,18 @@ const OnboardStep3 = () => {
   return (
     <div
       key="step3"
-      className="px-5 h-full flex flex-col items-center text-center space-y- justify-center space-y-[2vb]"
+      className="space-y- flex h-full flex-col items-center justify-center space-y-[2vb] px-5 text-center"
     >
       <h2 className="text-[2.3vb]">
         내 결과 보기 페이지에서 그룹별로
         <br />
         <b>상세 데이터를 확인</b>할 수 있어요
       </h2>
-      <section className="py-[0.75vb] aspect-[1/2.1653] rounded-[3vb] shadow-onboard overflow-hidden flex flex-col w-[25vb]">
-        <div className="flex flex-col overflow-y-scroll scrollbar-hide relative grow pb-[0.5vb]">
-          <header className="flex rounded-t-[2.2vb] p-[1vb] justify-between w-full h-[4vb] items-center">
+      <section className="flex aspect-[1/2.1653] w-[25vb] flex-col overflow-hidden rounded-[3vb] py-[0.75vb] shadow-onboard">
+        <div className="relative flex grow flex-col overflow-y-scroll pb-[0.5vb] scrollbar-hide">
+          <header className="flex h-[4vb] w-full items-center justify-between rounded-t-[2.2vb] p-[1vb]">
             <svg
-              className="w-[2.4vb] h-[1.195vb]"
+              className="h-[1.195vb] w-[2.4vb]"
               width="15"
               height="6"
               viewBox="0 0 15 6"
@@ -140,11 +140,11 @@ const OnboardStep3 = () => {
           <main>
             <header
               className={cn(
-                'z-10 grid grid-cols-3 px-[1vb] bg-white sticky duration-300 text-body1-bold shrink-0 w-full h-[4vb] items-center',
+                'sticky z-10 grid h-[4vb] w-full shrink-0 grid-cols-3 items-center bg-white px-[1vb] text-body1-bold duration-300',
               )}
             >
               <svg
-                className="h-[1.2vb]  w-fit aspect-square"
+                className="aspect-square  h-[1.2vb] w-fit"
                 width="28"
                 height="28"
                 viewBox="0 0 28 28"
@@ -163,9 +163,9 @@ const OnboardStep3 = () => {
                 <Logo />
               </div>
 
-              <div className="flex gap-x-[0.4vb] justify-end">
+              <div className="flex justify-end gap-x-[0.4vb]">
                 <svg
-                  className="h-[1.2vb]  w-fit aspect-square"
+                  className="aspect-square  h-[1.2vb] w-fit"
                   width="28"
                   height="28"
                   viewBox="0 0 28 28"
@@ -186,7 +186,7 @@ const OnboardStep3 = () => {
                   />
                 </svg>
                 <svg
-                  className="h-[1.2vb]  w-fit aspect-square"
+                  className="aspect-square  h-[1.2vb] w-fit"
                   width="28"
                   height="28"
                   viewBox="0 0 28 28"
@@ -204,10 +204,10 @@ const OnboardStep3 = () => {
             </header>
             <div
               className={cn(
-                'sticky -top-[0.4vb] bg-white mb-[0.6vb] duration-300 z-10 space-y-[0.6vb] px-[0.75vb]',
+                'sticky -top-[0.4vb] z-10 mb-[0.6vb] space-y-[0.6vb] bg-white px-[0.75vb] duration-300',
               )}
             >
-              <div className="h-[2vb] flex items-center gap-x-[0.6vb] px-[0.4vb] bg-white z-10">
+              <div className="z-10 flex h-[2vb] items-center gap-x-[0.6vb] bg-white px-[0.4vb]">
                 {filters.map((filter, index) => (
                   <button
                     key={filter.text}
@@ -219,8 +219,8 @@ const OnboardStep3 = () => {
                       setFilterIndex({ typeIdx: index, valueIdx: 0 })
                     }
                     className={cn(
-                      'text-[1vb] font-bold transition-colors text-text-sub-gray76 whitespace-nowrap',
-                      'active:scale-95 transition-transform origin-center select-none',
+                      'whitespace-nowrap text-[1vb] font-bold text-text-sub-gray76 transition-colors',
+                      'origin-center select-none transition-transform active:scale-95',
 
                       index === filterIndex.typeIdx && 'text-text-main-black11',
                     )}
@@ -244,7 +244,7 @@ const OnboardStep3 = () => {
                       },
                     }}
                     className={cn(
-                      'flex overflow-x-scroll px-[0.4vb] pb-[0.4vb] space-x-2 overflow-y-hidden w-screen scrollbar-hide items-center -z-[1] bg-white',
+                      '-z-[1] flex w-screen items-center space-x-2 overflow-y-hidden overflow-x-scroll bg-white px-[0.4vb] pb-[0.4vb] scrollbar-hide',
                     )}
                   >
                     {filters[filterIndex.typeIdx].items.map((item, idx) => (
@@ -261,7 +261,7 @@ const OnboardStep3 = () => {
                 )}
               </AnimatePresence>
             </div>
-            <div className="divide-y-[0.6vb] divide-line-soft flex flex-col">
+            <div className="flex flex-col divide-y-[0.6vb] divide-line-soft">
               <Section className="pt-[0.5vb]">
                 <Step3TreeInfo filter={selectedFilter} />
               </Section>
@@ -286,8 +286,8 @@ const OnboardStep3 = () => {
             </div>
           </main>
         </div>
-        <footer className="flex w-full h-[2vb] justify-center items-end">
-          <div className="h-[0.3vb] w-1/3 bg-black rounded-full" />
+        <footer className="flex h-[2vb] w-full items-end justify-center">
+          <div className="h-[0.3vb] w-1/3 rounded-full bg-black" />
         </footer>
       </section>
     </div>
@@ -304,7 +304,7 @@ function Section({
     <section
       {...props}
       className={cn(
-        'pt-[1vb] pb-[1.2vb] px-[1.4vb] flex flex-col overflow-x-hidden bg-text-main-whiteFF',
+        'flex flex-col overflow-x-hidden bg-text-main-whiteFF px-[1.4vb] pb-[1.2vb] pt-[1vb]',
         props.className,
       )}
     >
@@ -356,7 +356,7 @@ const FilterButton = ({
       draggable={false}
       variants={fadeInProps.variants}
       className={cn(
-        'text-[0.8vb]  h-[2vb] rounded-full px-[0.4vb] whitespace-nowrap avoid-min-w',
+        'avoid-min-w  h-[2vb] whitespace-nowrap rounded-full px-[0.4vb] text-[0.8vb]',
         'origin-center select-none',
         selected && 'text-text-main-whiteFF',
       )}

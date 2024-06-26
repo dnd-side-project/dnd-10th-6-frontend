@@ -55,7 +55,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }),
     ])
     return res.status(200).json({ accessToken })
-  } catch (err) {
+  } catch (_) {
     return withError(res, { status: 400 })
   }
 }

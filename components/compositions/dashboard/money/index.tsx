@@ -39,17 +39,17 @@ const Money = ({ filter }: { filter: FilterType }) => {
       <div ref={ref}>
         {isLoading || !statisics ? (
           <>
-            <div className="h-8 skeleton w-1/4 mb-2" />
-            <div className="h-8 skeleton w-3/4 mb-5" />
-            <div className="h-5 skeleton w-1/5" />
-            <div className="flex justify-center py-12 items-center rounded-2xl shadow-basic mt-8 flex-col px-6 skeleton aspect-square" />
-            <div className="w-1/2  mx-auto mt-10">
-              <div className="mx-auto !skeleton rounded-md h-8 w-32" />
+            <div className="skeleton mb-2 h-8 w-1/4" />
+            <div className="skeleton mb-5 h-8 w-3/4" />
+            <div className="skeleton h-5 w-1/5" />
+            <div className="skeleton mt-8 flex aspect-square flex-col items-center justify-center rounded-2xl px-6 py-12 shadow-basic" />
+            <div className="mx-auto  mt-10 w-1/2">
+              <div className="!skeleton mx-auto h-8 w-32 rounded-md" />
             </div>
           </>
         ) : (
           <>
-            <h2 className="text-mainTitle2-bold mb-5">
+            <h2 className="mb-5 text-mainTitle2-bold">
               <b className="text-brand-main-green400">
                 {statisics.peopleCount}명
               </b>
@@ -66,8 +66,8 @@ const Money = ({ filter }: { filter: FilterType }) => {
             >
               이용자 중 상위 99%
             </div> */}
-            <div className="mt-8 mb-10 py-12 flex items-center rounded-2xl shadow-basic mx-auto">
-              <div className="flex mx-auto h-full space-x-12">
+            <div className="mx-auto mb-10 mt-8 flex items-center rounded-2xl py-12 shadow-basic">
+              <div className="mx-auto flex h-full space-x-12">
                 <Bar
                   price={statisics.average ?? 0}
                   active={inView}
@@ -83,7 +83,7 @@ const Money = ({ filter }: { filter: FilterType }) => {
             </div>
           </>
         )}
-        <div className="mx-auto mt-10 w-1/2 flex justify-center">
+        <div className="mx-auto mt-10 flex w-1/2 justify-center">
           <Button
             onClick={() =>
               statisics?.questionId && handle(statisics?.questionId)
@@ -113,11 +113,11 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
   const { data } = useSession()
   const [isDone, setIsDone] = useState(false)
   return (
-    <div className="h-full flex flex-col">
-      <div className="w-14 mx-auto flex flex-col items-center justify-end h-40">
+    <div className="flex h-full flex-col">
+      <div className="mx-auto flex h-40 w-14 flex-col items-center justify-end">
         <div
           className={cn(
-            'w-fit relative rounded-md text-body3-bold whitespace-nowrap  items-center justify-center',
+            'relative w-fit items-center justify-center whitespace-nowrap  rounded-md text-body3-bold',
             'mb-4 px-2 py-1',
             isMe
               ? 'bg-brand-sub1-yellow900 text-text-main-whiteFF'
@@ -127,7 +127,7 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
           {price.toLocaleString()}원
           <svg
             className={cn(
-              'absolute left-1/2 -translate-x-1/2 -bottom-2.5',
+              'absolute -bottom-2.5 left-1/2 -translate-x-1/2',
               isMe ? 'fill-brand-sub1-yellow900' : 'fill-gray-gray100',
             )}
             width="25"
@@ -165,7 +165,7 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
               : {}
           }
           className={cn(
-            'w-full origin-bottom relative rounded-md',
+            'relative w-full origin-bottom rounded-md',
             isMe ? 'bg-brand-sub1-yellow900' : 'bg-gray-gray100',
           )}
         />
@@ -173,9 +173,9 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
 
       <p
         className={cn(
-          'w-fit mx-auto mt-4',
-          isMe && 'text-text-main-black11 text-body1-bold',
-          !isMe && 'text-text-sub-gray76 text-body1-medium opacity-50',
+          'mx-auto mt-4 w-fit',
+          isMe && 'text-body1-bold text-text-main-black11',
+          !isMe && 'text-body1-medium text-text-sub-gray76 opacity-50',
         )}
       >
         {isMe ? (data?.user?.name ?? '') + ' 님' : '이용자 평균'}

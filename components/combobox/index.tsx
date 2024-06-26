@@ -40,10 +40,10 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
       <div ref={ref} className="relative" onBlur={() => setIsOpen(false)}>
         <div
           className={cn(
-            'flex items-center justify-between w-full px-4 py-2 text-left bg-white border border-[#E5E5EC] rounded-md shadow-sm ',
-            'focus:outline-none focus:border-brand-main-green400 ',
+            'flex w-full items-center justify-between rounded-md border border-[#E5E5EC] bg-white px-4 py-2 text-left shadow-sm ',
+            'focus:border-brand-main-green400 focus:outline-none ',
             disabled &&
-              'text-text-sub-gray99 bg-gray-gray50  cursor-not-allowed',
+              'cursor-not-allowed bg-gray-gray50  text-text-sub-gray99',
             !disabled && 'hover:bg-gray-gray50',
           )}
           onClick={() => setIsOpen(!isOpen)}
@@ -58,7 +58,7 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
             strokeWidth={1.5}
             stroke="currentColor"
             className={cn(
-              'w-5 h-5 text-text-sub-gray76 duration-300 ease-in-out',
+              'h-5 w-5 text-text-sub-gray76 duration-300 ease-in-out',
               isOpen && 'rotate-180',
             )}
           >
@@ -72,7 +72,7 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="absolute z-10 mt-1 w-full bg-white border border-[#E5E5EC] rounded-md shadow-lg"
+              className="absolute z-10 mt-1 w-full rounded-md border border-[#E5E5EC] bg-white shadow-lg"
               variants={variants}
               initial="initial"
               animate="animate"
@@ -82,7 +82,7 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
                 <motion.div
                   key={option.value}
                   className={cn(
-                    'px-4 py-2 cursor-pointer select-none text-left',
+                    'cursor-pointer select-none px-4 py-2 text-left',
                     index === options.length - 1 ? 'rounded-b-md' : '',
                     selectedOption?.value === option.value && 'font-bold',
                     !disabled && 'hover:bg-gray-gray50',

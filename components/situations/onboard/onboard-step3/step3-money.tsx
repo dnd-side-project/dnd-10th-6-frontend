@@ -1,9 +1,7 @@
 import { Button } from '@/components/ui'
-import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
-import { useSession } from '@/provider/session-provider'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
 import React, { useMemo, useState } from 'react'
 
@@ -15,9 +13,7 @@ const statistics = {
   entireAverage: 32453728,
 }
 
-const Step3Money = ({ filter }: { filter: FilterType }) => {
-  const { handle } = useDetailDrawer()
-
+const Step3Money = ({}: { filter: FilterType }) => {
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
@@ -34,7 +30,7 @@ const Step3Money = ({ filter }: { filter: FilterType }) => {
     <LazyMotion features={domAnimation}>
       <div ref={ref}>
         <>
-          <h2 className="text-start text-[1.6vb] font-bold mb-[1.5vb]">
+          <h2 className="mb-[1.5vb] text-start text-[1.6vb] font-bold">
             <b className="text-brand-main-green400">
               {statistics.peopleCount}명
             </b>
@@ -45,8 +41,8 @@ const Step3Money = ({ filter }: { filter: FilterType }) => {
             </b>{' '}
             빌릴 수 있어요
           </h2>
-          <div className="mt-[0.8vb] mb-[1vb] py-[1.2vb] flex items-center rounded-[1.6vb] shadow-basic mx-auto">
-            <div className="flex mx-auto h-full space-x-[4vb]">
+          <div className="mx-auto mb-[1vb] mt-[0.8vb] flex items-center rounded-[1.6vb] py-[1.2vb] shadow-basic">
+            <div className="mx-auto flex h-full space-x-[4vb]">
               <Bar
                 price={statistics.average ?? 0}
                 active={inView}
@@ -61,12 +57,12 @@ const Step3Money = ({ filter }: { filter: FilterType }) => {
             </div>
           </div>
         </>
-        <div className="w-1/2  mx-auto mt-[2vb]">
+        <div className="mx-auto  mt-[2vb] w-1/2">
           <Button
             onClick={() => {}}
             rounded="full"
             variant="Line-neutral"
-            className="mx-auto text-[1vb] h-[3vb]"
+            className="mx-auto h-[3vb] text-[1vb]"
           >
             자세히 보기
           </Button>
@@ -86,14 +82,13 @@ interface BarProps {
 }
 
 function Bar({ active, value, price, isMe = true }: BarProps) {
-  const { data } = useSession()
   const [isDone, setIsDone] = useState(false)
   return (
-    <div className="h-full flex flex-col">
-      <div className="w-[4vb] mx-auto flex flex-col items-center justify-end h-[16vb]">
+    <div className="flex h-full flex-col">
+      <div className="mx-auto flex h-[16vb] w-[4vb] flex-col items-center justify-end">
         <div
           className={cn(
-            'w-fit relative rounded-md text-[1.2vb] font-bold whitespace-nowrap  items-center justify-center',
+            'relative w-fit items-center justify-center whitespace-nowrap rounded-md  text-[1.2vb] font-bold',
             'mb-4 px-2 py-1',
             isMe
               ? 'bg-brand-sub1-yellow900 text-text-main-whiteFF'
@@ -103,7 +98,7 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
           {price.toLocaleString()}원
           <svg
             className={cn(
-              'absolute left-1/2 -translate-x-1/2 -bottom-2.5',
+              'absolute -bottom-2.5 left-1/2 -translate-x-1/2',
               isMe ? 'fill-brand-sub1-yellow900' : 'fill-gray-gray100',
             )}
             width="25"
@@ -141,7 +136,7 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
               : {}
           }
           className={cn(
-            'w-full origin-bottom relative rounded-md',
+            'relative w-full origin-bottom rounded-md',
             isMe ? 'bg-brand-sub1-yellow900' : 'bg-gray-gray100',
           )}
         />
@@ -149,9 +144,9 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
 
       <p
         className={cn(
-          'w-fit mx-auto mt-4 text-[1.2vb] font-bold',
+          'mx-auto mt-4 w-fit text-[1.2vb] font-bold',
           isMe && 'text-text-main-black11',
-          !isMe && 'text-text-sub-gray76 font-medium opacity-50',
+          !isMe && 'font-medium text-text-sub-gray76 opacity-50',
         )}
       >
         {isMe ? '김디엔 님' : '이용자 평균'}

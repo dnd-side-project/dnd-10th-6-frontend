@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import Link from 'next/link'
 import { Drawer, DrawerContent } from '../ui/drawer'
 import Image from 'next/image'
@@ -18,7 +18,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
   })
   const [modalOpen, setModalOpen] = useState(false)
 
-  const toggleBottomSheet = (e: any) => {
+  const toggleBottomSheet: MouseEventHandler<HTMLButtonElement> = (e) => {
     setBottomSheet((prev) => ({
       ...prev,
       isOpen: !prev.isOpen,
@@ -26,7 +26,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
     e.stopPropagation()
   }
 
-  const handleLinkClick = (e: any) => {
+  const handleLinkClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
     if (senderWikiId === null) {
       e.preventDefault()
     } else {
@@ -34,11 +34,11 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
     }
   }
 
-  const handleDetailClick = (e: any) => {
+  const handleDetailClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.stopPropagation()
   }
 
-  const handleWritingClick = (e: any) => {
+  const handleWritingClick: MouseEventHandler<HTMLButtonElement> = (_) => {
     if (senderWikiId === null) {
       setModalOpen(true)
     } else {
@@ -52,7 +52,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
   return (
     <>
       <button
-        className="absolute z-20 top-3 right-3"
+        className="absolute right-3 top-3 z-20"
         onClick={toggleBottomSheet}
       >
         <Image src={menu} alt="menu" />
@@ -67,14 +67,14 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
         }
       >
         <DrawerContent>
-          <div className="p-4 flex flex-col text-body3-medium">
-            <div className="ml-2 flex flex-col my-auto space-y-4 justify-start items-start">
+          <div className="flex flex-col p-4 text-body3-medium">
+            <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
               <Link
                 href={`/surveys/questions?wikiId=${senderWikiId}`}
                 onClick={handleLinkClick}
               >
                 <button
-                  className="flex gap-2 items-center"
+                  className="flex items-center gap-2"
                   onClick={handleWritingClick}
                 >
                   <Image src={pen} alt="pen" />
@@ -85,7 +85,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
                 href={`/answers?surveyId=${id}`}
                 onClick={handleDetailClick}
               >
-                <button className="flex gap-2 items-center">
+                <button className="flex items-center gap-2">
                   <Image src={eye} alt="eye" />
                   소개서 자세히 보기
                 </button>

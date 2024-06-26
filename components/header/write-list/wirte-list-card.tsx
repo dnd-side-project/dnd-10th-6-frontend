@@ -1,5 +1,5 @@
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { useAnimation, useInView } from 'framer-motion'
+import { useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Writing } from '@/queries/surveys'
@@ -55,17 +55,17 @@ const WriteListCard = ({ item }: { item: Writing }) => {
     <motion.div
       variants={variants}
       ref={ref}
-      className="py-5 flex justify-between space-x-4"
+      className="flex justify-between space-x-4 py-5"
     >
       <div
-        className={`w-[48px] h-[48px] rounded-full flex justify-center items-center ${bgColor(
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
           item,
         )}`}
       >
         {treeType.render(item.period, item.relation)}
       </div>
 
-      <div className="flex flex-col grow space-y-2">
+      <div className="flex grow flex-col space-y-2">
         <h3 className="text-body1-bold">{item.senderName}님</h3>
         <div className="flex space-x-1.5">
           <PeriodBadge period={item.period} />

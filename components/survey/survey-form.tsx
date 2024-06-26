@@ -6,10 +6,9 @@ import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
 import InputLabel from '../inputLabel'
-import Inputbox from '../inputbox'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Button from '../ui/button'
+import { Button } from '@/components/ui'
 import { TreeSvg } from '../questionTrees'
 
 const surveyScheme = z.object({
@@ -98,10 +97,10 @@ const SurveyForm = ({
   return (
     <form
       onSubmit={form.handleSubmit(onValid)}
-      className="text-left relative h-full flex flex-col space-y-6 overflow-y-hidden"
+      className="relative flex h-full flex-col space-y-6 overflow-y-hidden text-left"
     >
       {type === 'OX' ? (
-        <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+        <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
           <div
             className="text-subTitle1-medium"
             dangerouslySetInnerHTML={{ __html: title }}
@@ -120,11 +119,11 @@ const SurveyForm = ({
                       duration: 0.3,
                     }}
                     className={cn(
-                      'flex items-center justify-start w-full p-4 rounded-sm border border-[#E5E5EC] transition-all duration-200',
+                      'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
                       'focus-within:border-brand-main-green400',
-                      'disabled:opacity-50 disabled:cursor-not-allowed',
+                      'disabled:cursor-not-allowed disabled:opacity-50',
                       field.value === option.id + '' &&
-                        'border-brand-main-green400 border bg-main-green-green50',
+                        'border border-brand-main-green400 bg-main-green-green50',
                     )}
                   >
                     <input
@@ -158,10 +157,10 @@ const SurveyForm = ({
                     >
                       <div
                         className={cn(
-                          'w-4 h-4 rounded-full bg-text-main-whiteFF border border-[#E5E5EC] transition-all duration-200 ',
+                          'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
                           'hover:border-brand-main-green400',
                           field.value === option.id + '' &&
-                            'border-brand-main-green400 border-4',
+                            'border-4 border-brand-main-green400',
                         )}
                       ></div>
 
@@ -174,7 +173,7 @@ const SurveyForm = ({
           />
         </div>
       ) : type === 'MULTIPLE_CHOICE' ? (
-        <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+        <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
           <div
             className="text-subTitle1-medium"
             dangerouslySetInnerHTML={{ __html: title }}
@@ -194,11 +193,11 @@ const SurveyForm = ({
                       duration: 0.3,
                     }}
                     className={cn(
-                      'flex items-center justify-start w-full p-4 rounded-sm border border-[#E5E5EC] transition-all duration-200',
+                      'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
                       'focus-within:border-brand-main-green400',
-                      'disabled:opacity-50 disabled:cursor-not-allowed',
+                      'disabled:cursor-not-allowed disabled:opacity-50',
                       field.value === option.id + '' &&
-                        'border-brand-main-green400 border bg-main-green-green50',
+                        'border border-brand-main-green400 bg-main-green-green50',
                     )}
                   >
                     <input
@@ -234,10 +233,10 @@ const SurveyForm = ({
                     >
                       <div
                         className={cn(
-                          'w-4 h-4 rounded-full bg-text-main-whiteFF border border-[#E5E5EC] transition-all duration-200 ',
+                          'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
                           'hover:border-brand-main-green400',
                           field.value === option.id + '' &&
-                            'border-brand-main-green400 border-4',
+                            'border-4 border-brand-main-green400',
                         )}
                       ></div>
 
@@ -265,7 +264,7 @@ const SurveyForm = ({
           />
         </div>
       ) : type === 'NUMERIC_CHOICE' ? (
-        <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[190px]">
+        <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
           <div
             className="text-subTitle1-medium"
             dangerouslySetInnerHTML={{ __html: title }}
@@ -285,11 +284,11 @@ const SurveyForm = ({
                       duration: 0.3,
                     }}
                     className={cn(
-                      'flex items-center justify-start w-full p-4 rounded-sm border border-[#E5E5EC] transition-all duration-200',
+                      'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
                       'focus-within:border-brand-main-green400',
-                      'disabled:opacity-50 disabled:cursor-not-allowed',
+                      'disabled:cursor-not-allowed disabled:opacity-50',
                       field.value === option.id + '' &&
-                        'border-brand-main-green400 border bg-main-green-green50',
+                        'border border-brand-main-green400 bg-main-green-green50',
                     )}
                   >
                     <AutoFocusedInput
@@ -326,10 +325,10 @@ const SurveyForm = ({
                     >
                       <div
                         className={cn(
-                          'w-4 h-4 rounded-full bg-text-main-whiteFF border border-[#E5E5EC] transition-all duration-200 ',
+                          'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
                           'hover:border-brand-main-green400',
                           field.value === option.id + '' &&
-                            'border-brand-main-green400 border-4',
+                            'border-4 border-brand-main-green400',
                         )}
                       ></div>
 
@@ -338,7 +337,7 @@ const SurveyForm = ({
                       ) ? (
                         <>
                           <AutoFocusedInput
-                            className="ml-4 bg-transparent outline-none grow"
+                            className="ml-4 grow bg-transparent outline-none"
                             placeholder="숫자만 입력해주세요"
                             maxLength={15}
                             type="text"
@@ -374,7 +373,7 @@ const SurveyForm = ({
           />
         </div>
       ) : (
-        <div className="flex flex-col space-y-2 overflow-y-scroll grow !mb-[240px]">
+        <div className="!mb-[240px] flex grow flex-col space-y-2 overflow-y-scroll">
           <div
             className="text-subTitle1-medium"
             dangerouslySetInnerHTML={{ __html: title }}
@@ -384,12 +383,12 @@ const SurveyForm = ({
             defaultValue=""
             control={form.control}
             render={({ field }) => (
-              <div className="relative py-[14px] px-4">
+              <div className="relative px-4 py-[14px]">
                 <textarea
                   {...field}
                   id={field.name}
                   className={cn(
-                    'flex resize-none w-full peer placeholder:text-muted border-none placeholder:text-text-sub-gray4f disabled:cursor-not-allowed  text-body3-medium  outline-none disabled:text-disabled disabled:placeholder:text-disabled bg-transparent ',
+                    'peer flex w-full resize-none border-none bg-transparent text-body3-medium outline-none  placeholder:text-muted  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
                   )}
                   placeholder={
                     name === 'FIVE_LETTER_WORD'
@@ -424,10 +423,10 @@ const SurveyForm = ({
                 <label
                   htmlFor={field.name}
                   className={cn(
-                    'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100 pointer-events-none select-none touch-none',
+                    'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main-green400 duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main-green400',
                   )}
                 />
-                <span className="absolute right-4 bottom-[14px] text-text-sub-gray99 text-body3-medium">
+                <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
                   {(field.value + '').length}/
                   {name === 'FIVE_LETTER_WORD' ? 5 : 50}
                 </span>
@@ -436,7 +435,7 @@ const SurveyForm = ({
           />
         </div>
       )}
-      <div className="absolute bottom-0 flex w-full flex-col justify-end items-end">
+      <div className="absolute bottom-0 flex w-full flex-col items-end justify-end">
         {type !== 'SHORT_ANSWER' && (
           <InputLabel
             className="text-sub2-medium"
@@ -448,12 +447,12 @@ const SurveyForm = ({
               defaultValue=""
               name={'reason'}
               render={({ field }) => (
-                <div className="relative py-[14px] px-4">
+                <div className="relative px-4 py-[14px]">
                   <textarea
                     {...field}
                     id={field.name}
                     className={cn(
-                      'flex resize-none w-full peer placeholder:text-muted border-none placeholder:text-text-sub-gray4f disabled:cursor-not-allowed  text-body3-medium  outline-none disabled:text-disabled disabled:placeholder:text-disabled bg-transparent ',
+                      'peer flex w-full resize-none border-none bg-transparent text-body3-medium outline-none  placeholder:text-muted  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
                     )}
                     placeholder="50글자 이내로 입력해주세요"
                     maxLength={50}
@@ -471,10 +470,10 @@ const SurveyForm = ({
                   <label
                     htmlFor={field.name}
                     className={cn(
-                      'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-brand-main-green400 peer-focus-visible:border-brand-main-green400 peer-placeholder-shown:border-line-medium block rounded-md duration-100 pointer-events-none select-none touch-none',
+                      'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main-green400 duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main-green400',
                     )}
                   />
-                  <span className="absolute right-4 bottom-[14px] text-text-sub-gray99 text-body3-medium">
+                  <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
                     {field.value?.length}/50
                   </span>
                 </div>
@@ -484,7 +483,7 @@ const SurveyForm = ({
         )}
 
         {Tree && Tree}
-        <div className="pt-5 mb-4 bg-white flex justify-center w-full">
+        <div className="mb-4 flex w-full justify-center bg-white pt-5">
           <Button
             disabled={
               disabled ||

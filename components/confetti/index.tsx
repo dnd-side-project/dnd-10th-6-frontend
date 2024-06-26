@@ -1,11 +1,4 @@
-import {
-  HTMLAttributes,
-  MouseEventHandler,
-  PropsWithChildren,
-  forwardRef,
-  useEffect,
-  useRef,
-} from 'react'
+import { HTMLAttributes, PropsWithChildren, useEffect, useRef } from 'react'
 const randomNumBetween = (min: number, max: number) =>
   Math.random() * (max - min) + min
 
@@ -47,9 +40,9 @@ class Particle {
     {
       x,
       y,
-      deg = 0,
+      // deg = 0,
       r = randomNumBetween(10, 30),
-      spread = 15,
+      // spread = 15,
     }: ParticleOptions,
     private readonly friction = 0.89,
     private readonly gravity = 0.5,

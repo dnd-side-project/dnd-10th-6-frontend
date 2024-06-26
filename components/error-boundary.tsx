@@ -13,7 +13,7 @@ class ErrorBoundary extends React.Component<
 
     this.state = { hasError: false }
   }
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(_: Error) {
     return { hasError: true }
   }
 
@@ -21,7 +21,7 @@ class ErrorBoundary extends React.Component<
     window.location.pathname = '/garden'
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, _: ErrorInfo) {
     console.log(error)
   }
   render() {
@@ -29,14 +29,14 @@ class ErrorBoundary extends React.Component<
       return (
         <motion.div
           {...fadeInProps}
-          className="h-calc-h flex flex-col justify-center items-center w-full"
+          className="flex h-calc-h w-full flex-col items-center justify-center"
         >
           <ErrorTree />
-          <div className="flex flex-col space-y-3 text-center mt-8 mb-14">
-            <p className="text-text-main-black11 text-mainTitle2-bold">
+          <div className="mb-14 mt-8 flex flex-col space-y-3 text-center">
+            <p className="text-mainTitle2-bold text-text-main-black11">
               서버에 문제가 생겼어요
             </p>
-            <p className="text-text-sub-gray4f text-subTitle2-medium">
+            <p className="text-subTitle2-medium text-text-sub-gray4f">
               잠시 후 다시 시도해 주세요
             </p>
           </div>

@@ -1,6 +1,5 @@
 import { cn } from '@/lib/client/utils'
 
-
 // !THINK
 export const periods: { [key: string]: string } = {
   SIX_MONTHS: '6개월 미만',
@@ -13,12 +12,10 @@ export const PeriodBadge = ({ period }: { period: string }) => {
   return (
     <div
       className={cn(
-        'w-fit h-fit rounded-md !text-caption2-medium px-2 py-1 bg-gray-gray50 text-text-sub-gray4f',
+        'h-fit w-fit rounded-md bg-gray-gray50 px-2 py-1 !text-caption2-medium text-text-sub-gray4f',
       )}
     >
       {periods[period]}
     </div>
   )
 }
-
-

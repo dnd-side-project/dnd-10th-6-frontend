@@ -46,7 +46,7 @@ const FilterButton = ({
       draggable={false}
       variants={fadeInProps.variants}
       className={cn(
-        'text-caption2-medium h-9 rounded-full px-3 whitespace-nowrap avoid-min-w',
+        'avoid-min-w h-9 whitespace-nowrap rounded-full px-3 text-caption2-medium',
         'origin-center select-none',
         selected && 'text-text-main-whiteFF ',
       )}

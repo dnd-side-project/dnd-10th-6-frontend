@@ -3,7 +3,7 @@ import Reason from '@/components/compositions/answers/reason'
 interface AnswerDetailProps {
   questionTitle: string
   questionName: string
-  answer?: string | number | any
+  answer?: string | number
   reason: string
   index: number
   value: string | boolean
@@ -42,17 +42,14 @@ const AnswerDetail = ({
   })()
   return (
     <>
-      <div className="py-4 px-1 flex flex-col space-y-4 ">
+      <div className="flex flex-col space-y-4 px-1 py-4 ">
         <div className="flex justify-between">
           <p className="text-body3-bold">
             {index + 1}.{' '}
             <span dangerouslySetInnerHTML={{ __html: questionTitle }}></span>
           </p>
           {onShareClick && (
-            <button
-              onClick={onShareClick}
-              className="shrink-0 self-baseline"
-            >
+            <button onClick={onShareClick} className="shrink-0 self-baseline">
               <svg
                 width="20"
                 height="20"
@@ -84,7 +81,7 @@ const AnswerDetail = ({
         </div>
         {answer && (
           <div
-            className="w-fit text-body3-medium px-2 py-1 rounded-md"
+            className="w-fit rounded-md px-2 py-1 text-body3-medium"
             style={answerStyle}
           >
             {answer}

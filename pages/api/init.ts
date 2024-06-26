@@ -3,7 +3,7 @@ import withHandler from '@/lib/server/with-handler'
 import { serialize } from 'cookie'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(_: NextApiRequest, res: NextApiResponse) {
   try {
     res.setHeader('Set-Cookie', [
       serialize('namui-init', new Date().toLocaleString(), {

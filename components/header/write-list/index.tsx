@@ -73,9 +73,9 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
     >
       <Filter />
       <div className="px-5">
-        <p className="text-body3-medium text-text-sub-gray76 mt-1 mb-4 flex items-center">
+        <p className="mb-4 mt-1 flex items-center text-body3-medium text-text-sub-gray76">
           {typeof data?.pages[0].data.totalCount !== 'number' ? (
-            <b className="text-brand-main-green400 skeleton w-10 h-4 block mr-1"></b>
+            <b className="skeleton mr-1 block h-4 w-10 text-brand-main-green400"></b>
           ) : (
             <b className="text-brand-main-green400">
               {data?.pages[0].data.totalCount}명
@@ -95,21 +95,21 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
                 <motion.div
                   key={`card-skeleton-${index}`}
                   variants={variants}
-                  className="flex py-5 justify-between space-x-4"
+                  className="flex justify-between space-x-4 py-5"
                 >
-                  <div className="aspect-square rounded-full skeleton h-12  flex justify-center items-center"></div>
-                  <div className="flex flex-col grow space-y-4">
+                  <div className="skeleton flex aspect-square h-12  items-center justify-center rounded-full"></div>
+                  <div className="flex grow flex-col space-y-4">
                     <div className="flex flex-col space-y-1">
-                      <h3 className="text-body1-bold skeleton h-4 w-1/5"></h3>
+                      <h3 className="skeleton h-4 w-1/5 text-body1-bold"></h3>
                       {/* <p className="text-body3-medium text-text-sub-gray76 skeleton h-4 w-1/2"></p> */}
                     </div>
                     {/* <div>{cardItem.answer}</div> 뱃지들어가야함 */}
                     <div className="flex">
                       <div className="flex h-4 grow gap-x-2">
-                        <p className="text-body1-medium text-text-main-black11 skeleton w-1/4 h-4"></p>
-                        <p className="text-body1-medium text-text-main-black11 skeleton w-1/4 h-4"></p>
+                        <p className="skeleton h-4 w-1/4 text-body1-medium text-text-main-black11"></p>
+                        <p className="skeleton h-4 w-1/4 text-body1-medium text-text-main-black11"></p>
                       </div>
-                      <p className="text-body1-medium text-text-main-black11 skeleton w-2/5 h-4"></p>
+                      <p className="skeleton h-4 w-2/5 text-body1-medium text-text-main-black11"></p>
                     </div>
                   </div>
                 </motion.div>

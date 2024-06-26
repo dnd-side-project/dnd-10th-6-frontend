@@ -111,12 +111,12 @@ const SideDrawer = ({
                 <AnimatePresence mode="wait">
                   {isMounted ? (
                     <BaseLayout
-                      className="w-full bg-white h-calc-h"
+                      className="h-calc-h w-full bg-white"
                       framer={{ ...drawerInOutProps }}
                       showHeader={header?.showHeader}
                       header={header}
                     >
-                      <section className="flex flex-col grow overflow-y-scroll h-full">
+                      <section className="flex h-full grow flex-col overflow-y-scroll">
                         {children}
                       </section>
                     </BaseLayout>

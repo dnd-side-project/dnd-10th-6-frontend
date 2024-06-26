@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { QS_NAMES } from '.'
 import Image from 'next/image'
 import noTakesTime from '@/assets/instagram/no-takes-time.svg'

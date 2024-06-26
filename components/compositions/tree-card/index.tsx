@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import { motion } from 'framer-motion'
-import { useState, useRef } from 'react'
+import { useState, useRef, MouseEvent } from 'react'
 import { fadeInProps } from '@/variants'
 import pen from '@/assets/icons/pen.svg'
 import eye from '@/assets/icons/eye.svg'
@@ -58,29 +58,29 @@ const TreeCard = ({
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('h-full aspect-[104/110] cursor-pointer relative', {
+      className={cn('relative aspect-[104/110] h-full cursor-pointer', {
         'preserve-3d': isFlipped,
       })}
       style={{ transformStyle: 'preserve-3d' }}
       onClick={handleCardClick}
     >
       <div
-        className={`card flex justify-center w-full ${isFlipped ? 'flipped' : ''}`}
+        className={`card flex w-full justify-center ${isFlipped ? 'flipped' : ''}`}
       >
         <div
           className={cn(
-            `card-front m-auto w-full flex flex-col justify-center items-center rounded-md ${bgColor}`,
+            `card-front m-auto flex w-full flex-col items-center justify-center rounded-md ${bgColor}`,
           )}
         >
-          <div className="overflow-hidden flex justify-center items-center mt-3 z-0  ">
+          <div className="z-0 mt-3 flex items-center justify-center overflow-hidden  ">
             {treeType.render(period as Period, relation as Relation)}
           </div>
         </div>
 
         <div
-          className={`card-back px-y w-full flex flex-col justify-center items-center rounded-md ${bgColor}`}
+          className={`card-back px-y flex w-full flex-col items-center justify-center rounded-md ${bgColor}`}
         >
-          <div className="w-full flex flex-col space-y-2 justify-center items-center m-auto">
+          <div className="m-auto flex w-full flex-col items-center justify-center space-y-2">
             <BottomSheetButton id={id} senderWikiId={senderWikiId} />
             <span className="my-2 text-body1-bold">{senderName}</span>
           </div>
@@ -103,7 +103,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
   })
   const [modalOpen, setModalOpen] = useState(false)
 
-  const toggleBottomSheet = (e: any) => {
+  const toggleBottomSheet = (e: MouseEvent) => {
     setBottomSheet((prev) => ({
       ...prev,
       isOpen: !prev.isOpen,
@@ -111,7 +111,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
     e.stopPropagation()
   }
 
-  const handleLinkClick = (e: any) => {
+  const handleLinkClick = (e: MouseEvent) => {
     if (senderWikiId === null) {
       e.preventDefault()
     } else {
@@ -119,11 +119,11 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
     }
   }
 
-  const handleDetailClick = (e: any) => {
+  const handleDetailClick = (e: MouseEvent) => {
     e.stopPropagation()
   }
 
-  const handleWritingClick = (e: any) => {
+  const handleWritingClick = (_: MouseEvent) => {
     if (senderWikiId === null) {
       setModalOpen(true)
     } else {
@@ -137,7 +137,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
   return (
     <>
       <button
-        className="absolute z-20 top-3 right-3"
+        className="absolute right-3 top-3 z-20"
         onClick={toggleBottomSheet}
       >
         <Image src={menu} alt="menu" />
@@ -152,14 +152,14 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
         }
       >
         <DrawerContent>
-          <div className="p-4 flex flex-col text-body3-medium">
-            <div className="ml-2 flex flex-col my-auto space-y-4 justify-start items-start">
+          <div className="flex flex-col p-4 text-body3-medium">
+            <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
               <Link
                 href={`/surveys/questions?wikiId=${senderWikiId}`}
                 onClick={handleLinkClick}
               >
                 <button
-                  className="flex gap-2 items-center"
+                  className="flex items-center gap-2"
                   onClick={handleWritingClick}
                 >
                   <Image src={pen} alt="pen" />
@@ -170,7 +170,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
                 href={`/answers?surveyId=${id}`}
                 onClick={handleDetailClick}
               >
-                <button className="flex gap-2 items-center">
+                <button className="flex items-center gap-2">
                   <Image src={eye} alt="eye" />
                   소개서 자세히 보기
                 </button>

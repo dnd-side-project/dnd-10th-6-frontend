@@ -1,14 +1,11 @@
 import { ReactNode, createContext, useRef, useState } from 'react'
 import { cn } from '@/lib/client/utils'
-import useScrollDirection from '@/hooks/use-scroll-direction'
-import { useSettingStore } from '@/stores/setting.store'
 import { GetServerSideProps } from 'next'
 
 import BaseLayout from '@/layout/base-layout'
 
 import { FilterProvider } from '@/hooks/use-filter'
 import withAuth from '@/layout/HOC/with-auth'
-import DashboardContainer from '@/components/dashboard-container'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
 import { useRouter } from 'next/router'
 import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
@@ -19,13 +16,13 @@ export const DetailQsContext = createContext<{
 }>({ id: '', handle: () => {} })
 
 const Page = () => {
-  const headerHeight = useSettingStore((state) => state.headerHeight)
+  // const headerHeight = useSettingStore((state) => state.headerHeight)
   const [selectedQsId, setSelectedQsId] = useState('')
   const ref = useRef<HTMLElement>(null)
 
   const router = useRouter()
-  const { direction, scrollTop } = useScrollDirection({ ref })
-  const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
+  // const { direction, scrollTop } = useScrollDirection({ ref })
+  // const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
 
   const handleQsId = (id: string) => {
     setSelectedQsId(id)

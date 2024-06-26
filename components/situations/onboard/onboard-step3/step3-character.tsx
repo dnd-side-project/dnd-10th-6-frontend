@@ -73,7 +73,7 @@ const statistics: CHARACTER_TYPE = {
     },
   ],
 }
-const Step3Character = ({ filter }: { filter: FilterType }) => {
+const Step3Character = ({}: { filter: FilterType }) => {
   return (
     <LazyMotion features={domAnimation}>
       <div>
@@ -117,7 +117,7 @@ function CharacterInfo({ statisics }: { statisics: CHARACTER_TYPE }) {
   }, [statisics])
   return (
     <>
-      <h2 className="text-start text-[1.6vb] font-bold mb-[1.5vb]">
+      <h2 className="mb-[1.5vb] text-start text-[1.6vb] font-bold">
         김디엔님은 이런사람이에요
       </h2>
       <m.div
@@ -134,7 +134,7 @@ function CharacterInfo({ statisics }: { statisics: CHARACTER_TYPE }) {
             },
           },
         }}
-        className="grid grid-cols-2 gap-[0.4vb] mt-[0.5vb]"
+        className="mt-[0.5vb] grid grid-cols-2 gap-[0.4vb]"
       >
         <CharacterBlock
           emoji={
@@ -213,7 +213,6 @@ function CharacterInfo({ statisics }: { statisics: CHARACTER_TYPE }) {
 function CharacterBlock({
   emoji,
   bottomText,
-  href,
   topText,
 }: {
   emoji: string
@@ -228,11 +227,11 @@ function CharacterBlock({
       ref={ref}
       variants={cardPickingVariants}
       animate={inView ? cardPickingVariants.picking : {}}
-      className="px-[1vb] py-[1.2vb] bg-bg-gray1 rounded-[1.2vb] text-text-main-black11 flex flex-col aspect-[160/210]"
+      className="flex aspect-[160/210] flex-col rounded-[1.2vb] bg-bg-gray1 px-[1vb] py-[1.2vb] text-text-main-black11"
     >
-      <h3 className="text-start text-[1.8vb] flex-[0.8]">{emoji}</h3>
-      <div className="text-start flex flex-col gap-y-[0.4vb] flex-1">
-        <p className="text-[1.2vb] flex-1">
+      <h3 className="flex-[0.8] text-start text-[1.8vb]">{emoji}</h3>
+      <div className="flex flex-1 flex-col gap-y-[0.4vb] text-start">
+        <p className="flex-1 text-[1.2vb]">
           {topText}
           <br />
           <b className="text-[1.2vb] font-bold">{bottomText}</b>

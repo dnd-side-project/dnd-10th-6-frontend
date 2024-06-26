@@ -57,9 +57,10 @@ const ShareModal = ({ children }: PropsWithChildren) => {
           divider: false,
           item: isLoggedIn
             ? [
+                // TODO: variant 적용 :default
                 <Button
                   onClick={handleCopyLink}
-                  variant="default"
+                  variant="Line-neutral"
                   key="copy-link"
                   className="rounded-none"
                 >
@@ -74,9 +75,10 @@ const ShareModal = ({ children }: PropsWithChildren) => {
                 </Button>,
               ]
             : [
+                // TODO: variant 적용 :default
                 <Button
                   onClick={() => setShareModalOpen(false)}
-                  variant="default"
+                  variant="Line-neutral"
                   key="copy-link"
                   className="rounded-none"
                 >
@@ -99,10 +101,11 @@ const ShareModal = ({ children }: PropsWithChildren) => {
         key="copyLinkModal"
         title="링크가 복사되었어요"
         footer={{
+          // TODO: variant 적용 :confirm
           item: [
             <Button
               onClick={() => setCopyModalOpen(false)}
-              variant="confirm"
+              variant="Line-neutral"
               className="border-t-[1px]"
               key="copy-close"
             >

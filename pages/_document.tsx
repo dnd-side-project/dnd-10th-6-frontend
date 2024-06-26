@@ -74,7 +74,7 @@ export default function Document() {
         `}
         </Script>
       </Head>
-      <body className="text-black bg-gray-gray50">
+      <body className="bg-gray-gray50 text-black">
         <Main />
         <NextScript />
       </body>

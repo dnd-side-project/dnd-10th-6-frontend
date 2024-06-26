@@ -41,8 +41,8 @@ const Alert = () => {
       }
     >
       <div className="flex flex-col">
-        <div className="py-[15px] px-5 flex justify-end">
-          <button className="text-[13px] text-brand-main-green400 leading-[18px] active:text-text-sub-gray76 duration-150">
+        <div className="flex justify-end px-5 py-[15px]">
+          <button className="text-[13px] leading-[18px] text-brand-main-green400 duration-150 active:text-text-sub-gray76">
             모두 읽기
           </button>
         </div>

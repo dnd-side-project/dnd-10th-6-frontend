@@ -16,7 +16,7 @@ const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
   MOST_USED_WORD: '💬 내가 가장 많이 사용하는 단어는?',
 }
 
-const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
+const Step3TreeInfo = ({}: { filter: FilterType }) => {
   const { data: short } = useQuery({
     ...getQuestionByTypeQuery('SHORT_ANSWER'),
     select(data) {
@@ -26,16 +26,16 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
 
   return (
     <>
-      <div className="bg-bg-gray1 py-[2vb] px-[1.2vb] rounded-[1vb] gap-y-[0.6vb] flex flex-col">
-        <div className="flex justify-between items-center">
-          <p className="text-[1vb] text-text-sub-gray4f text-start">
+      <div className="flex flex-col gap-y-[0.6vb] rounded-[1vb] bg-bg-gray1 px-[1.2vb] py-[2vb]">
+        <div className="flex items-center justify-between">
+          <p className="text-start text-[1vb] text-text-sub-gray4f">
             내 정원에 심어진 나무는
             <br />
-            <b className="font-bold text-[1.4vb] mt-[0.4vb] text-black">
+            <b className="mt-[0.4vb] text-[1.4vb] font-bold text-black">
               총 11그루
             </b>
           </p>
-          <div className="w-[4vb] h-[4vb] p-[0.6vb] bg-text-main-whiteFF flex justify-center items-center rounded-full">
+          <div className="flex h-[4vb] w-[4vb] items-center justify-center rounded-full bg-text-main-whiteFF p-[0.6vb]">
             <svg
               className="h-full"
               width="39"
@@ -89,19 +89,19 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
             </svg>
           </div>
         </div>
-        <Confetti className="fixed w-full h-full top-0 left-[200%] pointer-events-none">
-          <Button className="h-[3vb] text-[1vb] rounded-[0.3vb]">
+        <Confetti className="pointer-events-none fixed left-[200%] top-0 h-full w-full">
+          <Button className="h-[3vb] rounded-[0.3vb] text-[1vb]">
             링크 공유하기
           </Button>
         </Confetti>
       </div>
-      <h3 className="font-bold text-[1.6vb] text-st tracking-tighter mt-[2.2vb] mb-[1.4vb] text-start">
+      <h3 className="text-st mb-[1.4vb] mt-[2.2vb] text-start text-[1.6vb] font-bold tracking-tighter">
         김디엔님에 대해 알아보세요!
       </h3>
       {/* !DELETE */}
       {short?.length ? (
         <>
-          <div className="flex overflow-x-scroll space-x-[1vb] w-[22vb] px-[0.6vb] pl-[0.6vb] scrollbar-hide avoid-min-w relative">
+          <div className="avoid-min-w relative flex w-[22vb] space-x-[1vb] overflow-x-scroll px-[0.6vb] pl-[0.6vb] scrollbar-hide">
             {short.slice(0, short.length / 2).map((item) => (
               <Badge
                 key={item.id}
@@ -110,7 +110,7 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
               />
             ))}
           </div>
-          <div className="flex overflow-x-scroll space-x-[1vb] w-[22vb] px-[0.6vb] pl-[0.6vb] scrollbar-hide avoid-min-w relative mt-[1vb]">
+          <div className="avoid-min-w relative mt-[1vb] flex w-[22vb] space-x-[1vb] overflow-x-scroll px-[0.6vb] pl-[0.6vb] scrollbar-hide">
             {short.slice(short.length / 2, short.length).map((item) => (
               <Badge
                 key={item.id}
@@ -142,9 +142,9 @@ const Badge = ({ title, ...rest }: BadgeProps) => {
         event.preventDefault()
       }}
       className={cn(
-        'rounded-full border text-[1vb] border-line-medium',
-        'w-fit flex items-center px-[1vb] py-[0.8vb] grow whitespace-nowrap avoid-min-w duration-150 ease-easeOutQuint select-none',
-        'active:border-gray-gray800 active:bg-gray-gray100 active:scale-[0.98]',
+        'rounded-full border border-line-medium text-[1vb]',
+        'avoid-min-w flex w-fit grow select-none items-center whitespace-nowrap px-[1vb] py-[0.8vb] duration-150 ease-easeOutQuint',
+        'active:scale-[0.98] active:border-gray-gray800 active:bg-gray-gray100',
         rest.className,
       )}
     >

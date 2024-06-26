@@ -40,8 +40,6 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
     endAngle,
     fill,
     percent,
-    name,
-    payload,
     color,
     legend,
   } = props as PieSectorDataItem & Payload
@@ -147,7 +145,7 @@ const statisics: BEST_WORTH = {
     },
   ],
 }
-function Step3BestWorth({ filter }: { filter: FilterType }) {
+function Step3BestWorth({}: { filter: FilterType }) {
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     margin: '5%',
@@ -166,17 +164,17 @@ function Step3BestWorth({ filter }: { filter: FilterType }) {
   }, [statisics])
 
   return (
-    <div ref={ref} className="w-full h-full flex flex-col">
+    <div ref={ref} className="flex h-full w-full flex-col">
       <>
-        <h2 className="text-start text-[1.6vb] font-bold mb-[1.5vb]">
+        <h2 className="mb-[1.5vb] text-start text-[1.6vb] font-bold">
           가장 중요한 것은{' '}
           <b style={{ color: orderByMaxValueList?.[0].color }}>
             {orderByMaxValueList?.[0].legend}
           </b>
           이네요
         </h2>
-        <div className="flex justify-center py-[1.2vb] items-center rounded-2xl shadow-basic mt-[0.8vb] flex-col px-[0.6vb]">
-          <div className="w-[20vb] h-[20vb] mx-auto relative">
+        <div className="mt-[0.8vb] flex flex-col items-center justify-center rounded-2xl px-[0.6vb] py-[1.2vb] shadow-basic">
+          <div className="relative mx-auto h-[20vb] w-[20vb]">
             {inView && (
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart barGap={0} barCategoryGap={0}>
@@ -207,18 +205,18 @@ function Step3BestWorth({ filter }: { filter: FilterType }) {
               </ResponsiveContainer>
             )}
           </div>
-          <div className="flex justify-center space-x-[0.4vb] w-full mt-[0.8vb]">
+          <div className="mt-[0.8vb] flex w-full justify-center space-x-[0.4vb]">
             {orderByMaxValueList?.slice(0, 3).map((item) => {
               return (
                 <div key={item.legend} className="flex items-center space-x-1">
                   <div
-                    className={cn('w-[0.6vb] h-[0.6vb] rounded-full')}
+                    className={cn('h-[0.6vb] w-[0.6vb] rounded-full')}
                     style={{ backgroundColor: item.color }}
                   />
-                  <p className="font-bold text-[1vb] text-text-main-black11">
+                  <p className="text-[1vb] font-bold text-text-main-black11">
                     {item.legend}
                   </p>
-                  <span className="font-medium text-[1vb] text-text-sub-gray4f">
+                  <span className="text-[1vb] font-medium text-text-sub-gray4f">
                     {item.percentage}%
                   </span>
                 </div>
@@ -226,12 +224,12 @@ function Step3BestWorth({ filter }: { filter: FilterType }) {
             })}
           </div>
         </div>
-        <div className="w-1/2  mx-auto mt-[2vb]">
+        <div className="mx-auto  mt-[2vb] w-1/2">
           <Button
             onClick={() => {}}
             rounded="full"
             variant="Line-neutral"
-            className="mx-auto text-[1vb] h-[3vb]"
+            className="mx-auto h-[3vb] text-[1vb]"
           >
             자세히 보기
           </Button>
