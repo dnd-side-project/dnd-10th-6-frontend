@@ -1,5 +1,5 @@
-import Button from '@/components/button'
-import {Inputbox} from '@/components/ui'
+import { Button } from '@/components/ui'
+import { Inputbox } from '@/components/ui'
 import FormLayout from '@/layout/form-layout'
 import { useSession } from '@/provider/session-provider'
 import { zodResolver } from '@hookform/resolvers/zod'

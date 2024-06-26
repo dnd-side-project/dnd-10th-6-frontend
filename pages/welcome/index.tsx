@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 
 import MetaHead from '@/components/meta-head'
 import Modal from '@/components/modal'

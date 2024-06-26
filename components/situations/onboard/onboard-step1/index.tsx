@@ -1,5 +1,5 @@
 import Confetti from '@/components/confetti'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 
 import MetaHead from '@/components/meta-head'
 import Image from 'next/image'

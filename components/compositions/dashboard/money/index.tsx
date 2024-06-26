@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
@@ -83,14 +83,14 @@ const Money = ({ filter }: { filter: FilterType }) => {
             </div>
           </>
         )}
-        <div className="w-1/2  mx-auto mt-10">
+        <div className="mx-auto mt-10 w-1/2 flex justify-center">
           <Button
             onClick={() =>
               statisics?.questionId && handle(statisics?.questionId)
             }
             rounded="full"
-            variant="muted"
-            className="bg-text-main-whiteFF"
+            variant="Line-neutral"
+            className="mx-auto"
           >
             자세히 보기
           </Button>

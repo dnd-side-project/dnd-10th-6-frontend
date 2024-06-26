@@ -9,7 +9,7 @@ import InputLabel from '../inputLabel'
 import Inputbox from '../inputbox'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Button from '../button'
+import Button from '../ui/button'
 import { TreeSvg } from '../questionTrees'
 
 const surveyScheme = z.object({

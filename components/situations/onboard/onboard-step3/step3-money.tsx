@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
@@ -65,8 +65,8 @@ const Step3Money = ({ filter }: { filter: FilterType }) => {
           <Button
             onClick={() => {}}
             rounded="full"
-            variant="muted"
-            className="bg-text-main-whiteFF text-[1vb] h-[3vb]"
+            variant="Line-neutral"
+            className="mx-auto text-[1vb] h-[3vb]"
           >
             자세히 보기
           </Button>

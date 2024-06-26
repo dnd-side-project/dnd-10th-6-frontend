@@ -1,5 +1,4 @@
-import Button from '@/components/button'
-import Badge from '@/components/button/badge'
+import { Button, Badge } from '@/components/ui'
 import ShareModal from '@/components/share-modal'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
@@ -53,7 +52,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
       </h3>
 
       {/* !DELETE */}
-      {/* {short?.length ? (
+      {short?.length ? (
         <>
           <div className="flex overflow-x-scroll space-x-2 w-[calc(100%_+_3rem)] px-6 pl-6 scrollbar-hide avoid-min-w relative -left-[1.5rem]">
             {short.slice(0, short.length / 2).map((item) => (
@@ -76,7 +75,7 @@ const TreeInfo = ({ filter }: { filter: FilterType }) => {
             ))}
           </div>
         </>
-      ) : null} */}
+      ) : null}
     </>
   )
 }

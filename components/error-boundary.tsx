@@ -1,5 +1,5 @@
 import React, { ErrorInfo, PropsWithChildren } from 'react'
-import Button from './button'
+import { Button } from '@/components/ui'
 import ErrorTree from './svgs/error-tree'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'

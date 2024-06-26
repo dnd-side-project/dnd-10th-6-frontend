@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import Link from 'next/link'
 import TreeCard from '@/components/compositions/tree-card'
 import { useSession } from '@/provider/session-provider'
@@ -119,7 +119,7 @@ const Pages = () => {
               <WriteList
                 trigger={
                   <Button
-                    variant={'muted'}
+                    // variant={'muted'}
                     className="!text-body3-medium w-full border-none"
                   >
                     남의위키 작성목록

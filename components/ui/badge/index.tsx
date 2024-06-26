@@ -1,7 +1,5 @@
 import { cn } from '@/lib/client/utils'
-import Link from 'next/link'
 import React, { HTMLAttributes } from 'react'
-
 
 //!DELETE
 interface BadgeProps extends HTMLAttributes<HTMLButtonElement> {
@@ -11,7 +9,7 @@ interface BadgeProps extends HTMLAttributes<HTMLButtonElement> {
   prefetch?: boolean
 }
 
-const Badge = ({ title, ...rest }: BadgeProps) => {
+export const Badge = ({ title, ...rest }: BadgeProps) => {
   return (
     <button
       {...rest}
@@ -43,5 +41,3 @@ const Badge = ({ title, ...rest }: BadgeProps) => {
     </button>
   )
 }
-
-export default Badge

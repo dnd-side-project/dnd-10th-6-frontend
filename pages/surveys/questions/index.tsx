@@ -4,7 +4,7 @@ import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 import createFunnel from '@/components/funnel/createFunnel'
 import ProgressBar from '@/components/progressbar'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import FormLayout from '@/layout/form-layout'
 import {
   QueryClient,

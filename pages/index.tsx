@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import { Logo } from '@/components/ui'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'

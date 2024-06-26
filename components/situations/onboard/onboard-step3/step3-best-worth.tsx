@@ -7,7 +7,7 @@ import { PieSectorDataItem } from 'recharts/types/polar/Pie'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import { BEST_WORTH } from '@/model/dashboard.entity'
 export interface Payload {
   percent: number
@@ -230,8 +230,8 @@ function Step3BestWorth({ filter }: { filter: FilterType }) {
           <Button
             onClick={() => {}}
             rounded="full"
-            variant="muted"
-            className="bg-text-main-whiteFF text-[1vb] h-[3vb]"
+            variant="Line-neutral"
+            className="mx-auto text-[1vb] h-[3vb]"
           >
             자세히 보기
           </Button>

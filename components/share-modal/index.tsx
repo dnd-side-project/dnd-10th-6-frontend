@@ -2,7 +2,7 @@ import { shareToCopyLink, shareToKaKaoLink } from '@/lib/client/utils'
 import { useSession } from '@/provider/session-provider'
 import React, { PropsWithChildren, useCallback, useState } from 'react'
 import Modal from '@/components/modal'
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 
 import { useRouter } from 'next/router'
 

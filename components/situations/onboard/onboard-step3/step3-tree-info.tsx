@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import Confetti from '@/components/confetti'
 import { FilterType } from '@/hooks/use-filter'
 import { cn } from '@/lib/client/utils'
@@ -99,7 +99,7 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
         김디엔님에 대해 알아보세요!
       </h3>
       {/* !DELETE */}
-      {/* {short?.length ? (
+      {short?.length ? (
         <>
           <div className="flex overflow-x-scroll space-x-[1vb] w-[22vb] px-[0.6vb] pl-[0.6vb] scrollbar-hide avoid-min-w relative">
             {short.slice(0, short.length / 2).map((item) => (
@@ -120,7 +120,7 @@ const Step3TreeInfo = ({ filter }: { filter: FilterType }) => {
             ))}
           </div>
         </>
-      ) : null} */}
+      ) : null}
     </>
   )
 }

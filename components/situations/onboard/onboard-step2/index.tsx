@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import TreeCard from '@/components/compositions/tree-card'
 import Confetti from '@/components/confetti'
 import BaseLayout from '@/layout/base-layout'

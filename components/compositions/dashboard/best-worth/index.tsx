@@ -1,4 +1,4 @@
-import { useContext, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 import { Pie, Sector } from 'recharts'
 import { Cell } from 'recharts'
@@ -9,9 +9,10 @@ import { getDashboardQuery } from '@/queries/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
-import Button from '@/components/button'
+import { Button } from '@/components/ui/button'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { BEST_WORTH } from '@/model/dashboard.entity'
+
 export interface Payload {
   percent: number
   name: number
@@ -234,14 +235,14 @@ function BestWorth({ filter }: { filter: FilterType }) {
               })}
             </div>
           </div>
-          <div className="w-1/2  mx-auto mt-10">
+          <div className="mx-auto mt-10 w-1/2 flex justify-center">
             <Button
               onClick={() =>
                 statisics?.questionId && handle(statisics?.questionId)
               }
               rounded="full"
-              variant="muted"
-              className="bg-text-main-whiteFF"
+              variant="Line-neutral"
+              className="mx-auto"
             >
               자세히 보기
             </Button>

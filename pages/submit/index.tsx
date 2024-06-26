@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import ShareModal from '@/components/share-modal'
 import FormLayout from '@/layout/form-layout'
 import { useSession } from '@/provider/session-provider'

@@ -1,4 +1,4 @@
-import Button from '@/components/button'
+import { Button } from '@/components/ui'
 import BaseLayout from '@/layout/base-layout'
 import { cn } from '@/lib/client/utils'
 import React, { ReactNode } from 'react'
