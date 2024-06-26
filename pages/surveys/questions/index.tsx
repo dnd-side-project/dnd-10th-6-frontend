@@ -1,10 +1,8 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
-
 import { FunnelProvider } from '@/contexts/useFunnelContext'
 import createFunnel from '@/components/funnel/createFunnel'
-
 import ProgressBar from '@/components/progressbar'
 import Button from '@/components/button'
 import FormLayout from '@/layout/form-layout'
@@ -15,9 +13,10 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import { getQuestionQuery, submitQuestionMutaion } from '@/queries/question'
-import useQuestionForm, { QsSchemaType } from '@/hooks/useQuestionsForm'
+import useQuestionForm, { QsSchemaType } from '@/hooks/use-questions-form'
 import InputLabel from '@/components/inputLabel'
-import Inputbox from '@/components/inputbox'
+
+import { Inputbox } from '@/components/ui'
 import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
 
@@ -28,6 +27,8 @@ import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import SurveyForm from '@/components/survey/survey-form'
 import { toastError } from '@/lib/client/alert'
+import Image from 'next/image'
+import caution from '@/assets/icons/caution.svg'
 
 const MotionLabel = motion(InputLabel)
 
@@ -317,18 +318,11 @@ const Question = ({ nickname }: { nickname: string }) => {
                           </p>
                         </div>
                         <div className="py-4 px-5 bg-gray-gray50 rounded-md flex space-x-3 mt-5">
-                          <svg
-                            className="shrink-0 my-[2px]"
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <circle cx="8" cy="8" r="8" fill="#4F4F4F" />
-                            <path d="M9 3H7V9H9V3Z" fill="#F7F7F7" />
-                            <path d="M9 11H7V13H9V11Z" fill="#F7F7F7" />
-                          </svg>
+                          <Image
+                            src={caution}
+                            alt="caution"
+                            className="w-4 h-4 shrink-0 my-[2px]"
+                          />
                           <p className="text-body3-medium text-text-sub-gray76">
                             누가 작성했는지 알 수 있도록, 나를 가장 잘 나타내는
                             이름으로 입력해주세요

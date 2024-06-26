@@ -7,8 +7,7 @@ import { useIntersectionObserver } from '@/hooks/use-observer'
 import { useSession } from '@/provider/session-provider'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-import { relations } from '../badge/relation'
-import { periods } from '../badge/period'
+
 import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
 import { useRouter } from 'next/router'
 import { cn } from '@/lib/client/utils'
@@ -16,6 +15,8 @@ import { ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
 import { useMount } from '@/hooks/use-mount'
 import SideDrawer from '../side-drawer'
+import { periods } from '../badge/badge-period'
+import { relations } from '../badge/badge-relation'
 
 export interface DetailResponse {
   data: Data

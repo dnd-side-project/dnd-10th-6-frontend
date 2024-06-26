@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import Carousel from '.'
 
 import useEmblaCarousel from 'embla-carousel-react'
-import { onBoardingItems } from '@/components/onboard'
+import { onBoardingItems } from '@/components/situations/onboard'
 const meta: Meta<typeof Carousel> = {
   title: 'UI/Carousel',
   component: Carousel,

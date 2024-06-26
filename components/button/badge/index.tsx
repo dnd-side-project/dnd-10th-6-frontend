@@ -2,6 +2,8 @@ import { cn } from '@/lib/client/utils'
 import Link from 'next/link'
 import React, { HTMLAttributes } from 'react'
 
+
+//!DELETE
 interface BadgeProps extends HTMLAttributes<HTMLButtonElement> {
   title: string
   scroll?: boolean

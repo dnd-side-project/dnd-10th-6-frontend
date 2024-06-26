@@ -14,7 +14,7 @@ import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
-import WriteList from '@/components/compositions/header/write-list'
+import WriteList from '@/components/header/write-list'
 import { FilterProvider } from '@/hooks/use-filter'
 
 const Pages = () => {
