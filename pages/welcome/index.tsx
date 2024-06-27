@@ -88,7 +88,7 @@ const WelcomePage = () => {
                   // TODO : variant 적용 : confirm
                   <Button
                     onClick={() => setCopyModalOpen(false)}
-                    variant="Line-neutral"
+                    variant="BG-accent"
                     className="border-t-[1px]"
                     key="copy-close"
                   >
@@ -121,7 +121,7 @@ const WelcomePage = () => {
                 // TODO : variant 적용 : default
                 <Button
                   onClick={handleCopyLink}
-                  variant="Line-neutral"
+                  variant="BG-accent"
                   key="copy-link"
                   className="rounded-none"
                 >

@@ -125,7 +125,7 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
               // TODO : variant 적용 kakao
               <Close className="flex-[1_0_50%]" key="survey-footer">
                 <Button
-                  variant="Line-neutral"
+                  variant="BG-accent"
                   key="copy-link"
                   className="h-full rounded-none"
                 >

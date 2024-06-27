@@ -147,6 +147,7 @@ const Page = () => {
       <footer>
         {data?.user?.wikiId ? (
           <Button
+            variant="BG-accent"
             onClick={() => {
               router.push('/garden')
             }}

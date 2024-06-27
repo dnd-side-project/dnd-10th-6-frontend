@@ -289,7 +289,7 @@ const Pages = () => {
         )}
         <div className="sticky bottom-0 bg-gradient-to-t from-white from-85% to-transparent to-100% px-5 py-2 pt-5">
           <ShareModal>
-            <Button>친구에게 소개서 부탁하기</Button>
+            <Button variant="BG-accent">친구에게 소개서 부탁하기</Button>
           </ShareModal>
         </div>
       </section>

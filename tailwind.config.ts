@@ -6,11 +6,11 @@ import { fontSize } from './constants/styles'
 const config = {
   darkMode: ['class'],
   content: [
-    // './pages/**/*.{ts,tsx}',
+    './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    // './app/**/*.{ts,tsx}',
-    // './src/**/*.{ts,tsx}',
-    // './layout/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+    './layout/**/*.{ts,tsx}',
   ],
   prefix: '',
   theme: {
