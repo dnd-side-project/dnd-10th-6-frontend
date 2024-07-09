@@ -136,7 +136,7 @@ html {
 
 @layer components {
   .skeleton {
-    @apply bg-gray-gray300 animate-pulse rounded-md;
+    @apply animate-pulse rounded-md bg-gray-300;
   }
   .error-toast {
     @apply flex gap-x-3;

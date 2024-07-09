@@ -9,6 +9,7 @@ export const defaultColors = {
       '03': '#505050',
       '04': '#767676',
       '05': '#999999',
+      disabled: '#999999',
     },
   },
   line: {
