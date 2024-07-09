@@ -147,7 +147,7 @@ const Page = () => {
       <footer>
         {data?.user?.wikiId ? (
           <Button
-            variant="BG-accent"
+            variant="BG-brand"
             onClick={() => {
               router.push('/garden')
             }}
@@ -155,11 +155,11 @@ const Page = () => {
             내 정원가기
           </Button>
         ) : (
-          // TODO: variant 적용 : kakao
           <Button
             variant="Line-neutral"
             disabled={isPending}
             onClick={() => !isPending && handleLogin()}
+            className="!bg-[#FEE500]"
           >
             <svg
               width="22"
@@ -167,7 +167,6 @@ const Page = () => {
               viewBox="0 0 22 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-3"
             >
               <path
                 d="M11 0C4.92484 0 0 3.82543 0 8.54421C0 11.595 2.05893 14.2719 5.15604 15.7836C4.98754 16.356 4.0733 19.4663 4.03686 19.7107C4.03686 19.7107 4.015 19.8942 4.13566 19.9642C4.25638 20.0343 4.39828 19.9799 4.39828 19.9799C4.74437 19.9323 8.41149 17.3946 9.04626 16.954C9.68034 17.0424 10.3333 17.0884 11 17.0884C17.0752 17.0884 22 13.2631 22 8.54421C22 3.82543 17.0752 0 11 0Z"

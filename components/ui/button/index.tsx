@@ -5,7 +5,7 @@ import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
 import { fadeInOutProps } from '@/constants/variants'
 
 const buttonVariants = cva(
-  'font-pretendard duration-300 text-but1-sb disabled:cursor-not-allowed disabled:bg-bg-regular disabled:text-font-gray-05 origin-center active:scale-[0.985] hover:scale-[1.01] py-3',
+  'font-pretendard duration-300 text-but1-sb disabled:cursor-not-allowed disabled:bg-bg-regular disabled:text-font-gray-05 origin-center active:scale-[0.985] hover:scale-[1.01]  py-4',
   {
     variants: {
       variant: {
@@ -112,7 +112,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 </defs>
               </motion.svg>
             ) : (
-              <motion.div {...fadeInOutProps}>{children}</motion.div>
+              <motion.div
+                className="flex items-center gap-x-3 text-but1-sb"
+                {...fadeInOutProps}
+              >
+                {children}
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
