@@ -1,7 +1,19 @@
 import { useState } from 'react'
 import { cn } from '@/lib/client/utils'
 import { forwardRef } from 'react'
+import { cva, VariantProps } from 'class-variance-authority'
 import { motion, AnimatePresence } from 'framer-motion'
+
+const comboBoxVariants = cva('round-md flex w-full items-center justify-between rounded-md border border-[#E5E5EC] bg-white px-4 py-[14px] text-left shadow-sm text-b2-kr-m focus:border-brand-main-green400 focus:outline-none', {
+  variants: {
+    variant: {
+      default: '',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+})
 
 const variants = {
   initial: { opacity: 0, y: -10 },
@@ -14,17 +26,21 @@ interface Option {
   value: string
 }
 
-interface CombocoxDropdownProps {
+interface ComboxDropdownProps extends VariantProps<typeof comboBoxVariants> {
   options: Option[]
   placeholder: string
   name: string
   disabled?: boolean
   value: string
   onChange: (value: Option) => void
+  variant?: 'default'
 }
 
-const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
-  ({ options, placeholder, disabled, value, onChange }, ref) => {
+export const ComboboxDropdown = forwardRef<HTMLDivElement, ComboxDropdownProps>(
+  (
+    { options, placeholder, disabled, value, onChange, variant = 'default' },
+    ref,
+  ) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedOption, setSelectedOption] = useState<Option | null>(
       options.find((option) => option.value === value) ?? null,
@@ -37,35 +53,43 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
     }
 
     return (
-      <div ref={ref} className="relative" onBlur={() => setIsOpen(false)}>
+      <div
+        ref={ref}
+        className="relative w-full"
+        onBlur={() => setIsOpen(false)}
+      >
         <div
           className={cn(
-            'flex w-full items-center justify-between rounded-md border border-[#E5E5EC] bg-white px-4 py-2 text-left shadow-sm ',
-            'focus:border-brand-main-green400 focus:outline-none ',
+            comboBoxVariants({ variant }),
+
             disabled &&
               'cursor-not-allowed bg-gray-gray50  text-text-sub-gray99',
             !disabled && 'hover:bg-gray-gray50',
+            isOpen && 'text-b2-kr-sb border-brand-600',
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span className={cn(selectedOption && 'font-bold')}>
             {selectedOption ? selectedOption.label : placeholder}
           </span>
+
           <svg
-            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
             fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
             className={cn(
               'h-5 w-5 text-text-sub-gray76 duration-300 ease-in-out',
               isOpen && 'rotate-180',
             )}
           >
             <path
+              d="M13.3334 5.33317L8.00008 10.6665L2.66675 5.33317"
+              stroke="#111111"
+              strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="m19.5 8.25-7.5 7.5-7.5-7.5"
             />
           </svg>
         </div>
@@ -102,4 +126,3 @@ const ComboboxDropdown = forwardRef<HTMLDivElement, CombocoxDropdownProps>(
 )
 
 ComboboxDropdown.displayName = 'ComboboxDropdown'
-export default ComboboxDropdown
