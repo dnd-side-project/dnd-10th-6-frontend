@@ -15,13 +15,13 @@ import {
 import { getQuestionQuery, submitQuestionMutaion } from '@/queries/question'
 import useQuestionForm, { QsSchemaType } from '@/hooks/use-questions-form'
 import InputLabel from '@/components/inputLabel'
-
+import { ComboboxDropdown } from '@/components/ui'
 import { Inputbox } from '@/components/ui'
 import { GetServerSideProps } from 'next'
 import { serverURL } from '@/lib/server/utils'
 
 import { cn } from '@/lib/client/utils'
-import ComboboxDropdown from '@/components/combobox'
+
 import { fadeInProps } from '@/variants'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
