@@ -28,6 +28,8 @@ export interface Survey {
   questionAndAnswers: QuestionAndAnswer[]
 }
 
+export type WikiType = 'NAMUI' | 'ROMANCE'
+
 export interface QuestionAndAnswer {
   questionName: string
   optionName: string

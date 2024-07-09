@@ -33,7 +33,7 @@ const Pages = () => {
     },
     queryKey: ['survey'],
     queryFn: ({ pageParam = 0 }) => {
-      return NamuiApi.getSurveys(pageParam as number)
+      return NamuiApi.getSurveys(pageParam as number, 'NAMUI')
     },
   })
 
