@@ -17,5 +17,5 @@ export default {
   Kakao,
   Menu,
   Pen,
-  TreeIcon
+  TreeIcon,
 }

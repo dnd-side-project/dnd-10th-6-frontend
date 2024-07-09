@@ -77,7 +77,7 @@ const OnboardStep2 = () => {
       </h2>
       <section className="flex aspect-[1/2.1653] w-[25vb] flex-col overflow-hidden rounded-[3vb] p-[0.75vb] shadow-onboard">
         <div className="relative flex grow flex-col overflow-y-scroll pb-[0.5vb] scrollbar-hide">
-          <header className="flex h-[4vb] w-full items-center justify-between rounded-t-[2.2vb] bg-gray-gray50 p-[1vb]">
+          <header className="bg-gray-gray50 flex h-[4vb] w-full items-center justify-between rounded-t-[2.2vb] p-[1vb]">
             <svg
               className="h-[1.195vb] w-[2.4vb]"
               width="15"
@@ -177,7 +177,7 @@ const OnboardStep2 = () => {
                           />
                         ) : (
                           <div key={`empty-${(pageNo + 1) * (index + 1)}`}>
-                            <div className="flex aspect-[80/90] w-full items-center justify-center rounded border border-dashed bg-gray-gray50 ">
+                            <div className="bg-gray-gray50 flex aspect-[80/90] w-full items-center justify-center rounded border border-dashed ">
                               <svg
                                 width="34"
                                 height="34"

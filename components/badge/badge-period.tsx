@@ -12,7 +12,7 @@ export const PeriodBadge = ({ period }: { period: string }) => {
   return (
     <div
       className={cn(
-        'h-fit w-fit rounded-md bg-gray-gray50 px-2 py-1 !text-caption2-medium text-text-sub-gray4f',
+        'bg-gray-gray50 h-fit w-fit rounded-md px-2 py-1 !text-caption2-medium text-text-sub-gray4f',
       )}
     >
       {periods[period]}

@@ -229,7 +229,7 @@ const Question = ({ nickname }: { nickname: string }) => {
       }}
       title={
         !['senderName', 'knowing'].includes(step) ? (
-          <div className="flex items-center overflow-hidden text-brand-main-green400 ">
+          <div className="text-brand-main-green400 flex items-center overflow-hidden ">
             <p className="flex items-center justify-center" ref={stepRef}>
               0%
             </p>
@@ -317,7 +317,7 @@ const Question = ({ nickname }: { nickname: string }) => {
                             2~6자로 입력해주세요.
                           </p>
                         </div>
-                        <div className="mt-5 flex space-x-3 rounded-md bg-gray-gray50 px-5 py-4">
+                        <div className="bg-gray-gray50 mt-5 flex space-x-3 rounded-md px-5 py-4">
                           <Image
                             src={caution}
                             alt="caution"

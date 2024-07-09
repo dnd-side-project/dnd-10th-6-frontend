@@ -36,7 +36,7 @@ export const parseShareCardItems: {
   FRIENDLINESS_LEVEL: {
     NO_TAKES_TIME: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           친해지는데 <b>시간이 걸리는 편</b>
         </h3>
       ),
@@ -44,7 +44,7 @@ export const parseShareCardItems: {
     },
     YES: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           사람들과 <b>빨리 친해지는 편</b>
         </h3>
       ),
@@ -54,7 +54,7 @@ export const parseShareCardItems: {
   PERSONALITY_TYPE: {
     NO_OPPOSITE: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           답변자들과 <b>다른 성향</b>
         </h3>
       ),
@@ -62,7 +62,7 @@ export const parseShareCardItems: {
     },
     SIMILAR_TRAIT: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           사람들과 <b>비슷한 성향</b>
         </h3>
       ),
@@ -72,7 +72,7 @@ export const parseShareCardItems: {
   MBTI_IMMERSION: {
     NO_NOT_FOCUSED: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           MBTI에 <b>몰입하지 않는 편</b>
         </h3>
       ),
@@ -80,7 +80,7 @@ export const parseShareCardItems: {
     },
     YES: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           MBTI에 <b>과몰입하는 편</b>
         </h3>
       ),
@@ -90,7 +90,7 @@ export const parseShareCardItems: {
   WEEKEND_COMMITMENTS: {
     NO_NOT_INCLINED: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           주말마다 <b>집에서 쉬는 편</b>
         </h3>
       ),
@@ -98,7 +98,7 @@ export const parseShareCardItems: {
     },
     YES: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           주말마다 <b>약속이 있는 편</b>
         </h3>
       ),
@@ -108,7 +108,7 @@ export const parseShareCardItems: {
   CORE_VALUE: {
     HONOR: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           가장 중요한 것은 <b>명예</b>이네요
         </h3>
       ),
@@ -116,7 +116,7 @@ export const parseShareCardItems: {
     },
     MONEY: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           가장 중요한 것은 <b>돈</b>이네요
         </h3>
       ),
@@ -124,7 +124,7 @@ export const parseShareCardItems: {
     },
     FRIENDSHIP: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           가장 중요한 것은 <b>우정</b>이네요
         </h3>
       ),
@@ -132,7 +132,7 @@ export const parseShareCardItems: {
     },
     LOVE: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           가장 중요한 것은 <b>사랑</b>이네요
         </h3>
       ),
@@ -140,7 +140,7 @@ export const parseShareCardItems: {
     },
     MANUAL: {
       title: (answer: string) => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           가장 중요한 것은 <b>{answer}</b>이네요
         </h3>
       ),
@@ -150,7 +150,7 @@ export const parseShareCardItems: {
   HAPPY_BEHAVIOR: {
     ENJOY_ALONE: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           기쁠 때 <b>혼자 조용히 즐겨요</b>
         </h3>
       ),
@@ -158,7 +158,7 @@ export const parseShareCardItems: {
     },
     CELEBRATE_WITH_OTHERS: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           기쁠 때 <b>사람들에게 알리고 축하받아요</b>
         </h3>
       ),
@@ -166,7 +166,7 @@ export const parseShareCardItems: {
     },
     ENJOY_HOBBIES: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           기쁠 때 <b>취미생활을 즐겨요</b>
         </h3>
       ),
@@ -174,7 +174,7 @@ export const parseShareCardItems: {
     },
     ENJOY_FOOD: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           기쁠 때 <b>맛있는 음식을 먹어요</b>
         </h3>
       ),
@@ -183,7 +183,7 @@ export const parseShareCardItems: {
 
     MANUAL: {
       title: (answer: string) => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           기쁠 때 <b>{answer}</b>
         </h3>
       ),
@@ -193,7 +193,7 @@ export const parseShareCardItems: {
   SAD_ANGRY_BEHAVIOR: {
     SUFFER_ALONE: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           슬프거나 화날 때<br />
           <b>혼자 끙끙 앓아요</b>
         </h3>
@@ -202,7 +202,7 @@ export const parseShareCardItems: {
     },
     SEEK_ADVICE: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           슬프거나 화날 때 <b>사람들에게 조언을 구해요</b>
         </h3>
       ),
@@ -210,7 +210,7 @@ export const parseShareCardItems: {
     },
     SEEK_COMFORT: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           슬프거나 화날 때 <b>사람들에게 위로와 공감을 원해요</b>
         </h3>
       ),
@@ -218,7 +218,7 @@ export const parseShareCardItems: {
     },
     ENJOY_LEISURE: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           슬프거나 화날 때 <b>스트레스를 풀기 위해 여가생활을 즐겨요</b>
         </h3>
       ),
@@ -226,7 +226,7 @@ export const parseShareCardItems: {
     },
     MANUAL: {
       title: (answer: string) => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           슬프거나 화날 때 <b>{answer}</b>
         </h3>
       ),
@@ -236,7 +236,7 @@ export const parseShareCardItems: {
   BORROWING_LIMIT: {
     MONEY_1K: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           <b>1,000원</b> 빌려줄 수 있어요
         </h3>
       ),
@@ -244,7 +244,7 @@ export const parseShareCardItems: {
     },
     MONEY_0: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           <b>0원</b> 빌려줄 수 있어요
         </h3>
       ),
@@ -252,7 +252,7 @@ export const parseShareCardItems: {
     },
     MONEY_1M: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           <b>1,000,000원</b> 빌려줄 수 있어요
         </h3>
       ),
@@ -260,7 +260,7 @@ export const parseShareCardItems: {
     },
     MONEY_100K: {
       title: () => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           <b>100,000원</b> 빌려줄 수 있어요
         </h3>
       ),
@@ -268,7 +268,7 @@ export const parseShareCardItems: {
     },
     MANUAL_NUMERIC: {
       title: (answer: string) => (
-        <h3 className="text-[22px] leading-[30px] [&>b]:text-brand-main-green400">
+        <h3 className="[&>b]:text-brand-main-green400 text-[22px] leading-[30px]">
           <b>{answer}원</b> 빌려줄 수 있어요
         </h3>
       ),

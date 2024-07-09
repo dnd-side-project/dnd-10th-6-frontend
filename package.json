@@ -10,7 +10,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "push-storybook": "dotenv -e .env npx chromatic",
-    "test-storybook": "test-storybook"
+    "test-storybook": "test-storybook",
+    "format": "prettier --log-level warn --write \"./**/*.{tsx,ts}\""
   },
   "dependencies": {
     "@hookform/error-message": "^2.0.1",

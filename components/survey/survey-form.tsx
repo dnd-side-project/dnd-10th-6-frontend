@@ -123,7 +123,7 @@ const SurveyForm = ({
                       'focus-within:border-brand-main-green400',
                       'disabled:cursor-not-allowed disabled:opacity-50',
                       field.value === option.id + '' &&
-                        'border border-brand-main-green400 bg-main-green-green50',
+                        'border-brand-main-green400 border bg-main-green-green50',
                     )}
                   >
                     <input
@@ -160,7 +160,7 @@ const SurveyForm = ({
                           'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
                           'hover:border-brand-main-green400',
                           field.value === option.id + '' &&
-                            'border-4 border-brand-main-green400',
+                            'border-brand-main-green400 border-4',
                         )}
                       ></div>
 
@@ -197,7 +197,7 @@ const SurveyForm = ({
                       'focus-within:border-brand-main-green400',
                       'disabled:cursor-not-allowed disabled:opacity-50',
                       field.value === option.id + '' &&
-                        'border border-brand-main-green400 bg-main-green-green50',
+                        'border-brand-main-green400 border bg-main-green-green50',
                     )}
                   >
                     <input
@@ -236,7 +236,7 @@ const SurveyForm = ({
                           'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
                           'hover:border-brand-main-green400',
                           field.value === option.id + '' &&
-                            'border-4 border-brand-main-green400',
+                            'border-brand-main-green400 border-4',
                         )}
                       ></div>
 
@@ -288,7 +288,7 @@ const SurveyForm = ({
                       'focus-within:border-brand-main-green400',
                       'disabled:cursor-not-allowed disabled:opacity-50',
                       field.value === option.id + '' &&
-                        'border border-brand-main-green400 bg-main-green-green50',
+                        'border-brand-main-green400 border bg-main-green-green50',
                     )}
                   >
                     <AutoFocusedInput
@@ -328,7 +328,7 @@ const SurveyForm = ({
                           'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
                           'hover:border-brand-main-green400',
                           field.value === option.id + '' &&
-                            'border-4 border-brand-main-green400',
+                            'border-brand-main-green400 border-4',
                         )}
                       ></div>
 
@@ -388,7 +388,7 @@ const SurveyForm = ({
                   {...field}
                   id={field.name}
                   className={cn(
-                    'peer flex w-full resize-none border-none bg-transparent text-body3-medium outline-none  placeholder:text-muted  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
+                    'placeholder:text-muted peer flex w-full resize-none border-none bg-transparent text-body3-medium  outline-none  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
                   )}
                   placeholder={
                     name === 'FIVE_LETTER_WORD'
@@ -423,7 +423,7 @@ const SurveyForm = ({
                 <label
                   htmlFor={field.name}
                   className={cn(
-                    'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main-green400 duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main-green400',
+                    'border-brand-main-green400 peer-focus-visible:border-brand-main-green400 pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] duration-100 peer-placeholder-shown:border-line-medium',
                   )}
                 />
                 <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
@@ -452,7 +452,7 @@ const SurveyForm = ({
                     {...field}
                     id={field.name}
                     className={cn(
-                      'peer flex w-full resize-none border-none bg-transparent text-body3-medium outline-none  placeholder:text-muted  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
+                      'placeholder:text-muted peer flex w-full resize-none border-none bg-transparent text-body3-medium  outline-none  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
                     )}
                     placeholder="50글자 이내로 입력해주세요"
                     maxLength={50}
@@ -470,7 +470,7 @@ const SurveyForm = ({
                   <label
                     htmlFor={field.name}
                     className={cn(
-                      'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main-green400 duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main-green400',
+                      'border-brand-main-green400 peer-focus-visible:border-brand-main-green400 pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] duration-100 peer-placeholder-shown:border-line-medium',
                     )}
                   />
                   <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">

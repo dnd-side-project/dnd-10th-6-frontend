@@ -27,7 +27,7 @@ const WriterLanding = () => {
             <div className=" h-0 w-0 -translate-x-1/2 translate-y-full transform border-l-[18px] border-r-[15px] border-t-[15px] border-white border-l-transparent border-r-transparent"></div>
           </div>
         </div>
-        <a className="h-13 flex w-full items-center justify-center rounded-md bg-brand-sub1-yellow500 p-2 px-4">
+        <a className="h-13 bg-brand-sub1-yellow500 flex w-full items-center justify-center rounded-md p-2 px-4">
           <Image src={kakaoIcon} alt="kakaoIcon" height={24} width={24} />
           <p className="ml-3 p-2 text-center text-subTitle2-medium font-bold">
             카카오 로그인

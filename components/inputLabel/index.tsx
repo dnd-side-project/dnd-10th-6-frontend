@@ -16,7 +16,7 @@ const InputLabel = forwardRef<
       <div className="mb-2 flex items-center">
         <h3 className={className}>{label}</h3>
         {required && (
-          <span className="ml-2 text-body3-medium text-brand-main-green400">
+          <span className="text-brand-main-green400 ml-2 text-body3-medium">
             필수
           </span>
         )}

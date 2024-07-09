@@ -189,7 +189,7 @@ export const ShareImage = ({
               </div>
               <Reason
                 reason={reason}
-                className="rounded-lg bg-gray-gray50 px-4 py-3 text-start text-body3-medium text-text-main-black11"
+                className="bg-gray-gray50 rounded-lg px-4 py-3 text-start text-body3-medium text-text-main-black11"
               />
             </div>
           </div>
@@ -230,7 +230,7 @@ export const ShareImage = ({
                 </div>
                 <Reason
                   reason={reason}
-                  className="rounded-lg bg-gray-gray50 px-4 py-3 text-start text-body3-medium text-text-main-black11"
+                  className="bg-gray-gray50 rounded-lg px-4 py-3 text-start text-body3-medium text-text-main-black11"
                 />
               </div>
             </div>

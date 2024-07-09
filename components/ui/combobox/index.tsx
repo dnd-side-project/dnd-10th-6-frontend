@@ -4,16 +4,19 @@ import { forwardRef } from 'react'
 import { cva, VariantProps } from 'class-variance-authority'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const comboBoxVariants = cva('round-md flex w-full items-center justify-between rounded-md border border-[#E5E5EC] bg-white px-4 py-[14px] text-left shadow-sm text-b2-kr-m focus:border-brand-main-green400 focus:outline-none', {
-  variants: {
-    variant: {
-      default: '',
+const comboBoxVariants = cva(
+  'round-md flex w-full items-center justify-between rounded-md border border-[#E5E5EC] bg-white px-4 py-[14px] text-left shadow-sm text-b2-kr-m focus:border-brand-main-green400 focus:outline-none',
+  {
+    variants: {
+      variant: {
+        default: '',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
     },
   },
-  defaultVariants: {
-    variant: 'default',
-  },
-})
+)
 
 const variants = {
   initial: { opacity: 0, y: -10 },
@@ -63,9 +66,9 @@ export const ComboboxDropdown = forwardRef<HTMLDivElement, ComboxDropdownProps>(
             comboBoxVariants({ variant }),
 
             disabled &&
-              'cursor-not-allowed bg-gray-gray50  text-text-sub-gray99',
+              'bg-gray-gray50 cursor-not-allowed  text-text-sub-gray99',
             !disabled && 'hover:bg-gray-gray50',
-            isOpen && 'text-b2-kr-sb border-brand-600',
+            isOpen && 'border-brand-600 text-b2-kr-sb',
           )}
           onClick={() => setIsOpen(!isOpen)}
         >

@@ -39,7 +39,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
           'focus-within:border-brand-main-green400',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          selected && 'border border-brand-main-green400 bg-main-green-green50',
+          selected && 'border-brand-main-green400 border bg-main-green-green50',
         )}
       >
         <input
@@ -68,7 +68,7 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
             className={cn(
               'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
               'hover:border-brand-main-green400',
-              selected && 'border-4 border-brand-main-green400',
+              selected && 'border-brand-main-green400 border-4',
             )}
           ></div>
           <span className="ml-2">{label}</span>

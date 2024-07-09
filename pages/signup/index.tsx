@@ -75,7 +75,7 @@ const SignUp = () => {
                 2~6자로 입력해주세요.
               </p>
             </label>
-            <div className="mt-5 flex space-x-3 rounded-md bg-gray-gray50 px-5 py-4">
+            <div className="bg-gray-gray50 mt-5 flex space-x-3 rounded-md px-5 py-4">
               <svg
                 className="my-[2px] shrink-0"
                 width="16"

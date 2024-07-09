@@ -71,7 +71,7 @@ export const Setting = () => {
               item: [
                 <Close
                   key="cancel"
-                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
+                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
                 >
                   취소
                   <span className="sr-only">Close</span>
@@ -79,7 +79,7 @@ export const Setting = () => {
                 <button
                   onClick={signout}
                   key="confirm"
-                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
+                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
                 >
                   로그아웃
                 </button>,
@@ -93,7 +93,7 @@ export const Setting = () => {
               item: [
                 <Close
                   key="cancel"
-                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
+                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
                 >
                   취소
                   <span className="sr-only">Close</span>
@@ -101,7 +101,7 @@ export const Setting = () => {
                 <button
                   onClick={handleWithdrawClick}
                   key="confirm"
-                  className="flex-1 rounded-none bg-transparent px-4 py-[14px] text-brand-sub1-blue600 duration-150 active:bg-bg-gray1"
+                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
                 >
                   회원탈퇴
                 </button>,

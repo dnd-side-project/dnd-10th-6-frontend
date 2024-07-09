@@ -227,7 +227,7 @@ function CharacterBlock({
       ref={ref}
       variants={cardPickingVariants}
       animate={inView ? cardPickingVariants.picking : {}}
-      className="flex aspect-[160/210] flex-col rounded-[1.2vb] bg-bg-gray1 px-[1vb] py-[1.2vb] text-text-main-black11"
+      className="bg-bg-gray1 flex aspect-[160/210] flex-col rounded-[1.2vb] px-[1vb] py-[1.2vb] text-text-main-black11"
     >
       <h3 className="flex-[0.8] text-start text-[1.8vb]">{emoji}</h3>
       <div className="flex flex-1 flex-col gap-y-[0.4vb] text-start">

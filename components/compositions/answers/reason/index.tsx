@@ -9,7 +9,7 @@ const Reason = ({ reason, ...rest }: ReasonProps) => {
     <div
       {...rest}
       className={cn(
-        'whitespace-pre-wrap rounded-md bg-bg-gray1 px-2 py-4 text-body3-medium text-text-sub-gray76',
+        'bg-bg-gray1 whitespace-pre-wrap rounded-md px-2 py-4 text-body3-medium text-text-sub-gray76',
         rest.className,
       )}
     >

@@ -30,7 +30,7 @@ const TreeInfo = ({}: { filter: FilterType }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-y-6 rounded-2xl bg-bg-gray1 px-6 pb-10 pt-[30px]">
+      <div className="bg-bg-gray1 flex flex-col gap-y-6 rounded-2xl px-6 pb-10 pt-[30px]">
         <div className="flex items-center justify-between">
           <p className="text-body1 text-text-sub-gray4f">
             내 정원에 심어진 나무는

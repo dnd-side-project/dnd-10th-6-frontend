@@ -170,7 +170,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">
       <div className="flex flex-col space-y-4 p-5">
-        <div className="w-fit rounded-md bg-gray-gray50 px-2 py-1 text-body3-medium text-text-sub-gray76">
+        <div className="bg-gray-gray50 w-fit rounded-md px-2 py-1 text-body3-medium text-text-sub-gray76">
           질문
         </div>
         {isLoading ? (
@@ -191,7 +191,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
         <p className="flex items-center px-5 py-4 text-body3-medium text-text-sub-gray76">
           {typeof parsedData?.pages[0]?.data?.answers?.totalCount !==
           'number' ? (
-            <b className="skeleton mr-1 block h-4 w-10 text-brand-main-green400"></b>
+            <b className="skeleton text-brand-main-green400 mr-1 block h-4 w-10"></b>
           ) : (
             <b className="text-brand-main-green400">
               {parsedData?.pages[0]?.data?.answers?.totalCount}명
@@ -327,7 +327,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                             ].join(' · ')}
                           </p>
                         </div>
-                        <p className="rounded-md bg-gray-gray50 p-4 text-body1-medium text-text-sub-gray76">
+                        <p className="bg-gray-gray50 rounded-md p-4 text-body1-medium text-text-sub-gray76">
                           {cardItem.answer}
                         </p>
                       </div>
@@ -409,12 +409,12 @@ function MultipleChoice({
         </div>
         <div
           className={cn(
-            'w-fit rounded-md bg-gray-gray50 px-2 py-1 text-body3-medium text-text-sub-gray76',
+            'bg-gray-gray50 w-fit rounded-md px-2 py-1 text-body3-medium text-text-sub-gray76',
           )}
         >
           {cardItem.answer}
         </div>
-        <p className="rounded-md bg-gray-gray50 p-4 text-body1-medium text-text-sub-gray4f">
+        <p className="bg-gray-gray50 rounded-md p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
         </p>
       </div>
@@ -499,7 +499,7 @@ function TwoChoice({
         >
           {cardItem.answer}
         </div>
-        <p className="rounded-md bg-gray-gray50  p-4 text-body1-medium text-text-sub-gray4f">
+        <p className="bg-gray-gray50 rounded-md  p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
         </p>
       </div>

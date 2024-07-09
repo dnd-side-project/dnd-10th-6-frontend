@@ -5,6 +5,7 @@ import { UseInfiniteQueryOptions, UseQueryOptions } from '@tanstack/react-query'
 
 export const getSurveyQuery = (
   pageNo: number,
+  wikitype: WikiType,
 ): UseInfiniteQueryOptions<GetSurveyResponse, Error> => ({
   initialPageParam: 0,
   getNextPageParam: (page) => {
@@ -13,7 +14,8 @@ export const getSurveyQuery = (
       : page.data.page + 1
   },
   queryKey: ['survey', pageNo],
-  queryFn: ({ pageParam = 0 }) => NamuiApi.getSurveys(pageParam as number),
+  queryFn: ({ pageParam = 0 }) =>
+    NamuiApi.getSurveys(pageParam as number, wikitype),
 })
 
 export interface SurveyByIdResponse {
@@ -21,7 +23,7 @@ export interface SurveyByIdResponse {
 }
 
 export interface Survey {
-  senderName: any
+  senderName: string
   period: Period
   relation: Relation
   createdAt: string

@@ -26,7 +26,7 @@ const Step3TreeInfo = ({}: { filter: FilterType }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-y-[0.6vb] rounded-[1vb] bg-bg-gray1 px-[1.2vb] py-[2vb]">
+      <div className="bg-bg-gray1 flex flex-col gap-y-[0.6vb] rounded-[1vb] px-[1.2vb] py-[2vb]">
         <div className="flex items-center justify-between">
           <p className="text-start text-[1vb] text-text-sub-gray4f">
             내 정원에 심어진 나무는
@@ -144,7 +144,7 @@ const Badge = ({ title, ...rest }: BadgeProps) => {
       className={cn(
         'rounded-full border border-line-medium text-[1vb]',
         'avoid-min-w flex w-fit grow select-none items-center whitespace-nowrap px-[1vb] py-[0.8vb] duration-150 ease-easeOutQuint',
-        'active:scale-[0.98] active:border-gray-gray800 active:bg-gray-gray100',
+        'active:border-gray-gray800 active:bg-gray-gray100 active:scale-[0.98]',
         rest.className,
       )}
     >

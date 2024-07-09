@@ -75,7 +75,7 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
       <div className="px-5">
         <p className="mb-4 mt-1 flex items-center text-body3-medium text-text-sub-gray76">
           {typeof data?.pages[0].data.totalCount !== 'number' ? (
-            <b className="skeleton mr-1 block h-4 w-10 text-brand-main-green400"></b>
+            <b className="skeleton text-brand-main-green400 mr-1 block h-4 w-10"></b>
           ) : (
             <b className="text-brand-main-green400">
               {data?.pages[0].data.totalCount}명

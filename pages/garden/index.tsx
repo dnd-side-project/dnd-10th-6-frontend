@@ -94,7 +94,7 @@ const Pages = () => {
 
   return (
     <BaseLayout
-      className="flex h-calc-h flex-col bg-gray-gray50"
+      className="bg-gray-gray50 flex h-calc-h flex-col"
       header={{
         className: 'bg-gray-gray50',
         leftIcon: null,
@@ -167,7 +167,7 @@ const Pages = () => {
                     />
                   </svg>
 
-                  <div className="relative z-10 h-full w-full flex-1 whitespace-nowrap rounded-lg bg-gray-gray800 px-4 py-3 text-body3-medium text-white">
+                  <div className="bg-gray-gray800 relative z-10 h-full w-full flex-1 whitespace-nowrap rounded-lg px-4 py-3 text-body3-medium text-white">
                     알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
                   </div>
                 </motion.div>
@@ -213,7 +213,7 @@ const Pages = () => {
                   <motion.div
                     variants={fadeInProps.variants}
                     key={`empty-${(index + 1) * (index + 1)}`}
-                    className="flex aspect-[104/110] h-full items-center justify-center rounded-md border border-dashed bg-gray-gray50 p-[25%]"
+                    className="bg-gray-gray50 flex aspect-[104/110] h-full items-center justify-center rounded-md border border-dashed p-[25%]"
                   >
                     <svg
                       className="h-full w-full"
