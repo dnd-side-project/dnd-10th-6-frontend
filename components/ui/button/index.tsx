@@ -5,20 +5,20 @@ import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
 import { fadeInOutProps } from '@/constants/variants'
 
 const buttonVariants = cva(
-  'font-pretendard duration-300 text-but1-sb disabled:cursor-not-allowed disabled:bg-bg-regular disabled:text-font-gray-05 origin-center active:scale-[0.985] hover:scale-[1.05] py-3',
+  'font-pretendard duration-300 text-but1-sb disabled:cursor-not-allowed disabled:bg-bg-regular disabled:text-font-gray-05 origin-center active:scale-[0.985] hover:scale-[1.01] py-3',
   {
     variants: {
       variant: {
         'BG-brand':
-          'hover:bg-green-500 active:bg-green-400 text-font-white bg-brand-main',
+          'hover:bg-brand-500 active:bg-brand-400 text-font-white bg-brand-600',
         'BG-accent':
           'bg-black text-font-white hover:bg-black-800 active:bg-black-700',
         'BG-neutral':
           'hover:bg-gray-300 active:bg-gray-200 bg-bg-regular text-font-black',
         'Line-brand':
-          'border-[1px] border-brand-main text-brand-main hover:bg-[#EEFFEF] active:bg-[#F5FFF6] disabled:border-bg-regular',
+          'border-[1px] border-brand-600 text-brand-600 hover:bg-[#EEFFEF] active:bg-[#F5FFF6] disabled:border-bg-regular',
         'Line-accent':
-          'border-[1px] border-line-regular text-brand-main hover:bg-[#F4F4F5] active:bg-[#F5F5F9] disabled:border-bg-regular [&_svg]:text-black',
+          'border-[1px] border-line-regular text-brand-600 hover:bg-[#F4F4F5] active:bg-[#F5F5F9] disabled:border-bg-regular [&_svg]:text-black',
         'Line-neutral':
           'text-black border-[1px] border-line-regular hover:bg-[#F4F4F5] activer:bg-[#F5F5F9] disabled:border-bg-regular [&_svg]:text-black',
       },

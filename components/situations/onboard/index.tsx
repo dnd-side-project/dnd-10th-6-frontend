@@ -43,7 +43,7 @@ const OnBoard = ({ onStartClick }: OnBoardProps) => {
         renderItem={(item) => item}
       />
       <Button
-        variant="BG-accent"
+        variant="BG-brand"
         onClick={
           selectedIndex !== onBoardingItems.length - 1
             ? () => emblaApi?.scrollNext()
