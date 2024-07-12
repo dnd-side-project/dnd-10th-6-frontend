@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss'
 import { namuiColors } from './constants/colors/namui-colors'
 import { defaultColors } from './constants/colors/default'
 import { fontSize } from './constants/styles'
+import { colors } from './styles/theme/colors'
 
 const config = {
   darkMode: ['class'],

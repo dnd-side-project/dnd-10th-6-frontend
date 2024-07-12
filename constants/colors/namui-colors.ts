@@ -1,5 +1,6 @@
 import { ThemeConfig } from 'tailwindcss/types/config'
 
+// ! 앞으로 사용 안 할 예정 -> default.ts에 등록된 컨피크로 사용할 것 (2024.07.12)
 export const namuiColors = {
   brand: {
     main: {

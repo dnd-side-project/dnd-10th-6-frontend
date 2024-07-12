@@ -39,6 +39,17 @@ export const defaultColors = {
     sub1: '#199EF0',
     sub2: '#FFEB34',
   },
+  pink: {
+    900: '#F4433F',
+    800: '#FF4E46',
+    700: '#FF5544',
+    600: '#FF6460',
+    500: '#FF8282',
+    400: '#FFA6A6',
+    300: '#FFD4DA',
+    200: '#FFEEF1',
+    //pink는 100, 50 없음
+  },
   gray: {
     200: '#F2F2F8',
     300: '#EEEEF4',
