@@ -29,6 +29,19 @@ export const colors = {
       green100: '#BAE7C9',
       green50: '#E2F6E9',
     },
+
+    pink: {
+      pink900: '#F4433F',
+      pink800: '#FF4E46',
+      pink700: '#FF5544',
+      pink600: '#FF6460',
+      pink500: '#FF8282',
+      pink400: '#FFA6A6',
+      pink300: '#FFD4DA',
+      pink200: '#FFEEF1',
+      //pink는 100, 50 없음
+    },
+
     sub1: {
       yellow: {
         yellow900: '#F77D0E',
