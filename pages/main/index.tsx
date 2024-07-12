@@ -15,7 +15,12 @@ const Main = () => {
       header={{
         className: 'bg-bg-light',
         leftIcon: null,
-        rightIcon: <Setting />,
+        rightIcon: (
+          <button>
+            <Setting />
+          </button>
+        ),
+
         center: <Logo />,
       }}
     >
