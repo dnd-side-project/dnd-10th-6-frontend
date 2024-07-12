@@ -2,13 +2,36 @@ import Setting from '@/components/header/setting'
 import Logo from '@/components/svgs/logo'
 import BaseLayout from '@/layout/base-layout'
 import Image from 'next/image'
-import { ReactNode } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { cn } from '@/lib/client/utils'
 import namuiCharacter from '@/assets/icons/namui-character.svg'
 import romanceCharacter from '@/assets/icons/romance-character.svg'
 import { useRouter } from 'next/router'
+import { useSession } from '@/provider/session-provider'
+
+import { NamuiApi } from '@/lib/namui-api'
+import { Wiki } from '@/model/wikis.entity'
 
 const Main = () => {
+  const { data } = useSession()
+  const [wikis, setWikis] = useState<Wiki[]>([])
+
+  const getWikis = useCallback(async () => {
+    try {
+      if (data?.token?.accessToken || NamuiApi.hasToken()) {
+        const response = await NamuiApi.getWikis()
+        console.log(response.data)
+        setWikis(response.wikiList)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, [data?.token?.accessToken])
+
+  useEffect(() => {
+    getWikis()
+  }, [getWikis])
+
   return (
     <BaseLayout
       className=" flex h-calc-h flex-col bg-bg-light "
@@ -33,24 +56,24 @@ const Main = () => {
           </h3>
         </div>
         <div className="flex flex-col space-y-3">
-          <TemplateButton
-            className=" bg-green-50 text-green-600"
-            characterSvg={namuiCharacter}
-            wikiName="남의위키"
-            questionNumber={14}
-            wikiDescription="다른 사람이보는 내 모습은 어떨까요?"
-            answerCount={0}
-            url="/dashboard"
-          />
-          <TemplateButton
-            className="bg-pink-200 text-pink-600"
-            characterSvg={romanceCharacter}
-            wikiName="연애위키"
-            questionNumber={9}
-            wikiDescription="연애할 때 나는 어떤 사람일까요?"
-            answerCount={0}
-            url="/dashboard2"
-          />
+          {/* {wikis.map((wiki) => (
+            <TemplateButton
+              key={wiki.id}
+              className={
+                wiki.id === 'NAMUI'
+                  ? 'bg-green-50 text-green-600'
+                  : 'bg-pink-200 text-pink-600'
+              }
+              characterSvg={
+                wiki.id === 'NAMUI' ? namuiCharacter : romanceCharacter
+              }
+              wikiName={wiki.name}
+              questionNumber={wiki.questionCount}
+              wikiDescription={wiki.description}
+              answerCount={wiki.answerCount === null ? 0 : wiki.answerCount}
+              url={`/dashboard/${wiki}`}
+            />
+          ))} */}
         </div>
       </div>
     </BaseLayout>
