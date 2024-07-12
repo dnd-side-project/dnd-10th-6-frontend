@@ -9,17 +9,14 @@
     --brand-400: #0bd774;
   }
 
-  .love {
-    --brand-600: #FF4E46;
-    --brand-500: #FF5544;
-    --brand-400: #FF6460;
+  .romance {
+    --brand-600: #ff4e46;
+    --brand-500: #ff5544;
+    --brand-400: #ff6460;
   }
 }
 
-
-
-html.dd{
-
+html.dd {
 }
 
 .card {
