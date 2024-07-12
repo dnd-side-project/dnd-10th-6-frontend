@@ -84,7 +84,9 @@ const TemplateButton = ({
       className="w-full"
     >
       <div
-        className="flex w-full items-center justify-center gap-[10px] rounded-2xl bg-white px-4 py-5
+        className="hover:bg-line-regular flex
+        w-full items-center justify-center gap-[10px] rounded-2xl bg-white px-4
+        py-5 transition-all duration-200 active:bg-black-700
         "
       >
         <div className="flex w-full items-center justify-center gap-3">

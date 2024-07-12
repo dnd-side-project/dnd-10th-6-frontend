@@ -87,6 +87,9 @@ export const namuiColors = {
   line: {
     soft: '#F1F1F5',
     medium: '#E5E5EC',
+    light: '#F1F1F1',
+    regular: '#E5E5E5',
+    black: '#111111',
   },
   relation: {
     etc: '#D9D9D9',
