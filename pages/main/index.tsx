@@ -70,7 +70,7 @@ const Main = () => {
               questionNumber={wiki.questionCount}
               wikiDescription={wiki.description}
               answerCount={wiki.answerCount === null ? 0 : wiki.answerCount}
-              url={`/dashboard/${wiki.wikiType}`}
+              url={`/dashboard/${wiki.wikiType.toLowerCase()}`}
             />
           ))}
         </div>
