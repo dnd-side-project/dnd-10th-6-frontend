@@ -29,6 +29,19 @@ export const colors = {
       green100: '#BAE7C9',
       green50: '#E2F6E9',
     },
+
+    pink: {
+      pink900: '#F4433F',
+      pink800: '#FF4E46',
+      pink700: '#FF5544',
+      pink600: '#FF6460',
+      pink500: '#FF8282',
+      pink400: '#FFA6A6',
+      pink300: '#FFD4DA',
+      pink200: '#FFEEF1',
+      //pink는 100, 50 없음
+    },
+
     sub1: {
       yellow: {
         yellow900: '#F77D0E',
@@ -84,6 +97,9 @@ export const colors = {
   line: {
     soft: '#F1F1F5',
     medium: '#E5E5EC',
+    light: '#F1F1F1',
+    regular: '#E5E5E5',
+    black: '#111111',
   },
   relation: {
     etc: '#D9D9D9',

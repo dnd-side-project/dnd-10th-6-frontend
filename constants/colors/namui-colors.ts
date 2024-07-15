@@ -1,5 +1,6 @@
 import { ThemeConfig } from 'tailwindcss/types/config'
 
+// ! 앞으로 사용 안 할 예정 -> default.ts에 등록된 컨피크로 사용할 것 (2024.07.12)
 export const namuiColors = {
   brand: {
     main: {
@@ -86,6 +87,9 @@ export const namuiColors = {
   line: {
     soft: '#F1F1F5',
     medium: '#E5E5EC',
+    light: '#F1F1F1',
+    regular: '#E5E5E5',
+    black: '#111111',
   },
   relation: {
     etc: '#D9D9D9',

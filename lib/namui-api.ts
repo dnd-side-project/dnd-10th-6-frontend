@@ -18,6 +18,7 @@ import {
   WikiType,
 } from '@/queries/surveys'
 import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
+import { Wikis } from '@/model/wikis.entity'
 
 interface NamuiResponse<T = unknown> {
   data: T
@@ -196,6 +197,13 @@ export class NamuiApi {
     return await NamuiApi.handler<NamuiResponse<string>>({
       method: 'GET',
       url: `/api/v1/surveys?surveyId=${userId}`,
+    })
+  }
+
+  static async getWikis() {
+    return await NamuiApi.handler<NamuiResponse<Wikis>>({
+      method: 'GET',
+      url: '/api/v1/wikis',
     })
   }
 
