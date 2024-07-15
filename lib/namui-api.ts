@@ -201,7 +201,7 @@ export class NamuiApi {
   }
 
   static async getWikis() {
-    return await NamuiApi.handler<NamuiResponse<{ data: Wikis }>>({
+    return await NamuiApi.handler<NamuiResponse<Wikis>>({
       method: 'GET',
       url: '/api/v1/wikis',
     })

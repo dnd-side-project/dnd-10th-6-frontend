@@ -20,8 +20,7 @@ const Main = () => {
     try {
       if (data?.token?.accessToken || NamuiApi.hasToken()) {
         const response = await NamuiApi.getWikis()
-        console.log(response.data)
-        setWikis(response.wikiList)
+        setWikis(response.data.wikiList)
       }
     } catch (error) {
       console.error(error)
@@ -56,24 +55,24 @@ const Main = () => {
           </h3>
         </div>
         <div className="flex flex-col space-y-3">
-          {/* {wikis.map((wiki) => (
+          {wikis.map((wiki) => (
             <TemplateButton
-              key={wiki.id}
+              key={wiki.wikiType}
               className={
-                wiki.id === 'NAMUI'
+                wiki.wikiType === 'NAMUI'
                   ? 'bg-green-50 text-green-600'
                   : 'bg-pink-200 text-pink-600'
               }
               characterSvg={
-                wiki.id === 'NAMUI' ? namuiCharacter : romanceCharacter
+                wiki.wikiType === 'NAMUI' ? namuiCharacter : romanceCharacter
               }
               wikiName={wiki.name}
               questionNumber={wiki.questionCount}
               wikiDescription={wiki.description}
               answerCount={wiki.answerCount === null ? 0 : wiki.answerCount}
-              url={`/dashboard/${wiki}`}
+              url={`/dashboard/${wiki.wikiType}`}
             />
-          ))} */}
+          ))}
         </div>
       </div>
     </BaseLayout>
@@ -112,9 +111,9 @@ const TemplateButton = ({
       className="w-full"
     >
       <div
-        className="hover:bg-line-regular flex
-        w-full items-center justify-center gap-[10px] rounded-2xl bg-white px-4
-        py-5 transition-all duration-200 active:bg-black-700
+        className="flex w-full
+        items-center justify-center gap-[10px] rounded-2xl bg-white px-4 py-5
+        transition-all duration-200 hover:bg-line-regular active:bg-black-700
         "
       >
         <div className="flex w-full items-center justify-center gap-3">

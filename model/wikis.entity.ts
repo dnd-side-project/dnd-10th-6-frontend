@@ -6,6 +6,6 @@ export interface Wiki {
   answerCount: number | null
 }
 
-export interface NamuiResponse {
+export interface Wikis {
   wikiList: Wiki[]
 }
