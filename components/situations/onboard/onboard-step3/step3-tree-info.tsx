@@ -18,7 +18,7 @@ const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
 
 const Step3TreeInfo = ({}: { filter: FilterType }) => {
   const { data: short } = useQuery({
-    ...getQuestionByTypeQuery('SHORT_ANSWER'),
+    ...getQuestionByTypeQuery('SHORT_ANSWER', 'NAMUI'),
     select(data) {
       return data.data
     },

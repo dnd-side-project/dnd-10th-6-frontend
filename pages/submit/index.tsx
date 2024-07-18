@@ -6,11 +6,12 @@ import Link from 'next/link'
 import React, { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { GetServerSideProps } from 'next'
+import { WikiType } from '@/queries/surveys'
 
 const index = () => {
   const { data } = useSession()
   const searchParams = useSearchParams()
-  const wikiType = searchParams.get('wikiType')
+  const wikiType = searchParams.get('wikiType')! as WikiType
   return (
     <FormLayout
       button={
