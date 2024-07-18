@@ -46,9 +46,9 @@ const Main = () => {
         center: <Logo />,
       }}
     >
-      <div className="flex flex-col space-y-5 px-[30px] pb-6 pt-8">
-        <div className="flex flex-col space-y-8">
-          <h3 className=" text-h1-kr-b text-font-gray-04">
+      <div className="flex flex-col space-y-8  px-[20px] pb-6 pt-8">
+        <div className="flex flex-col space-y-8 px-[10px]">
+          <h3 className="text-h1-kr-b text-font-gray-04">
             남이 보는 <br />
             <span className="text-h1-kr-b text-font-black">내 모습을 </span>
             알아보세요
@@ -117,22 +117,24 @@ const TemplateButton = ({
         "
       >
         <div className="flex w-full items-center justify-center gap-3">
-          <Image src={characterSvg} alt="character" />
-          <div className="flex w-full flex-col space-y-2">
-            <div className="flex items-center justify-start space-x-2">
-              <h3 className="text-t3-kr-b text-font-black">{wikiName}</h3>
-              <div
-                className={cn(
-                  'text-body3-kr-m flex items-center justify-center rounded-full px-[10px] py-[3px] text-left',
-                  className,
-                )}
-              >
-                질문 {questionNumber}개
+          <Image src={characterSvg} alt="character" className="flex-shrink-0" />
+          <div className="flex w-full flex-col space-y-3">
+            <div className="flex flex-col justify-start space-y-2">
+              <div className="flex space-x-2">
+                <h3 className="text-t3-kr-b text-font-black">{wikiName}</h3>
+                <div
+                  className={cn(
+                    'flex items-center justify-center rounded-full px-[10px] py-[3px] text-left text-but5-m',
+                    className,
+                  )}
+                >
+                  질문 {questionNumber}개
+                </div>
               </div>
+              <p className="text-start text-b2-kr-m tracking-tighter text-font-gray-03">
+                {wikiDescription}
+              </p>
             </div>
-            <p className="text-body2-kr-m w-full text-left text-font-gray-04">
-              {wikiDescription}
-            </p>
             <p className=" w-full text-right text-b3-kr-m text-font-gray-04">
               {answerCount}명 답변
             </p>

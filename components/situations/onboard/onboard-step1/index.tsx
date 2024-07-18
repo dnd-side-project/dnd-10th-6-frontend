@@ -97,8 +97,10 @@ const OnboardStep1 = () => {
           </div>
           <div className="relative">
             <Confetti className="pointer-events-none fixed left-0 top-0 h-full w-full">
-              <Button className="h-fit self-end rounded-sm py-[0.8vb] text-[1.4vb]">
-                친구에게 내 소개 부탁하기
+              <Button className="h-fit self-end rounded-sm py-[0.8vb] text-xs">
+                <span className="text-[1.4vb] leading-normal ">
+                  친구에게 내 소개 부탁하기
+                </span>
               </Button>
             </Confetti>
           </div>

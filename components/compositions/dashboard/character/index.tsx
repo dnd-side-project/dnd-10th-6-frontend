@@ -8,6 +8,7 @@ import { getDashboardQuery } from '@/queries/dashboard'
 import { CHARACTER_NAMES, CHARACTER_TYPE } from '@/model/dashboard.entity'
 import { useMemo } from 'react'
 import Link from 'next/link'
+import { WikiType } from '@/queries/surveys'
 
 const characterMap = {
   busy: [
@@ -52,9 +53,15 @@ const characterMap = {
   ],
 }
 
-const Character = ({ filter }: { filter: FilterType }) => {
+const Character = ({
+  filter,
+  wikiType,
+}: {
+  wikiType: WikiType
+  filter: FilterType
+}) => {
   const { data: statisics, isLoading } = useQuery({
-    ...getDashboardQuery(filter),
+    ...getDashboardQuery(wikiType, filter),
     select(data) {
       return data.data?.statistics.find(
         (item) => item.dashboardType === 'CHARACTER',

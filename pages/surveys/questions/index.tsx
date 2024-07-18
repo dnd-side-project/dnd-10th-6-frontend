@@ -29,12 +29,19 @@ import SurveyForm from '@/components/survey/survey-form'
 import { toastError } from '@/lib/client/alert'
 import Image from 'next/image'
 import caution from '@/assets/icons/caution.svg'
+import { WikiType } from '@/queries/surveys'
 
 const MotionLabel = motion(InputLabel)
 
-const Question = ({ nickname }: { nickname: string }) => {
+const Question = ({
+  nickname,
+  wikiType,
+}: {
+  nickname: string
+  wikiType: WikiType
+}) => {
   const { data } = useSession()
-  const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
+  const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname, wikiType))
   const { mutate: submit, isPending } = useMutation(
     submitQuestionMutaion({
       onSuccess() {
@@ -458,8 +465,15 @@ export default Question
 Question.getLayout = (page: ReactNode) => page
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { wikiId } = ctx.query
+  const { wikiId, wikiType } = ctx.query
   if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  if (
+    !wikiType ||
+    typeof wikiType !== 'string' ||
+    ['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())
+  ) {
+    return { notFound: true }
+  }
   serverURL.pathname = '/api/v1/users'
   serverURL.searchParams.append('wikiId', wikiId)
   const queryClient = new QueryClient()
@@ -475,10 +489,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     )
     serverURL.searchParams.delete('wikiId')
     if (!response.data?.nickname) return { notFound: true }
+
     const {
       data: { nickname },
     } = response
-    await queryClient.prefetchQuery(getQuestionQuery(nickname))
+    await queryClient.prefetchQuery(
+      getQuestionQuery(nickname, wikiType as WikiType),
+    )
 
     return {
       props: {

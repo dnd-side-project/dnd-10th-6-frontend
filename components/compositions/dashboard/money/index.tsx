@@ -6,15 +6,22 @@ import { cn } from '@/lib/client/utils'
 import { MONEY } from '@/model/dashboard.entity'
 import { useSession } from '@/provider/session-provider'
 import { getDashboardQuery } from '@/queries/dashboard'
+import { WikiType } from '@/queries/surveys'
 import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
 import React, { useMemo, useState } from 'react'
 
-const Money = ({ filter }: { filter: FilterType }) => {
+const Money = ({
+  wikiType,
+  filter,
+}: {
+  wikiType: WikiType
+  filter: FilterType
+}) => {
   const { handle } = useDetailDrawer()
 
   const { data: statisics, isLoading } = useQuery({
-    ...getDashboardQuery(filter),
+    ...getDashboardQuery(wikiType, filter),
     select(data) {
       return data.data?.statistics.find(
         (item) => item.dashboardType === 'MONEY',

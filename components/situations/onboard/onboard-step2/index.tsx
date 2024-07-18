@@ -144,7 +144,9 @@ const OnboardStep2 = () => {
               </div>
 
               <Button className="!h-fit !w-fit rounded-[0.4vb] px-[1vb] py-[0.7vb] text-[0.9vb]">
-                내 결과 보기
+                <span className="text-[1.4vb] leading-normal ">
+                  내 결과 보기
+                </span>
               </Button>
             </div>
             <section className="bg-white">
@@ -237,8 +239,10 @@ const OnboardStep2 = () => {
               </div>
               <div className="sticky bottom-0 bg-gradient-to-t from-white from-85% to-transparent to-100%">
                 <Confetti className="pointer-events-none fixed left-full top-0 h-full w-full">
-                  <Button className="h-fit self-end rounded-sm py-[0.8vb] text-[1.4vb]">
-                    친구에게 내 소개 부탁하기
+                  <Button className="h-fit self-end rounded-sm py-[0.8vb] text-xs">
+                    <span className="text-[1.4vb] leading-normal ">
+                      친구에게 내 소개 부탁하기
+                    </span>
                   </Button>
                 </Confetti>
               </div>

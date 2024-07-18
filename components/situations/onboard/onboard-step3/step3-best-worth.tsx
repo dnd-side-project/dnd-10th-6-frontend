@@ -229,9 +229,9 @@ function Step3BestWorth({}: { filter: FilterType }) {
             onClick={() => {}}
             rounded="full"
             variant="Line-neutral"
-            className="mx-auto h-[3vb] text-[1vb]"
+            className="mx-auto h-[3vb] p-0"
           >
-            자세히 보기
+            <span className="text-[1vb] leading-none">자세히 보기</span>
           </Button>
         </div>
       </>

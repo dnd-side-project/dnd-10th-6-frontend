@@ -5,7 +5,7 @@ import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
 import { fadeInOutProps } from '@/constants/variants'
 
 const buttonVariants = cva(
-  'font-pretendard duration-300 text-but1-sb disabled:cursor-not-allowed disabled:bg-bg-regular disabled:text-font-gray-05 origin-center active:scale-[0.985] hover:scale-[1.01]  py-4',
+  'font-pretendard duration-300 text-but1-sb disabled:cursor-not-allowed disabled:bg-bg-regular disabled:text-font-gray-05 origin-center active:scale-[0.985] hover:scale-[1.01] py-4',
   {
     variants: {
       variant: {
@@ -71,7 +71,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           buttonVariants({ variant, rounded }),
           className,
           'w-full',
-          isPending && 'w-20 cursor-progress',
+          isPending && 'w-20 cursor-progress p-3',
         )}
         {...rest}
         style={{
