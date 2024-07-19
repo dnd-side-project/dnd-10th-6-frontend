@@ -149,7 +149,7 @@ const Page = () => {
           <Button
             variant="BG-brand"
             onClick={() => {
-              router.push('/garden')
+              router.push('/main')
             }}
           >
             내 정원가기
@@ -158,8 +158,9 @@ const Page = () => {
           <Button
             variant="Line-neutral"
             disabled={isPending}
+            isPending={isPending}
             onClick={() => !isPending && handleLogin()}
-            className="!bg-[#FEE500]"
+            className="w-full !bg-[#FEE500]"
           >
             <svg
               width="22"

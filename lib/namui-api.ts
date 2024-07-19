@@ -20,7 +20,7 @@ import {
 import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 import { Wikis } from '@/model/wikis.entity'
 
-interface NamuiResponse<T = unknown> {
+export interface NamuiResponse<T = unknown> {
   data: T
 }
 

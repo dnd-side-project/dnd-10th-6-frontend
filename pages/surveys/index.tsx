@@ -13,6 +13,7 @@ import { Close } from '@radix-ui/react-dialog'
 import Link from 'next/link'
 import { useMutation } from '@tanstack/react-query'
 import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 const Page = ({
   wikiType,
@@ -33,6 +34,8 @@ const Page = ({
   const [openMineAlert, setOpenMineAlert] = useState(false)
 
   const IsMine = wikiId === data?.user?.wikiId
+
+  useToggleTheme(wikiType)
 
   const handleStart = () => {
     if (IsMine) return setOpenMineAlert(true)
@@ -172,12 +175,9 @@ export default Page
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { wikiId, wikiType } = ctx.query
-  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
-  if (
-    !wikiType ||
-    typeof wikiType !== 'string' ||
-    ['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())
-  ) {
+  if (!wikiId || typeof wikiType !== 'string' || typeof wikiId === 'object')
+    return { notFound: true }
+  if (!wikiType || !['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())) {
     return { notFound: true }
   }
   serverURL.pathname = '/api/v1/users'

@@ -2,34 +2,19 @@ import Setting from '@/components/header/setting'
 import Logo from '@/components/svgs/logo'
 import BaseLayout from '@/layout/base-layout'
 import Image from 'next/image'
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import { cn } from '@/lib/client/utils'
 import namuiCharacter from '@/assets/icons/namui-character.svg'
 import romanceCharacter from '@/assets/icons/romance-character.svg'
 import { useRouter } from 'next/router'
-import { useSession } from '@/provider/session-provider'
 
-import { NamuiApi } from '@/lib/namui-api'
-import { Wiki } from '@/model/wikis.entity'
+import { useQuery } from '@tanstack/react-query'
+import { getWikis } from '@/queries/wiki'
+import withAuth from '@/layout/HOC/with-auth'
 
 const Main = () => {
-  const { data } = useSession()
-  const [wikis, setWikis] = useState<Wiki[]>([])
-
-  const getWikis = useCallback(async () => {
-    try {
-      if (data?.token?.accessToken || NamuiApi.hasToken()) {
-        const response = await NamuiApi.getWikis()
-        setWikis(response.data.wikiList)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }, [data?.token?.accessToken])
-
-  useEffect(() => {
-    getWikis()
-  }, [getWikis])
+  // const [wikis, setWikis] = useState<Wiki[]>([])
+  const { data: wikis } = useQuery(getWikis)
 
   return (
     <BaseLayout
@@ -55,7 +40,7 @@ const Main = () => {
           </h3>
         </div>
         <div className="flex flex-col space-y-3">
-          {wikis.map((wiki) => (
+          {wikis?.data.wikiList.map((wiki) => (
             <TemplateButton
               key={wiki.wikiType}
               className={
@@ -70,7 +55,7 @@ const Main = () => {
               questionNumber={wiki.questionCount}
               wikiDescription={wiki.description}
               answerCount={wiki.answerCount === null ? 0 : wiki.answerCount}
-              url={`/dashboard/${wiki.wikiType.toLowerCase()}`}
+              url={`/dashboard?wikiType=${wiki.wikiType.toLowerCase()}`}
             />
           ))}
         </div>
@@ -79,8 +64,9 @@ const Main = () => {
   )
 }
 
-export default Main
-Main.getLayout = (page: ReactNode) => page
+const MainWithAuth = withAuth(Main)
+MainWithAuth.getLayout = (page: ReactNode) => page
+export default MainWithAuth
 
 export interface TemplateButtonProps {
   className?: string

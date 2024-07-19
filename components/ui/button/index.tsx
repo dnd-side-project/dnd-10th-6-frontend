@@ -71,7 +71,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           buttonVariants({ variant, rounded }),
           className,
           'w-full',
-          isPending && 'w-20 cursor-progress p-3',
+          isPending && 'cursor-progress p-3',
         )}
         {...rest}
         style={{

@@ -7,11 +7,15 @@ import React, { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { GetServerSideProps } from 'next'
 import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 const index = () => {
   const { data } = useSession()
   const searchParams = useSearchParams()
   const wikiType = searchParams.get('wikiType')! as WikiType
+
+  useToggleTheme(wikiType)
+
   return (
     <FormLayout
       button={
@@ -182,7 +186,6 @@ const index = () => {
 
 export default index
 index.getLayout = (page: ReactNode) => page
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { wikiId, wikiType } = ctx.query
   if (!wikiId || typeof wikiId === 'object') return { notFound: true }

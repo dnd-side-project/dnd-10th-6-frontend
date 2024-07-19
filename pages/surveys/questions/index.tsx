@@ -30,6 +30,7 @@ import { toastError } from '@/lib/client/alert'
 import Image from 'next/image'
 import caution from '@/assets/icons/caution.svg'
 import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 const MotionLabel = motion(InputLabel)
 
@@ -73,10 +74,13 @@ const Question = ({
     max: fieldList.length,
   })
 
+  useToggleTheme(wikiType)
+
   const questionForm = useQuestionForm({
     defaultValues: {
       owner: router.query.wikiId! as string,
       senderName: '',
+      wikiType: wikiType,
       answers: qs.map((item) => ({
         id: '',
         answer: '',
@@ -430,13 +434,13 @@ const Question = ({
               </Step>
               {fields.map((field, idx) => {
                 const { title, options, type, name, id } = qs[idx]
-
                 return (
                   <Step name={field.questionId} key={step}>
                     <SurveyForm
                       disabled={isPending}
                       index={progress.current}
                       isLast={isLastQs}
+                      id={id}
                       initialValue={questionForm.getValues().answers[idx]}
                       onConfirm={(values) => {
                         questionForm.setValue(`answers.${idx}`, {
@@ -466,12 +470,9 @@ Question.getLayout = (page: ReactNode) => page
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { wikiId, wikiType } = ctx.query
-  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
-  if (
-    !wikiType ||
-    typeof wikiType !== 'string' ||
-    ['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())
-  ) {
+  if (!wikiId || typeof wikiType !== 'string' || typeof wikiId === 'object')
+    return { notFound: true }
+  if (!['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())) {
     return { notFound: true }
   }
   serverURL.pathname = '/api/v1/users'
@@ -501,11 +502,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       props: {
         dehydratedState: dehydrate(queryClient),
         nickname,
+        wikiType,
       },
     }
   } catch (_) {
     return {
-      props: {},
+      props: { wikiType },
     }
   } finally {
     queryClient.clear()

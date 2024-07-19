@@ -14,13 +14,14 @@ import { useRouter } from 'next/router'
 import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
 import { useSearchParams } from 'next/navigation'
 import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 export const DetailQsContext = createContext<{
   id: string
   handle: (id: string) => void
 }>({ id: '', handle: () => {} })
 
-const Page = ({ wikiType }: { wikiType?: WikiType }) => {
+const Page = ({ wikiType }: { wikiType: WikiType }) => {
   const searchParams = useSearchParams()
   const wiki = wikiType || (searchParams.get('wikiType') as WikiType)
 
@@ -31,6 +32,8 @@ const Page = ({ wikiType }: { wikiType?: WikiType }) => {
   const router = useRouter()
   const { direction, scrollTop } = useScrollDirection({ ref })
   const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
+
+  useToggleTheme(wikiType)
 
   const handleQsId = (id: string) => {
     setSelectedQsId(id)
