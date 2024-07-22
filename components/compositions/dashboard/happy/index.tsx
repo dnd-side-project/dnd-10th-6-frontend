@@ -6,14 +6,21 @@ import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { cn } from '@/lib/client/utils'
 import { HAPPY_OR_SAD } from '@/model/dashboard.entity'
 import { getDashboardQuery } from '@/queries/dashboard'
+import { WikiType } from '@/queries/surveys'
 import { useQuery } from '@tanstack/react-query'
 import { HTMLMotionProps, m, LazyMotion, domAnimation } from 'framer-motion'
 import React, { useMemo } from 'react'
 
-const Happy = ({ filter }: { filter: FilterType }) => {
+const Happy = ({
+  wikiType,
+  filter,
+}: {
+  wikiType: WikiType
+  filter: FilterType
+}) => {
   const { handle } = useDetailDrawer()
   const { data: statisics, isLoading } = useQuery({
-    ...getDashboardQuery(filter),
+    ...getDashboardQuery(wikiType, filter),
     select(data) {
       return data.data?.statistics.find(
         (item) => item.dashboardType === 'HAPPY',

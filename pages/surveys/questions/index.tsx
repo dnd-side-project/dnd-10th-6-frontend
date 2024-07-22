@@ -29,12 +29,20 @@ import SurveyForm from '@/components/survey/survey-form'
 import { toastError } from '@/lib/client/alert'
 import Image from 'next/image'
 import caution from '@/assets/icons/caution.svg'
+import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 const MotionLabel = motion(InputLabel)
 
-const Question = ({ nickname }: { nickname: string }) => {
+const Question = ({
+  nickname,
+  wikiType,
+}: {
+  nickname: string
+  wikiType: WikiType
+}) => {
   const { data } = useSession()
-  const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname))
+  const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname, wikiType))
   const { mutate: submit, isPending } = useMutation(
     submitQuestionMutaion({
       onSuccess() {
@@ -66,10 +74,13 @@ const Question = ({ nickname }: { nickname: string }) => {
     max: fieldList.length,
   })
 
+  useToggleTheme(wikiType)
+
   const questionForm = useQuestionForm({
     defaultValues: {
       owner: router.query.wikiId! as string,
       senderName: '',
+      wikiType: wikiType,
       answers: qs.map((item) => ({
         id: '',
         answer: '',
@@ -423,13 +434,13 @@ const Question = ({ nickname }: { nickname: string }) => {
               </Step>
               {fields.map((field, idx) => {
                 const { title, options, type, name, id } = qs[idx]
-
                 return (
                   <Step name={field.questionId} key={step}>
                     <SurveyForm
                       disabled={isPending}
                       index={progress.current}
                       isLast={isLastQs}
+                      id={id}
                       initialValue={questionForm.getValues().answers[idx]}
                       onConfirm={(values) => {
                         questionForm.setValue(`answers.${idx}`, {
@@ -458,8 +469,12 @@ export default Question
 Question.getLayout = (page: ReactNode) => page
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { wikiId } = ctx.query
-  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  const { wikiId, wikiType } = ctx.query
+  if (!wikiId || typeof wikiType !== 'string' || typeof wikiId === 'object')
+    return { notFound: true }
+  if (!['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())) {
+    return { notFound: true }
+  }
   serverURL.pathname = '/api/v1/users'
   serverURL.searchParams.append('wikiId', wikiId)
   const queryClient = new QueryClient()
@@ -475,20 +490,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     )
     serverURL.searchParams.delete('wikiId')
     if (!response.data?.nickname) return { notFound: true }
+
     const {
       data: { nickname },
     } = response
-    await queryClient.prefetchQuery(getQuestionQuery(nickname))
+    await queryClient.prefetchQuery(
+      getQuestionQuery(nickname, wikiType as WikiType),
+    )
 
     return {
       props: {
         dehydratedState: dehydrate(queryClient),
         nickname,
+        wikiType,
       },
     }
   } catch (_) {
     return {
-      props: {},
+      props: { wikiType },
     }
   } finally {
     queryClient.clear()

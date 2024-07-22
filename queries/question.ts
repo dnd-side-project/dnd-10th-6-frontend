@@ -2,12 +2,14 @@ import { QsSchemaType } from '@/hooks/use-questions-form'
 import { NamuiApi } from '@/lib/namui-api'
 import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
+import { WikiType } from './surveys'
 
 export const getQuestionQuery = (
   nickname: string,
+  wikiType: WikiType,
 ): UseQueryOptions<{ data: Question[] }, Error, Question[]> => ({
   queryKey: ['Question'],
-  queryFn: NamuiApi.getQs,
+  queryFn: () => NamuiApi.getQs(wikiType),
   select: (result) => {
     return result.data.map((item) => ({
       ...item,
@@ -18,14 +20,16 @@ export const getQuestionQuery = (
 
 export const getQuestionByTypeQuery = (
   type: QuestionType,
+  wikiType: WikiType,
 ): UseQueryOptions<
   QuestionByType,
   Error,
   QuestionByType,
-  [string, QuestionType]
+  [string, QuestionType, WikiType]
 > => ({
-  queryKey: ['question', type],
-  queryFn: ({ queryKey }) => NamuiApi.getQuestionByType(queryKey[1]),
+  queryKey: ['question', type, wikiType],
+  queryFn: ({ queryKey }) =>
+    NamuiApi.getQuestionByType(queryKey[1], queryKey[2]),
 })
 
 export const submitQuestionMutaion = (

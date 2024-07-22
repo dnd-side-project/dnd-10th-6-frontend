@@ -31,6 +31,7 @@ export interface Survey {
 }
 
 export type WikiType = 'NAMUI' | 'ROMANCE'
+export const wikiTypeList = ['NAMUI', 'ROMANCE'] as const
 
 export interface QuestionAndAnswer {
   questionName: string

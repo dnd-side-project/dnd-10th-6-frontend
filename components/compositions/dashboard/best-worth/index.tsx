@@ -12,6 +12,7 @@ import { RANK_COLOR } from '@/constants'
 import { Button } from '@/components/ui/button'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { BEST_WORTH } from '@/model/dashboard.entity'
+import { WikiType } from '@/queries/surveys'
 
 export interface Payload {
   percent: number
@@ -124,7 +125,13 @@ const RenderActiveShape = (props: PieSectorDataItem) => {
   )
 }
 
-function BestWorth({ filter }: { filter: FilterType }) {
+function BestWorth({
+  filter,
+  wikiType,
+}: {
+  filter: FilterType
+  wikiType: WikiType
+}) {
   const { handle } = useDetailDrawer()
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
@@ -132,7 +139,7 @@ function BestWorth({ filter }: { filter: FilterType }) {
   })
 
   const { data: statisics, isLoading } = useQuery({
-    ...getDashboardQuery(filter),
+    ...getDashboardQuery(wikiType, filter),
     select: (data) => {
       const bestWorth = data.data?.statistics.find(
         (item) => item.dashboardType === 'BEST_WORTH',

@@ -1,3 +1,5 @@
+import { ANSWER_TYPE } from '@/constants/enum'
+import { wikiTypeList } from '@/queries/surveys'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -51,12 +53,17 @@ const QsSchema = z.object({
   senderName: z.string().min(2).max(6),
   period: z.enum(period),
   relation: z.enum(relation),
+  wikiType: z.enum(wikiTypeList),
   answers: z.array(
     z.object({
       id: z.string(),
       questionId: z.string(),
-      type: z.enum(['OPTION', 'MANUAL']),
-      answer: z.string().min(1).or(z.number()),
+      type: z.enum([
+        ANSWER_TYPE.MANUAL,
+        ANSWER_TYPE.OPTION,
+        ANSWER_TYPE.OPTION_LIST,
+      ]),
+      answer: z.string().min(1).or(z.number()).or(z.array(z.string())),
       reason: z.string().optional(),
     }),
   ),

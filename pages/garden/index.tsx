@@ -16,8 +16,12 @@ import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
 import WriteList from '@/components/header/write-list'
 import { FilterProvider } from '@/hooks/use-filter'
+import { useSearchParams } from 'next/navigation'
+import { WikiType } from '@/queries/surveys'
 
 const Pages = () => {
+  const searchParams = useSearchParams()
+  const wikiType = searchParams.get('wikiType') as WikiType
   const { data } = useSession()
   const {
     data: surveys,
@@ -288,7 +292,7 @@ const Pages = () => {
           </button>
         )}
         <div className="sticky bottom-0 bg-gradient-to-t from-white from-85% to-transparent to-100% px-5 py-2 pt-5">
-          <ShareModal>
+          <ShareModal wikiType={wikiType}>
             <Button variant="BG-accent">친구에게 소개서 부탁하기</Button>
           </ShareModal>
         </div>

@@ -12,13 +12,19 @@ import DashboardContainer from '@/components/dashboard-container'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
 import { useRouter } from 'next/router'
 import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
+import { useSearchParams } from 'next/navigation'
+import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 export const DetailQsContext = createContext<{
   id: string
   handle: (id: string) => void
 }>({ id: '', handle: () => {} })
 
-const Page = () => {
+const Page = ({ wikiType }: { wikiType: WikiType }) => {
+  const searchParams = useSearchParams()
+  const wiki = wikiType || (searchParams.get('wikiType') as WikiType)
+
   const headerHeight = useSettingStore((state) => state.headerHeight)
   const [selectedQsId, setSelectedQsId] = useState('')
   const ref = useRef<HTMLElement>(null)
@@ -26,6 +32,8 @@ const Page = () => {
   const router = useRouter()
   const { direction, scrollTop } = useScrollDirection({ ref })
   const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
+
+  useToggleTheme(wikiType)
 
   const handleQsId = (id: string) => {
     setSelectedQsId(id)
@@ -47,7 +55,10 @@ const Page = () => {
         value={{ id: selectedQsId, handle: handleQsId }}
       >
         <FilterProvider>
-          <DashboardContainer shouldShowHeader={shouldShowHeader} />
+          <DashboardContainer
+            wikiType={wiki}
+            shouldShowHeader={shouldShowHeader}
+          />
         </FilterProvider>
 
         <FilterProvider>
@@ -67,6 +78,15 @@ export default DashboardWithAuth
 
 export const getServerSideProps = (async (context) => {
   const isViewOnboard = context.req.cookies['namui-init'] ?? null
+  const { wikiType } = context.query
+  if (!wikiType || typeof wikiType !== 'string') {
+    return {
+      redirect: {
+        destination: '/main',
+        permanent: true,
+      },
+    }
+  }
   if (!isViewOnboard) {
     return {
       redirect: {
@@ -75,5 +95,5 @@ export const getServerSideProps = (async (context) => {
       },
     }
   }
-  return { props: {} }
+  return { props: { wikiType: wikiType.toUpperCase() } }
 }) satisfies GetServerSideProps

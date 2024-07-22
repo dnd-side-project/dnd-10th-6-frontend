@@ -4,6 +4,7 @@ export type QuestionType =
   | 'NUMERIC_CHOICE'
   | 'MULTIPLE_CHOICE'
   | 'SHORT_ANSWER'
+  | 'RANK'
 
 export interface Question {
   id: string
@@ -35,5 +36,5 @@ export interface Daum {
   reasonRequired: boolean
   dashboardType: string
   surveyOrder: number
-  options: any[]
+  options: unknown[]
 }

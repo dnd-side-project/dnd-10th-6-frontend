@@ -12,8 +12,18 @@ import Modal from '@/components/modal'
 import { Close } from '@radix-ui/react-dialog'
 import Link from 'next/link'
 import { useMutation } from '@tanstack/react-query'
+import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
-const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
+const Page = ({
+  wikiType,
+  nickname,
+  wikiId,
+}: {
+  wikiType: WikiType
+  nickname: string
+  wikiId: string
+}) => {
   const { signin, data } = useSession()
   const router = useRouter()
   const { isPending, mutate } = useMutation({
@@ -24,6 +34,8 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
   const [openMineAlert, setOpenMineAlert] = useState(false)
 
   const IsMine = wikiId === data?.user?.wikiId
+
+  useToggleTheme(wikiType)
 
   const handleStart = () => {
     if (IsMine) return setOpenMineAlert(true)
@@ -48,31 +60,33 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
         </div>
       </section>
       <footer className="relative flex flex-col items-center space-y-3">
-        <motion.div
-          initial={{ scale: 0, y: 10, opacity: 0 }}
-          animate={{ scale: 1, y: 0, opacity: 1 }}
-          className="absolute -top-[85%] text-center"
-        >
-          <div className="relative h-full w-full flex-1 rounded-lg bg-white  px-3 py-4 shadow-chat-bubble">
-            <p className="text-body3-medium text-black">
-              <b>비회원</b>으로 시작하면 <br />
-              내가 작성한 <b>남의위키를 볼 수 없어요!</b>
-            </p>
-          </div>
-          <svg
-            className="relative left-1/2 -translate-x-1/2 -translate-y-[15%] drop-shadow-chat-bubble"
-            width="19"
-            height="16"
-            viewBox="0 0 19 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+        {!data?.user && (
+          <motion.div
+            initial={{ scale: 0, y: 10, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            className="absolute -top-[85%] text-center"
           >
-            <path
-              d="M12.0709 13.7252C10.9051 15.6637 8.09493 15.6637 6.92912 13.7252L1.40877 4.54615C0.206241 2.54663 1.64638 1.27978e-07 3.97965 3.31959e-07L15.0204 1.29717e-06C17.3536 1.50115e-06 18.7938 2.54663 17.5912 4.54615L12.0709 13.7252Z"
-              fill="white"
-            />
-          </svg>
-        </motion.div>
+            <div className="relative h-full w-full flex-1 rounded-lg bg-white  px-3 py-4 shadow-chat-bubble">
+              <p className="text-body3-medium text-black">
+                <b>비회원</b>으로 시작하면 <br />
+                내가 작성한 <b>남의위키를 볼 수 없어요!</b>
+              </p>
+            </div>
+            <svg
+              className="relative left-1/2 -translate-x-1/2 -translate-y-[15%] drop-shadow-chat-bubble"
+              width="19"
+              height="16"
+              viewBox="0 0 19 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.0709 13.7252C10.9051 15.6637 8.09493 15.6637 6.92912 13.7252L1.40877 4.54615C0.206241 2.54663 1.64638 1.27978e-07 3.97965 3.31959e-07L15.0204 1.29717e-06C17.3536 1.50115e-06 18.7938 2.54663 17.5912 4.54615L12.0709 13.7252Z"
+                fill="white"
+              />
+            </svg>
+          </motion.div>
+        )}
         {data?.user?.wikiId ? (
           <Button onClick={handleStart}>시작하기</Button>
         ) : (
@@ -80,6 +94,7 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
           <Button
             disabled={isPending}
             variant="Line-neutral"
+            className="!bg-[#FEE500]"
             onClick={() =>
               mutate({
                 provider: 'kakao',
@@ -103,15 +118,19 @@ const Page = ({ nickname, wikiId }: { nickname: string; wikiId: string }) => {
             카카오 로그인
           </Button>
         )}
-        <button
-          onClick={() => {
-            NamuiApi.clear()
-            router.replace(`/surveys/questions?wikiId=${router.query.wikiId}`)
-          }}
-          className="text-sm text-text-sub-gray76 underline underline-offset-2"
-        >
-          비회원으로 시작하기
-        </button>
+        {!data?.user && (
+          <button
+            onClick={() => {
+              NamuiApi.clear()
+              router.replace(
+                `/surveys/questions?wikiId=${router.query.wikiId}&wikiType=${wikiType}`,
+              )
+            }}
+            className="text-sm text-text-sub-gray76 underline underline-offset-2"
+          >
+            비회원으로 시작하기
+          </button>
+        )}
       </footer>
       <Modal
         onOpenChange={setOpenMineAlert}
@@ -155,8 +174,12 @@ Page.getLayout = (page: ReactNode) => (
 export default Page
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { wikiId } = ctx.query
-  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  const { wikiId, wikiType } = ctx.query
+  if (!wikiId || typeof wikiType !== 'string' || typeof wikiId === 'object')
+    return { notFound: true }
+  if (!wikiType || !['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())) {
+    return { notFound: true }
+  }
   serverURL.pathname = '/api/v1/users'
   serverURL.searchParams.append('wikiId', wikiId)
 
@@ -176,6 +199,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       nickname: response.data.nickname,
       wikiId,
+      wikiType,
     },
   }
 }

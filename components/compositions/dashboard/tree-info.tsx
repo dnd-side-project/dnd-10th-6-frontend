@@ -8,6 +8,7 @@ import { getQuestionByTypeQuery } from '@/queries/question'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import tree from '@/assets/icons/tree-icon.svg'
+import { WikiType } from '@/queries/surveys'
 
 const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
   FIRST_IMPRESSION: '👀 나의 첫인상은?',
@@ -18,11 +19,11 @@ const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
   MOST_USED_WORD: '💬 내가 가장 많이 사용하는 단어는?',
 }
 
-const TreeInfo = ({}: { filter: FilterType }) => {
+const TreeInfo = ({ wikiType }: { wikiType: WikiType; filter: FilterType }) => {
   const { handle } = useDetailDrawer()
   const { data } = useSession()
   const { data: short } = useQuery({
-    ...getQuestionByTypeQuery('SHORT_ANSWER'),
+    ...getQuestionByTypeQuery('SHORT_ANSWER', wikiType),
     select(data) {
       return data.data
     },
@@ -43,8 +44,8 @@ const TreeInfo = ({}: { filter: FilterType }) => {
             <Image src={tree} alt="tree" />
           </div>
         </div>
-        <ShareModal>
-          <Button className="h-11">링크 공유하기</Button>
+        <ShareModal wikiType={wikiType}>
+          <Button>링크 공유하기</Button>
         </ShareModal>
       </div>
       <h3 className="mb-5 mt-8 text-mainTitle2-bold font-bold tracking-tighter">

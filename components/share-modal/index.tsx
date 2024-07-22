@@ -5,8 +5,16 @@ import Modal from '@/components/modal'
 import { Button } from '@/components/ui'
 
 import { useRouter } from 'next/router'
+import { WikiType } from '@/queries/surveys'
 
-const ShareModal = ({ children }: PropsWithChildren) => {
+interface ShareModalProps {
+  wikiType: WikiType
+}
+
+const ShareModal = ({
+  wikiType,
+  children,
+}: PropsWithChildren<ShareModalProps>) => {
   const { data } = useSession()
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [copyModalOpen, setCopyModalOpen] = useState(false)
@@ -16,16 +24,20 @@ const ShareModal = ({ children }: PropsWithChildren) => {
     if (data?.user?.wikiId) {
       const url = new URL(window.location.origin)
       url.pathname = '/surveys'
+      console.log(wikiType, '<<<wikiTypewikiType')
       url.searchParams.set('wikiId', data?.user?.wikiId)
+      url.searchParams.set('wikiType', wikiType.toUpperCase())
       await shareToCopyLink(url.toString())
     }
     setShareModalOpen(false)
     setCopyModalOpen(true)
-  }, [data?.user?.wikiId])
+  }, [data?.user?.wikiId, wikiType])
 
   const handleShareKakao = () => {
     if (data?.user?.wikiId) {
-      shareToKaKaoLink(`surveys?wikiId=${data?.user?.wikiId}`)
+      shareToKaKaoLink(
+        `surveys?wikiId=${data?.user?.wikiId}&wikiType=${wikiType.toUpperCase()}`,
+      )
     }
   }
 

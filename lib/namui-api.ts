@@ -20,7 +20,7 @@ import {
 import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 import { Wikis } from '@/model/wikis.entity'
 
-interface NamuiResponse<T = unknown> {
+export interface NamuiResponse<T = unknown> {
   data: T
 }
 
@@ -75,12 +75,13 @@ export class NamuiApi {
     })
   }
 
-  static async getQuestionByType(type: QuestionType) {
+  static async getQuestionByType(type: QuestionType, wikiType: WikiType) {
     return await NamuiApi.handler<QuestionByType>({
       method: 'GET',
       url: '/api/v1/questions',
       params: {
         type,
+        wikiType,
       },
     })
   }
@@ -173,23 +174,31 @@ export class NamuiApi {
     })
   }
 
-  static async getDashboard(filter: [key: string, value: string]) {
+  static async getDashboard(
+    filter: [key: string, value: string],
+    wikiType: WikiType,
+  ) {
     return await NamuiApi.handler<NamuiResponse<DashboardData>>({
       method: 'GET',
       url: '/api/v1/dashboard',
-      params:
-        filter[0] === 'total'
+      params: {
+        wikiType,
+        ...(filter[0] === 'total'
           ? {}
           : {
               [filter[0]]: filter[1],
-            },
+            }),
+      },
     })
   }
 
-  static async getQs() {
+  static async getQs(wikiType: WikiType) {
     return await NamuiApi.handler<NamuiResponse<Question[]>>({
       method: 'GET',
       url: '/api/v1/questions',
+      params: {
+        wikiType,
+      },
     })
   }
 

@@ -18,7 +18,7 @@ const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
 
 const Step3TreeInfo = ({}: { filter: FilterType }) => {
   const { data: short } = useQuery({
-    ...getQuestionByTypeQuery('SHORT_ANSWER'),
+    ...getQuestionByTypeQuery('SHORT_ANSWER', 'NAMUI'),
     select(data) {
       return data.data
     },
@@ -90,8 +90,8 @@ const Step3TreeInfo = ({}: { filter: FilterType }) => {
           </div>
         </div>
         <Confetti className="pointer-events-none fixed left-[200%] top-0 h-full w-full">
-          <Button className="h-[3vb] rounded-[0.3vb] text-[1vb]">
-            링크 공유하기
+          <Button className="h-[3vb] rounded-[0.3vb] py-[0.8vb] text-[1vb]">
+            <span className="text-[1.4vb] leading-normal ">링크 공유하기</span>
           </Button>
         </Confetti>
       </div>

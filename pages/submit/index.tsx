@@ -4,14 +4,23 @@ import FormLayout from '@/layout/form-layout'
 import { useSession } from '@/provider/session-provider'
 import Link from 'next/link'
 import React, { ReactNode } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { GetServerSideProps } from 'next'
+import { WikiType } from '@/queries/surveys'
+import { useToggleTheme } from '@/hooks/use-toggle-theme'
 
 const index = () => {
   const { data } = useSession()
+  const searchParams = useSearchParams()
+  const wikiType = searchParams.get('wikiType')! as WikiType
+
+  useToggleTheme(wikiType)
+
   return (
     <FormLayout
       button={
         <div className="flex w-full flex-col space-y-3">
-          <ShareModal>
+          <ShareModal wikiType={wikiType}>
             <Button>친구에게 내 소개 부탁하기</Button>
           </ShareModal>
           {/* <Button variant="default">작성한 소개서 보러가기</Button> */}
@@ -177,3 +186,21 @@ const index = () => {
 
 export default index
 index.getLayout = (page: ReactNode) => page
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { wikiId, wikiType } = ctx.query
+  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  if (
+    !wikiType ||
+    typeof wikiType !== 'string' ||
+    ['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())
+  ) {
+    return { notFound: true }
+  }
+
+  return {
+    props: {
+      wikiId,
+      wikiType,
+    },
+  }
+}
