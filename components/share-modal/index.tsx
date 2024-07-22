@@ -26,7 +26,7 @@ const ShareModal = ({
       url.pathname = '/surveys'
       console.log(wikiType, '<<<wikiTypewikiType')
       url.searchParams.set('wikiId', data?.user?.wikiId)
-      url.searchParams.set('wikiType', wikiType.toUpperCase())
+      url.searchParams.set('wikiType', wikiType)
       await shareToCopyLink(url.toString())
     }
     setShareModalOpen(false)
@@ -36,7 +36,7 @@ const ShareModal = ({
   const handleShareKakao = () => {
     if (data?.user?.wikiId) {
       shareToKaKaoLink(
-        `surveys?wikiId=${data?.user?.wikiId}&wikiType=${wikiType.toUpperCase()}`,
+        `surveys?wikiId=${data?.user?.wikiId}&wikiType=${wikiType}`,
       )
     }
   }
