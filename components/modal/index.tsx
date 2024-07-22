@@ -42,7 +42,10 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         item: [
           <Close
             key="cancel"
-            className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
+            className=" active:bg-bg-gray1 flex-1
+            
+            
+            rounded-none bg-transparent px-4 py-[14px] text-brand-sub1 duration-150 active:bg-bg-regular"
           >
             확인
             <span className="sr-only">Close</span>
