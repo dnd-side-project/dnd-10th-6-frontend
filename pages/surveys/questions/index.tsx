@@ -165,20 +165,20 @@ const Question = ({ nickname }: { nickname: string }) => {
   }
 
   const txt = useMemo(() => {
-    const 상수들 = [0, 0, 0, 30]
-    if (fieldList.length <= 상수들.length) return []
+    const nums = [0, 0, 0, 30]
+    if (fieldList.length <= nums.length) return []
     let result: number[] = []
     for (let i = 0; i < 5; i++) {
-      const 상수 = fieldList.length - 상수들.length
-      const makeRandomeArr = Array(상수)
+      const num = fieldList.length - nums.length
+      const makeRandomeArr = Array(num)
         .fill(0)
         .map((_) => Math.random() * 70 + 30)
         .sort((a, b) => a - b)
         .map((item, idx) =>
-          Math.round(((result?.[idx + 상수들.length] ?? 0) + item) / 2),
+          Math.round(((result?.[idx + nums.length] ?? 0) + item) / 2),
         )
 
-      result = [...상수들, ...makeRandomeArr, 100].sort((a, b) => a - b)
+      result = [...nums, ...makeRandomeArr, 100].sort((a, b) => a - b)
     }
     return result
   }, [fieldList])
