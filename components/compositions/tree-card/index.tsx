@@ -10,13 +10,17 @@ import pen from '@/assets/icons/pen.svg'
 import eye from '@/assets/icons/eye.svg'
 import menu from '@/assets/icons/menu.svg'
 import Modal from '@/components/modal'
-import { Drawer, DrawerContent } from '@/components/ui/drawer'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+} from '@/components/ui/drawer'
 
 interface TreeCardProps {
   period: string
   relation: string
-  isFlipped: boolean
-  onClick: () => void
+
   id: string
   senderName: string
   senderWikiId: string
@@ -26,11 +30,11 @@ const TreeCard = ({
   id,
   period,
   relation,
-  isFlipped,
   senderName,
   senderWikiId,
-  onClick,
 }: TreeCardProps) => {
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
+
   const bgColor = (() => {
     switch (relation) {
       case 'ELEMENTARY_SCHOOL':
@@ -46,27 +50,28 @@ const TreeCard = ({
       case 'ETC':
         return 'bg-relation-etc'
       default:
+        return ''
     }
   })()
 
   const treeType = useRef(new TreeType(treeCardAsset)).current
+
   const handleCardClick = () => {
-    onClick()
+    setBottomSheetOpen(true)
+  }
+
+  const closeBottomSheet = () => {
+    setBottomSheetOpen(false)
   }
 
   return (
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('relative aspect-[104/110] h-full cursor-pointer', {
-        'preserve-3d': isFlipped,
-      })}
-      style={{ transformStyle: 'preserve-3d' }}
+      className={cn('relative aspect-[104/110] h-full cursor-pointer', {})}
       onClick={handleCardClick}
     >
-      <div
-        className={`card flex w-full justify-center ${isFlipped ? 'flipped' : ''}`}
-      >
+      <div className={`card flex w-full justify-center `}>
         <div
           className={cn(
             `card-front m-auto flex w-full flex-col items-center justify-center rounded-md ${bgColor}`,
@@ -77,13 +82,16 @@ const TreeCard = ({
           </div>
         </div>
 
-        <div
-          className={`card-back px-y flex w-full flex-col items-center justify-center rounded-md ${bgColor}`}
-        >
-          <div className="m-auto flex w-full flex-col items-center justify-center space-y-2">
-            <BottomSheetButton id={id} senderWikiId={senderWikiId} />
-            <span className="my-2 text-body1-bold">{senderName}</span>
-          </div>
+        <div className="m-auto flex w-full flex-col items-center justify-center space-y-2">
+          <BottomSheetButton
+            id={id}
+            senderWikiId={senderWikiId}
+            bottomSheetOpen={bottomSheetOpen}
+            closeBottomSheet={closeBottomSheet}
+            senderName={senderName}
+            period={period}
+            relation={relation}
+          />
         </div>
       </div>
     </motion.div>
@@ -95,21 +103,23 @@ export default TreeCard
 interface BottomSheetButtonProps {
   id: string
   senderWikiId: string | null
+  senderName: string
+  bottomSheetOpen: boolean
+  closeBottomSheet: () => void
+  period: string
+  relation: string
 }
 
-const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
-  const [bottomSheet, setBottomSheet] = useState({
-    isOpen: false,
-  })
+const BottomSheetButton = ({
+  id,
+  senderWikiId,
+  senderName,
+  bottomSheetOpen,
+  period,
+  relation,
+  closeBottomSheet,
+}: BottomSheetButtonProps) => {
   const [modalOpen, setModalOpen] = useState(false)
-
-  const toggleBottomSheet = (e: MouseEvent) => {
-    setBottomSheet((prev) => ({
-      ...prev,
-      isOpen: !prev.isOpen,
-    }))
-    e.stopPropagation()
-  }
 
   const handleLinkClick = (e: MouseEvent) => {
     if (senderWikiId === null) {
@@ -127,31 +137,26 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
     if (senderWikiId === null) {
       setModalOpen(true)
     } else {
-      setBottomSheet((prev) => ({
-        ...prev,
-        isOpen: false,
-      }))
+      closeBottomSheet()
     }
   }
 
   return (
     <>
-      <button
-        className="absolute right-3 top-3 z-20"
-        onClick={toggleBottomSheet}
-      >
-        <Image src={menu} alt="menu" />
-      </button>
       <Drawer
-        open={bottomSheet.isOpen}
-        onOpenChange={(open) =>
-          setBottomSheet((prev) => ({
-            ...prev,
-            isOpen: open,
-          }))
-        }
+        open={bottomSheetOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            closeBottomSheet()
+          }
+        }}
       >
         <DrawerContent>
+          <DrawerHeader
+            senderName={senderName}
+            period={period}
+            relation={relation}
+          />
           <div className="flex flex-col p-4 text-body3-medium">
             <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
               <Link
@@ -163,7 +168,7 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
                   onClick={handleWritingClick}
                 >
                   <Image src={pen} alt="pen" />
-                  친구 소개 쓰러가기
+                  쓰러가기
                 </button>
               </Link>
               <Link
@@ -172,11 +177,12 @@ const BottomSheetButton = ({ id, senderWikiId }: BottomSheetButtonProps) => {
               >
                 <button className="flex items-center gap-2">
                   <Image src={eye} alt="eye" />
-                  소개서 자세히 보기
+                  상세 보기
                 </button>
               </Link>
             </div>
           </div>
+          <DrawerFooter />
         </DrawerContent>
       </Drawer>
       <Modal

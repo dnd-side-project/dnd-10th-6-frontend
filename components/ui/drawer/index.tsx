@@ -1,3 +1,4 @@
+import { PeriodBadge, RelationBadge } from '@/components/badge'
 import { cn } from '@/lib/client/utils'
 import * as React from 'react'
 import { Drawer as DrawerPrimitive } from 'vaul'
@@ -40,12 +41,12 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border',
+        'fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-white',
         className,
       )}
       {...props}
     >
-      <div className="bg-muted mx-auto mt-4 h-2 w-[100px] rounded-full" />
+      <div className="bg-muted mx-auto mt-0 h-2 w-[100px] rounded-full" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
@@ -54,12 +55,24 @@ DrawerContent.displayName = 'DrawerContent'
 
 const DrawerHeader = ({
   className,
+  senderName,
+  period,
+  relation,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn('grid gap-1.5 p-4 text-center sm:text-left', className)}
-    {...props}
-  />
+}: React.HTMLAttributes<HTMLDivElement> & {
+  senderName: string
+  period: string
+  relation: string
+}) => (
+  <div className={cn(' p-4', className)} {...props}>
+    {senderName && (
+      <div className="flex items-center gap-2">
+        <h2 className=" text-t2-kr-b text-black">{senderName}님의 남의위키</h2>
+        <PeriodBadge period={period} />
+        <RelationBadge relation={relation} />
+      </div>
+    )}
+  </div>
 )
 DrawerHeader.displayName = 'DrawerHeader'
 
@@ -68,7 +81,7 @@ const DrawerFooter = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn('mt-auto flex flex-col gap-2 p-4', className)}
+    className={cn('mb-4 mt-auto flex flex-col gap-2', className)}
     {...props}
   />
 )

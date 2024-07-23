@@ -28,7 +28,6 @@ import { Logo } from '@/components/ui'
 import icons from '@/assets/icons'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -206,7 +205,6 @@ export default function NamuiWikiApp({
               {getLayout(<Component {...pageProps} />)}
             </div>
           </HydrationBoundary>
-          <ReactQueryDevtools />
         </QueryProvider>
       </ErrorBoundary>
 

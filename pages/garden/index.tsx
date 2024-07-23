@@ -53,7 +53,7 @@ const Pages = () => {
   })
 
   const [showScrollButton, setShowScrollButton] = useState(false)
-  const [flippedCardIndex, setFlippedCardIndex] = useState(-1)
+
   useEffect(() => {
     function handleScroll() {
       const scrollTop = document.documentElement.scrollTop
@@ -73,13 +73,6 @@ const Pages = () => {
     })
   }
 
-  const handleCardClick = (index: number) => {
-    if (flippedCardIndex === index) {
-      setFlippedCardIndex(-1)
-    } else {
-      setFlippedCardIndex(index)
-    }
-  }
   const totalCount = useMemo(
     () => surveys?.pages[0].data.totalCount ?? 0,
     [surveys],
@@ -213,8 +206,6 @@ const Pages = () => {
                       id={item.surveyId}
                       period={item.period}
                       relation={item.relation}
-                      isFlipped={index === flippedCardIndex}
-                      onClick={() => handleCardClick(index)}
                     />
                   )),
                 )}
