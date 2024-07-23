@@ -8,7 +8,6 @@ import { useState, useRef, MouseEvent } from 'react'
 import { fadeInProps } from '@/variants'
 import pen from '@/assets/icons/pen.svg'
 import eye from '@/assets/icons/eye.svg'
-import menu from '@/assets/icons/menu.svg'
 import Modal from '@/components/modal'
 import {
   Drawer,

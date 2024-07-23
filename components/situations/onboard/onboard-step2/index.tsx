@@ -174,8 +174,6 @@ const OnboardStep2 = () => {
                             id={item.surveyId}
                             period={item.period}
                             relation={item.relation}
-                            isFlipped={false}
-                            onClick={() => {}}
                           />
                         ) : (
                           <div key={`empty-${(pageNo + 1) * (index + 1)}`}>
@@ -228,8 +226,6 @@ const OnboardStep2 = () => {
                             id={item.surveyId}
                             period={item.period}
                             relation={item.relation}
-                            isFlipped={index === 0}
-                            onClick={() => {}}
                           />
                         ))}
                       </div>

@@ -129,14 +129,11 @@ const Pages = () => {
           </h3>
         </div>
         <div className="flex items-center justify-start ">
-          <ShareModal
-            wikiType={wikiType}
-            children={
-              <Button className="px-4 py-3 text-but3-sb" variant="BG-neutral">
-                링크 공유
-              </Button>
-            }
-          />
+          <ShareModal wikiType={wikiType}>
+            <Button className="px-4 py-3 text-but3-sb" variant="BG-neutral">
+              링크 공유
+            </Button>
+          </ShareModal>
         </div>
       </div>
       <hr className="mb-6 border-line-regular" />
