@@ -2,10 +2,10 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import { Button } from '@/components/ui'
-import Link from 'next/link'
+
 import TreeCard from '@/components/compositions/tree-card'
 import { useSession } from '@/provider/session-provider'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { NamuiApi } from '@/lib/namui-api'
 import { GetSurveyResponse } from '@/model/survey.entity'
 import { useIntersectionObserver } from '@/hooks/use-observer'
@@ -14,15 +14,20 @@ import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
-import WriteList from '@/components/header/write-list'
-import { FilterProvider } from '@/hooks/use-filter'
+
 import { useSearchParams } from 'next/navigation'
 import { WikiType } from '@/queries/surveys'
+import { useRouter } from 'next/router'
+import backIcon from '@/assets/icons/back.svg'
+import Image from 'next/image'
+import { getWikis } from '@/queries/wiki'
 
 const Pages = () => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const wikiType = searchParams.get('wikiType') as WikiType
   const { data } = useSession()
+  const { data: wikis } = useQuery(getWikis)
   const {
     data: surveys,
     isLoading,
@@ -48,7 +53,7 @@ const Pages = () => {
   }) 
 
   const [showScrollButton, setShowScrollButton] = useState(false)
-  const [flippedCardIndex, setFlippedCardIndex] = useState(-1)
+
   useEffect(() => {
     function handleScroll() {
       const scrollTop = document.documentElement.scrollTop
@@ -68,13 +73,6 @@ const Pages = () => {
     })
   }
 
-  const handleCardClick = (index: number) => {
-    if (flippedCardIndex === index) {
-      setFlippedCardIndex(-1)
-    } else {
-      setFlippedCardIndex(index)
-    }
-  }
   const totalCount = useMemo(
     () => surveys?.pages[0].data.totalCount ?? 0,
     [surveys],
@@ -98,49 +96,49 @@ const Pages = () => {
 
   return (
     <BaseLayout
-      className="bg-gray-gray50 flex h-calc-h flex-col"
+      className="bg-bg-white flex h-calc-h flex-col px-5"
       header={{
-        className: 'bg-gray-gray50',
-        leftIcon: null,
-        rightIcon: false,
-        center: (
-          <p className="text-body1-bold text-text-main-black11">내 정원</p>
+        className: 'bg-bg-white w-full flex justify-between items-center px-0',
+        leftIcon: (
+          <Image
+            src={backIcon}
+            alt="back"
+            // 이전의 대시보드 타입에 따라 뒤로가기
+            onClick={() =>
+              router.replace(
+                Array.isArray(wikis) &&
+                  wikis.find((wiki) => wiki.wikiType === 'NAMUI')
+                  ? '/dashboard?wikiType=NAMUI'
+                  : '/dashboard?wikiType=ROMANCE',
+              )
+            }
+          />
         ),
+        rightIcon: false,
+        center: <p className="text-t4-kr-b text-black">내 정원</p>,
       }}
     >
-      <div className="flex flex-col space-y-5 px-[30px] pb-6 pt-8">
-        <div className="flex flex-1 flex-col space-y-2">
-          <p className="text-body1-medium text-text-sub-gray4f">
-            내 정원에 심어진 나무는
+      <div className="flex items-center justify-between py-6 ">
+        <div className="flex flex-col space-y-2 ">
+          <p className="text-b2-kr-m text-font-gray-03">
+            내 정원에 심어진 나무
           </p>
-          <h3 className="text-mainTitle1-bold text-black">
-            총 {data?.user?.totalSurveyCnt ?? 0}그루
+          <h3 className="text-d4-kr-b text-black">
+            {data?.user?.totalSurveyCnt ?? 0}
+            <span className=" text-subTitle1-bold text-black"> 그루</span>
           </h3>
         </div>
-        <div className="flex space-x-2">
-          <div className="flex w-full">
-            <FilterProvider>
-              <WriteList
-                trigger={
-                  <Button
-                    // variant={'muted'}
-                    className="w-full border-none !text-body3-medium"
-                  >
-                    남의위키 작성목록
-                  </Button>
-                }
-              />
-            </FilterProvider>
-          </div>
-          <Link href="/dashboard" className="w-full">
-            <button className="w-full rounded-md bg-main-green-green50 px-4 py-3 text-body3-medium text-main-green-green800 hover:bg-[#f3faf3] hover:text-main-green-green300 active:bg-main-green-green100 active:text-main-green-green800">
-              내 결과 보기
-            </button>
-          </Link>
+        <div className="flex items-center justify-start ">
+          <ShareModal wikiType={wikiType}>
+            <Button className="px-4 py-3 text-but3-sb" variant="BG-neutral">
+              링크 공유
+            </Button>
+          </ShareModal>
         </div>
       </div>
+      <hr className="mb-6 border-line-regular" />
       <section className="flex grow flex-col bg-white">
-        <div className="flex items-center justify-start px-[30px] py-4">
+        <div className="flex items-center justify-start py-4">
           <div className="relative text-left text-subTitle2-medium text-text-sub-gray4f">
             받은 친구
             <AnimatePresence mode="wait">
@@ -171,7 +169,7 @@ const Pages = () => {
                     />
                   </svg>
 
-                  <div className="bg-gray-gray800 relative z-10 h-full w-full flex-1 whitespace-nowrap rounded-lg px-4 py-3 text-body3-medium text-white">
+                  <div className=" relative z-10 h-full w-full flex-1 whitespace-nowrap rounded-lg bg-black-800 px-4 py-3 text-b3-kr-sb text-white">
                     알게 된 기간, 경로에 따라 <br /> 나무 모양과 색이 달라져요
                   </div>
                 </motion.div>
@@ -194,7 +192,7 @@ const Pages = () => {
               <motion.div
                 {...fadeInProps}
                 transition={{ staggerChildren: 0.03 }}
-                className="grid w-full grid-cols-3 gap-2 px-5 "
+                className="grid w-full grid-cols-3 gap-2 "
               >
                 {surveys?.pages.map((page, pageNo) =>
                   page.data.content.map((item, index) => (
@@ -205,8 +203,6 @@ const Pages = () => {
                       id={item.surveyId}
                       period={item.period}
                       relation={item.relation}
-                      isFlipped={index === flippedCardIndex}
-                      onClick={() => handleCardClick(index)}
                     />
                   )),
                 )}
@@ -217,7 +213,7 @@ const Pages = () => {
                   <motion.div
                     variants={fadeInProps.variants}
                     key={`empty-${(index + 1) * (index + 1)}`}
-                    className="bg-gray-gray50 flex aspect-[104/110] h-full items-center justify-center rounded-md border border-dashed p-[25%]"
+                    className=" flex aspect-[104/110] h-full items-center justify-center rounded-md border border-dashed bg-bg-light p-[25%]"
                   >
                     <svg
                       className="h-full w-full"
@@ -291,11 +287,6 @@ const Pages = () => {
             </svg>
           </button>
         )}
-        <div className="sticky bottom-0 bg-gradient-to-t from-white from-85% to-transparent to-100% px-5 py-2 pt-5">
-          <ShareModal wikiType={wikiType}>
-            <Button variant="BG-accent">친구에게 소개서 부탁하기</Button>
-          </ShareModal>
-        </div>
       </section>
     </BaseLayout>
   )
