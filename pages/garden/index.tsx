@@ -36,7 +36,7 @@ const Pages = () => {
         : page.data.page + 1
     },
     queryKey: ['survey'],
-    queryFn: ({ pageParam = 0 }) => {
+    queryFn: ({ pageParam = 0 }) => { 
       return NamuiApi.getSurveys(pageParam as number, 'NAMUI')
     },
   })
@@ -45,7 +45,7 @@ const Pages = () => {
     threshold: 0.5,
     hasNextPage,
     fetchNextPage,
-  })
+  }) 
 
   const [showScrollButton, setShowScrollButton] = useState(false)
   const [flippedCardIndex, setFlippedCardIndex] = useState(-1)
