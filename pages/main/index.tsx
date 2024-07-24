@@ -12,6 +12,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getWikis } from '@/queries/wiki'
 import withAuth from '@/layout/HOC/with-auth'
 
+import { motion } from 'framer-motion'
+
 const Main = () => {
   // const [wikis, setWikis] = useState<Wiki[]>([])
   const { data: wikis } = useQuery(getWikis)
@@ -39,10 +41,22 @@ const Main = () => {
             알아보세요
           </h3>
         </div>
-        <div className="flex flex-col space-y-3">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={{
+            initial: {},
+            animate: {
+              transition: {
+                staggerChildren: 0.05,
+              },
+            },
+          }}
+          className="flex flex-col space-y-3"
+        >
           {wikis?.data.wikiList.map((wiki) => (
             <TemplateButton
-              key={wiki.wikiType}
+              key={wiki.wikiType + wiki.description}
               className={
                 wiki.wikiType === 'NAMUI'
                   ? 'bg-green-50 text-green-600'
@@ -58,7 +72,7 @@ const Main = () => {
               url={`/dashboard?wikiType=${wiki.wikiType}`}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </BaseLayout>
   )
@@ -78,6 +92,17 @@ export interface TemplateButtonProps {
   url: string
 }
 
+const variant = {
+  initial: {
+    opacity: 0,
+    y: -10,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  },
+}
+
 const TemplateButton = ({
   className,
   characterSvg,
@@ -90,7 +115,8 @@ const TemplateButton = ({
   const router = useRouter()
 
   return (
-    <button
+    <motion.button
+      variants={variant}
       onClick={() => {
         router.push(url)
       }}
@@ -127,6 +153,6 @@ const TemplateButton = ({
           </div>
         </div>
       </div>
-    </button>
+    </motion.button>
   )
 }

@@ -33,3 +33,7 @@ export const parseJwt = (token: string) => {
 }
 
 export const serverURL = new URL(process.env.NEXT_PUBLIC_API_URL)
+
+export const clamp = (value: number, min: number, max: number) => {
+  return Math.min(Math.max(value, min), max)
+}

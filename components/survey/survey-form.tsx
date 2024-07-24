@@ -19,7 +19,7 @@ import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 import InputLabel from '../inputLabel'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@/components/ui'
+import { Button, Inputbox } from '@/components/ui'
 import { TreeSvg } from '../questionTrees'
 import { useRaisedShadow } from '@/hooks/use-raised-shadow'
 import { ANSWER_TYPE } from '@/constants/enum'
@@ -256,7 +256,7 @@ const SurveyForm = ({
                           'border-brand-main-green400 border bg-main-green-green50',
                       )}
                     >
-                      <input
+                      <Inputbox
                         id={option.id}
                         name={name}
                         value={option.id}
@@ -331,7 +331,7 @@ const SurveyForm = ({
                           'border-brand-main-green400 border bg-main-green-green50',
                       )}
                     >
-                      <input
+                      <Inputbox
                         id={option.id}
                         name={name}
                         value={option.id}
@@ -529,9 +529,6 @@ const SurveyForm = ({
                   <textarea
                     {...field}
                     id={field.name}
-                    className={cn(
-                      'placeholder:text-muted peer flex w-full resize-none border-none bg-transparent text-body3-medium  outline-none  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
-                    )}
                     placeholder={
                       name === 'FIVE_LETTER_WORD'
                         ? '5글자로 입력해주세요'
@@ -660,5 +657,5 @@ function AutoFocusedInput(props: AutoFocusedInputProps) {
       ref.current.focus()
     }
   }, [])
-  return <input ref={ref} {...props} />
+  return <Inputbox ref={ref} {...props} />
 }

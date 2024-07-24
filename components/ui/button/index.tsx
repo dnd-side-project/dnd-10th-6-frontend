@@ -69,8 +69,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={buttonRef}
         className={cn(
           buttonVariants({ variant, rounded }),
-          className,
           'w-full',
+          className,
           isPending && 'cursor-progress p-3',
         )}
         {...rest}
