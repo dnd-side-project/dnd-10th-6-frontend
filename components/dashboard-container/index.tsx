@@ -37,7 +37,7 @@ const DashboardContainer = ({
           <motion.div
             {...fadeInProps}
             key="exist"
-            className="flex flex-col divide-y-[12px] divide-line-soft"
+            className="flex flex-col divide-y-[12px] divide-line-light"
           >
             {/* 내 정원에 심어진 나무는? */}
             <Section className="pt-5">
@@ -71,10 +71,10 @@ const DashboardContainer = ({
             <div />
             <div className="flex flex-col items-center">
               <TripleTrees />
-              <h3 className="mb-4 mt-8 text-subTitle1-bold">
+              <h3 className="mb-4 mt-8 text-t2-kr-b">
                 나무를 심어준 친구가 없어요
               </h3>
-              <p className="text-body1-medium text-text-sub-gray4f">
+              <p className="text-b1-kr-m text-font-gray-03 ">
                 나에 대해 궁금하다면 링크 공유하기를 눌러
                 <br />
                 친구에게 알려달라고 부탁해보세요
@@ -100,7 +100,7 @@ function Section({
     <section
       {...props}
       className={cn(
-        'flex flex-col overflow-x-hidden bg-text-main-whiteFF px-6 pb-12 pt-10',
+        'flex flex-col overflow-x-hidden bg-white px-6 pb-12 pt-10',
         props.className,
       )}
     >

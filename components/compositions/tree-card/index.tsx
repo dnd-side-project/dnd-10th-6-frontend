@@ -37,17 +37,17 @@ const TreeCard = ({
   const bgColor = (() => {
     switch (relation) {
       case 'ELEMENTARY_SCHOOL':
-        return 'bg-relation-elementary_school'
+        return 'bg-yellow-50'
       case 'MIDDLE_AND_HIGH_SCHOOL':
-        return 'bg-relation-middle_and_high_school'
+        return 'bg-orange-50'
       case 'UNIVERSITY':
-        return 'bg-relation-university'
+        return 'bg-[#EEFFEF]'
       case 'WORK':
-        return 'bg-relation-work'
+        return 'bg-blue-50'
       case 'SOCIAL':
-        return 'bg-relation-social'
+        return 'bg-green-50'
       case 'ETC':
-        return 'bg-relation-etc'
+        return 'bg-black-50'
       default:
         return ''
     }
@@ -156,7 +156,7 @@ const BottomSheetButton = ({
             period={period}
             relation={relation}
           />
-          <div className="flex flex-col p-4 text-body3-medium">
+          <div className="flex flex-col p-4">
             <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
               <Link
                 href={`/surveys/questions?wikiId=${senderWikiId}`}
@@ -191,7 +191,7 @@ const BottomSheetButton = ({
         }}
         title=""
         description={
-          <span className="text-body3-bold text-black">
+          <span className=" text-b2-kr-b text-black">
             비회원으로 작성해서
             <br />
             친구에게 소개서를 써줄 수 없어요

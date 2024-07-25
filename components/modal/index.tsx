@@ -42,13 +42,9 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         item: [
           <Close
             key="cancel"
-            className=" active:bg-bg-gray1 flex-1
-            
-            
-            rounded-none bg-transparent px-4 py-[14px] text-brand-sub1 duration-150 active:bg-bg-regular"
+            className="flex-1 rounded-none bg-brand-600 px-4 py-[14px] text-b2-kr-b text-white duration-150 hover:bg-green-500 active:bg-green-400"
           >
             확인
-            <span className="sr-only">Close</span>
           </Close>,
         ],
       },
@@ -62,13 +58,14 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         <DialogTrigger asChild ref={ref as ForwardedRef<HTMLButtonElement>}>
           {trigger}
         </DialogTrigger>
+
         <DialogContent
           className="max-w-[min(540px,80dvw)]"
           footer={
             <DialogFooter
               className={cn(
                 footer.divider &&
-                  'divide-x-[1px] divide-line-medium border-t-[1px] border-t-line-medium',
+                  'divide-x-[1px] divide-line-regular border-t-[1px] border-t-line-regular',
               )}
             >
               {[...(footer?.item ?? [])].map((ele) => ele)}
@@ -76,16 +73,16 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           }
         >
           <DialogHeader>
-            {title && (
-              <DialogTitle className="text-center">{title}</DialogTitle>
-            )}
             {description && (
-              <DialogDescription
-                className="mt-2 text-center text-xs leading-[18px] text-[#767676]"
-                style={{ whiteSpaceCollapse: 'preserve-breaks' }}
-              >
-                {description}
-              </DialogDescription>
+              <DialogTitle className="text-b2-kr-b text-black">
+                {title}
+                <DialogDescription
+                  className="mt-2 text-b2-kr-m text-font-gray-04"
+                  style={{ whiteSpaceCollapse: 'preserve-breaks' }}
+                >
+                  {description}
+                </DialogDescription>
+              </DialogTitle>
             )}
             {children}
           </DialogHeader>

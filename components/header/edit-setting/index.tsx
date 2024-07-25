@@ -11,6 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
+import Image from 'next/image'
+import caution from '@/assets/icons/caution.svg'
 
 const scheme = z.object({
   nickname: z
@@ -41,7 +43,7 @@ export const EditProfile = () => {
   return (
     <SideDrawer
       header={{
-        center: <p className="text-body1-bold">프로필 수정</p>,
+        center: <p className="text-t4-kr-b">프로필 수정</p>,
         options: {
           onBackClick() {
             setOpenAlert(false)
@@ -52,8 +54,8 @@ export const EditProfile = () => {
       open={openAlert}
       onChangeOpen={setOpenAlert}
       trigger={
-        <p className="cursor-pointer py-[14px] text-body1-bold text-text-main-black11">
-          프로필 편집
+        <p className="cursor-pointer py-[14px] text-but2-sb text-black">
+          프로필 수정
         </p>
       }
     >
@@ -62,24 +64,33 @@ export const EditProfile = () => {
         className="mb-4 mt-4 flex flex-1 flex-col px-5"
       >
         <label htmlFor={id} className=" grow space-y-2">
-          <span className="text-body1-medium">이름</span>
+          <span className="text-t4-kr-b">이름</span>
           <Inputbox
             maxLength={6}
-            className={cn(
-              form.formState.errors.nickname && '!border-inputbox-color-alert',
-            )}
+            className={cn(form.formState.errors.nickname && '!border-bg-red')}
             {...form.register('nickname', { required: true })}
             id={id}
             placeholder="이름을 입력해주세요"
           />
           <p
             className={cn(
-              'ml-2 mt-2 text-body3-medium text-text-sub-gray76 duration-150',
-              form.formState.errors.nickname && '!text-inputbox-color-alert',
+              'pb-5 pt-1 text-b2-kr-m text-font-gray-04 duration-150',
+              form.formState.errors.nickname && '!text-bg-red',
             )}
           >
             2~6자로 입력해주세요.
           </p>
+          <div className="mt-5 flex space-x-3 rounded-md bg-bg-light px-5 py-4">
+            <Image
+              src={caution}
+              alt="caution"
+              className="my-[2px] h-4 w-4 shrink-0"
+            />
+            <p className="text-b2-kr-m text-font-gray-04">
+              누가 작성했는지 알 수 있도록, 나를 가장 잘 나타내는 이름으로
+              입력해주세요
+            </p>
+          </div>
         </label>
 
         <Button type="submit">다음</Button>

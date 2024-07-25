@@ -89,17 +89,17 @@ export default DetailDrawer
 const bgColor = (cardItem: Content) => {
   switch (cardItem.relation) {
     case 'ELEMENTARY_SCHOOL':
-      return 'bg-relation-elementary_school'
+      return 'bg-yellow-50'
     case 'MIDDLE_AND_HIGH_SCHOOL':
-      return 'bg-relation-middle_and_high_school'
+      return 'bg-orange-50'
     case 'UNIVERSITY':
-      return 'bg-relation-university'
+      return 'bg-[#EEFFEF]'
     case 'WORK':
-      return 'bg-relation-work'
+      return 'bg-blue-50'
     case 'SOCIAL':
-      return 'bg-relation-social'
+      return 'bg-green-50'
     case 'ETC':
-      return 'bg-relation-etc'
+      return 'bg-black-50'
     default:
       return ''
   }
