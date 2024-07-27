@@ -4,7 +4,10 @@ export const defaultColors = {
   white: '#FFFFFF',
   font: {
     white: '#FFFFFF',
-    black: '#111111',
+    black: {
+      DEFAULT: '#111111',
+      '02': '#111111',
+    },
     gray: {
       '03': '#505050',
       '04': '#767676',

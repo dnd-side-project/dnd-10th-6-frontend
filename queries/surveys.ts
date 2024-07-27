@@ -1,6 +1,7 @@
 import { NamuiApi } from '@/lib/namui-api'
 import { GetSurveyResponse } from '@/model/survey.entity'
 import { Period, Relation } from '@/model/tree.entity'
+import { WikiType } from '@/types'
 import { UseInfiniteQueryOptions, UseQueryOptions } from '@tanstack/react-query'
 
 export const getSurveyQuery = (
@@ -29,9 +30,6 @@ export interface Survey {
   createdAt: string
   questionAndAnswers: QuestionAndAnswer[]
 }
-
-export type WikiType = 'NAMUI' | 'ROMANCE'
-export const wikiTypeList = ['NAMUI', 'ROMANCE'] as const
 
 export interface QuestionAndAnswer {
   questionName: string

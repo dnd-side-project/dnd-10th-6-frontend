@@ -80,8 +80,7 @@ export const DeveloperInfo = () => {
               <Logo />
             </div>
             <p className="text-b3-kr-m text-text-sub-gray4f">
-              Copyright {new Date().getFullYear()}. GRRREW. All rights
-              reserved.
+              Copyright {new Date().getFullYear()}. GRRREW. All rights reserved.
             </p>
           </div>
         </div>

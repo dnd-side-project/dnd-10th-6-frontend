@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useState } from 'react'
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
 export type Direction = 'UP' | 'DOWN'
 
@@ -11,26 +11,21 @@ const useScrollDirection = <T extends RefObject<HTMLElement>>(
 ) => {
   const { ref } = options ?? {}
   const [direction, setDirection] = useState<Direction>('DOWN')
-  const [lastScrollTop, setLastScrollTop] = useState(0)
-  // const lastScrollTop = useRef(0)
+  const lastScrollTop = useRef(0)
 
-  const handleScroll = useCallback(
-    ({ target }: Event) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      const scrollTop = target?.scrollTop ?? target?.scrollingElement?.scrollTop
-      if (typeof scrollTop === 'number') {
-        let newDirection: Direction = 'UP'
-        if (lastScrollTop <= scrollTop) {
-          newDirection = 'DOWN'
-        }
-        setDirection(newDirection)
-        // lastScrollTop = scrollTop
-        setLastScrollTop(scrollTop)
+  const handleScroll = useCallback(({ target }: Event) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const scrollTop = target?.scrollTop ?? target?.scrollingElement?.scrollTop
+    if (typeof scrollTop === 'number') {
+      let newDirection: Direction = 'UP'
+      if (lastScrollTop.current <= scrollTop) {
+        newDirection = 'DOWN'
       }
-    },
-    [lastScrollTop],
-  )
+      setDirection(newDirection)
+      lastScrollTop.current = scrollTop
+    }
+  }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -42,7 +37,8 @@ const useScrollDirection = <T extends RefObject<HTMLElement>>(
       }
     }
   }, [handleScroll, ref])
-  return { direction, scrollTop: lastScrollTop }
+
+  return { direction, scrollTop: lastScrollTop.current }
 }
 
 export default useScrollDirection

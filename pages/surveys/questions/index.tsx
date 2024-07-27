@@ -29,18 +29,17 @@ import SurveyForm from '@/components/survey/survey-form'
 import { toastError } from '@/lib/client/alert'
 import Image from 'next/image'
 import caution from '@/assets/icons/caution.svg'
-import { WikiType } from '@/queries/surveys'
 import { useToggleTheme } from '@/hooks/use-toggle-theme'
+import { PropswithWikiType, WikiType } from '@/types'
 
 const MotionLabel = motion(InputLabel)
 
 const Question = ({
   nickname,
   wikiType,
-}: {
+}: PropswithWikiType<{
   nickname: string
-  wikiType: WikiType
-}) => {
+}>) => {
   const { data } = useSession()
   const { data: qs } = useSuspenseQuery(getQuestionQuery(nickname, wikiType))
   const { mutate: submit, isPending } = useMutation(

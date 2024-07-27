@@ -16,11 +16,12 @@ import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
 
 import { useSearchParams } from 'next/navigation'
-import { WikiType } from '@/queries/surveys'
 import { useRouter } from 'next/router'
 import backIcon from '@/assets/icons/back.svg'
 import Image from 'next/image'
 import { getWikis } from '@/queries/wiki'
+import { cn } from '@/lib/client/utils'
+import { WikiType } from '@/types'
 
 const Pages = () => {
   const router = useRouter()
@@ -41,7 +42,7 @@ const Pages = () => {
         : page.data.page + 1
     },
     queryKey: ['survey'],
-    queryFn: ({ pageParam = 0 }) => { 
+    queryFn: ({ pageParam = 0 }) => {
       return NamuiApi.getSurveys(pageParam as number, 'NAMUI')
     },
   })
@@ -50,7 +51,7 @@ const Pages = () => {
     threshold: 0.5,
     hasNextPage,
     fetchNextPage,
-  }) 
+  })
 
   const [showScrollButton, setShowScrollButton] = useState(false)
 
@@ -255,7 +256,9 @@ const Pages = () => {
                   <motion.div
                     variants={fadeInProps.variants}
                     key={`loading-${i}`}
-                    className="skeleton"
+                    className={cn(
+                      'skeleton relative aspect-[104/110] h-full cursor-pointer',
+                    )}
                   >
                     <div className="flex h-[110px] w-[104px] items-center justify-center rounded"></div>
                   </motion.div>

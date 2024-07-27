@@ -14,18 +14,22 @@ import Money from '@/components/compositions/dashboard/money'
 import Happy from '@/components/compositions/dashboard/happy'
 import Sad from '@/components/compositions/dashboard/sad'
 import TreeInfo from '@/components/compositions/dashboard/tree-info'
-import { WikiType } from '@/queries/surveys'
+import { PropswithWikiType } from '@/types'
+import { KnowAbout } from '../compositions/dashboard/know-about'
+
 const DashboardContainer = ({
   shouldShowHeader,
   wikiType,
-}: {
+  wikiCount,
+}: PropswithWikiType<{
   shouldShowHeader: boolean
-  wikiType: WikiType
-}) => {
+  wikiCount: number
+}>) => {
   const { selectedFilter } = useFilter()
   const { data: statisics, isLoading } = useQuery(
     getDashboardQuery(wikiType, selectedFilter),
   )
+
   return (
     <motion.div
       {...fadeInProps}
@@ -37,11 +41,18 @@ const DashboardContainer = ({
           <motion.div
             {...fadeInProps}
             key="exist"
-            className="flex flex-col divide-y-[12px] divide-line-light"
+            className="flex flex-col px-5"
           >
             {/* 내 정원에 심어진 나무는? */}
             <Section className="pt-5">
-              <TreeInfo filter={selectedFilter} wikiType={wikiType} />
+              <TreeInfo
+                filter={selectedFilter}
+                wikiType={wikiType}
+                wikiCount={wikiCount}
+              />
+            </Section>
+            <Section>
+              <KnowAbout wikiType={wikiType} />
             </Section>
             {/* 가장 중요한 것 - 파이차트 */}
             <Section>
@@ -100,7 +111,7 @@ function Section({
     <section
       {...props}
       className={cn(
-        'flex flex-col overflow-x-hidden bg-white px-6 pb-12 pt-10',
+        'flex flex-col overflow-x-hidden bg-white',
         props.className,
       )}
     >

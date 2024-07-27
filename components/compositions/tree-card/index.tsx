@@ -19,10 +19,10 @@ import {
 interface TreeCardProps {
   period: string
   relation: string
-
   id: string
   senderName: string
   senderWikiId: string
+  disabled?: boolean
 }
 
 const TreeCard = ({
@@ -31,6 +31,7 @@ const TreeCard = ({
   relation,
   senderName,
   senderWikiId,
+  disabled,
 }: TreeCardProps) => {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
 
@@ -67,13 +68,16 @@ const TreeCard = ({
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('relative aspect-[104/110] h-full cursor-pointer', {})}
-      onClick={handleCardClick}
+      className={cn(
+        'relative aspect-[104/110] h-full',
+        disabled ? '' : 'cursor-pointer',
+      )}
+      onClick={!disabled ? handleCardClick : () => {}}
     >
       <div className={`card flex w-full justify-center `}>
         <div
           className={cn(
-            `card-front m-auto flex w-full flex-col items-center justify-center rounded-md ${bgColor}`,
+            `card-front m-auto flex w-full flex-col items-center justify-center rounded-lg ${bgColor}`,
           )}
         >
           <div className="z-0 mt-3 flex items-center justify-center overflow-hidden  ">

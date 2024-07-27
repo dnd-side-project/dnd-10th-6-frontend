@@ -5,6 +5,7 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
 } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -80,7 +81,10 @@ const Header = ({
     }
   }, [handleResize, setIntersecting])
 
-  const shoudFixedHeader = scrollTop > headerHeight && direction === 'UP'
+  const shoudFixedHeader = useMemo(
+    () => scrollTop > headerHeight && direction === 'UP',
+    [direction, headerHeight, scrollTop],
+  )
   return (
     <motion.header
       ref={headerRef}

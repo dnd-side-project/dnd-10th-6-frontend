@@ -1,58 +1,142 @@
-import { Button, Badge } from '@/components/ui'
-import ShareModal from '@/components/share-modal'
-import useDetailDrawer from '@/hooks/use-detail-drawer'
+import { Button } from '@/components/ui'
 import { FilterType } from '@/hooks/use-filter'
-import { SHORT_TYPE_LIST } from '@/model/question.entity'
-import { useSession } from '@/provider/session-provider'
-import { getQuestionByTypeQuery } from '@/queries/question'
 import { useQuery } from '@tanstack/react-query'
-import Image from 'next/image'
-import tree from '@/assets/icons/tree-icon.svg'
-import { WikiType } from '@/queries/surveys'
+import { motion } from 'framer-motion'
+import { GetSurveyResponse } from '@/model/survey.entity'
+import { NamuiApi } from '@/lib/namui-api'
+import { AnimatePresence } from 'framer-motion'
+import TreeCard from '../tree-card'
+import { fadeInProps } from '@/variants'
+import { cn } from '@/lib/client/utils'
+import { PropswithWikiType } from '@/types'
 
-const SHORT_FILTER: { [key in SHORT_TYPE_LIST[number]]: string } = {
-  FIRST_IMPRESSION: '👀 나의 첫인상은?',
-  CHARACTER_CELEBRITY_ASSOCIATION: '🤔 나는 누구와 닮았나요?',
-  FIVE_LETTER_WORD: '🧐 나를 5글자로 표현한다면?',
-  LEARNING_ASPIRATION: '📚 나의 이런점은 꼭 배우고 싶어요!',
-  SECRET_PLEASURE: '😍 내가 혼자 몰래 좋아하고 있는 것은?',
-  MOST_USED_WORD: '💬 내가 가장 많이 사용하는 단어는?',
-}
-
-const TreeInfo = ({ wikiType }: { wikiType: WikiType; filter: FilterType }) => {
-  const { handle } = useDetailDrawer()
-  const { data } = useSession()
-  const { data: short } = useQuery({
-    ...getQuestionByTypeQuery('SHORT_ANSWER', wikiType),
-    select(data) {
-      return data.data
+const TreeInfo = ({
+  wikiType,
+  wikiCount,
+}: PropswithWikiType<{ filter: FilterType; wikiCount: number }>) => {
+  const { data: surveys, isLoading } = useQuery<GetSurveyResponse>({
+    queryKey: ['survey'],
+    queryFn: ({ pageParam = 0 }) => {
+      return NamuiApi.getSurveys(pageParam as number, wikiType)
     },
   })
 
   return (
-    <>
-      <div className="bg-bg-gray1 flex flex-col gap-y-6 rounded-2xl px-6 pb-10 pt-[30px]">
-        <div className="flex items-center justify-between">
-          <p className="text-body1 text-text-sub-gray4f">
-            내 정원에 심어진 나무는
-            <br />
-            <b className="mt-1 text-mainTitle1-bold text-black">
-              총 {data?.user?.totalSurveyCnt ?? 0}그루
-            </b>
-          </p>
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-text-main-whiteFF">
-            <Image src={tree} alt="tree" />
-          </div>
-        </div>
+    <div className="mb-[100px] flex flex-col space-y-8">
+      <div className="mx-auto mb-8 flex flex-col space-y-4 text-center">
+        <h3 className="text-t3-kr-m">내 정원에 심어진 나무</h3>
+        <b className="text-d4-kr-b">{wikiCount}그루</b>
+      </div>
+
+      <div className="[mask-image:linear-gradient(to_bottom,white_0%,transparent_100%)]">
+        <AnimatePresence mode="wait">
+          {!isLoading && surveys ? (
+            <motion.div
+              {...fadeInProps}
+              transition={{ staggerChildren: 0.03 }}
+              className="grid w-full grid-cols-3 gap-3"
+            >
+              {surveys.data.content.map((item) => (
+                <TreeCard
+                  disabled
+                  senderName={item.senderName}
+                  senderWikiId={item.senderWikiId}
+                  key={`${item.surveyId}`}
+                  id={item.surveyId}
+                  period={item.period}
+                  relation={item.relation}
+                />
+              ))}
+              {Array.from(
+                { length: 6 - surveys.data.content.length },
+                () => null,
+              ).map((_, index) => (
+                <motion.div
+                  variants={fadeInProps.variants}
+                  key={`empty-${(index + 1) * (index + 1)}`}
+                  className=" flex aspect-[104/110] h-full items-center justify-center rounded-md border border-dashed bg-bg-light p-[25%]"
+                >
+                  <svg
+                    className="h-full w-full"
+                    width="34"
+                    height="34"
+                    viewBox="0 0 34 34"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.36523 17.5469C8.55024 19.222 9.87772 22.8973 13.7077 24.1978C17.5376 25.4983 20.8343 24.6076 22.0039 23.9997"
+                      stroke="#D9D9D9"
+                      strokeLinecap="round"
+                    />
+                    <circle cx="17" cy="17" r="16.5" stroke="#D9D9D9" />
+                    <circle
+                      cx="14.8053"
+                      cy="12.6139"
+                      r="1.64516"
+                      fill="#D9D9D9"
+                    />
+                    <circle
+                      cx="21.3893"
+                      cy="14.8053"
+                      r="1.64516"
+                      fill="#D9D9D9"
+                    />
+                  </svg>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`empty-container`}
+              {...fadeInProps}
+              className="grid grid-cols-3 gap-3"
+            >
+              {Array.from({ length: 6 }, (_, v) => v + 1).map((i) => (
+                <motion.div
+                  variants={fadeInProps.variants}
+                  key={`loading-${i}`}
+                  className={cn(
+                    'skeleton relative aspect-[104/110] h-full cursor-pointer',
+                  )}
+                >
+                  <div className="flex h-[110px] w-[104px] items-center justify-center rounded"></div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      <div className="flex flex-col items-center space-y-12">
+        <ul className="list-inside list-disc px-5 py-4 text-b2-kr-m tracking-tight text-font-gray-05">
+          <li>내 소개서를 작성하면 내 정원에 나무가 심겨요.</li>
+          <li>내 정원의 나무를 더 보고 싶다면 버튼을 눌러보세요.</li>
+        </ul>
+        <Button
+          variant="Line-neutral"
+          rounded="full"
+          className="mx-auto w-fit px-8"
+        >
+          내 정원 더보기
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+export default TreeInfo
+
+{
+  /* <div className="">
+        <div className="flex items-center justify-between"></div>
         <ShareModal wikiType={wikiType}>
           <Button>링크 공유하기</Button>
         </ShareModal>
-      </div>
-      <h3 className="mb-5 mt-8 text-mainTitle2-bold font-bold tracking-tighter">
-        {data?.user?.name ?? ''}님에 대해 알아보세요!
-      </h3>
+      </div> */
+}
 
-      {/* !DELETE */}
+{
+  /* !DELETE
       {short?.length ? (
         <>
           <div className="avoid-min-w relative -left-[1.5rem] flex w-[calc(100%_+_3rem)] space-x-2 overflow-x-scroll px-6 pl-6 scrollbar-hide">
@@ -76,9 +160,5 @@ const TreeInfo = ({ wikiType }: { wikiType: WikiType; filter: FilterType }) => {
             ))}
           </div>
         </>
-      ) : null}
-    </>
-  )
+      ) : null} */
 }
-
-export default TreeInfo

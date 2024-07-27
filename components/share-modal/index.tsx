@@ -5,16 +5,14 @@ import Modal from '@/components/modal'
 import { Button } from '@/components/ui'
 
 import { useRouter } from 'next/router'
-import { WikiType } from '@/queries/surveys'
+import { PropswithWikiType } from '@/types'
 
-interface ShareModalProps {
-  wikiType: WikiType
-}
+interface ShareModalProps {}
 
 const ShareModal = ({
   wikiType,
   children,
-}: PropsWithChildren<ShareModalProps>) => {
+}: PropswithWikiType<PropsWithChildren<ShareModalProps>>) => {
   const { data } = useSession()
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [copyModalOpen, setCopyModalOpen] = useState(false)

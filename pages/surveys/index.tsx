@@ -12,18 +12,17 @@ import Modal from '@/components/modal'
 import { Close } from '@radix-ui/react-dialog'
 import Link from 'next/link'
 import { useMutation } from '@tanstack/react-query'
-import { WikiType } from '@/queries/surveys'
 import { useToggleTheme } from '@/hooks/use-toggle-theme'
+import { PropswithWikiType } from '@/types'
 
 const Page = ({
   wikiType,
   nickname,
   wikiId,
-}: {
-  wikiType: WikiType
+}: PropswithWikiType<{
   nickname: string
   wikiId: string
-}) => {
+}>) => {
   const { signin, data } = useSession()
   const router = useRouter()
   const { isPending, mutate } = useMutation({

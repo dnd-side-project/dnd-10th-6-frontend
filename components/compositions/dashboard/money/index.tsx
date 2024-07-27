@@ -6,7 +6,7 @@ import { cn } from '@/lib/client/utils'
 import { MONEY } from '@/model/dashboard.entity'
 import { useSession } from '@/provider/session-provider'
 import { getDashboardQuery } from '@/queries/dashboard'
-import { WikiType } from '@/queries/surveys'
+import { PropswithWikiType } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
 import React, { useMemo, useState } from 'react'
@@ -14,10 +14,9 @@ import React, { useMemo, useState } from 'react'
 const Money = ({
   wikiType,
   filter,
-}: {
-  wikiType: WikiType
+}: PropswithWikiType<{
   filter: FilterType
-}) => {
+}>) => {
   const { handle } = useDetailDrawer()
 
   const { data: statisics, isLoading } = useQuery({
