@@ -42,7 +42,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         item: [
           <Close
             key="cancel"
-            className="flex-1 rounded-none bg-brand-600 px-4 py-[14px] text-b2-kr-b text-white duration-150 hover:bg-green-500 active:bg-green-400"
+            className="flex-1 rounded-none bg-brand-600 px-4 py-[14px] text-b2-kr-b text-black duration-150 hover:bg-green-500 active:bg-green-400"
           >
             확인
           </Close>,

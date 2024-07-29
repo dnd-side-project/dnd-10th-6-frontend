@@ -110,13 +110,14 @@ const ShareModal = ({
         onOpenChange={setCopyModalOpen}
         key="copyLinkModal"
         title="링크가 복사되었어요"
+        className="text-black "
         footer={{
           // TODO: variant 적용 :confirm
           item: [
             <Button
               onClick={() => setCopyModalOpen(false)}
               variant="Line-neutral"
-              className="border-t-[1px]"
+              className="border-t-[1px] text-black"
               key="copy-close"
             >
               확인

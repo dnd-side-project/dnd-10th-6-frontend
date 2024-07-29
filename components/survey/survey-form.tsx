@@ -23,6 +23,7 @@ import { Button, Inputbox } from '@/components/ui'
 import { TreeSvg } from '../questionTrees'
 import { useRaisedShadow } from '@/hooks/use-raised-shadow'
 import { ANSWER_TYPE } from '@/constants/enum'
+import UpDownSheet from '../ui/updownSheet'
 
 const surveyScheme = z.object({
   answer: z.string().min(1).or(z.number()).or(z.array(z.string())),
@@ -60,32 +61,66 @@ const ReorderOptionItem = ({
   id,
   value,
   children,
+  index,
+  totalItems,
+  moveItem,
+  selectedId,
+  setSelectedId,
 }: PropsWithChildren<{
   value: unknown
   id: string
-  isSelectedOption?: boolean
+  index: number
+  totalItems: number
+  moveItem: (from: number, to: number) => void
+  selectedId: string | null
+  setSelectedId: (id: string | null) => void
 }>) => {
   const y = useMotionValue(0)
   const boxShadow = useRaisedShadow(y)
+  const [isUpDownSheetOpen, setUpDownSheetOpen] = useState(false)
+
   return (
-    <Reorder.Item
-      style={{ boxShadow, y }}
-      value={value}
-      id={id}
-      key={id}
-      className={cn(
-        'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4',
-        'focus-within:border-brand-main-green400',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-      )}
-    >
-      {children}
-    </Reorder.Item>
+    <>
+      <Reorder.Item
+        style={{ boxShadow, y }}
+        value={value}
+        id={id}
+        key={id}
+        className={cn(
+          'flex w-full items-center justify-start rounded-md border bg-white p-4',
+          selectedId === id
+            ? 'border-brand-main bg-pink-200' //romance ui이기 때문에 pink가 적용되야하지만, 50에 대한 값은 brand-main으로 설정되있지않아 임의로 줌.
+            : 'border-[#E5E5EC]',
+          'hover:border-brand-main hover:bg-pink-300',
+          'focus-within:border-brand-main',
+          'disabled:cursor-not-allowed disabled:opacity-50',
+        )}
+        onClick={() => {
+          setUpDownSheetOpen(true)
+          setSelectedId(id)
+        }}
+      >
+        {children}
+      </Reorder.Item>
+      <UpDownSheet
+        isOpen={isUpDownSheetOpen}
+        onClose={() => setUpDownSheetOpen(false)}
+        onMoveUp={() => {
+          if (index > 0) moveItem(index, index - 1)
+        }}
+        onMoveDown={() => {
+          if (index < totalItems - 1) moveItem(index, index + 1)
+        }}
+        isFirst={index === 0}
+        isLast={index === totalItems - 1}
+      />
+    </>
   )
 }
 
 const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
   const form = useFormContext<surveyFormType>()
+  const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const [optionsState, setOptionsState] = useState(
     options.map((option) => option.id),
@@ -101,6 +136,14 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
     form.setValue('id', id)
   }, [])
 
+  const moveItem = (from: number, to: number) => {
+    const updatedOptions = [...optionsState]
+    const [movedItem] = updatedOptions.splice(from, 1)
+    updatedOptions.splice(to, 0, movedItem)
+    setOptionsState(updatedOptions)
+    form.setValue('answer', updatedOptions)
+  }
+
   return (
     <Reorder.Group
       axis="y"
@@ -111,13 +154,22 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
       values={optionsState}
       className="flex-1 space-y-2 overflow-y-auto"
     >
-      {optionsState.map((option) => (
-        <ReorderOptionItem key={option} value={option} id={option}>
+      {optionsState.map((option, index) => (
+        <ReorderOptionItem
+          key={option}
+          value={option}
+          id={option}
+          index={index}
+          totalItems={optionsState.length}
+          moveItem={moveItem}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+        >
           <label
             className={cn(
               'flex items-center',
               'cursor-pointer',
-              'text-body1-medium font-medium text-gray-700 transition-all duration-200',
+              'text-b1-kr-m  text-gray-700 transition-all duration-200',
               'w-full pl-2',
               'justify-between',
             )}
