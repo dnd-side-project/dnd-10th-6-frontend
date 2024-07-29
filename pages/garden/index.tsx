@@ -3,7 +3,6 @@ import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import { Button } from '@/components/ui'
 import TreeCard from '@/components/compositions/tree-card'
-import { useSession } from '@/provider/session-provider'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useIntersectionObserver } from '@/hooks/use-observer'
 import { AnimatePresence } from 'framer-motion'
@@ -23,7 +22,6 @@ const Pages = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const wikiType = searchParams.get('wikiType') as WikiType
-  const { data } = useSession()
 
   const {
     data: surveys,

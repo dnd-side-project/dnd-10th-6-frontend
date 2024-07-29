@@ -6,8 +6,8 @@ import Link from 'next/link'
 import React, { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { GetServerSideProps } from 'next'
-import { WikiType } from '@/queries/surveys'
 import { useToggleTheme } from '@/hooks/use-toggle-theme'
+import { WikiType } from '@/types'
 
 const index = () => {
   const { data } = useSession()

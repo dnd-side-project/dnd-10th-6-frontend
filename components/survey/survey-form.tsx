@@ -89,9 +89,9 @@ const ReorderOptionItem = ({
         className={cn(
           'flex w-full items-center justify-start rounded-md border bg-white p-4',
           selectedId === id
-            ? 'border-brand-main bg-pink-200' //romance ui이기 때문에 pink가 적용되야하지만, 50에 대한 값은 brand-main으로 설정되있지않아 임의로 줌.
+            ? 'border-brand-main bg-pink-300' //romance ui이기 때문에 pink가 적용되야하지만, 200,300에 대한 값은 brand-main으로 설정되있지않아 임의로 줌.
             : 'border-[#E5E5EC]',
-          'hover:border-brand-main hover:bg-pink-300',
+          'hover:border-brand-main hover:bg-pink-200',
           'focus-within:border-brand-main',
           'disabled:cursor-not-allowed disabled:opacity-50',
         )}
