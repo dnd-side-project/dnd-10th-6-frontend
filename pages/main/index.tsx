@@ -15,7 +15,6 @@ import withAuth from '@/layout/HOC/with-auth'
 import { motion } from 'framer-motion'
 
 const Main = () => {
-  // const [wikis, setWikis] = useState<Wiki[]>([])
   const { data: wikis } = useQuery(getWikis)
 
   return (
@@ -69,7 +68,7 @@ const Main = () => {
               questionNumber={wiki.questionCount}
               wikiDescription={wiki.description}
               answerCount={wiki.answerCount === null ? 0 : wiki.answerCount}
-              url={`/dashboard?wikiType=${wiki.wikiType}`}
+              url={wiki.wikiType}
             />
           ))}
         </motion.div>
@@ -102,7 +101,6 @@ const variant = {
     y: 0,
   },
 }
-
 const TemplateButton = ({
   className,
   characterSvg,
@@ -118,15 +116,14 @@ const TemplateButton = ({
     <motion.button
       variants={variant}
       onClick={() => {
-        router.push(url)
+        router.push(`/dashboard?wikiType=${url}`)
       }}
       className="w-full"
     >
       <div
         className="flex w-full
         items-center justify-center gap-[10px] rounded-2xl bg-white px-4 py-5
-        transition-all duration-200 hover:bg-line-regular active:bg-black-700
-        "
+        transition-all duration-200 hover:bg-line-regular active:bg-black-700"
       >
         <div className="flex w-full items-center justify-center gap-3">
           <Image src={characterSvg} alt="character" className="flex-shrink-0" />

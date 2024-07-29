@@ -9,6 +9,7 @@ import TreeCard from '../tree-card'
 import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
 import { PropswithWikiType } from '@/types'
+import { useRouter } from 'next/router'
 
 const TreeInfo = ({
   wikiType,
@@ -20,6 +21,8 @@ const TreeInfo = ({
       return NamuiApi.getSurveys(pageParam as number, wikiType)
     },
   })
+
+  const router = useRouter()
 
   return (
     <div className="mb-[100px] flex flex-col space-y-8">
@@ -116,6 +119,9 @@ const TreeInfo = ({
           variant="Line-neutral"
           rounded="full"
           className="mx-auto w-fit px-8"
+          onClick={() => {
+            router.push(`/garden?wikiType=${wikiType}`)
+          }}
         >
           내 정원 더보기
         </Button>
