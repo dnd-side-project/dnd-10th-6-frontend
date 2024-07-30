@@ -38,7 +38,9 @@ const Page = ({
 
   const handleStart = () => {
     if (IsMine) return setOpenMineAlert(true)
-    router.replace(`/surveys/questions?wikiId=${router.query.wikiId}`)
+    router.replace(
+      `/surveys/questions?wikiId=${router.query.wikiId}&wikiType=${wikiType}`,
+    )
   }
 
   return (
@@ -97,7 +99,8 @@ const Page = ({
             onClick={() =>
               mutate({
                 provider: 'kakao',
-                callbackUrl: `/surveys/questions?wikiId=${router.query.wikiId}`,
+                callbackUrl: `/surveys/questions?wikiId=${router.query.wikiId}&wikiType=${wikiType}
+                `,
               })
             }
           >
