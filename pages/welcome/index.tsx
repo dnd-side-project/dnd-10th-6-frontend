@@ -7,6 +7,8 @@ import { shareToCopyLink, shareToKaKaoLink } from '@/lib/client/utils'
 import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
+import Image from 'next/image'
+import welcomeTree from '@/assets/characters/welcome-tree.webp'
 
 const WelcomePage = () => {
   const router = useRouter()
@@ -66,9 +68,9 @@ const WelcomePage = () => {
         }}
         className="fixed top-0 left-0 z-10 w-full bg-white"
         content={
-          <div className="grow -mt-5 flex flex-col items-center justify-center px-5 text-center">
-            <img src="/assets/trees/welcome-tree.svg" alt="welcome" />
-            <p className="text-mainTitle2-bold mt-8 mb-3">
+          <div className="-mt-5 flex grow flex-col items-center justify-center px-5 text-center">
+            <Image src={welcomeTree} alt="welcome" width={300} height={150} />
+            <p className="mb-3 mt-8 text-mainTitle2-bold">
               환영해요 {data?.user?.name}님
             </p>
             <p className="text-subTitle2-medium text-text-sub-gray4f">
