@@ -31,9 +31,10 @@ interface Colors {
   LETTER_COUNT_BOX: string
   IMAGE_WIKI_DECO: StaticImageData
   IMAGE_COUNT_DECO: StaticImageData
+  MAIN_COLOR: string
 }
 
-const WIKI_COLORS: { [key in WikiType]: Colors } = {
+export const WIKI_COLORS: { [key in WikiType]: Colors } = {
   NAMUI: {
     GRADIENT_FROM: '#BFF1CF',
     NAME_BOX: '#199EF0',
@@ -41,6 +42,7 @@ const WIKI_COLORS: { [key in WikiType]: Colors } = {
     LETTER_COUNT_BOX: '#FFEB34',
     IMAGE_COUNT_DECO: PieChart,
     IMAGE_WIKI_DECO: BarChart,
+    MAIN_COLOR: '#00BE4F',
   },
   ROMANCE: {
     GRADIENT_FROM: '#FFD4DA',
@@ -49,6 +51,7 @@ const WIKI_COLORS: { [key in WikiType]: Colors } = {
     LETTER_COUNT_BOX: '#FFEB34',
     IMAGE_WIKI_DECO: Gift,
     IMAGE_COUNT_DECO: Message,
+    MAIN_COLOR: '#FF6460',
   },
 }
 
@@ -146,11 +149,16 @@ export const getServerSideProps = (async (context) => {
 
   //FIX: change to SSR && set auth in server runtime
   NamuiApi.setToken(context.req.cookies['accessToken'])
-  const { data: wikis } = await NamuiApi.getWikis()
-  const wikiCount =
-    wikis.wikiList.find((wiki) => wiki.wikiType === wikiType)?.answerCount || 0
+  try {
+    const { data: wikis } = await NamuiApi.getWikis()
+    const wikiCount =
+      wikis.wikiList.find((wiki) => wiki.wikiType === wikiType)?.answerCount ||
+      0
 
-  return { props: { wikiType: wikiType.toUpperCase(), wikiCount } }
+    return { props: { wikiType: wikiType.toUpperCase(), wikiCount } }
+  } catch {
+    return { props: { wikiType: wikiType.toUpperCase(), wikiCount: 0 } }
+  }
 }) satisfies GetServerSideProps
 
 function DashboardTitle({

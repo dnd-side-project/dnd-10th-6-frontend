@@ -47,7 +47,7 @@ const BaseLayout = forwardRef<HTMLElement, PropsWithChildren<BaseLayoutProps>>(
         className={cn(
           pretendard.variable,
           pretendard.className,
-          'flex w-full flex-col',
+          'flex w-full flex-col scrollbar-hide',
           className,
         )}
       >

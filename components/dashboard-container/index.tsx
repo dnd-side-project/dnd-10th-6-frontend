@@ -16,6 +16,8 @@ import Sad from '@/components/compositions/dashboard/sad'
 import TreeInfo from '@/components/compositions/dashboard/tree-info'
 import { PropswithWikiType } from '@/types'
 import { KnowAbout } from '../compositions/dashboard/know-about'
+import { useSession } from '@/provider/session-provider'
+import { BubbleChart } from '../compositions/dashboard/bubble-chart'
 
 const DashboardContainer = ({
   shouldShowHeader,
@@ -41,7 +43,7 @@ const DashboardContainer = ({
           <motion.div
             {...fadeInProps}
             key="exist"
-            className="flex flex-col px-5"
+            className="flex flex-col space-y-5 px-5"
           >
             {/* 내 정원에 심어진 나무는? */}
             <Section className="pt-5">
@@ -56,7 +58,8 @@ const DashboardContainer = ({
             </Section>
             {/* 가장 중요한 것 - 파이차트 */}
             <Section>
-              <BestWorth filter={selectedFilter} wikiType={wikiType} />
+              <BubbleChart wikiType={wikiType} filter={selectedFilter} />
+              {/* <BestWorth filter={selectedFilter} wikiType={wikiType} /> */}
             </Section>
             {/* 이런사람이에요 - 박스 */}
             <Section>

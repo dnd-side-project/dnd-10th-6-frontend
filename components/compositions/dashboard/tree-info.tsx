@@ -16,7 +16,7 @@ const TreeInfo = ({
   wikiCount,
 }: PropswithWikiType<{ filter: FilterType; wikiCount: number }>) => {
   const { data: surveys, isLoading } = useQuery<GetSurveyResponse>({
-    queryKey: ['survey'],
+    queryKey: ['survey', wikiType],
     queryFn: ({ pageParam = 0 }) => {
       return NamuiApi.getSurveys(pageParam as number, wikiType)
     },

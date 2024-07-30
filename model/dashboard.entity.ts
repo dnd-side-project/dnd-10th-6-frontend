@@ -32,7 +32,8 @@ export type CHARACTER_TYPE = {
 }
 
 export type BEST_WORTH = {
-  dashboardType: 'BEST_WORTH'
+  // TODO: 대시보드타입 변경예정
+  dashboardType: 'BUBBLE_CHART'
   questionId: string
   rank: Rank[]
 }

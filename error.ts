@@ -1,3 +1,5 @@
+import { isServer } from '@tanstack/react-query'
+
 export enum ERROR_TYPE {
   NOT_IMPLIMENT = 'NOT_IMPLIMENT',
   BAD_REQUEST_ERROR = 'BAD_REQUEST_ERROR',
@@ -96,6 +98,14 @@ export const raiseNamuiErrorFromStatus = (
 ) => {
   const parsedError = (error: NamuiError) => {
     if (isReturned) return error
+    if (isServer) {
+      try {
+        throw error
+      } catch (err) {
+        console.log(error.stack)
+        return 1
+      }
+    }
     throw error
   }
   switch (true) {

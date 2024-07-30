@@ -11,7 +11,7 @@ interface SafeSvgTextInnerProps {
 export const SafeSvgTextInner = (props: SafeSvgTextInnerProps) => {
   const { children, maxWidth = 0, minWidth = 0 } = props
   const ref = useRef<SVGTextElement>(null)
-  const [textWidth, setTextWidth] = useState(clamp(0, minWidth, maxWidth))
+  const [textWidth, setTextWidth] = useState(() => clamp(0, minWidth, maxWidth))
 
   useBrowserLayoutEffect(() => {
     if (!ref.current) return
