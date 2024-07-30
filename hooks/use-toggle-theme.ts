@@ -1,5 +1,5 @@
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import { WikiType } from '@/queries/surveys'
+import { WikiType } from '@/types'
 
 export const useToggleTheme = (wikiType: WikiType) => {
   useBrowserLayoutEffect(() => {

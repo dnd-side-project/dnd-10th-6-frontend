@@ -12,13 +12,10 @@ import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 import { DashboardData } from '@/model/dashboard.entity'
 import { QsSchemaType } from '@/hooks/use-questions-form'
 import { GetSurveyResponse } from '@/model/survey.entity'
-import {
-  SurveyByIdResponse,
-  WritingListResponse,
-  WikiType,
-} from '@/queries/surveys'
+import { SurveyByIdResponse, WritingListResponse } from '@/queries/surveys'
 import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 import { Wikis } from '@/model/wikis.entity'
+import { WikiType } from '@/types'
 
 export interface NamuiResponse<T = unknown> {
   data: T

@@ -19,10 +19,10 @@ import {
 interface TreeCardProps {
   period: string
   relation: string
-
   id: string
   senderName: string
   senderWikiId: string
+  disabled?: boolean
 }
 
 const TreeCard = ({
@@ -31,23 +31,24 @@ const TreeCard = ({
   relation,
   senderName,
   senderWikiId,
+  disabled,
 }: TreeCardProps) => {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
 
   const bgColor = (() => {
     switch (relation) {
       case 'ELEMENTARY_SCHOOL':
-        return 'bg-relation-elementary_school'
+        return 'bg-yellow-50'
       case 'MIDDLE_AND_HIGH_SCHOOL':
-        return 'bg-relation-middle_and_high_school'
+        return 'bg-orange-50'
       case 'UNIVERSITY':
-        return 'bg-relation-university'
+        return 'bg-[#EEFFEF]'
       case 'WORK':
-        return 'bg-relation-work'
+        return 'bg-blue-50'
       case 'SOCIAL':
-        return 'bg-relation-social'
+        return 'bg-green-50'
       case 'ETC':
-        return 'bg-relation-etc'
+        return 'bg-black-50'
       default:
         return ''
     }
@@ -67,13 +68,16 @@ const TreeCard = ({
     <motion.div
       id={id}
       variants={fadeInProps.variants}
-      className={cn('relative aspect-[104/110] h-full cursor-pointer', {})}
-      onClick={handleCardClick}
+      className={cn(
+        'relative aspect-[104/110] h-full',
+        disabled ? '' : 'cursor-pointer',
+      )}
+      onClick={!disabled ? handleCardClick : () => {}}
     >
       <div className={`card flex w-full justify-center `}>
         <div
           className={cn(
-            `card-front m-auto flex w-full flex-col items-center justify-center rounded-md ${bgColor}`,
+            `card-front m-auto flex w-full flex-col items-center justify-center rounded-lg ${bgColor}`,
           )}
         >
           <div className="z-0 mt-3 flex items-center justify-center overflow-hidden  ">
@@ -156,7 +160,7 @@ const BottomSheetButton = ({
             period={period}
             relation={relation}
           />
-          <div className="flex flex-col p-4 text-body3-medium">
+          <div className="flex flex-col p-4">
             <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
               <Link
                 href={`/surveys/questions?wikiId=${senderWikiId}`}
@@ -191,7 +195,7 @@ const BottomSheetButton = ({
         }}
         title=""
         description={
-          <span className="text-body3-bold text-black">
+          <span className=" text-b2-kr-b text-black">
             비회원으로 작성해서
             <br />
             친구에게 소개서를 써줄 수 없어요

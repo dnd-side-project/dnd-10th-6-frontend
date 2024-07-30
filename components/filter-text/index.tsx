@@ -14,10 +14,10 @@ const FilterText = ({ label, active = false, ...props }: FilterTextProps) => {
       draggable={false}
       onClick={props.onClick}
       className={cn(
-        'text-body1 whitespace-nowrap font-bold text-text-sub-gray76 transition-colors',
+        'whitespace-nowrap text-b1-kr-m text-font-gray-04 transition-colors',
         'origin-center select-none transition-transform active:scale-95',
         props.className,
-        active && 'text-text-main-black11',
+        active && 'text-b1-kr-b text-black',
       )}
     >
       {label}

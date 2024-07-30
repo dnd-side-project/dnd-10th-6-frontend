@@ -2,55 +2,60 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import BaseLayout from '@/layout/base-layout'
 import withAuth from '@/layout/HOC/with-auth'
 import { Button } from '@/components/ui'
-
 import TreeCard from '@/components/compositions/tree-card'
-import { useSession } from '@/provider/session-provider'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { NamuiApi } from '@/lib/namui-api'
-import { GetSurveyResponse } from '@/model/survey.entity'
 import { useIntersectionObserver } from '@/hooks/use-observer'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
-
 import { useSearchParams } from 'next/navigation'
-import { WikiType } from '@/queries/surveys'
 import { useRouter } from 'next/router'
 import backIcon from '@/assets/icons/back.svg'
 import Image from 'next/image'
-import { getWikis } from '@/queries/wiki'
+import { cn } from '@/lib/client/utils'
+import { WikiType } from '@/types'
+import { NamuiApi } from '@/lib/namui-api'
 
 const Pages = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const wikiType = searchParams.get('wikiType') as WikiType
-  const { data } = useSession()
-  const { data: wikis } = useQuery(getWikis)
+
   const {
     data: surveys,
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteQuery<GetSurveyResponse>({
-    initialPageParam: 0,
-    getNextPageParam: (page) => {
-      return page.data.totalPage - 1 <= page.data.page
+  } = useInfiniteQuery({
+    queryKey: ['surveys', wikiType],
+    queryFn: ({ pageParam = 0 }) => NamuiApi.getSurveys(pageParam, wikiType),
+    getNextPageParam: (lastPage) => {
+      return lastPage.data.totalPage - 1 <= lastPage.data.page
         ? undefined
-        : page.data.page + 1
+        : lastPage.data.page + 1
     },
-    queryKey: ['survey'],
-    queryFn: ({ pageParam = 0 }) => { 
-      return NamuiApi.getSurveys(pageParam as number, 'NAMUI')
-    },
+    initialPageParam: 0,
   })
+
+  const { data: wikis } = useQuery({
+    queryKey: ['wikis'],
+    queryFn: NamuiApi.getWikis,
+  })
+
+  const wikiAnswerCount = useMemo(
+    () =>
+      wikis?.data.wikiList.find((wiki) => wiki.wikiType === wikiType)
+        ?.answerCount || 0,
+    [wikis, wikiType],
+  )
 
   const { ref } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.5,
     hasNextPage,
     fetchNextPage,
-  }) 
+  })
 
   const [showScrollButton, setShowScrollButton] = useState(false)
 
@@ -100,19 +105,7 @@ const Pages = () => {
       header={{
         className: 'bg-bg-white w-full flex justify-between items-center px-0',
         leftIcon: (
-          <Image
-            src={backIcon}
-            alt="back"
-            // 이전의 대시보드 타입에 따라 뒤로가기
-            onClick={() =>
-              router.replace(
-                Array.isArray(wikis) &&
-                  wikis.find((wiki) => wiki.wikiType === 'NAMUI')
-                  ? '/dashboard?wikiType=NAMUI'
-                  : '/dashboard?wikiType=ROMANCE',
-              )
-            }
-          />
+          <Image src={backIcon} alt="back" onClick={() => router.back()} />
         ),
         rightIcon: false,
         center: <p className="text-t4-kr-b text-black">내 정원</p>,
@@ -124,7 +117,7 @@ const Pages = () => {
             내 정원에 심어진 나무
           </p>
           <h3 className="text-d4-kr-b text-black">
-            {data?.user?.totalSurveyCnt ?? 0}
+            {wikiAnswerCount}
             <span className=" text-subTitle1-bold text-black"> 그루</span>
           </h3>
         </div>
@@ -255,7 +248,9 @@ const Pages = () => {
                   <motion.div
                     variants={fadeInProps.variants}
                     key={`loading-${i}`}
-                    className="skeleton"
+                    className={cn(
+                      'skeleton relative aspect-[104/110] h-full cursor-pointer',
+                    )}
                   >
                     <div className="flex h-[110px] w-[104px] items-center justify-center rounded"></div>
                   </motion.div>
@@ -291,6 +286,7 @@ const Pages = () => {
     </BaseLayout>
   )
 }
+
 const Garden = withAuth(Pages)
 Garden.getLayout = (page: ReactNode) => page
 

@@ -5,6 +5,7 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
 } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -80,13 +81,16 @@ const Header = ({
     }
   }, [handleResize, setIntersecting])
 
-  const shoudFixedHeader = scrollTop > headerHeight && direction === 'UP'
+  const shoudFixedHeader = useMemo(
+    () => scrollTop > headerHeight && direction === 'UP',
+    [direction, headerHeight, scrollTop],
+  )
   return (
     <motion.header
       ref={headerRef}
       {...fadeInProps}
       className={cn(
-        'sticky z-10 grid h-14 w-full shrink-0 grid-cols-3 items-center bg-white px-5 text-body1-bold duration-300',
+        'sticky z-10 grid h-14 w-full shrink-0 grid-cols-3 items-center bg-white px-5 text-t4-kr-b duration-300',
         className,
         shoudFixedHeader ? 'top-0' : '-top-header',
       )}

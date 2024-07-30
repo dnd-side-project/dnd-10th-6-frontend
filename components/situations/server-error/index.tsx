@@ -18,11 +18,11 @@ const ServerError = () => {
 
         <Button
           onClick={() => {
-            router.push('/garden')
+            router.push('/main')
           }}
           className="w-32"
         >
-          내 정원가기
+          돌아가기
         </Button>
       </div>
     </BaseLayout>

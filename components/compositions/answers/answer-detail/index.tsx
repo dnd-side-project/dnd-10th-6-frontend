@@ -24,7 +24,7 @@ const AnswerDetail = ({
   }
   const falseValueStyle = {
     color: '#EB2A2A',
-    backgroundColor: '#FFF8F8',
+    backgroundColor: '#FFF2F2',
   }
   const remainValueStyle = {
     color: '#6B7280',
@@ -44,7 +44,7 @@ const AnswerDetail = ({
     <>
       <div className="flex flex-col space-y-4 px-1 py-4 ">
         <div className="flex justify-between">
-          <p className="text-body3-bold">
+          <p className="text-b3-kr-b">
             {index + 1}.{' '}
             <span dangerouslySetInnerHTML={{ __html: questionTitle }}></span>
           </p>
@@ -81,7 +81,7 @@ const AnswerDetail = ({
         </div>
         {answer && (
           <div
-            className="w-fit rounded-md px-2 py-1 text-body3-medium"
+            className="w-fit rounded-md px-2 py-1 text-b3-kr-m"
             style={answerStyle}
           >
             {answer}

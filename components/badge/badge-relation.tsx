@@ -12,20 +12,22 @@ export const relations: {
   ETC: '기타',
 }
 
+//TODO: 연애위키 대학교 뱃지 - pink 등록 필요
+
 const bgColor = (relation: string) => {
   switch (relation) {
     case 'ELEMENTARY_SCHOOL':
-      return 'bg-relation-elementary_school'
+      return 'bg-yellow-50'
     case 'MIDDLE_AND_HIGH_SCHOOL':
-      return 'bg-relation-middle_and_high_school'
+      return 'bg-orange-50'
     case 'UNIVERSITY':
-      return 'bg-relation-university'
+      return 'bg-[#EEFFEF]'
     case 'WORK':
-      return 'bg-relation-work'
+      return 'bg-blue-50'
     case 'SOCIAL':
-      return 'bg-relation-social'
+      return 'bg-green-50'
     case 'ETC':
-      return 'bg-relation-etc'
+      return 'bg-black-50'
     default:
       return ''
   }
@@ -34,17 +36,17 @@ const bgColor = (relation: string) => {
 const textColor = (relation: string) => {
   switch (relation) {
     case 'ELEMENTARY_SCHOOL':
-      return 'text-[#BEA000]'
+      return 'text-yellow-600'
     case 'MIDDLE_AND_HIGH_SCHOOL':
-      return 'text-[#EF7200]'
+      return 'text-yellow-900'
     case 'UNIVERSITY':
-      return 'text-main-green800'
+      return 'text-green-900'
     case 'WORK':
-      return 'text-main-sub2-blue-blue900'
+      return 'text-blue-600'
     case 'SOCIAL':
-      return 'text-brand-main-green400'
+      return 'text-green-600'
     case 'ETC':
-      return 'text-text-sub-gray4f'
+      return 'text-black-900'
     default:
       return ''
   }
@@ -54,7 +56,7 @@ export const RelationBadge = ({ relation }: { relation: string }) => {
   return (
     <div
       className={cn(
-        'h-fit w-fit rounded-md px-2 py-1 !text-caption2-medium',
+        'h-fit w-fit rounded-md px-2 py-1 !text-but4-m',
         bgColor(relation),
         textColor(relation),
       )}

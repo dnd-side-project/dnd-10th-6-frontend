@@ -12,8 +12,9 @@ import { useQuery } from '@tanstack/react-query'
 import { getWikis } from '@/queries/wiki'
 import withAuth from '@/layout/HOC/with-auth'
 
+import { motion } from 'framer-motion'
+
 const Main = () => {
-  // const [wikis, setWikis] = useState<Wiki[]>([])
   const { data: wikis } = useQuery(getWikis)
 
   return (
@@ -39,10 +40,22 @@ const Main = () => {
             알아보세요
           </h3>
         </div>
-        <div className="flex flex-col space-y-3">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={{
+            initial: {},
+            animate: {
+              transition: {
+                staggerChildren: 0.05,
+              },
+            },
+          }}
+          className="flex flex-col space-y-3"
+        >
           {wikis?.data.wikiList.map((wiki) => (
             <TemplateButton
-              key={wiki.wikiType}
+              key={wiki.wikiType + wiki.description}
               className={
                 wiki.wikiType === 'NAMUI'
                   ? 'bg-green-50 text-green-600'
@@ -55,10 +68,10 @@ const Main = () => {
               questionNumber={wiki.questionCount}
               wikiDescription={wiki.description}
               answerCount={wiki.answerCount === null ? 0 : wiki.answerCount}
-              url={`/dashboard?wikiType=${wiki.wikiType}`}
+              url={wiki.wikiType}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
     </BaseLayout>
   )
@@ -78,6 +91,16 @@ export interface TemplateButtonProps {
   url: string
 }
 
+const variant = {
+  initial: {
+    opacity: 0,
+    y: -10,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+  },
+}
 const TemplateButton = ({
   className,
   characterSvg,
@@ -90,17 +113,17 @@ const TemplateButton = ({
   const router = useRouter()
 
   return (
-    <button
+    <motion.button
+      variants={variant}
       onClick={() => {
-        router.push(url)
+        router.push(`/dashboard?wikiType=${url}`)
       }}
       className="w-full"
     >
       <div
         className="flex w-full
         items-center justify-center gap-[10px] rounded-2xl bg-white px-4 py-5
-        transition-all duration-200 hover:bg-line-regular active:bg-black-700
-        "
+        transition-all duration-200 hover:bg-line-regular active:bg-black-700"
       >
         <div className="flex w-full items-center justify-center gap-3">
           <Image src={characterSvg} alt="character" className="flex-shrink-0" />
@@ -127,6 +150,6 @@ const TemplateButton = ({
           </div>
         </div>
       </div>
-    </button>
+    </motion.button>
   )
 }

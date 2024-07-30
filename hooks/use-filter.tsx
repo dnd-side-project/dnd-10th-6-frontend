@@ -153,7 +153,7 @@ export const Filter = (props?: { className?: string }) => {
         props?.className,
       )}
     >
-      <div className="z-10 flex h-14 items-center gap-x-6 bg-white px-5">
+      <div className="z-10 flex h-14 items-center gap-x-6  px-5">
         {filters.map((filter, index) => (
           <FilterText
             key={filter.text}

@@ -52,16 +52,14 @@ export const Setting = () => {
         </svg>
       }
     >
-      <div className="flex flex-col divide-y-[1px] divide-line-medium">
+      <div className="flex flex-col divide-y-[1px] divide-line-regular">
         <section className="flex flex-col items-start px-5 py-4">
-          <h4 className="py-2 text-body3-medium text-text-sub-gray4f">
-            계정 관리
-          </h4>
+          <h4 className="py-2 text-but4-m text-font-gray-03">계정 관리</h4>
           <EditProfile />
 
           <Modal
             trigger={
-              <p className="cursor-pointer py-[14px] text-body1-bold text-text-main-black11">
+              <p className="cursor-pointer py-[14px] text-but2-sb text-black">
                 로그아웃
               </p>
             }
@@ -71,7 +69,7 @@ export const Setting = () => {
               item: [
                 <Close
                   key="cancel"
-                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
+                  className="flex-1 rounded-none bg-bg-regular px-4 py-[14px] text-but2-sb text-black duration-150 active:bg-black-200"
                 >
                   취소
                   <span className="sr-only">Close</span>
@@ -79,9 +77,9 @@ export const Setting = () => {
                 <button
                   onClick={signout}
                   key="confirm"
-                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
+                  className="flex-1 rounded-none  bg-brand-main px-4 py-[14px] text-but2-sb text-white duration-150 active:bg-green-500"
                 >
-                  로그아웃
+                  확인
                 </button>,
               ],
             }}
@@ -93,34 +91,29 @@ export const Setting = () => {
               item: [
                 <Close
                   key="cancel"
-                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
+                  className="flex-1 rounded-none bg-bg-regular px-4 py-[14px] text-but2-sb text-black duration-150 active:bg-black-200"
                 >
                   취소
-                  <span className="sr-only">Close</span>
                 </Close>,
                 <button
                   onClick={handleWithdrawClick}
                   key="confirm"
-                  className="text-brand-sub1-blue600 active:bg-bg-gray1 flex-1 rounded-none bg-transparent px-4 py-[14px] duration-150"
+                  className="flex-1 rounded-none bg-brand-main px-4 py-[14px] text-but2-sb text-white duration-150 active:bg-green-500"
                 >
-                  회원탈퇴
+                  탈퇴
                 </button>,
               ],
             }}
             trigger={
-              <p className="py-[14px] text-body1-bold text-text-main-black11">
-                서비스 탈퇴
-              </p>
+              <p className="py-[14px] text-but2-sb text-black">회원 탈퇴</p>
             }
-            title="서비스 탈퇴"
+            title="회원 탈퇴"
             description={`탈퇴 시 모든 정보가 사라져요.
             정말 탈퇴하시겠어요?`}
           />
         </section>
         <section className="flex flex-col items-start px-5 py-4">
-          <h4 className="py-2 text-body3-medium text-text-sub-gray4f ">
-            남의 위키
-          </h4>
+          <h4 className="py-2 text-but4-m text-font-gray-03 ">남의 위키</h4>
           <DeveloperInfo />
         </section>
       </div>

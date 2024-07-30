@@ -16,15 +16,13 @@ const InputLabel = forwardRef<
       <div className="mb-2 flex items-center">
         <h3 className={className}>{label}</h3>
         {required && (
-          <span className="text-brand-main-green400 ml-2 text-body3-medium">
-            필수
-          </span>
+          <span className="ml-2 text-b2-kr-m text-bg-green">필수</span>
         )}
       </div>
       <div className="relative h-fit w-full ">
         {children}
         {errorMessage && (
-          <p className="text-caption1 mt-1 text-red-500">{errorMessage}</p>
+          <p className="mt-1 text-c1-kr-m text-bg-red">{errorMessage}</p>
         )}
       </div>
     </label>
