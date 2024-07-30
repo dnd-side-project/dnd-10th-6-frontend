@@ -50,14 +50,14 @@ const ShareModal = ({
         key="selectShareModal"
         trigger={children}
         title={
-          isLoggedIn ? '친구에게 내 소개를 부탁하시겠어요?' : '비회원이시군요!'
+          isLoggedIn ? '친구에게 내 소개서를 보내시나요?' : '비회원이시군요!'
         }
         description={
           isLoggedIn ? (
             <span>
               링크 공유하기를 통해
               <br />
-              친구에게 내 소개를 부탁할 수 있어요!
+              남이 보는 내 모습을 알 수 있어요!
             </span>
           ) : (
             <span>내 소개를 부탁하려면 로그인을 해야 해요</span>
@@ -72,13 +72,13 @@ const ShareModal = ({
                   onClick={handleCopyLink}
                   variant="Line-neutral"
                   key="copy-link"
-                  className="rounded-none"
+                  className="rounded-none border border-transparent bg-bg-regular text-but2-sb"
                 >
-                  링크복사
+                  링크 공유
                 </Button>,
                 <Button
                   key="kakao-share"
-                  className="rounded-none"
+                  className="rounded-none text-but2-sb"
                   onClick={handleShareKakao}
                 >
                   카카오 공유
@@ -110,14 +110,14 @@ const ShareModal = ({
         onOpenChange={setCopyModalOpen}
         key="copyLinkModal"
         title="링크가 복사되었어요"
-        className="text-black "
+        className="text-black  "
         footer={{
           // TODO: variant 적용 :confirm
           item: [
             <Button
               onClick={() => setCopyModalOpen(false)}
-              variant="Line-neutral"
-              className="border-t-[1px] text-black"
+              variant="BG-brand"
+              className="rounded-none border-t-[1px]"
               key="copy-close"
             >
               확인

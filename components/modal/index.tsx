@@ -42,7 +42,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         item: [
           <Close
             key="cancel"
-            className="flex-1 rounded-none bg-brand-600 px-4 py-[14px] text-b2-kr-b text-black duration-150 hover:bg-green-500 active:bg-green-400"
+            className="flex-1 rounded-none bg-brand-600 px-4 py-[14px] text-but2-sb text-white duration-150 hover:bg-green-500 active:bg-green-400"
           >
             확인
           </Close>,
@@ -65,7 +65,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
             <DialogFooter
               className={cn(
                 footer.divider &&
-                  'divide-x-[1px] divide-line-regular border-t-[1px] border-t-line-regular',
+                  'divide-x-[1px] divide-line-regular border-t-[1px] border-t-line-regular ',
               )}
             >
               {[...(footer?.item ?? [])].map((ele) => ele)}
@@ -74,7 +74,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
         >
           <DialogHeader>
             {description && (
-              <DialogTitle className="text-b2-kr-b text-black">
+              <DialogTitle className="text-but2-sb ">
                 {title}
                 <DialogDescription
                   className="mt-2 text-b2-kr-m text-font-gray-04"
