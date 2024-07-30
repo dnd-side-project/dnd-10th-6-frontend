@@ -152,7 +152,7 @@ const Page = () => {
               router.push('/main')
             }}
           >
-           시작하기
+            시작하기
           </Button>
         ) : (
           <Button

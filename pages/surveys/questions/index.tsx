@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
 import { FunnelProvider } from '@/contexts/useFunnelContext'

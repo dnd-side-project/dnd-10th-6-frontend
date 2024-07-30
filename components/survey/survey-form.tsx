@@ -219,7 +219,6 @@ const SurveyForm = ({
   title,
   name,
   isLast,
-  index,
   initialValue,
   disabled,
   onConfirm,
@@ -650,7 +649,7 @@ const SurveyForm = ({
                       {...field}
                       id={field.name}
                       className={cn(
-                        'placeholder:text-muted peer flex w-full resize-none border-none bg-white text-b3-kr-m  outline-none  placeholder:text-font-gray-04 peer-focus-visible:border-brand-main disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled                        ',
+                        'placeholder:text-muted peer flex w-full resize-none border-none bg-white text-b3-kr-m  outline-none  placeholder:text-font-gray-04 disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled peer-focus-visible:border-brand-main                        ',
                       )}
                       placeholder="50글자 이내로 입력해주세요"
                       maxLength={50}
