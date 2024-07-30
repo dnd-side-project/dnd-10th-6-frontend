@@ -73,17 +73,15 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           }
         >
           <DialogHeader>
-            {description && (
-              <DialogTitle className="text-but2-sb ">
-                {title}
-                <DialogDescription
-                  className="mt-2 text-b2-kr-m text-font-gray-04"
-                  style={{ whiteSpaceCollapse: 'preserve-breaks' }}
-                >
-                  {description}
-                </DialogDescription>
-              </DialogTitle>
-            )}
+            <DialogTitle className="text-center text-but2-sb ">
+              {title}
+              <DialogDescription
+                className="mt-2 text-center text-b2-kr-m text-font-gray-04"
+                style={{ whiteSpaceCollapse: 'preserve-breaks' }}
+              >
+                {description}
+              </DialogDescription>
+            </DialogTitle>
             {children}
           </DialogHeader>
         </DialogContent>

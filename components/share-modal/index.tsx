@@ -22,7 +22,6 @@ const ShareModal = ({
     if (data?.user?.wikiId) {
       const url = new URL(window.location.origin)
       url.pathname = '/surveys'
-      console.log(wikiType, '<<<wikiTypewikiType')
       url.searchParams.set('wikiId', data?.user?.wikiId)
       url.searchParams.set('wikiType', wikiType)
       await shareToCopyLink(url.toString())
@@ -110,9 +109,8 @@ const ShareModal = ({
         onOpenChange={setCopyModalOpen}
         key="copyLinkModal"
         title="링크가 복사되었어요"
-        className="text-black  "
+        className="text-center text-b2-kr-b text-black"
         footer={{
-          // TODO: variant 적용 :confirm
           item: [
             <Button
               onClick={() => setCopyModalOpen(false)}
