@@ -8,6 +8,7 @@ import { useSession } from '@/provider/session-provider'
 import { useRouter } from 'next/router'
 import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
+import welcomeTree from '@/assets/characters/welcome-tree.webp'
 
 const WelcomePage = () => {
   const router = useRouter()
@@ -68,12 +69,7 @@ const WelcomePage = () => {
         className="fixed left-0 top-0 z-10 w-full bg-white"
         content={
           <div className="-mt-5 flex grow flex-col items-center justify-center px-5 text-center">
-            <Image
-              src="/assets/trees/welcome-tree.svg"
-              alt="welcome"
-              width={200}
-              height={200}
-            />
+            <Image src={welcomeTree} alt="welcome" width={300} height={150} />
             <p className="mb-3 mt-8 text-mainTitle2-bold">
               환영해요 {data?.user?.name}님
             </p>
