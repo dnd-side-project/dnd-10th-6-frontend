@@ -1,5 +1,5 @@
 import { cn } from '@/lib/client/utils'
-import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
+import { CardType, Period, Relation, treeCardAsset } from '@/model/card.entity'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -54,7 +54,7 @@ const TreeCard = ({
     }
   })()
 
-  const treeType = useRef(new TreeType(treeCardAsset)).current
+  const treeType = useRef(new CardType(treeCardAsset)).current
 
   const handleCardClick = () => {
     setBottomSheetOpen(true)

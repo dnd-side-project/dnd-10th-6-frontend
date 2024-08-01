@@ -8,7 +8,7 @@ import { useSession } from '@/provider/session-provider'
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 
-import { Period, Relation, TreeType, treeCardAsset } from '@/model/tree.entity'
+import { Period, Relation, TreeType, treeCardAsset } from '@/model/card.entity'
 import { useRouter } from 'next/router'
 import { cn } from '@/lib/client/utils'
 import { QS_NAMES, ShareImageContext } from '../share-image'

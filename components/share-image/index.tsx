@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Period, Relation, treeCardAsset, TreeType } from '@/model/tree.entity'
+import { Period, Relation, treeCardAsset, TreeType } from '@/model/card.entity'
 
 import { useSession } from '@/provider/session-provider'
 import { parseShareCardItems } from './constants'

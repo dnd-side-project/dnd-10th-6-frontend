@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Survey, getSurveyByIdQuery } from '@/queries/surveys'
 import { GetServerSideProps } from 'next'
 import { fadeInProps } from '@/variants'
-import { TreeType, treeCardAsset } from '@/model/tree.entity'
+import { CardType, treeCardAsset } from '@/model/card.entity'
 import {
   QS_NAMES,
   ShareImageContext,
@@ -30,7 +30,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
     return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
   }, [survey])
 
-  const treeType = useRef(new TreeType(treeCardAsset)).current
+  const treeType = useRef(new CardType(treeCardAsset)).current
 
   const bgColor = (survey: Survey) => {
     switch (survey.relation) {
