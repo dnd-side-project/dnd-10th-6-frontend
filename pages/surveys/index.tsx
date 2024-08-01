@@ -10,7 +10,6 @@ import { NamuiApi } from '@/lib/namui-api'
 import SurveyTree from '@/components/svgs/survey-tree'
 import Modal from '@/components/modal'
 import { Close } from '@radix-ui/react-dialog'
-import Link from 'next/link'
 import { useMutation } from '@tanstack/react-query'
 import { useToggleTheme } from '@/hooks/use-toggle-theme'
 import { PropswithWikiType } from '@/types'
@@ -38,7 +37,9 @@ const Page = ({
 
   const handleStart = () => {
     if (IsMine) return setOpenMineAlert(true)
-    router.replace(`/surveys/questions?wikiId=${router.query.wikiId}`)
+    router.replace(
+      `/surveys/questions?wikiId=${router.query.wikiId}&wikiType=${wikiType}`,
+    )
   }
 
   return (
@@ -97,7 +98,8 @@ const Page = ({
             onClick={() =>
               mutate({
                 provider: 'kakao',
-                callbackUrl: `/surveys/questions?wikiId=${router.query.wikiId}`,
+                callbackUrl: `/surveys/questions?wikiId=${router.query.wikiId}&wikiType=${wikiType}
+                `,
               })
             }
           >
@@ -136,6 +138,7 @@ const Page = ({
         title="이런!"
         description="나의 위키는 답변할 수 없어요!"
         trigger={<></>}
+        className="border-none"
         footer={{
           divider: false,
           item: [
@@ -143,7 +146,7 @@ const Page = ({
               // TODO : variant 적용 kakao
               <Close className="flex-[1_0_50%]" key="survey-footer">
                 <Button
-                  variant="BG-accent"
+                  variant="BG-neutral"
                   key="copy-link"
                   className="h-full rounded-none"
                 >
@@ -151,13 +154,14 @@ const Page = ({
                   <span className="sr-only">Close</span>
                 </Button>
               </Close>,
-              <Link
+              <Button
                 key="survey-footer-link"
-                className="h-full w-full flex-[1_0_50%] rounded-none border-[1px] border-none border-transparent bg-green-500 px-4 py-[14px] text-center text-white  shadow-sm duration-150 hover:bg-green-600 focus-visible:ring-offset-2 active:bg-green-800"
-                href="/garden"
+                className=" h-full w-full flex-[1_0_50%] rounded-none border-[1px] border-none border-transparent px-4 py-[14px] text-center text-white shadow-sm duration-150  "
+                onClick={() => router.push('/main')}
+                variant="BG-brand"
               >
-                내 정원가기
-              </Link>,
+                메인 홈 가기
+              </Button>,
             ],
           ],
         }}
