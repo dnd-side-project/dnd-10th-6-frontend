@@ -8,16 +8,13 @@ import { cn } from '@/lib/client/utils'
 import TripleTrees from '../svgs/triple-trees'
 import ShareModal from '../share-modal'
 import { Button } from '@/components/ui'
-import BestWorth from '@/components/compositions/dashboard/best-worth'
 import Character from '@/components/compositions/dashboard/character'
 import Money from '@/components/compositions/dashboard/money'
-import Happy from '@/components/compositions/dashboard/happy'
-import Sad from '@/components/compositions/dashboard/sad'
 import TreeInfo from '@/components/compositions/dashboard/tree-info'
 import { PropswithWikiType } from '@/types'
 import { KnowAbout } from '../compositions/dashboard/know-about'
-import { useSession } from '@/provider/session-provider'
 import { BubbleChart } from '../compositions/dashboard/bubble-chart'
+import { BarChart } from '../compositions/dashboard/bar-chart'
 
 const DashboardContainer = ({
   shouldShowHeader,
@@ -43,7 +40,7 @@ const DashboardContainer = ({
           <motion.div
             {...fadeInProps}
             key="exist"
-            className="flex flex-col space-y-5 px-5"
+            className="flex flex-col space-y-5 px-5 pb-5"
           >
             {/* 내 정원에 심어진 나무는? */}
             <Section className="pt-5">
@@ -59,7 +56,6 @@ const DashboardContainer = ({
             {/* 가장 중요한 것 - 파이차트 */}
             <Section>
               <BubbleChart wikiType={wikiType} filter={selectedFilter} />
-              {/* <BestWorth filter={selectedFilter} wikiType={wikiType} /> */}
             </Section>
             {/* 이런사람이에요 - 박스 */}
             <Section>
@@ -70,10 +66,18 @@ const DashboardContainer = ({
             </Section>
             {/* 기쁠 떄 */}
             <Section>
-              <Happy filter={selectedFilter} wikiType={wikiType} />
+              <BarChart
+                filter={selectedFilter}
+                wikiType={wikiType}
+                chartType="HAPPY"
+              />
             </Section>
             <Section>
-              <Sad filter={selectedFilter} wikiType={wikiType} />
+              <BarChart
+                filter={selectedFilter}
+                wikiType={wikiType}
+                chartType="SAD"
+              />
             </Section>
           </motion.div>
         ) : (

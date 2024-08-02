@@ -8,6 +8,8 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: '',
+        transparent:
+          'border-none bg-transparent py-0 focus-within:bg-transparent hover:bg-transparent',
       },
     },
     defaultVariants: {
@@ -19,7 +21,7 @@ const inputVariants = cva(
 interface InputboxProps
   extends VariantProps<typeof inputVariants>,
     ComponentPropsWithoutRef<'input'> {
-  variant?: 'default'
+  variant?: 'default' | 'transparent'
 }
 
 const Inputbox = forwardRef<HTMLInputElement, InputboxProps>(

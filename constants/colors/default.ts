@@ -1,3 +1,4 @@
+import { WikiType } from '@/types'
 import { ThemeConfig } from 'tailwindcss/types/config'
 
 export const defaultColors = {
@@ -39,6 +40,7 @@ export const defaultColors = {
     200: '#93E8B0',
     100: '#BFF1CF',
     50: '#E6F7EA',
+    hover: 'var(--brand-hover)',
     sub1: '#199EF0',
     sub2: '#FFEB34',
   },
@@ -119,3 +121,34 @@ export const defaultColors = {
     DEFAULT: '#111111',
   },
 } satisfies ThemeConfig['colors']
+
+type BINARY_GRADIENT_TYPE = { BINARY: { from: string; to: string }[] }
+type MONEY_GRADIENT_TYPE = { MONEY: { from: string; to: string } }
+export const MAIN_COLOR: { [key in WikiType]: string } & BINARY_GRADIENT_TYPE &
+  MONEY_GRADIENT_TYPE = {
+  NAMUI: '#00be4f',
+  ROMANCE: '#ff4e46',
+  MONEY: {
+    from: '#FF8F36',
+    to: '#FFE09C',
+  },
+
+  BINARY: [
+    {
+      from: '#FF8F36',
+      to: '#FFE09C',
+    },
+    {
+      from: '#00BE4F',
+      to: '#BFF1CF',
+    },
+    {
+      from: '#199EF0',
+      to: '#B4E6FF',
+    },
+    {
+      from: '#FDD82E',
+      to: '#FFF59B',
+    },
+  ],
+}

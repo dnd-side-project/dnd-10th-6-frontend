@@ -12,8 +12,9 @@ import Modal from '@/components/modal'
 import { Close } from '@radix-ui/react-dialog'
 import Link from 'next/link'
 import { useMutation } from '@tanstack/react-query'
-import { useToggleTheme } from '@/hooks/use-toggle-theme'
+
 import { PropswithWikiType } from '@/types'
+import { useToggletheme } from '@/contexts/wiki-provider'
 
 const Page = ({
   wikiType,
@@ -34,7 +35,7 @@ const Page = ({
 
   const IsMine = wikiId === data?.user?.wikiId
 
-  useToggleTheme(wikiType)
+  useToggletheme(wikiType)
 
   const handleStart = () => {
     if (IsMine) return setOpenMineAlert(true)

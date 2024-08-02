@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useRef, useState } from 'react'
+import { ReactNode, createContext, useMemo, useRef, useState } from 'react'
 import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 import useScrollDirection from '@/hooks/use-scroll-direction'
 import { useSettingStore } from '@/stores/setting.store'
@@ -58,19 +58,15 @@ export const WIKI_COLORS: { [key in WikiType]: Colors } = {
 import { motion, useInView } from 'framer-motion'
 import { PropswithWikiType, WikiType } from '@/types'
 import { NamuiApi } from '@/lib/namui-api'
-import { useToggleTheme } from '@/hooks/use-toggle-theme'
+import { useToggletheme } from '@/contexts/wiki-provider'
+import { useQuery } from '@tanstack/react-query'
 
 export const DetailQsContext = createContext<{
   id: string
   handle: (id: string) => void
 }>({ id: '', handle: () => {} })
 
-const Page = ({
-  wikiType,
-  wikiCount,
-}: PropswithWikiType<{
-  wikiCount: number
-}>) => {
+const Page = ({ wikiType }: PropswithWikiType) => {
   const searchParams = useSearchParams()
   const wiki = wikiType || (searchParams.get('wikiType') as WikiType)
   const headerHeight = useSettingStore((state) => state.headerHeight)
@@ -81,7 +77,19 @@ const Page = ({
   const { direction, scrollTop } = useScrollDirection({ ref })
   const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
 
-  useToggleTheme(wikiType)
+  const { data: wikis } = useQuery({
+    queryKey: ['wikis'],
+    queryFn: NamuiApi.getWikis,
+  })
+
+  const wikiCount = useMemo(
+    () =>
+      wikis?.data.wikiList.find((wiki) => wiki.wikiType === wikiType)
+        ?.answerCount || 0,
+    [wikiType, wikis],
+  )
+
+  useToggletheme(wikiType)
 
   const handleQsId = (id: string) => {
     setSelectedQsId(id)
@@ -148,17 +156,18 @@ export const getServerSideProps = (async (context) => {
   }
 
   //FIX: change to SSR && set auth in server runtime
-  NamuiApi.setToken(context.req.cookies['accessToken'])
-  try {
-    const { data: wikis } = await NamuiApi.getWikis()
-    const wikiCount =
-      wikis.wikiList.find((wiki) => wiki.wikiType === wikiType)?.answerCount ||
-      0
+  // NamuiApi.setToken(context.req.cookies['accessToken'])
+  // try {
+  //   const { data: wikis } = await NamuiApi.getWikis()
+  //   const wikiCount =
+  //     wikis.wikiList.find((wiki) => wiki.wikiType === wikiType)?.answerCount ||
+  //     0
 
-    return { props: { wikiType: wikiType.toUpperCase(), wikiCount } }
-  } catch {
-    return { props: { wikiType: wikiType.toUpperCase(), wikiCount: 0 } }
-  }
+  //   return { props: { wikiType: wikiType.toUpperCase(), wikiCount } }
+  // } catch {
+  //   return { props: { wikiType: wikiType.toUpperCase(), wikiCount: 0 } }
+  // }
+  return { props: { wikiType: wikiType.toUpperCase() } }
 }) satisfies GetServerSideProps
 
 function DashboardTitle({

@@ -31,7 +31,7 @@ const TreeInfo = ({
         <b className="text-d4-kr-b">{wikiCount}그루</b>
       </div>
 
-      <div className="[mask-image:linear-gradient(to_bottom,white_0%,transparent_100%)]">
+      <div className="[mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]">
         <AnimatePresence mode="wait">
           {!isLoading && surveys ? (
             <motion.div

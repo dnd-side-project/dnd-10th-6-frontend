@@ -302,10 +302,10 @@ const SurveyForm = ({
                       }}
                       className={cn(
                         'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
-                        'focus-within:border-brand-main-green400',
+                        'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
-                          'border-brand-main-green400 border bg-main-green-green50',
+                          'bg-brand-hover border border-brand-main',
                       )}
                     >
                       <Inputbox
@@ -340,9 +340,9 @@ const SurveyForm = ({
                         <div
                           className={cn(
                             'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
-                            'hover:border-brand-main-green400',
+                            'hover:border-brand-main',
                             field.value === option.id + '' &&
-                              'border-brand-main-green400 border-4',
+                              'border-4 border-brand-main',
                           )}
                         ></div>
 
@@ -377,10 +377,10 @@ const SurveyForm = ({
                       }}
                       className={cn(
                         'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
-                        'focus-within:border-brand-main-green400',
+                        'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
-                          'border-brand-main-green400 border bg-main-green-green50',
+                          'bg-brand-hover border border-brand-main',
                       )}
                     >
                       <Inputbox
@@ -417,9 +417,9 @@ const SurveyForm = ({
                         <div
                           className={cn(
                             'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
-                            'hover:border-brand-main-green400',
+                            'hover:border-brand-main',
                             field.value === option.id + '' &&
-                              'border-brand-main-green400 border-4',
+                              'border-4 border-brand-main',
                           )}
                         ></div>
 
@@ -469,10 +469,10 @@ const SurveyForm = ({
                       }}
                       className={cn(
                         'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
-                        'focus-within:border-brand-main-green400',
+                        'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
-                          'border-brand-main-green400 border bg-main-green-green50',
+                          'border border-brand-main bg-main-green-green50',
                       )}
                     >
                       <AutoFocusedInput
@@ -510,9 +510,9 @@ const SurveyForm = ({
                         <div
                           className={cn(
                             'h-4 w-4 rounded-full border border-[#E5E5EC] bg-text-main-whiteFF transition-all duration-200 ',
-                            'hover:border-brand-main-green400',
+                            'hover:border-brand-main',
                             field.value === option.id + '' &&
-                              'border-brand-main-green400 border-4',
+                              'border-4 border-brand-main',
                           )}
                         ></div>
 
@@ -587,6 +587,9 @@ const SurveyForm = ({
                         : '50글자 이내로 입력해주세요'
                     }
                     {...(name === 'FIVE_LETTER_WORD' && { minLength: 5 })}
+                    className={cn(
+                      'placeholder:text-muted peer flex w-full resize-none border-none bg-transparent text-body3-medium  outline-none  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
+                    )}
                     maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 50}
                     rows={2}
                     value={field.value + ''}
@@ -614,7 +617,7 @@ const SurveyForm = ({
                   <label
                     htmlFor={field.name}
                     className={cn(
-                      'border-brand-main-green400 peer-focus-visible:border-brand-main-green400 pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] duration-100 peer-placeholder-shown:border-line-medium',
+                      'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main',
                     )}
                   />
                   <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
@@ -661,7 +664,7 @@ const SurveyForm = ({
                     <label
                       htmlFor={field.name}
                       className={cn(
-                        'border-brand-main-green400 peer-focus-visible:border-brand-main-green400 pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] duration-100 peer-placeholder-shown:border-line-medium',
+                        'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main',
                       )}
                     />
                     <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
@@ -709,5 +712,13 @@ function AutoFocusedInput(props: AutoFocusedInputProps) {
       ref.current.focus()
     }
   }, [])
-  return <Inputbox ref={ref} {...props} />
+
+  return (
+    <Inputbox
+      variant="transparent"
+      ref={ref}
+      {...props}
+      className={cn('h-6', props.className)}
+    />
+  )
 }

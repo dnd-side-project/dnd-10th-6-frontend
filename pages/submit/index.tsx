@@ -6,15 +6,16 @@ import Link from 'next/link'
 import React, { ReactNode } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { GetServerSideProps } from 'next'
-import { useToggleTheme } from '@/hooks/use-toggle-theme'
+
 import { WikiType } from '@/types'
+import { useToggletheme } from '@/contexts/wiki-provider'
 
 const index = () => {
   const { data } = useSession()
   const searchParams = useSearchParams()
   const wikiType = searchParams.get('wikiType')! as WikiType
 
-  useToggleTheme(wikiType)
+  useToggletheme(wikiType)
 
   return (
     <FormLayout
