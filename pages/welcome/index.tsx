@@ -8,32 +8,32 @@ import FormLayout from '@/layout/form-layout'
 
 import MetaHead from '@/components/meta-head'
 import Modal from '@/components/modal'
-import { Button } from '@/components/ui'
+import {
+  Badge,
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+} from '@/components/ui'
 
 import welcomeTree from '@/assets/characters/welcome-tree.webp'
+import { useSearchParams } from 'next/navigation'
+import { PropswithWikiType, WikiType } from '@/types'
 
-const WelcomePage = () => {
+const WelcomePage = ({ wikiType }: PropswithWikiType) => {
   const router = useRouter()
   const { data } = useSession()
-
+  const searchParams = useSearchParams()
+  const wiki = wikiType || (searchParams.get('wikiType') as WikiType)
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [copyModalOpen, setCopyModalOpen] = useState(false)
-  const handleCopyLink = useCallback(async () => {
-    if (data?.user?.wikiId) {
-      const url = new URL(window.location.origin)
-      url.pathname = '/surveys'
-      url.searchParams.set('wikiId', data?.user?.wikiId)
-      await shareToCopyLink(url.toString())
-    }
-    setShareModalOpen(false)
-    setCopyModalOpen(true)
-  }, [data?.user?.wikiId])
 
-  const handleShareKakao = () => {
-    if (data?.user?.wikiId) {
-      shareToKaKaoLink(`surveys?wikiId=${data?.user?.wikiId}`)
-    }
-  }
+  const closeBottomSheet = useCallback(() => {
+    setBottomSheetOpen(false)
+  }, [])
+
   return (
     <>
       <MetaHead
@@ -88,7 +88,6 @@ const WelcomePage = () => {
               title="링크가 복사되었어요"
               footer={{
                 item: [
-                  // TODO : variant 적용 : confirm
                   <Button
                     onClick={() => setCopyModalOpen(false)}
                     variant="BG-accent"
@@ -104,46 +103,85 @@ const WelcomePage = () => {
           </div>
         }
         button={
-          <Modal
-            open={shareModalOpen}
-            onOpenChange={(state) => {
-              setShareModalOpen(state)
-            }}
-            trigger={<Button>친구에게 내 소개 부탁하기</Button>}
-            title="친구에게 내 소개를 부탁하시겠어요?"
-            description={
-              <p>
-                링크 공유하기를 통해
-                <br />
-                친구에게 내 소개를 부탁할 수 있어요!
-              </p>
-            }
-            footer={{
-              divider: false,
-              item: [
-                // TODO : variant 적용 : default
-                <Button
-                  onClick={handleCopyLink}
-                  variant="BG-accent"
-                  key="copy-link"
-                  className="rounded-none"
-                >
-                  링크복사
-                </Button>,
-                <Button
-                  onClick={handleShareKakao}
-                  key="kakao-share"
-                  className="rounded-none"
-                >
-                  카카오 공유
-                </Button>,
-              ],
-            }}
-          />
+          <Button onClick={() => setBottomSheetOpen(true)} variant="BG-brand">
+            나에 대해 물어보기
+          </Button>
         }
+      />
+      <BottomSheetButton
+        bottomSheetOpen={bottomSheetOpen}
+        closeBottomSheet={closeBottomSheet}
+        wikiType={wiki}
       />
     </>
   )
 }
 
 export default WelcomePage
+
+// 추가된 BottomSheetButton 컴포넌트
+interface BottomSheetButtonProps {
+  bottomSheetOpen: boolean
+  closeBottomSheet: () => void
+  wikiType: WikiType
+}
+
+const BottomSheetButton = ({
+  bottomSheetOpen,
+  closeBottomSheet,
+  wikiType,
+}: BottomSheetButtonProps) => {
+  const [modalOpen, setModalOpen] = useState(false)
+
+  return (
+    <>
+      <Drawer
+        open={bottomSheetOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            closeBottomSheet()
+          }
+        }}
+      >
+        <DrawerContent>
+          <div className="flex flex-col p-4">
+            <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
+              <h2 className="text-left text-t2-kr-b">
+                나에 대해 물어볼
+                <br /> 주제를 선택해 주세요
+              </h2>
+              <div className="flex flex-col space-y-4">
+                <div className="w-full rounded-md border border-line-regular px-[30px] py-6">
+                  <div className="flex w-full items-center justify-between">
+                    <h3 className="w-full text-t3-kr-b">남의위키</h3>
+                    <div className="w-full rounded-full bg-green-50 px-[10px] py-[3px] text-green-500">
+                      질문 14개
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full px-[30px] py-6">연애위키버튼</div>
+              </div>
+              <Button onClick={() => setModalOpen(true)}>모달 열기</Button>
+            </div>
+          </div>
+          <DrawerFooter />
+        </DrawerContent>
+      </Drawer>
+      <Modal
+        open={modalOpen}
+        onOpenChange={(state) => {
+          setModalOpen(state)
+        }}
+        title=""
+        description={
+          <span className=" text-b2-kr-b text-black">
+            비회원으로 작성해서
+            <br />
+            친구에게 소개서를 써줄 수 없어요
+          </span>
+        }
+        trigger={null}
+      />
+    </>
+  )
+}
