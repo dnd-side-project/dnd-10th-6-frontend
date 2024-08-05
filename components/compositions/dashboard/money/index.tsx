@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui'
+import { MAIN_COLOR } from '@/constants'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
@@ -18,7 +19,7 @@ const Money = ({
   filter: FilterType
 }>) => {
   const { handle } = useDetailDrawer()
-
+  const { data } = useSession()
   const { data: statisics, isLoading } = useQuery({
     ...getDashboardQuery(wikiType, filter),
     select(data) {
@@ -42,7 +43,10 @@ const Money = ({
   }, [statisics])
   return (
     <LazyMotion features={domAnimation}>
-      <div ref={ref}>
+      <div
+        ref={ref}
+        className="flex flex-col items-center space-y-[60px] rounded-[20px] bg-bg-light py-10"
+      >
         {isLoading || !statisics ? (
           <>
             <div className="skeleton mb-2 h-8 w-1/4" />
@@ -55,16 +59,8 @@ const Money = ({
           </>
         ) : (
           <>
-            <h2 className="mb-5 text-mainTitle2-bold">
-              <b className="text-brand-main-green400">
-                {statisics.peopleCount}명
-              </b>
-              에게
-              <br />
-              <b className="text-brand-main-green400">
-                {statisics.average.toLocaleString()}원
-              </b>{' '}
-              빌릴 수 있어요
+            <h2 className="mx-auto w-fit px-5 text-t1-kr-b">
+              {data?.user?.name}님에게 빌릴 수 있는 금액은
             </h2>
             {/* <div
               className="text-body3-medium text-text-sub-gray76 px-2 py-1 bg-gray-gray50 w-fit rounded-md
@@ -72,20 +68,20 @@ const Money = ({
             >
               이용자 중 상위 99%
             </div> */}
-            <div className="mx-auto mb-10 mt-8 flex items-center rounded-2xl py-12 shadow-basic">
-              <div className="mx-auto flex h-full space-x-12">
-                <Bar
-                  price={statisics.average ?? 0}
-                  active={inView}
-                  value={myAvg.mine * 100}
-                />
-                <Bar
-                  price={statisics.entireAverage ?? 0}
-                  active={inView}
-                  isMe={false}
-                  value={myAvg.entire * 100}
-                />
-              </div>
+            {/* <div className="mx-auto mb-10 mt-8 flex items-center rounded-2xl py-12 shadow-basic">
+            </div> */}
+            <div className="mx-auto flex h-full space-x-12">
+              <Bar
+                price={statisics.average ?? 0}
+                active={inView}
+                value={myAvg.mine * 100}
+              />
+              <Bar
+                price={statisics.entireAverage ?? 0}
+                active={inView}
+                isMe={false}
+                value={myAvg.entire * 100}
+              />
             </div>
           </>
         )}
@@ -96,9 +92,9 @@ const Money = ({
             }
             rounded="full"
             variant="Line-neutral"
-            className="mx-auto"
+            className="mx-auto "
           >
-            자세히 보기
+            <span className="text-but2-sb">자세히 보기</span>
           </Button>
         </div>
       </div>
@@ -126,16 +122,26 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
             'relative w-fit items-center justify-center whitespace-nowrap  rounded-md text-body3-bold',
             'mb-4 px-2 py-1',
             isMe
-              ? 'bg-brand-sub1-yellow900 text-text-main-whiteFF'
-              : 'bg-gray-gray100 text-text-sub-gray76',
+              ? 'text-text-main-whiteFF'
+              : 'bg-bg-regular text-text-sub-gray76',
           )}
+          style={{
+            ...(isMe
+              ? {
+                  background: `linear-gradient(to top, ${MAIN_COLOR.MONEY.from} 0%, ${MAIN_COLOR.MONEY.to} 100%)`,
+                }
+              : {}),
+          }}
         >
           {price.toLocaleString()}원
           <svg
             className={cn(
               'absolute -bottom-2.5 left-1/2 -translate-x-1/2',
-              isMe ? 'fill-brand-sub1-yellow900' : 'fill-gray-gray100',
+              isMe ? '' : 'fill-bg-regular',
             )}
+            style={{
+              ...(isMe ? { fill: MAIN_COLOR.MONEY.from } : {}),
+            }}
             width="25"
             height="12"
             viewBox="0 0 25 12"
@@ -154,7 +160,7 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
             active
               ? isDone
                 ? {
-                    height: [`${value}%`, `${value * 0.8}%`],
+                    height: [`${value || 5}%`, `${value * 0.8}%`],
                     transition: {
                       repeat: Infinity,
                       repeatType: 'mirror',
@@ -172,19 +178,26 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
           }
           className={cn(
             'relative w-full origin-bottom rounded-md',
-            isMe ? 'bg-brand-sub1-yellow900' : 'bg-gray-gray100',
+            !isMe && 'bg-bg-regular',
           )}
+          style={{
+            ...(isMe
+              ? {
+                  background: `linear-gradient(to top, ${MAIN_COLOR.MONEY.from} 0%, ${MAIN_COLOR.MONEY.to} 100%)`,
+                }
+              : {}),
+          }}
         />
       </div>
 
       <p
         className={cn(
           'mx-auto mt-4 w-fit',
-          isMe && 'text-body1-bold text-text-main-black11',
-          !isMe && 'text-body1-medium text-text-sub-gray76 opacity-50',
+          isMe && 'text-b1-kr-b',
+          !isMe && 'text-b1-kr-m text-font-gray-04',
         )}
       >
-        {isMe ? (data?.user?.name ?? '') + ' 님' : '이용자 평균'}
+        {isMe ? (data?.user?.name ?? '') + '님 평균' : '이용자 평균'}
       </p>
     </div>
   )

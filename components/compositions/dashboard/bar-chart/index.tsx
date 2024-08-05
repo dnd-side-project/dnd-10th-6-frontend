@@ -3,7 +3,7 @@ import { RANK_COLOR } from '@/constants'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { HAPPY_OR_SAD } from '@/model/dashboard.entity'
+import { BarChartType, HAPPY_OR_SAD } from '@/model/dashboard.entity'
 import { useSession } from '@/provider/session-provider'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { PropswithWikiType } from '@/types'
@@ -11,11 +11,13 @@ import { useQuery } from '@tanstack/react-query'
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useRef } from 'react'
 
-const Happy = ({
+export const BarChart = ({
   wikiType,
   filter,
+  chartType,
 }: PropswithWikiType<{
   filter: FilterType
+  chartType: BarChartType
 }>) => {
   const { data } = useSession()
   const { handle } = useDetailDrawer()
@@ -23,7 +25,7 @@ const Happy = ({
     ...getDashboardQuery(wikiType, filter),
     select(data) {
       return data.data?.statistics.find(
-        (item) => item.dashboardType === 'HAPPY',
+        (item) => item.dashboardType === chartType,
       ) as HAPPY_OR_SAD
     },
   })
@@ -33,7 +35,6 @@ const Happy = ({
     amount: 'all',
   })
 
-  data?.user?.name
   const orderByMaxValueList = useMemo(() => {
     const arr = statisics?.rank?.sort((a, b) => b.percentage - a.percentage)
 
@@ -123,8 +124,6 @@ const Happy = ({
     </LazyMotion>
   )
 }
-
-export default Happy
 
 interface BarProps {
   percent: number

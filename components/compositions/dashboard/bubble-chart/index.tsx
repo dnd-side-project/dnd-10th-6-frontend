@@ -24,7 +24,7 @@ export const BubbleChart = ({
     ...getDashboardQuery(wikiType, filter),
     select: (data) => {
       const bestWorth = data.data?.statistics.find(
-        (item) => item.dashboardType === 'BUBBLE_CHART',
+        (item) => item.dashboardType === 'BEST_WORTH',
       )
 
       return bestWorth as BEST_WORTH
@@ -42,7 +42,6 @@ export const BubbleChart = ({
         `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
     }))
   }, [statisics])
-
   return (
     <div className="flex flex-col items-center rounded-[20px] bg-bg-light py-10">
       <h2 className="mx-auto w-fit px-5 text-t1-kr-b">
@@ -108,20 +107,20 @@ const BUBBLE_OPTIONS: [BALL_ONE, BALL_TWO, BALL_THREE] = [
     {
       mainColor: (wikiType: WikiType) => WIKI_COLORS[wikiType].MAIN_COLOR,
       subColor: '#BFF1CF',
-      left: 0,
-      top: 0,
+      left: 30,
+      top: 50,
     },
     {
       mainColor: '#199EF0',
       subColor: '#B4E6FF',
-      left: 0,
-      top: 0,
+      left: 70,
+      top: 30,
     },
     {
       mainColor: '#FDD82E',
       subColor: '#FFF59B',
-      left: 0,
-      top: 0,
+      left: 65,
+      top: 65,
     },
   ],
 ]
@@ -131,13 +130,13 @@ const GrowingCircles = ({
   wikiType,
 }: PropswithWikiType<BubbleChartProps>) => {
   const containerRef = useRef<HTMLDivElement>(null)
-
   const bubbles = useMemo(() => {
     if (!data) return null
     const lastIndex = data.findIndex((i) => i.percentage === 0)
     if (lastIndex <= 0) return
-    const currentBubbleOptions = BUBBLE_OPTIONS[lastIndex - 1]
-    return currentBubbleOptions.map((item, index) => ({
+    const currentBubbleOptions =
+      BUBBLE_OPTIONS[lastIndex > 3 ? 2 : lastIndex - 1]
+    return currentBubbleOptions?.map((item, index) => ({
       ...item,
       id: data[index].legend,
       percentage: data[index].percentage,
@@ -151,7 +150,7 @@ const GrowingCircles = ({
   }, [bubbles])
 
   const inview = useInView(containerRef, {
-    once: false,
+    once: true,
     margin: '-100px',
   })
 

@@ -29,8 +29,8 @@ import SurveyForm from '@/components/survey/survey-form'
 import { toastError } from '@/lib/client/alert'
 import Image from 'next/image'
 import caution from '@/assets/icons/caution.svg'
-import { useToggleTheme } from '@/hooks/use-toggle-theme'
 import { PropswithWikiType, WikiType } from '@/types'
+import { useToggletheme } from '@/contexts/wiki-provider'
 
 const MotionLabel = motion(InputLabel)
 
@@ -71,7 +71,7 @@ const Question = ({
     max: fieldList.length,
   })
 
-  useToggleTheme(wikiType)
+  useToggletheme(wikiType)
 
   const questionForm = useQuestionForm({
     defaultValues: {
