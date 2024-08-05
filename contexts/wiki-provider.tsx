@@ -1,7 +1,7 @@
+import { PropsWithChildren, useCallback, useState } from 'react'
 import { createContext } from '@/lib/client/context'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import { WikiType } from '@/types'
-import { PropsWithChildren, useCallback, useEffect, useState } from 'react'
 
 const WIKI_CONTEXT = 'WikiContext'
 

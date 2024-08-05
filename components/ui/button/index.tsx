@@ -1,6 +1,7 @@
-import { cn } from '@/lib/client/utils'
-import { VariantProps, cva } from 'class-variance-authority'
 import { forwardRef } from 'react'
+import { VariantProps, cva } from 'class-variance-authority'
+import { cn } from '@/lib/client/utils'
+
 import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
 import { fadeInOutProps } from '@/constants/variants'
 

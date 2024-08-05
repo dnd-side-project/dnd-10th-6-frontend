@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui'
-import BaseLayout from '@/layout/base-layout'
-import { cn } from '@/lib/client/utils'
 import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router'
+import { cn } from '@/lib/client/utils'
+import BaseLayout from '@/layout/base-layout'
+import { Button } from '@/components/ui'
 
 const Pages = () => {
   const router = useRouter()

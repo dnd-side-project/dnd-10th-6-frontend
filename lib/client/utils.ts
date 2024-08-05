@@ -1,8 +1,8 @@
+import * as React from 'react'
+import { useLayoutEffect } from 'react'
 import { type ClassValue, clsx } from 'clsx'
 import { extendTailwindMerge } from 'tailwind-merge'
-import { useLayoutEffect } from 'react'
 import { fontSize } from '@/constants'
-import * as React from 'react'
 
 export const twm = extendTailwindMerge({
   extend: {

@@ -1,16 +1,18 @@
-import { Button } from '@/components/ui'
-import { RANK_COLOR } from '@/constants'
-import { FilterType } from '@/hooks/use-filter'
-import { cn } from '@/lib/client/utils'
-import { BEST_WORTH, Rank } from '@/model/dashboard.entity'
-import { WIKI_COLORS } from '@/pages/dashboard'
-import { useSession } from '@/provider/session-provider'
-import { getDashboardQuery } from '@/queries/dashboard'
-import { PropswithWikiType, WikiType } from '@/types'
+import { useMemo, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useSession } from '@/provider/session-provider'
+import { cn } from '@/lib/client/utils'
 import { useInView } from 'framer-motion'
 import { motion } from 'framer-motion'
-import { useMemo, useRef } from 'react'
+
+import { FilterType } from '@/hooks/use-filter'
+import { WIKI_COLORS } from '@/pages/dashboard'
+
+import { getDashboardQuery } from '@/queries/dashboard'
+import { RANK_COLOR } from '@/constants'
+import { PropswithWikiType, WikiType } from '@/types'
+import { BEST_WORTH, Rank } from '@/model/dashboard.entity'
+import { Button } from '@/components/ui'
 
 export const BubbleChart = ({
   wikiType,

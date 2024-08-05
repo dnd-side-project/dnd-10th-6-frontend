@@ -1,15 +1,18 @@
-import { Button } from '@/components/ui'
-import { RANK_COLOR } from '@/constants'
+import React, { useEffect, useMemo, useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from '@/provider/session-provider'
+import { m, LazyMotion, domAnimation } from 'framer-motion'
+
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { HAPPY_OR_SAD } from '@/model/dashboard.entity'
-import { useSession } from '@/provider/session-provider'
+
+import { RANK_COLOR } from '@/constants'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { PropswithWikiType } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import { m, LazyMotion, domAnimation } from 'framer-motion'
-import React, { useEffect, useMemo, useRef } from 'react'
+import { HAPPY_OR_SAD } from '@/model/dashboard.entity'
+
+import { Button } from '@/components/ui'
 
 const Happy = ({
   wikiType,

@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
-
-import useFilter, { Filter } from '@/hooks/use-filter'
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query'
-import { NamuiApi } from '@/lib/namui-api'
-import { useIntersectionObserver } from '@/hooks/use-observer'
-import { useSession } from '@/provider/session-provider'
-import { motion } from 'framer-motion'
-import { fadeInProps } from '@/variants'
-
-import { Period, Relation, TreeType, treeCardAsset } from '@/model/card.entity'
 import { useRouter } from 'next/router'
 import { cn } from '@/lib/client/utils'
+import { useSession } from '@/provider/session-provider'
+
+import { NamuiApi } from '@/lib/namui-api'
+import useFilter, { Filter } from '@/hooks/use-filter'
+import { useIntersectionObserver } from '@/hooks/use-observer'
+
+import { motion } from 'framer-motion'
+import { fadeInProps } from '@/variants'
+import { Period, Relation, CardType, treeCardAsset } from '@/model/card.entity'
+
 import { QS_NAMES, ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
 import { useMount } from '@/hooks/use-mount'
@@ -430,7 +431,7 @@ function TwoChoice({
 }: {
   cardItem: Content
   summary: string
-  treeType: TreeType
+  treeType: CardType
   onShareClick?: () => void
 }) {
   const isPositiveAnswer = cardItem.answer.includes('🙆‍♂️')

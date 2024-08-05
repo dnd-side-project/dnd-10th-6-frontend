@@ -1,5 +1,5 @@
-import { WikiType } from '@/types'
 import { ThemeConfig } from 'tailwindcss/types/config'
+import { WikiType } from '@/types'
 
 export const defaultColors = {
   white: '#FFFFFF',

@@ -1,15 +1,18 @@
-import { Button } from '@/components/ui'
-import { FilterType } from '@/hooks/use-filter'
+import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { GetSurveyResponse } from '@/model/survey.entity'
-import { NamuiApi } from '@/lib/namui-api'
 import { AnimatePresence } from 'framer-motion'
-import TreeCard from '../tree-card'
-import { fadeInProps } from '@/variants'
+
+import { NamuiApi } from '@/lib/namui-api'
 import { cn } from '@/lib/client/utils'
+import { FilterType } from '@/hooks/use-filter'
+
+import { fadeInProps } from '@/variants'
 import { PropswithWikiType } from '@/types'
-import { useRouter } from 'next/router'
+import { GetSurveyResponse } from '@/model/survey.entity'
+
+import { Button } from '@/components/ui'
+import TreeCard from '../tree-card'
 
 const TreeInfo = ({
   wikiType,

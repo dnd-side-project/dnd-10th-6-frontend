@@ -1,16 +1,17 @@
 import { ReactNode, useContext, useMemo, useRef } from 'react'
+import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+import { useQuery } from '@tanstack/react-query'
+import { AnimatePresence, motion } from 'framer-motion'
 import withAuth from '@/layout/HOC/with-auth'
 import FormLayout from '@/layout/form-layout'
-import AnswerDetail from '@/components/compositions/answers/answer-detail'
-import { useRouter } from 'next/router'
 import { useSession } from '@/provider/session-provider'
-import { AnimatePresence, motion } from 'framer-motion'
-import { RelationBadge, PeriodBadge } from '@/components/badge'
-import { useQuery } from '@tanstack/react-query'
+
 import { Survey, getSurveyByIdQuery } from '@/queries/surveys'
-import { GetServerSideProps } from 'next'
 import { fadeInProps } from '@/variants'
 import { CardType, treeCardAsset } from '@/model/card.entity'
+import AnswerDetail from '@/components/compositions/answers/answer-detail'
+import { RelationBadge, PeriodBadge } from '@/components/badge'
 import {
   QS_NAMES,
   ShareImageContext,
@@ -18,6 +19,7 @@ import {
   ShareImageProvider,
 } from '@/components/share-image'
 import { parseShareCardItems } from '@/components/share-image/constants'
+
 const Pages = ({ surveyId }: { surveyId: string }) => {
   const { data: { data: survey } = {}, isLoading } = useQuery(
     getSurveyByIdQuery(surveyId),

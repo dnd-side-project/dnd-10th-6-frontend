@@ -1,6 +1,6 @@
-import { motion, Variants, useAnimation } from 'framer-motion'
 import { useEffect } from 'react'
 import { useWikiContext } from '@/contexts/wiki-provider'
+import { motion, Variants, useAnimation } from 'framer-motion'
 import { MAIN_COLOR } from '@/constants'
 
 const logoVariants: Variants = {

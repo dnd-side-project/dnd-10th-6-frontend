@@ -302,7 +302,7 @@ const SurveyForm = ({
                         duration: 0.3,
                       }}
                       className={cn(
-                        'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
+                        'flex w-full items-center justify-start rounded-md border border-[#E5E5EC] p-4 transition-all duration-200',
                         'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
@@ -670,9 +670,7 @@ const SurveyForm = ({
                     <label
                       htmlFor={field.name}
                       className={cn(
-
                         'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] duration-100 peer-placeholder-shown:border-line-regular peer-focus-visible:border-brand-main',
-
                       )}
                     />
                     <span className="absolute bottom-[14px] right-4 text-b3-kr-m text-font-gray-04">

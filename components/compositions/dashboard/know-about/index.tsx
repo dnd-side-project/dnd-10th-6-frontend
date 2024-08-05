@@ -1,11 +1,11 @@
-import useDetailDrawer from '@/hooks/use-detail-drawer'
-import { cn } from '@/lib/client/utils'
-import { SHORT_TYPE_LIST } from '@/model/question.entity'
+import React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useSession } from '@/provider/session-provider'
+import { cn } from '@/lib/client/utils'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { getQuestionByTypeQuery } from '@/queries/question'
 import { WikiType, PropswithWikiType } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import { SHORT_TYPE_LIST } from '@/model/question.entity'
 
 const SHORT_FILTER: {
   [wikiType in WikiType]: {

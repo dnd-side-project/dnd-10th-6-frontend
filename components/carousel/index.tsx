@@ -1,5 +1,5 @@
-import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react'
 import type { ReactNode, PropsWithChildren } from 'react'
+import React, { useMemo, useState, useEffect, useCallback, useRef } from 'react'
 import { UseEmblaCarouselType } from 'embla-carousel-react'
 import { EmblaCarouselType } from 'embla-carousel'
 import {

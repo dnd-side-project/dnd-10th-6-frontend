@@ -1,13 +1,15 @@
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+
+import { useSession } from '@/provider/session-provider'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
+import BaseLayout from '@/layout/base-layout'
+import { useMount } from '@/hooks/use-mount'
+
+import MetaHead from '@/components/meta-head'
 import { Button } from '@/components/ui'
 import { Logo } from '@/components/ui'
-import { useSession } from '@/provider/session-provider'
-import { useRouter } from 'next/router'
-import BaseLayout from '@/layout/base-layout'
-import { ReactNode, useEffect, useRef, useState } from 'react'
-import { useMount } from '@/hooks/use-mount'
-import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import MetaHead from '@/components/meta-head'
 
 const Page = () => {
   const { signin, data } = useSession()

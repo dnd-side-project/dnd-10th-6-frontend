@@ -1,18 +1,20 @@
 import { useMemo, useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
+
 import { Pie, Sector } from 'recharts'
 import { Cell } from 'recharts'
 import { PieChart, ResponsiveContainer } from 'recharts'
 import { PieSectorDataItem } from 'recharts/types/polar/Pie'
-import { useInViewRef } from '@/hooks/use-in-view-ref'
+
 import { getDashboardQuery } from '@/queries/dashboard'
-import { useQuery } from '@tanstack/react-query'
+import { PropswithWikiType } from '@/types'
+import { BEST_WORTH } from '@/model/dashboard.entity'
+import { useInViewRef } from '@/hooks/use-in-view-ref'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { RANK_COLOR } from '@/constants'
 import { Button } from '@/components/ui/button'
-import useDetailDrawer from '@/hooks/use-detail-drawer'
-import { BEST_WORTH } from '@/model/dashboard.entity'
-import { PropswithWikiType } from '@/types'
 
 export interface Payload {
   percent: number

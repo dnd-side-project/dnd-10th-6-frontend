@@ -1,14 +1,16 @@
+import { useMemo } from 'react'
+import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from '@/provider/session-provider'
+
 import { m, LazyMotion, domAnimation } from 'framer-motion'
 import { fadeInProps } from '@/variants'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { useSession } from '@/provider/session-provider'
 import { FilterType } from '@/hooks/use-filter'
-import { useQuery } from '@tanstack/react-query'
+
 import { getDashboardQuery } from '@/queries/dashboard'
-import { CHARACTER_NAMES, CHARACTER_TYPE } from '@/model/dashboard.entity'
-import { useMemo } from 'react'
-import Link from 'next/link'
 import { PropswithWikiType } from '@/types'
+import { CHARACTER_NAMES, CHARACTER_TYPE } from '@/model/dashboard.entity'
 
 const characterMap = {
   busy: [

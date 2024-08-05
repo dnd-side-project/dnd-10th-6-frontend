@@ -1,16 +1,19 @@
-import { Button } from '@/components/ui'
-import { MAIN_COLOR } from '@/constants'
+import React, { useMemo, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from '@/provider/session-provider'
+import { cn } from '@/lib/client/utils'
+import { LazyMotion, domAnimation, m } from 'framer-motion'
+
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { cn } from '@/lib/client/utils'
-import { MONEY } from '@/model/dashboard.entity'
-import { useSession } from '@/provider/session-provider'
+
+import { MAIN_COLOR } from '@/constants'
 import { getDashboardQuery } from '@/queries/dashboard'
 import { PropswithWikiType } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import { LazyMotion, domAnimation, m } from 'framer-motion'
-import React, { useMemo, useState } from 'react'
+import { MONEY } from '@/model/dashboard.entity'
+
+import { Button } from '@/components/ui'
 
 const Money = ({
   wikiType,

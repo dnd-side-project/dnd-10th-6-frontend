@@ -7,15 +7,15 @@ import axios, {
 } from 'axios'
 import type { ProviderType, User } from '@/lib/auth'
 import { NamuiError, raiseNamuiErrorFromStatus } from '@/error'
+import { SurveyByIdResponse, WritingListResponse } from '@/queries/surveys'
+import { QsSchemaType } from '@/hooks/use-questions-form'
 import { AUTH } from '@/constants'
+import { WikiType } from '@/types'
 import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 import { DashboardData } from '@/model/dashboard.entity'
-import { QsSchemaType } from '@/hooks/use-questions-form'
 import { GetSurveyResponse } from '@/model/survey.entity'
-import { SurveyByIdResponse, WritingListResponse } from '@/queries/surveys'
-import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 import { Wikis } from '@/model/wikis.entity'
-import { WikiType } from '@/types'
+import { DetailResponse } from '@/components/dashboard-container/detail-drawer'
 
 export interface NamuiResponse<T = unknown> {
   data: T

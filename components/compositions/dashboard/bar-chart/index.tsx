@@ -1,15 +1,15 @@
-import { Button } from '@/components/ui'
+import React, { useEffect, useMemo, useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from '@/provider/session-provider'
+import { m, LazyMotion, domAnimation } from 'framer-motion'
+import { getDashboardQuery } from '@/queries/dashboard'
+import { PropswithWikiType } from '@/types'
 import { RANK_COLOR } from '@/constants'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { FilterType } from '@/hooks/use-filter'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 import { BarChartType, HAPPY_OR_SAD } from '@/model/dashboard.entity'
-import { useSession } from '@/provider/session-provider'
-import { getDashboardQuery } from '@/queries/dashboard'
-import { PropswithWikiType } from '@/types'
-import { useQuery } from '@tanstack/react-query'
-import { m, LazyMotion, domAnimation } from 'framer-motion'
-import React, { useEffect, useMemo, useRef } from 'react'
+import { Button } from '@/components/ui'
 
 export const BarChart = ({
   wikiType,

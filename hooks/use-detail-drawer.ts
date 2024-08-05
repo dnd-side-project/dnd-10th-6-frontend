@@ -1,6 +1,6 @@
-import { DetailType } from '@/components/dashboard-container/detail-drawer'
-import { useRouter } from 'next/router'
 import { useCallback } from 'react'
+import { useRouter } from 'next/router'
+import { DetailType } from '@/components/dashboard-container/detail-drawer'
 
 const useDetailDrawer = () => {
   const router = useRouter()

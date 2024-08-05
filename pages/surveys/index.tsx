@@ -1,19 +1,21 @@
 import { ReactNode, useState } from 'react'
-import { Button } from '@/components/ui'
-import { useSession } from '@/provider/session-provider'
-import { useRouter } from 'next/router'
-import { motion } from 'framer-motion'
+import { useMutation } from '@tanstack/react-query'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+import { useSession } from '@/provider/session-provider'
+
+import { motion } from 'framer-motion'
+import { Close } from '@radix-ui/react-dialog'
+
+import { NamuiApi } from '@/lib/namui-api'
 import { serverURL } from '@/lib/server/utils'
 import BaseLayout from '@/layout/base-layout'
-import { NamuiApi } from '@/lib/namui-api'
+import { useToggletheme } from '@/contexts/wiki-provider'
+import { PropswithWikiType } from '@/types'
+
 import SurveyTree from '@/components/svgs/survey-tree'
 import Modal from '@/components/modal'
-import { Close } from '@radix-ui/react-dialog'
-import { useMutation } from '@tanstack/react-query'
-
-import { PropswithWikiType } from '@/types'
-import { useToggletheme } from '@/contexts/wiki-provider'
+import { Button } from '@/components/ui'
 
 const Page = ({
   wikiType,

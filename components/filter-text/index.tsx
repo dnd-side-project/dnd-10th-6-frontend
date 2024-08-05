@@ -1,5 +1,5 @@
-import { cn } from '@/lib/client/utils'
 import { HTMLAttributes } from 'react'
+import { cn } from '@/lib/client/utils'
 
 interface FilterTextProps extends HTMLAttributes<HTMLButtonElement> {
   active?: boolean

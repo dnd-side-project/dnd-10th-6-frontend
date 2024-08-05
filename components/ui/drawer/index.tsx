@@ -1,7 +1,7 @@
-import { PeriodBadge, RelationBadge } from '@/components/badge'
-import { cn } from '@/lib/client/utils'
 import * as React from 'react'
+import { cn } from '@/lib/client/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
+import { PeriodBadge, RelationBadge } from '@/components/badge'
 
 const Drawer = ({
   shouldScaleBackground = true,

@@ -1,8 +1,8 @@
+import { UseInfiniteQueryOptions, UseQueryOptions } from '@tanstack/react-query'
 import { NamuiApi } from '@/lib/namui-api'
+import { WikiType } from '@/types'
 import { GetSurveyResponse } from '@/model/survey.entity'
 import { Period, Relation } from '@/model/card.entity'
-import { WikiType } from '@/types'
-import { UseInfiniteQueryOptions, UseQueryOptions } from '@tanstack/react-query'
 
 export const getSurveyQuery = (
   pageNo: number,

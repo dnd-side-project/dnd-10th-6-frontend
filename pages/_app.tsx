@@ -1,34 +1,38 @@
-import { AUTH } from '@/constants'
-import { UnauthorizedError } from '@/error'
-import CalcMobileHeight from '@/contexts/calc-mobile-height'
-import BaseLayout from '@/layout/base-layout'
-import { Session, Token } from '@/lib/auth'
-import { NamuiApi } from '@/lib/namui-api'
+import { useRef, ReactElement, ReactNode, useEffect, useState } from 'react'
+import { NextPage } from 'next'
+import type { AppContext, AppInitialProps, AppProps } from 'next/app'
+import App from 'next/app'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
+import '@/styles/global.css'
 import {
   SessionProvider,
   SessionContextType,
 } from '@/provider/session-provider'
-import '@/styles/global.css'
-import { parse, serialize } from 'cookie'
-import { NextPage } from 'next'
-import type { AppContext, AppInitialProps, AppProps } from 'next/app'
-import App from 'next/app'
-import { useRef, ReactElement, ReactNode, useEffect, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
-import { useRouter } from 'next/router'
-import { useSearchParams } from 'next/navigation'
-import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import QueryProvider from '@/contexts/query-provider'
+
 import { HydrationBoundary } from '@tanstack/react-query'
-import MetaHead from '@/components/meta-head'
+import { parse, serialize } from 'cookie'
+import { Toaster } from 'react-hot-toast'
+
+import { UnauthorizedError } from '@/error'
+import QueryProvider from '@/contexts/query-provider'
+import { WikiProvider } from '@/contexts/wiki-provider'
+import CalcMobileHeight from '@/contexts/calc-mobile-height'
+
+import BaseLayout from '@/layout/base-layout'
+import { Session, Token } from '@/lib/auth'
+import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
+
+import { AUTH } from '@/constants'
+
+import MetaHead from '@/components/meta-head'
 import ErrorBoundary from '@/components/error-boundary'
 import { Logo } from '@/components/ui'
-
 import icons from '@/assets/icons'
-import Image from 'next/image'
-import Link from 'next/link'
-import { WikiProvider } from '@/contexts/wiki-provider'
 
 export type NextPageWithLayout<P = unknown, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode

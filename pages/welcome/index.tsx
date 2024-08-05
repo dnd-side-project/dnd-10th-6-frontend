@@ -1,13 +1,15 @@
-import { Button } from '@/components/ui'
+import React, { useCallback, useState } from 'react'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+import { useSession } from '@/provider/session-provider'
+
+import { shareToCopyLink, shareToKaKaoLink } from '@/lib/client/utils'
+import FormLayout from '@/layout/form-layout'
 
 import MetaHead from '@/components/meta-head'
 import Modal from '@/components/modal'
-import FormLayout from '@/layout/form-layout'
-import { shareToCopyLink, shareToKaKaoLink } from '@/lib/client/utils'
-import { useSession } from '@/provider/session-provider'
-import { useRouter } from 'next/router'
-import React, { useCallback, useState } from 'react'
-import Image from 'next/image'
+import { Button } from '@/components/ui'
+
 import welcomeTree from '@/assets/characters/welcome-tree.webp'
 
 const WelcomePage = () => {

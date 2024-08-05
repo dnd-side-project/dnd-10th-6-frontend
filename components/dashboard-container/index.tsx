@@ -1,20 +1,22 @@
+import React, { HTMLAttributes, PropsWithChildren } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { AnimatePresence, motion } from 'framer-motion'
+import { cn } from '@/lib/client/utils'
+
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { getDashboardQuery } from '@/queries/dashboard'
-import { useQuery } from '@tanstack/react-query'
-import React, { HTMLAttributes, PropsWithChildren } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { PropswithWikiType } from '@/types'
 import { fadeInProps } from '@/variants'
-import { cn } from '@/lib/client/utils'
-import TripleTrees from '../svgs/triple-trees'
-import ShareModal from '../share-modal'
+
+import { KnowAbout } from '../compositions/dashboard/know-about'
+import { BubbleChart } from '../compositions/dashboard/bubble-chart'
+import { BarChart } from '../compositions/dashboard/bar-chart'
 import { Button } from '@/components/ui'
 import Character from '@/components/compositions/dashboard/character'
 import Money from '@/components/compositions/dashboard/money'
 import TreeInfo from '@/components/compositions/dashboard/tree-info'
-import { PropswithWikiType } from '@/types'
-import { KnowAbout } from '../compositions/dashboard/know-about'
-import { BubbleChart } from '../compositions/dashboard/bubble-chart'
-import { BarChart } from '../compositions/dashboard/bar-chart'
+import TripleTrees from '../svgs/triple-trees'
+import ShareModal from '../share-modal'
 
 const DashboardContainer = ({
   shouldShowHeader,

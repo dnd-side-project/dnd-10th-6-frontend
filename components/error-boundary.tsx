@@ -1,9 +1,9 @@
 import React, { ErrorInfo, PropsWithChildren } from 'react'
-import { Button } from '@/components/ui'
-import ErrorTree from './svgs/error-tree'
+
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-
+import { Button } from '@/components/ui'
+import ErrorTree from './svgs/error-tree'
 class ErrorBoundary extends React.Component<
   PropsWithChildren,
   { hasError: boolean }

@@ -1,28 +1,28 @@
 import { ReactNode, createContext, useMemo, useRef, useState } from 'react'
-import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
-import useScrollDirection from '@/hooks/use-scroll-direction'
-import { useSettingStore } from '@/stores/setting.store'
 import { GetServerSideProps } from 'next'
+import { StaticImageData } from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
+import { useSettingStore } from '@/stores/setting.store'
+import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 
+import { useSession } from '@/provider/session-provider'
 import BaseLayout from '@/layout/base-layout'
-
-import { FilterProvider } from '@/hooks/use-filter'
 import withAuth from '@/layout/HOC/with-auth'
+import { FilterProvider } from '@/hooks/use-filter'
+import useScrollDirection from '@/hooks/use-scroll-direction'
+
 import DashboardContainer from '@/components/dashboard-container'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
-import { useRouter } from 'next/router'
-import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
-import { useSearchParams } from 'next/navigation'
-import { Button } from '@/components/ui'
-import { useSession } from '@/provider/session-provider'
-import { SafeSvgTextInner } from '@/components/safe-svg-text-inner'
 import ShareModal from '@/components/share-modal'
+import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
+import { Button } from '@/components/ui'
+import { SafeSvgTextInner } from '@/components/safe-svg-text-inner'
 
 import BarChart from '@/pages/assets/images/icons/barchart.png'
 import PieChart from '@/pages/assets/images/icons/piechart.png'
 import Gift from '@/pages/assets/images/icons/gift.png'
 import Message from '@/pages/assets/images/icons/message.png'
-import { StaticImageData } from 'next/image'
 
 interface Colors {
   GRADIENT_FROM: string

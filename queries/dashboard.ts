@@ -1,7 +1,7 @@
-import { NamuiApi } from '@/lib/namui-api'
-import { DashboardResponse, Statistic } from '@/model/dashboard.entity'
-import { WikiType } from '@/types'
 import { UseQueryOptions } from '@tanstack/react-query'
+import { NamuiApi } from '@/lib/namui-api'
+import { WikiType } from '@/types'
+import { DashboardResponse, Statistic } from '@/model/dashboard.entity'
 
 export type DashboardFilter = {
   type: string

@@ -1,5 +1,6 @@
-import { Method } from 'axios'
 import { NextApiResponse, NextApiRequest } from 'next'
+import { Method } from 'axios'
+
 import { withError } from './utils'
 
 interface ConfigType<T> {

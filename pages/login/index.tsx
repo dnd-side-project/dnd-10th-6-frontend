@@ -1,5 +1,6 @@
-import WriterLanding from '@/components/situations/landing'
 import { ReactNode } from 'react'
+import WriterLanding from '@/components/situations/landing'
+
 
 const Page = () => {
   return (
