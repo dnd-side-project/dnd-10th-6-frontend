@@ -1,10 +1,10 @@
-import Loading from '@/components/situations/loading'
-import { AUTH } from '@/constants'
-import BaseLayout from '@/layout/base-layout'
-import { useBrowserLayoutEffect } from '@/lib/client/utils'
+import React, { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import React, { ReactNode } from 'react'
+import BaseLayout from '@/layout/base-layout'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
+import { AUTH } from '@/constants'
+import Loading from '@/components/situations/loading'
 /**
  *
  * @param {csrfCallbackUrl} 요청 화면으로 되돌아 가기 전 선행되어야 하는 화면 주소

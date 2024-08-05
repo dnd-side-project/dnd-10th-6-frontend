@@ -1,22 +1,26 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
-import BaseLayout from '@/layout/base-layout'
-import withAuth from '@/layout/HOC/with-auth'
-import { Button } from '@/components/ui'
-import TreeCard from '@/components/compositions/tree-card'
+import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { useIntersectionObserver } from '@/hooks/use-observer'
 import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
+
+import BaseLayout from '@/layout/base-layout'
+import withAuth from '@/layout/HOC/with-auth'
+import { NamuiApi } from '@/lib/namui-api'
+import { cn } from '@/lib/client/utils'
+import { useToggletheme } from '@/contexts/wiki-provider'
+
+import { useIntersectionObserver } from '@/hooks/use-observer'
 import { fadeInProps } from '@/variants'
+import { WikiType } from '@/types'
+
+import TreeCard from '@/components/compositions/tree-card'
 import ShareModal from '@/components/share-modal'
 import InfoIcon from '@/components/svgs/info-icon'
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/router'
+import { Button } from '@/components/ui'
 import backIcon from '@/assets/icons/back.svg'
-import Image from 'next/image'
-import { cn } from '@/lib/client/utils'
-import { WikiType } from '@/types'
-import { NamuiApi } from '@/lib/namui-api'
 
 const Pages = () => {
   const router = useRouter()
@@ -56,6 +60,8 @@ const Pages = () => {
     hasNextPage,
     fetchNextPage,
   })
+
+  useToggletheme(wikiType)
 
   const [showScrollButton, setShowScrollButton] = useState(false)
 

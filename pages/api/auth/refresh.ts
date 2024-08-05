@@ -1,10 +1,12 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { serialize } from 'cookie'
+import * as z from 'zod'
+
 import { AUTH } from '@/constants'
 import { UnauthorizedError, isNamuiError } from '@/error'
 import { serverURL } from '@/lib/server/utils'
 import withHandler from '@/lib/server/with-handler'
-import { serialize } from 'cookie'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import * as z from 'zod'
+
 const token = z.object({
   accessToken: z.string().min(1),
   refreshToken: z.string().min(1),

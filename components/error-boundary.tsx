@@ -1,9 +1,9 @@
 import React, { ErrorInfo, PropsWithChildren } from 'react'
-import { Button } from '@/components/ui'
-import ErrorTree from './svgs/error-tree'
+
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-
+import { Button } from '@/components/ui'
+import ErrorTree from './svgs/error-tree'
 class ErrorBoundary extends React.Component<
   PropsWithChildren,
   { hasError: boolean }
@@ -18,7 +18,7 @@ class ErrorBoundary extends React.Component<
   }
 
   handleBack() {
-    window.location.pathname = '/garden'
+    window.location.pathname = '/main'
   }
 
   componentDidCatch(error: Error, _: ErrorInfo) {
@@ -42,7 +42,7 @@ class ErrorBoundary extends React.Component<
           </div>
 
           <Button onClick={this.handleBack} className="!w-fit px-4">
-            내 정원가기
+            돌아가기
           </Button>
         </motion.div>
       )

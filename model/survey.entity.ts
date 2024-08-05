@@ -1,4 +1,4 @@
-import { Period, Relation } from './tree.entity'
+import { Period, Relation } from './card.entity'
 
 export interface GetSurveyResponse {
   data: GetSurveyData

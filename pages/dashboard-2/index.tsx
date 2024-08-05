@@ -1,13 +1,12 @@
 import { ReactNode, createContext, useRef, useState } from 'react'
-import { cn } from '@/lib/client/utils'
-import { GetServerSideProps } from 'next'
-
-import BaseLayout from '@/layout/base-layout'
-
-import { FilterProvider } from '@/hooks/use-filter'
-import withAuth from '@/layout/HOC/with-auth'
-import DetailDrawer from '@/components/dashboard-container/detail-drawer'
 import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next'
+import { cn } from '@/lib/client/utils'
+import BaseLayout from '@/layout/base-layout'
+import withAuth from '@/layout/HOC/with-auth'
+import { FilterProvider } from '@/hooks/use-filter'
+
+import DetailDrawer from '@/components/dashboard-container/detail-drawer'
 import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
 
 export const DetailQsContext = createContext<{

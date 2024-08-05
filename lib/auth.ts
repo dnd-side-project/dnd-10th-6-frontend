@@ -1,5 +1,5 @@
-import { BadRequestError } from '@/error'
 import * as z from 'zod'
+import { BadRequestError } from '@/error'
 
 export interface User {
   wikiId: string

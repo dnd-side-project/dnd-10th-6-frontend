@@ -1,5 +1,5 @@
-import { BadRequestError } from '@/error'
 import { NextApiResponse } from 'next'
+import { BadRequestError } from '@/error'
 
 export const withError = (
   res: NextApiResponse,

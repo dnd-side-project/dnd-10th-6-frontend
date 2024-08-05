@@ -1,7 +1,8 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+import { serialize } from 'cookie'
 import { AUTH } from '@/constants'
 import withHandler from '@/lib/server/with-handler'
-import { serialize } from 'cookie'
-import { NextApiRequest, NextApiResponse } from 'next'
+
 const EXPIRED_TOKEN_KEY_LIST = [
   AUTH.OAUTH_TOKEN,
   AUTH.OAUTH_PROVIDER,

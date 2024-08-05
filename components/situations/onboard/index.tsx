@@ -1,17 +1,21 @@
-import { Button } from '@/components/ui'
-import Carousel from '@/components/carousel'
 import { useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { EmblaCarouselType } from 'embla-carousel'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
+import { Button } from '@/components/ui'
+import Carousel from '@/components/carousel'
 import OnboardStep2 from './onboard-step2'
 import OnboardStep3 from './onboard-step3'
 import OnboardStep1 from './onboard-step1'
+import OnboardStep4 from './onobard-step4'
+import OnboardStep5 from './onboard-step5'
 
 export const onBoardingItems = [
   <OnboardStep1 key="onboarding-step1" />,
   <OnboardStep2 key="onboarding-step2" />,
   <OnboardStep3 key="onboarding-step3" />,
+  <OnboardStep4 key="onboarding-step4" />,
+  <OnboardStep5 key="onboarding-step5" />,
 ]
 interface OnBoardProps {
   onStartClick: () => void

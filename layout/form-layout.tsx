@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react'
 import BaseLayout from './base-layout'
-import { HeaderProps } from '@/components/header'
 import { cn } from '@/lib/client/utils'
-
+import { HeaderProps } from '@/components/header'
 interface FormLayoutProps {
   title?: ReactNode
   content: ReactNode

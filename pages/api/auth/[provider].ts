@@ -1,4 +1,5 @@
-import { AUTH } from '@/constants'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { parse, serialize } from 'cookie'
 import {
   BadRequestError,
   InternalServerError,
@@ -7,8 +8,8 @@ import {
 } from '@/error'
 import { Provider } from '@/lib/auth'
 import withHandler from '@/lib/server/with-handler'
-import { parse, serialize } from 'cookie'
-import type { NextApiRequest, NextApiResponse } from 'next'
+
+import { AUTH } from '@/constants'
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

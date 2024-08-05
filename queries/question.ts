@@ -1,8 +1,8 @@
-import { QsSchemaType } from '@/hooks/use-questions-form'
-import { NamuiApi } from '@/lib/namui-api'
-import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
-import { WikiType } from '@/types'
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
+import { NamuiApi } from '@/lib/namui-api'
+import { QsSchemaType } from '@/hooks/use-questions-form'
+import { WikiType } from '@/types'
+import { Question, QuestionByType, QuestionType } from '@/model/question.entity'
 
 export const getQuestionQuery = (
   nickname: string,

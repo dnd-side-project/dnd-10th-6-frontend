@@ -1,7 +1,8 @@
-import { useBrowserLayoutEffect } from '@/lib/client/utils'
-import { useSession } from '@/provider/session-provider'
-import { useRouter } from 'next/router'
 import { ComponentType, ReactNode } from 'react'
+import { useRouter } from 'next/router'
+import { useSession } from '@/provider/session-provider'
+import { useBrowserLayoutEffect } from '@/lib/client/utils'
+
 type HOC = {
   (): React.JSX.Element
   getLayout?: (page: ReactNode) => ReactNode

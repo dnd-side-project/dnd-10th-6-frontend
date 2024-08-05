@@ -3,7 +3,7 @@ import { useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Writing } from '@/queries/surveys'
-import { TreeType, treeCardAsset } from '@/model/tree.entity'
+import { TreeType, treeCardAsset } from '@/model/card.entity'
 import { PeriodBadge, RelationBadge } from '@/components/badge'
 const variants = {
   hidden: {

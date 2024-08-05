@@ -31,20 +31,24 @@ export type CHARACTER_TYPE = {
   characters: CHARACTER_ITEMS[]
 }
 
+export type BarChartType = 'HAPPY' | 'SAD'
+
 export type BEST_WORTH = {
-  dashboardType: 'BEST_WORTH'
+  // TODO: 대시보드타입 변경예정
+  dashboardType: 'BUBBLE_CHART'
   questionId: string
   rank: Rank[]
 }
 export type HAPPY_OR_SAD = {
-  dashboardType: 'HAPPY' | 'SAD'
+  dashboardType: BarChartType
   questionId: string
   rank: Rank[]
+  questionTitle: string
 }
 
 export type Statistic =
   | {
-      dashboardType: 'HAPPY' | 'SAD' | 'MONEY'
+      dashboardType: BarChartType | 'MONEY'
       rank?: Rank[]
       friendly?: boolean
       similar?: boolean

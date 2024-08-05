@@ -1,8 +1,8 @@
-import { ANSWER_TYPE } from '@/constants/enum'
-import { wikiTypeList } from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { wikiTypeList } from '@/types'
+import { ANSWER_TYPE } from '@/constants/enum'
 
 const period = ['SIX_MONTHS', 'ONE_YEAR', 'FOUR_YEARS', 'INFINITE'] as const
 

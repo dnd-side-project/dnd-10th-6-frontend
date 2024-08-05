@@ -1,28 +1,28 @@
-import { ReactNode, createContext, useRef, useState } from 'react'
-import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
-import useScrollDirection from '@/hooks/use-scroll-direction'
-import { useSettingStore } from '@/stores/setting.store'
+import { ReactNode, createContext, useMemo, useRef, useState } from 'react'
 import { GetServerSideProps } from 'next'
+import { StaticImageData } from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
+import { useSettingStore } from '@/stores/setting.store'
+import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 
+import { useSession } from '@/provider/session-provider'
 import BaseLayout from '@/layout/base-layout'
-
-import { FilterProvider } from '@/hooks/use-filter'
 import withAuth from '@/layout/HOC/with-auth'
+import { FilterProvider } from '@/hooks/use-filter'
+import useScrollDirection from '@/hooks/use-scroll-direction'
+
 import DashboardContainer from '@/components/dashboard-container'
 import DetailDrawer from '@/components/dashboard-container/detail-drawer'
-import { useRouter } from 'next/router'
-import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
-import { useSearchParams } from 'next/navigation'
-import { Button } from '@/components/ui'
-import { useSession } from '@/provider/session-provider'
-import { SafeSvgTextInner } from '@/components/safe-svg-text-inner'
 import ShareModal from '@/components/share-modal'
+import { ShareImageDrawer, ShareImageProvider } from '@/components/share-image'
+import { Button } from '@/components/ui'
+import { SafeSvgTextInner } from '@/components/safe-svg-text-inner'
 
 import BarChart from '@/pages/assets/images/icons/barchart.png'
 import PieChart from '@/pages/assets/images/icons/piechart.png'
 import Gift from '@/pages/assets/images/icons/gift.png'
 import Message from '@/pages/assets/images/icons/message.png'
-import { StaticImageData } from 'next/image'
 
 interface Colors {
   GRADIENT_FROM: string
@@ -31,9 +31,10 @@ interface Colors {
   LETTER_COUNT_BOX: string
   IMAGE_WIKI_DECO: StaticImageData
   IMAGE_COUNT_DECO: StaticImageData
+  MAIN_COLOR: string
 }
 
-const WIKI_COLORS: { [key in WikiType]: Colors } = {
+export const WIKI_COLORS: { [key in WikiType]: Colors } = {
   NAMUI: {
     GRADIENT_FROM: '#BFF1CF',
     NAME_BOX: '#199EF0',
@@ -41,6 +42,7 @@ const WIKI_COLORS: { [key in WikiType]: Colors } = {
     LETTER_COUNT_BOX: '#FFEB34',
     IMAGE_COUNT_DECO: PieChart,
     IMAGE_WIKI_DECO: BarChart,
+    MAIN_COLOR: '#00BE4F',
   },
   ROMANCE: {
     GRADIENT_FROM: '#FFD4DA',
@@ -49,25 +51,22 @@ const WIKI_COLORS: { [key in WikiType]: Colors } = {
     LETTER_COUNT_BOX: '#FFEB34',
     IMAGE_WIKI_DECO: Gift,
     IMAGE_COUNT_DECO: Message,
+    MAIN_COLOR: '#FF6460',
   },
 }
 
 import { motion, useInView } from 'framer-motion'
 import { PropswithWikiType, WikiType } from '@/types'
 import { NamuiApi } from '@/lib/namui-api'
-import { useToggleTheme } from '@/hooks/use-toggle-theme'
+import { useToggletheme } from '@/contexts/wiki-provider'
+import { useQuery } from '@tanstack/react-query'
 
 export const DetailQsContext = createContext<{
   id: string
   handle: (id: string) => void
 }>({ id: '', handle: () => {} })
 
-const Page = ({
-  wikiType,
-  wikiCount,
-}: PropswithWikiType<{
-  wikiCount: number
-}>) => {
+const Page = ({ wikiType }: PropswithWikiType) => {
   const searchParams = useSearchParams()
   const wiki = wikiType || (searchParams.get('wikiType') as WikiType)
   const headerHeight = useSettingStore((state) => state.headerHeight)
@@ -78,7 +77,19 @@ const Page = ({
   const { direction, scrollTop } = useScrollDirection({ ref })
   const shouldShowHeader = scrollTop > headerHeight && direction === 'UP'
 
-  useToggleTheme(wikiType)
+  const { data: wikis } = useQuery({
+    queryKey: ['wikis'],
+    queryFn: NamuiApi.getWikis,
+  })
+
+  const wikiCount = useMemo(
+    () =>
+      wikis?.data.wikiList.find((wiki) => wiki.wikiType === wikiType)
+        ?.answerCount || 0,
+    [wikiType, wikis],
+  )
+
+  useToggletheme(wikiType)
 
   const handleQsId = (id: string) => {
     setSelectedQsId(id)
@@ -145,12 +156,18 @@ export const getServerSideProps = (async (context) => {
   }
 
   //FIX: change to SSR && set auth in server runtime
-  NamuiApi.setToken(context.req.cookies['accessToken'])
-  const { data: wikis } = await NamuiApi.getWikis()
-  const wikiCount =
-    wikis.wikiList.find((wiki) => wiki.wikiType === wikiType)?.answerCount || 0
+  // NamuiApi.setToken(context.req.cookies['accessToken'])
+  // try {
+  //   const { data: wikis } = await NamuiApi.getWikis()
+  //   const wikiCount =
+  //     wikis.wikiList.find((wiki) => wiki.wikiType === wikiType)?.answerCount ||
+  //     0
 
-  return { props: { wikiType: wikiType.toUpperCase(), wikiCount } }
+  //   return { props: { wikiType: wikiType.toUpperCase(), wikiCount } }
+  // } catch {
+  //   return { props: { wikiType: wikiType.toUpperCase(), wikiCount: 0 } }
+  // }
+  return { props: { wikiType: wikiType.toUpperCase() } }
 }) satisfies GetServerSideProps
 
 function DashboardTitle({

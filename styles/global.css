@@ -7,12 +7,14 @@
     --brand-600: #00be4f;
     --brand-500: #00ce59;
     --brand-400: #0bd774;
+    --brand-hover: #eeffef;
   }
 
   .romance {
     --brand-600: #ff4e46;
     --brand-500: #ff5544;
     --brand-400: #ff6460;
+    --brand-hover: #ffeef1;
   }
 }
 
