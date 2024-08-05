@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Controller, FormProvider, useFieldArray } from 'react-hook-form'
 import { FunnelProvider } from '@/contexts/useFunnelContext'
@@ -66,8 +66,6 @@ const Question = ({
   const { step, toPrevStep, toNextStep, hasPrevStep } = useFunnel()
   const router = useRouter()
 
-  const stepRef = useRef<HTMLParagraphElement>(null)
-
   const [progress, setProgress] = useState<{ current: number; max: number }>({
     current: 0,
     max: fieldList.length,
@@ -105,59 +103,9 @@ const Question = ({
     submit(data)
   }
 
-  const countAnimation = ({
-    index,
-  }: {
-    direction: 'UP' | 'DOWN'
-    index: number
-  }) => {
-    if (stepRef.current) {
-      const startValue = txt[progress.current] ?? 0
-
-      const DURATION = 1500
-      const easeOutQuint = (x: number): number => {
-        return 1 - Math.pow(1 - x, 5)
-      }
-
-      const target = txt[index]
-
-      let animationId: number
-      // 최초 시작 시간
-      let start: number
-
-      const animate = () => {
-        if (!start) start = new Date().getTime()
-        // 현재시간 - 최초시작시간
-        const timestamp = new Date().getTime()
-        const progress = timestamp - start
-        if (progress >= DURATION) {
-          if (stepRef.current) {
-            stepRef.current.innerText = `${isNaN(target) ? 100 : target}%`
-          }
-          cancelAnimationFrame(animationId)
-          if (target === 100) router.replace('/submit')
-          return
-        }
-
-        const p = progress / DURATION
-        const value = easeOutQuint(p)
-        if (stepRef.current) {
-          const dest = target - startValue
-          stepRef.current.innerText = `${(isNaN(startValue) ? 0 : startValue ?? 0) + Math.round(dest * value) ?? 0}%`
-        }
-        if (p < DURATION) {
-          animationId = requestAnimationFrame(animate)
-        }
-      }
-
-      animationId = requestAnimationFrame(animate)
-    }
-  }
-
   const goPrev = async () => {
     toPrevStep()
     setProgress((prev) => ({ ...prev, current: prev.current - 1 }))
-    countAnimation({ direction: 'DOWN', index: progress.current - 1 })
   }
 
   const goNext = () => {
@@ -171,7 +119,6 @@ const Question = ({
 
     toNextStep()
     setProgress((prev) => ({ ...prev, current: prev.current + 1 }))
-    countAnimation({ direction: 'UP', index: progress.current + 1 })
   }
 
   const txt = useMemo(() => {
@@ -240,9 +187,7 @@ const Question = ({
       title={
         !['senderName', 'knowing'].includes(step) ? (
           <div className="text-brand-main-green400 flex items-center overflow-hidden ">
-            <p className="flex items-center justify-center" ref={stepRef}>
-              0%
-            </p>
+            <p className="flex items-center justify-center">남의위키</p>
           </div>
         ) : (
           <div className="flex items-center text-body1-bold">정보 입력</div>

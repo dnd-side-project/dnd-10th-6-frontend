@@ -18,12 +18,13 @@ import { fadeInProps } from '@/variants'
 import { cn, useBrowserLayoutEffect } from '@/lib/client/utils'
 import InputLabel from '../inputLabel'
 import * as z from 'zod'
+import Image from 'next/image'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Inputbox } from '@/components/ui'
-import { TreeSvg } from '../questionTrees'
 import { useRaisedShadow } from '@/hooks/use-raised-shadow'
 import { ANSWER_TYPE } from '@/constants/enum'
 import UpDownSheet from '../ui/updownSheet'
+import questionTree from '@/assets/characters/question-tree.svg'
 
 const surveyScheme = z.object({
   answer: z.string().min(1).or(z.number()).or(z.array(z.string())),
@@ -218,7 +219,6 @@ const SurveyForm = ({
   title,
   name,
   isLast,
-  index,
   initialValue,
   disabled,
   onConfirm,
@@ -273,7 +273,7 @@ const SurveyForm = ({
   const selectedType = form.watch().type
   const answerWatch = form.watch().answer
   const reasonWatch = form.watch().reason
-  const Tree = TreeSvg[(index - 1) as keyof typeof TreeSvg]
+
   return (
     <FormProvider {...form}>
       <form
@@ -282,9 +282,10 @@ const SurveyForm = ({
       >
         {type === 'OX' ? (
           // OX 타입
-          <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
+          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+            <Image src={questionTree} alt="questionTree" />
             <div
-              className="text-subTitle1-medium"
+              className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller
@@ -356,9 +357,10 @@ const SurveyForm = ({
           </div>
         ) : type === 'MULTIPLE_CHOICE' ? (
           // 다중선택
-          <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
+          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+            <Image src={questionTree} alt="questionTree" />
             <div
-              className="text-subTitle1-medium"
+              className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller
@@ -448,9 +450,10 @@ const SurveyForm = ({
           </div>
         ) : type === 'NUMERIC_CHOICE' ? (
           // 숫자 선택
-          <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
+          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+            <Image src={questionTree} alt="questionTree" />
             <div
-              className="text-subTitle1-medium"
+              className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller
@@ -559,17 +562,19 @@ const SurveyForm = ({
             />
           </div>
         ) : type === 'RANK' ? (
-          <div className="!mb-[190px] flex grow flex-col space-y-2 overflow-y-scroll">
+          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+            <Image src={questionTree} alt="questionTree" />
             <div
-              className="text-subTitle1-medium"
+              className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             />
             <ReorderOptions options={options} name={name} id={id} />
           </div>
         ) : (
-          <div className="!mb-[240px] flex grow flex-col space-y-2 overflow-y-scroll">
+          <div className="!mb-[240px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+            <Image src={questionTree} alt="questionTree" />
             <div
-              className="text-subTitle1-medium"
+              className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller
@@ -577,8 +582,9 @@ const SurveyForm = ({
               defaultValue=""
               control={form.control}
               render={({ field }) => (
-                <div className="relative px-4 py-[14px]">
+                <div className="relative w-full px-4 py-[14px] text-left">
                   <textarea
+                    className="w-full resize-none border-none bg-white text-b2-kr-m text-black outline-none placeholder:text-font-gray-04 disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled"
                     {...field}
                     id={field.name}
                     placeholder={
@@ -620,7 +626,7 @@ const SurveyForm = ({
                       'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main',
                     )}
                   />
-                  <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
+                  <span className="absolute bottom-[14px] right-4 text-b3-kr-m text-font-gray-04">
                     {(field.value + '').length}/
                     {name === 'FIVE_LETTER_WORD' ? 5 : 50}
                   </span>
@@ -632,7 +638,7 @@ const SurveyForm = ({
         <div className="absolute bottom-0 flex w-full flex-col items-end justify-end">
           {type !== 'SHORT_ANSWER' && (
             <InputLabel
-              className="text-sub2-medium"
+              className="text-t4-kr-m"
               label="이유를 말해주세요"
               required
             >
@@ -646,7 +652,7 @@ const SurveyForm = ({
                       {...field}
                       id={field.name}
                       className={cn(
-                        'placeholder:text-muted peer flex w-full resize-none border-none bg-transparent text-body3-medium  outline-none  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
+                        'placeholder:text-muted peer flex w-full resize-none border-none bg-white text-b3-kr-m  outline-none  placeholder:text-font-gray-04 disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled peer-focus-visible:border-brand-main                        ',
                       )}
                       placeholder="50글자 이내로 입력해주세요"
                       maxLength={50}
@@ -664,10 +670,12 @@ const SurveyForm = ({
                     <label
                       htmlFor={field.name}
                       className={cn(
-                        'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] border-brand-main duration-100 peer-placeholder-shown:border-line-medium peer-focus-visible:border-brand-main',
+
+                        'pointer-events-none absolute left-1/2 top-1/2 block h-full w-full -translate-x-1/2 -translate-y-1/2 touch-none select-none rounded-md border-[1px] duration-100 peer-placeholder-shown:border-line-regular peer-focus-visible:border-brand-main',
+
                       )}
                     />
-                    <span className="absolute bottom-[14px] right-4 text-body3-medium text-text-sub-gray99">
+                    <span className="absolute bottom-[14px] right-4 text-b3-kr-m text-font-gray-04">
                       {field.value?.length}/50
                     </span>
                   </div>
@@ -676,7 +684,6 @@ const SurveyForm = ({
             </InputLabel>
           )}
 
-          {Tree && Tree}
           <div className="mb-4 flex w-full justify-center bg-white pt-5">
             <Button
               disabled={
