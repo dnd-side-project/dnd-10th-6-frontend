@@ -1,56 +1,49 @@
 import React, { useId, useMemo, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+
 import { useSession } from '@/provider/session-provider'
 import { cn } from '@/lib/client/utils'
 import { LazyMotion, domAnimation, m } from 'framer-motion'
 
 import useDetailDrawer from '@/hooks/use-detail-drawer'
-import { FilterType } from '@/hooks/use-filter'
+
 import { useInViewRef } from '@/hooks/use-in-view-ref'
 
 import { MAIN_COLOR } from '@/constants'
-import { getDashboardQuery } from '@/queries/dashboard'
+
 import { PropswithWikiType } from '@/types'
-import { MONEY } from '@/model/dashboard.entity'
+import { MoneyChartType } from '@/model/dashboard.entity'
 
 import { Button } from '@/components/ui'
 
 const Money = ({
-  wikiType,
-  filter,
+  isLoading,
+  dashboard,
 }: PropswithWikiType<{
-  filter: FilterType
+  isLoading?: boolean
+  dashboard: MoneyChartType
 }>) => {
   const { handle } = useDetailDrawer()
   const { data } = useSession()
-  const { data: statisics, isLoading } = useQuery({
-    ...getDashboardQuery(wikiType, filter),
-    select(data) {
-      return data.data?.statistics.find(
-        (item) => item.dashboardType === 'MONEY',
-      ) as MONEY
-    },
-  })
 
   const { ref, inView } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
   })
   const myAvg = useMemo(() => {
-    const total = (statisics?.average ?? 0) + (statisics?.entireAverage ?? 0)
+    const total = (dashboard?.average ?? 0) + (dashboard?.entireAverage ?? 0)
 
     return {
-      mine: (statisics?.average ?? 0) / total,
-      entire: (statisics?.entireAverage ?? 0) / total,
+      mine: (dashboard?.average ?? 0) / total,
+      entire: (dashboard?.entireAverage ?? 0) / total,
     }
-  }, [statisics])
+  }, [dashboard])
   return (
     <LazyMotion features={domAnimation}>
       <div
         ref={ref}
         className="flex flex-col items-center space-y-[60px] rounded-[20px] bg-bg-light py-10"
       >
-        {isLoading || !statisics ? (
+        {isLoading || !dashboard ? (
           <>
             <div className="skeleton mb-2 h-8 w-1/4" />
             <div className="skeleton mb-5 h-8 w-3/4" />
@@ -75,12 +68,12 @@ const Money = ({
             </div> */}
             <div className="mx-auto flex h-full space-x-12">
               <Bar
-                price={statisics.average ?? 0}
+                price={dashboard.average ?? 0}
                 active={inView}
                 value={myAvg.mine * 100}
               />
               <Bar
-                price={statisics.entireAverage ?? 0}
+                price={dashboard.entireAverage ?? 0}
                 active={inView}
                 isMe={false}
                 value={myAvg.entire * 100}
@@ -91,7 +84,7 @@ const Money = ({
         <div className="mx-auto mt-10 flex w-1/2 justify-center">
           <Button
             onClick={() =>
-              statisics?.questionId && handle(statisics?.questionId)
+              dashboard?.questionId && handle(dashboard?.questionId)
             }
             rounded="full"
             variant="Line-neutral"

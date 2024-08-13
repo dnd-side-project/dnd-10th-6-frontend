@@ -13,6 +13,7 @@ import { Button } from '@/components/ui'
 export const BarChart = ({
   isLoading,
   dashboard,
+  wikiType,
 }: PropswithWikiType<{
   isLoading?: boolean
   dashboard: BarChartType
@@ -30,11 +31,11 @@ export const BarChart = ({
     return arr?.map((item, index) => ({
       ...item,
       color:
-        RANK_COLOR[index] ??
+        RANK_COLOR[wikiType][index] ??
         `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
       text: item.legend.split('  ')[1],
     }))
-  }, [dashboard])
+  }, [dashboard?.rank, wikiType])
 
   return (
     <LazyMotion features={domAnimation}>
@@ -57,7 +58,7 @@ export const BarChart = ({
               <span>친구가 써준 답변을 확인해보세요</span>
             ) : (
               <h2
-                className="mx-auto w-fit text-t1-kr-b"
+                className="mx-auto w-fit text-center text-t1-kr-b"
                 dangerouslySetInnerHTML={{
                   __html: (dashboard?.questionTitle ?? '').replace(
                     '{{userName}}',

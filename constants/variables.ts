@@ -11,4 +11,7 @@ export const AUTH = {
 }
 
 export const QUESTION_MAX = 14
-export const RANK_COLOR = ['#00BC68', '#199EF0', '#FFEB34']
+export const RANK_COLOR = {
+  NAMUI: ['#00BC68', '#199EF0', '#FFEB34'],
+  ROMANCE: ['#FF6460', '#199EF0', '#FFEB34'],
+}

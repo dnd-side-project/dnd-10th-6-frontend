@@ -27,10 +27,10 @@ export const BubbleChart = ({
       ...item,
       percentage: item.percentage ?? 0,
       color:
-        RANK_COLOR[index] ??
+        RANK_COLOR[wikiType][index] ??
         `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
     }))
-  }, [dashboard])
+  }, [dashboard?.rank, wikiType])
   return (
     <div className="flex flex-col items-center rounded-[20px] bg-bg-light py-10">
       <h2 className="mx-auto w-fit px-5 text-t1-kr-b">

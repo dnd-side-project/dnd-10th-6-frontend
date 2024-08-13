@@ -1,8 +1,8 @@
 import React, {
   HTMLAttributes,
   PropsWithChildren,
-  useCallback,
   useMemo,
+  useRef,
 } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -21,6 +21,9 @@ import TripleTrees from '../svgs/triple-trees'
 import ShareModal from '../share-modal'
 import { Statistic } from '@/model/dashboard.entity'
 import { BinaryChart } from '../compositions/dashboard/binary-chart'
+import Money from '../compositions/dashboard/money'
+import { MAIN_COLOR } from '@/constants'
+import { RankChart } from '../compositions/dashboard/rank-chart'
 
 const DashboardContainer = ({
   shouldShowHeader,
@@ -35,9 +38,7 @@ const DashboardContainer = ({
     getDashboardQuery(wikiType, selectedFilter),
   )
 
-  console.log(statisics, '<')
-
-  const dashboardList = useMemo(() => statisics, [statisics?.length])
+  const dashboardList = useMemo(() => statisics, [statisics])
 
   return (
     <motion.div
@@ -61,11 +62,9 @@ const DashboardContainer = ({
               />
             </Section>
             {dashboardList?.map((stat) => (
-              <RecursiveDashboard
-                key={stat.questionId}
-                wikiType={wikiType}
-                dashboard={stat}
-              />
+              <Section key={stat.questionId}>
+                <RecursiveDashboard wikiType={wikiType} dashboard={stat} />
+              </Section>
             ))}
           </motion.div>
         ) : (
@@ -123,8 +122,7 @@ const RecursiveDashboard = ({
   wikiType,
   dashboard,
 }: PropswithWikiType<RecursiveDashboardProps>) => {
-  const { selectedFilter } = useFilter()
-  const Component = useCallback(() => {
+  const dashboardChild = useMemo(() => {
     switch (dashboard.dashboardType) {
       case 'BAR_CHART':
         return <BarChart wikiType={wikiType} dashboard={dashboard} />
@@ -133,26 +131,10 @@ const RecursiveDashboard = ({
       case 'BUBBLE_CHART':
         return <BubbleChart wikiType={wikiType} dashboard={dashboard} />
       case 'MONEY':
-        return (
-          <BarChart
-            filter={selectedFilter}
-            wikiType={wikiType}
-            chartType="HAPPY"
-          />
-        )
+        return <Money wikiType={wikiType} dashboard={dashboard} />
       case 'RANK':
-        return (
-          <BarChart
-            filter={selectedFilter}
-            wikiType={wikiType}
-            chartType="HAPPY"
-          />
-        )
+        return <RankChart dashboard={dashboard} wikiType={wikiType} />
     }
-  }, [dashboard, selectedFilter, wikiType])
-  return (
-    <Section>
-      <Component />
-    </Section>
-  )
+  }, [dashboard, wikiType])
+  return dashboardChild
 }

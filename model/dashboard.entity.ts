@@ -110,12 +110,27 @@ export interface BarChartType {
   rank: Rank[]
 }
 
+export interface RankChart {
+  dashboardType: 'RANK'
+  questionId: string
+  questionTitle: string
+  questionName: string
+  rank: RankChartRank[]
+}
+
+export interface RankChartRank {
+  text: string
+  point: number
+  percentage: number
+}
+
 // 다형성 타입 Statistic 정의
 export type Statistic =
   | BinaryChartType
   | MoneyChartType
   | BubbleChartType
   | BarChartType
+  | RankChart
 
 // <Section>
 // <KnowAbout wikiType={wikiType} />
