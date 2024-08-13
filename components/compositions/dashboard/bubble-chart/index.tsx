@@ -1,40 +1,27 @@
 import { useMemo, useRef } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { useSession } from '@/provider/session-provider'
 import { cn } from '@/lib/client/utils'
 import { useInView } from 'framer-motion'
 import { motion } from 'framer-motion'
-
-import { FilterType } from '@/hooks/use-filter'
 import { WIKI_COLORS } from '@/pages/dashboard'
 
-import { getDashboardQuery } from '@/queries/dashboard'
 import { RANK_COLOR } from '@/constants'
 import { PropswithWikiType, WikiType } from '@/types'
-import { BEST_WORTH, Rank } from '@/model/dashboard.entity'
+import { BubbleChartType, Rank } from '@/model/dashboard.entity'
 import { Button } from '@/components/ui'
 
 export const BubbleChart = ({
+  dashboard,
+  isLoading,
   wikiType,
-  filter,
 }: PropswithWikiType<{
-  filter: FilterType
+  dashboard: BubbleChartType
+  isLoading?: boolean
 }>) => {
   const { data } = useSession()
 
-  const { data: statisics } = useQuery({
-    ...getDashboardQuery(wikiType, filter),
-    select: (data) => {
-      const bestWorth = data.data?.statistics.find(
-        (item) => item.dashboardType === 'BEST_WORTH',
-      )
-
-      return bestWorth as BEST_WORTH
-    },
-  })
-
   const orderByMaxValueList = useMemo(() => {
-    const arr = statisics?.rank?.sort((a, b) => b.percentage - a.percentage)
+    const arr = dashboard?.rank?.sort((a, b) => b.percentage - a.percentage)
 
     return arr?.map((item, index) => ({
       ...item,
@@ -43,7 +30,7 @@ export const BubbleChart = ({
         RANK_COLOR[index] ??
         `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
     }))
-  }, [statisics])
+  }, [dashboard])
   return (
     <div className="flex flex-col items-center rounded-[20px] bg-bg-light py-10">
       <h2 className="mx-auto w-fit px-5 text-t1-kr-b">

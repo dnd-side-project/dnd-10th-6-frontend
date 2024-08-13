@@ -1,4 +1,9 @@
-import React, { HTMLAttributes, PropsWithChildren } from 'react'
+import React, {
+  HTMLAttributes,
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+} from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
@@ -8,15 +13,14 @@ import { getDashboardQuery } from '@/queries/dashboard'
 import { PropswithWikiType } from '@/types'
 import { fadeInProps } from '@/variants'
 
-import { KnowAbout } from '../compositions/dashboard/know-about'
 import { BubbleChart } from '../compositions/dashboard/bubble-chart'
 import { BarChart } from '../compositions/dashboard/bar-chart'
 import { Button } from '@/components/ui'
-import Character from '@/components/compositions/dashboard/character'
-import Money from '@/components/compositions/dashboard/money'
 import TreeInfo from '@/components/compositions/dashboard/tree-info'
 import TripleTrees from '../svgs/triple-trees'
 import ShareModal from '../share-modal'
+import { Statistic } from '@/model/dashboard.entity'
+import { BinaryChart } from '../compositions/dashboard/binary-chart'
 
 const DashboardContainer = ({
   shouldShowHeader,
@@ -30,6 +34,10 @@ const DashboardContainer = ({
   const { data: statisics, isLoading } = useQuery(
     getDashboardQuery(wikiType, selectedFilter),
   )
+
+  console.log(statisics, '<')
+
+  const dashboardList = useMemo(() => statisics, [statisics?.length])
 
   return (
     <motion.div
@@ -52,35 +60,13 @@ const DashboardContainer = ({
                 wikiCount={wikiCount}
               />
             </Section>
-            <Section>
-              <KnowAbout wikiType={wikiType} />
-            </Section>
-            {/* 가장 중요한 것 - 파이차트 */}
-            <Section>
-              <BubbleChart wikiType={wikiType} filter={selectedFilter} />
-            </Section>
-            {/* 이런사람이에요 - 박스 */}
-            <Section>
-              <Character filter={selectedFilter} wikiType={wikiType} />
-            </Section>
-            <Section>
-              <Money filter={selectedFilter} wikiType={wikiType} />
-            </Section>
-            {/* 기쁠 떄 */}
-            <Section>
-              <BarChart
-                filter={selectedFilter}
+            {dashboardList?.map((stat) => (
+              <RecursiveDashboard
+                key={stat.questionId}
                 wikiType={wikiType}
-                chartType="HAPPY"
+                dashboard={stat}
               />
-            </Section>
-            <Section>
-              <BarChart
-                filter={selectedFilter}
-                wikiType={wikiType}
-                chartType="SAD"
-              />
-            </Section>
+            ))}
           </motion.div>
         ) : (
           <motion.div
@@ -126,5 +112,47 @@ function Section({
     >
       {children}
     </section>
+  )
+}
+
+interface RecursiveDashboardProps {
+  dashboard: Statistic
+}
+
+const RecursiveDashboard = ({
+  wikiType,
+  dashboard,
+}: PropswithWikiType<RecursiveDashboardProps>) => {
+  const { selectedFilter } = useFilter()
+  const Component = useCallback(() => {
+    switch (dashboard.dashboardType) {
+      case 'BAR_CHART':
+        return <BarChart wikiType={wikiType} dashboard={dashboard} />
+      case 'BINARY':
+        return <BinaryChart wikiType={wikiType} dashboard={dashboard} />
+      case 'BUBBLE_CHART':
+        return <BubbleChart wikiType={wikiType} dashboard={dashboard} />
+      case 'MONEY':
+        return (
+          <BarChart
+            filter={selectedFilter}
+            wikiType={wikiType}
+            chartType="HAPPY"
+          />
+        )
+      case 'RANK':
+        return (
+          <BarChart
+            filter={selectedFilter}
+            wikiType={wikiType}
+            chartType="HAPPY"
+          />
+        )
+    }
+  }, [dashboard, selectedFilter, wikiType])
+  return (
+    <Section>
+      <Component />
+    </Section>
   )
 }

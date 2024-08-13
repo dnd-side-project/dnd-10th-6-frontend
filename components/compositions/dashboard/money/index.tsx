@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useId, useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from '@/provider/session-provider'
 import { cn } from '@/lib/client/utils'
@@ -117,8 +117,9 @@ interface BarProps {
 function Bar({ active, value, price, isMe = true }: BarProps) {
   const { data } = useSession()
   const [isDone, setIsDone] = useState(false)
+  const id = useId()
   return (
-    <div className="flex h-full flex-col">
+    <m.div className="flex h-full flex-col">
       <div className="mx-auto flex h-40 w-14 flex-col items-center justify-end">
         <div
           className={cn(
@@ -155,6 +156,7 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
           </svg>
         </div>
         <m.div
+          key={id}
           initial={{ height: 0 }}
           onAnimationComplete={() => {
             setIsDone(true)
@@ -202,6 +204,6 @@ function Bar({ active, value, price, isMe = true }: BarProps) {
       >
         {isMe ? (data?.user?.name ?? '') + '님 평균' : '이용자 평균'}
       </p>
-    </div>
+    </m.div>
   )
 }

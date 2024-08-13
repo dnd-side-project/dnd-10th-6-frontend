@@ -7,15 +7,15 @@ import { PropswithWikiType } from '@/types'
 import { RANK_COLOR } from '@/constants'
 import useDetailDrawer from '@/hooks/use-detail-drawer'
 import { useInViewRef } from '@/hooks/use-in-view-ref'
-import { BarChartType } from '@/model/dashboard.entity'
+import { BinaryChartType } from '@/model/dashboard.entity'
 import { Button } from '@/components/ui'
 
-export const BarChart = ({
+export const BinaryChart = ({
   isLoading,
   dashboard,
 }: PropswithWikiType<{
   isLoading?: boolean
-  dashboard: BarChartType
+  dashboard: BinaryChartType
 }>) => {
   const { data } = useSession()
   const { handle } = useDetailDrawer()
@@ -24,17 +24,17 @@ export const BarChart = ({
     once: true,
   })
 
-  const orderByMaxValueList = useMemo(() => {
-    const arr = dashboard?.rank?.sort((a, b) => b.percentage - a.percentage)
+  // const orderByMaxValueList = useMemo(() => {
+  //   const arr = dashboard?.rank?.sort((a, b) => b.percentage - a.percentage)
 
-    return arr?.map((item, index) => ({
-      ...item,
-      color:
-        RANK_COLOR[index] ??
-        `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
-      text: item.legend.split('  ')[1],
-    }))
-  }, [dashboard])
+  //   return arr?.map((item, index) => ({
+  //     ...item,
+  //     color:
+  //       RANK_COLOR[index] ??
+  //       `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
+  //     text: item.legend.split('  ')[1],
+  //   }))
+  // }, [dashboard])
 
   return (
     <LazyMotion features={domAnimation}>
@@ -53,7 +53,7 @@ export const BarChart = ({
           </>
         ) : (
           <>
-            {orderByMaxValueList?.[0].text === '직접 입력' ? (
+            {/* {orderByMaxValueList?.[0].text === '직접 입력' ? (
               <span>친구가 써준 답변을 확인해보세요</span>
             ) : (
               <h2
@@ -94,7 +94,7 @@ export const BarChart = ({
                   />
                 )
               })}
-            </ul>
+            </ul> */}
             <div className="mx-auto mt-12 flex w-1/2 justify-center">
               <Button
                 onClick={() =>
