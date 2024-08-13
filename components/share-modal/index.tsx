@@ -7,16 +7,26 @@ import { Button } from '@/components/ui'
 import { useRouter } from 'next/router'
 import { PropswithWikiType } from '@/types'
 
-interface ShareModalProps {}
+interface ShareModalProps {
+  open?: boolean
+  onOpenChange?: (state: boolean) => void
+}
 
 const ShareModal = ({
   wikiType,
   children,
+  open,
+  onOpenChange,
 }: PropswithWikiType<PropsWithChildren<ShareModalProps>>) => {
   const { data } = useSession()
-  const [shareModalOpen, setShareModalOpen] = useState(false)
+  const [shareModalOpen, setShareModalOpen] = useState(open)
   const [copyModalOpen, setCopyModalOpen] = useState(false)
   const router = useRouter()
+
+  const onStateChange = (state: boolean) => {
+    setShareModalOpen(state)
+    onOpenChange?.(state)
+  }
 
   const handleCopyLink = useCallback(async () => {
     if (data?.user?.wikiId) {
@@ -42,10 +52,8 @@ const ShareModal = ({
   return (
     <>
       <Modal
-        open={shareModalOpen}
-        onOpenChange={(state) => {
-          setShareModalOpen(state)
-        }}
+        open={open ?? shareModalOpen}
+        onOpenChange={onStateChange}
         key="selectShareModal"
         trigger={children}
         title={

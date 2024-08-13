@@ -21,12 +21,8 @@ const SHORT_FILTER: {
     CHARACTER_CELEBRITY_ASSOCIATION: '닮은 캐릭터(연예인)은?',
   },
   ROMANCE: {
-    FIRST_IMPRESSION: '👀 나의 첫인상은?',
-    CHARACTER_CELEBRITY_ASSOCIATION: '🤔 나는 누구와 닮았나요?',
-    FIVE_LETTER_WORD: '🧐 나를 5글자로 표현한다면?',
-    LEARNING_ASPIRATION: '📚 나의 이런점은 꼭 배우고 싶어요!',
-    SECRET_PLEASURE: '😍 내가 혼자 몰래 좋아하고 있는 것은?',
-    MOST_USED_WORD: '💬 내가 가장 많이 사용하는 단어는?',
+    IDEAL_TYPE: '이상형은?',
+    FLIRTING_METHOD: '이성에게 하는 플러팅 방법은?',
   },
 }
 export const KnowAbout = ({ wikiType }: PropswithWikiType) => {
@@ -38,7 +34,6 @@ export const KnowAbout = ({ wikiType }: PropswithWikiType) => {
       return data.data
     },
   })
-
   return (
     <div className="space-y-8 rounded-[20px] bg-bg-light p-5 py-10">
       <h2 className="mx-auto w-fit text-t1-kr-b">

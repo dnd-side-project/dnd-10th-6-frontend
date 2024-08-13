@@ -1,25 +1,20 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useSession } from '@/provider/session-provider'
 
-import { shareToCopyLink, shareToKaKaoLink } from '@/lib/client/utils'
 import FormLayout from '@/layout/form-layout'
 
 import MetaHead from '@/components/meta-head'
 import Modal from '@/components/modal'
-import {
-  Badge,
-  Button,
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-} from '@/components/ui'
+import { Button, Drawer, DrawerContent, DrawerFooter } from '@/components/ui'
 
 import welcomeTree from '@/assets/characters/welcome-tree.webp'
 import { useSearchParams } from 'next/navigation'
-import { PropswithWikiType, WikiType } from '@/types'
+import { PropswithWikiType, WikiType, wikiTypeList } from '@/types'
+import ShareModal from '@/components/share-modal'
+import { Controller, useForm } from 'react-hook-form'
+import { cn } from '@/lib/client/utils'
 
 const WelcomePage = ({ wikiType }: PropswithWikiType) => {
   const router = useRouter()
@@ -30,9 +25,20 @@ const WelcomePage = ({ wikiType }: PropswithWikiType) => {
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [copyModalOpen, setCopyModalOpen] = useState(false)
 
-  const closeBottomSheet = useCallback(() => {
-    setBottomSheetOpen(false)
-  }, [])
+  const closeBottomSheet = useCallback(
+    (wikiType?: WikiType) => {
+      setBottomSheetOpen(false)
+      if (wikiType) {
+        router.push({
+          query: {
+            wikiType,
+          },
+        })
+        setShareModalOpen(true)
+      }
+    },
+    [router],
+  )
 
   return (
     <>
@@ -81,6 +87,7 @@ const WelcomePage = ({ wikiType }: PropswithWikiType) => {
               친구가 소개서를 작성해주면
               <br />내 정원에 나무가 심겨요
             </p>
+
             <Modal
               open={copyModalOpen}
               onOpenChange={setCopyModalOpen}
@@ -113,6 +120,11 @@ const WelcomePage = ({ wikiType }: PropswithWikiType) => {
         closeBottomSheet={closeBottomSheet}
         wikiType={wiki}
       />
+      <ShareModal
+        wikiType={wiki}
+        onOpenChange={setShareModalOpen}
+        open={shareModalOpen}
+      ></ShareModal>
     </>
   )
 }
@@ -122,16 +134,34 @@ export default WelcomePage
 // 추가된 BottomSheetButton 컴포넌트
 interface BottomSheetButtonProps {
   bottomSheetOpen: boolean
-  closeBottomSheet: () => void
+  closeBottomSheet: (selectedWikiType?: WikiType) => void
   wikiType: WikiType
 }
 
 const BottomSheetButton = ({
   bottomSheetOpen,
   closeBottomSheet,
-  wikiType,
 }: BottomSheetButtonProps) => {
-  const [modalOpen, setModalOpen] = useState(false)
+  const form = useForm<{ wikiType: WikiType }>()
+
+  const wikiInfo = useMemo(() => {
+    return {
+      NAMUI: {
+        questionCount: 14,
+        name: '남의위키',
+        description: '다른 사람이 보는 내 모습은 어떨까요?',
+      },
+      ROMANCE: {
+        questionCount: 8,
+        name: '연애위키',
+        description: '연애할 때 나는 어떤 사람인가요?',
+      },
+    }
+  }, [])
+
+  const handleSubmit = (values: { wikiType: WikiType }) => {
+    closeBottomSheet(values.wikiType)
+  }
 
   return (
     <>
@@ -144,44 +174,69 @@ const BottomSheetButton = ({
         }}
       >
         <DrawerContent>
-          <div className="flex flex-col p-4">
-            <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
-              <h2 className="text-left text-t2-kr-b">
-                나에 대해 물어볼
-                <br /> 주제를 선택해 주세요
-              </h2>
-              <div className="flex flex-col space-y-4">
-                <div className="w-full rounded-md border border-line-regular px-[30px] py-6">
-                  <div className="flex w-full items-center justify-between">
-                    <h3 className="w-full text-t3-kr-b">남의위키</h3>
-                    <div className="w-full rounded-full bg-green-50 px-[10px] py-[3px] text-green-500">
-                      질문 14개
-                    </div>
-                  </div>
+          <form
+            className="flex flex-col p-4"
+            onSubmit={form.handleSubmit(handleSubmit)}
+          >
+            <Controller
+              control={form.control}
+              name="wikiType"
+              render={({ field }) => (
+                <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
+                  <h2 className="text-left text-t2-kr-b">
+                    나에 대해 물어볼
+                    <br /> 주제를 선택해 주세요
+                  </h2>
+                  {wikiTypeList.map((wiki) => (
+                    <button
+                      type="button"
+                      onClick={() => field.onChange(wiki)}
+                      key={wiki}
+                      data-selected={field.value === wiki}
+                      className={cn(
+                        'group flex w-full items-center justify-between space-y-2 rounded-2xl border-[1px] border-line-regular bg-white px-6 py-[30px] ',
+                        'duration-200 data-[selected=true]:border-brand-main data-[selected=true]:bg-green-50',
+                      )}
+                    >
+                      <div>
+                        <div className="flex w-full items-center space-x-2">
+                          <h3 className="text-t3-kr-b">
+                            {wikiInfo[wiki].name}
+                          </h3>
+                          <div className="bg-bg-green-hover rounded-full px-[10px]  py-[3px] text-but4-m  text-green-500">
+                            질문 {wikiInfo[wiki].questionCount}개
+                          </div>
+                        </div>
+                        <p>{wikiInfo[wiki].description}</p>
+                      </div>
+                      <svg
+                        width="22"
+                        height="16"
+                        viewBox="0 0 22 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-line-regular duration-200 group-data-[selected=true]:text-brand-main"
+                      >
+                        <path
+                          d="M1.66663 9.16667L8.66663 15L20.3333 1"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  ))}
+
+                  <Button type="submit">소개서 선택하기</Button>
                 </div>
-                <div className="w-full px-[30px] py-6">연애위키버튼</div>
-              </div>
-              <Button onClick={() => setModalOpen(true)}>모달 열기</Button>
-            </div>
-          </div>
+              )}
+            />
+          </form>
+
           <DrawerFooter />
         </DrawerContent>
       </Drawer>
-      <Modal
-        open={modalOpen}
-        onOpenChange={(state) => {
-          setModalOpen(state)
-        }}
-        title=""
-        description={
-          <span className=" text-b2-kr-b text-black">
-            비회원으로 작성해서
-            <br />
-            친구에게 소개서를 써줄 수 없어요
-          </span>
-        }
-        trigger={null}
-      />
     </>
   )
 }

@@ -166,7 +166,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
     fetchNextPage,
   })
 
-  const treeType = useRef(new TreeType(treeCardAsset)).current
+  const treeType = useRef(new CardType(treeCardAsset)).current
 
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">
@@ -351,7 +351,7 @@ function MultipleChoice({
 }: {
   cardItem: Content
   summary: string
-  treeType: TreeType
+  treeType: CardType
   onShareClick?: () => void
 }) {
   return (

@@ -24,6 +24,7 @@ import { BinaryChart } from '../compositions/dashboard/binary-chart'
 import Money from '../compositions/dashboard/money'
 import { MAIN_COLOR } from '@/constants'
 import { RankChart } from '../compositions/dashboard/rank-chart'
+import { KnowAbout } from '../compositions/dashboard/know-about'
 
 const DashboardContainer = ({
   shouldShowHeader,
@@ -60,6 +61,9 @@ const DashboardContainer = ({
                 wikiType={wikiType}
                 wikiCount={wikiCount}
               />
+            </Section>
+            <Section>
+              <KnowAbout wikiType={wikiType} />
             </Section>
             {dashboardList?.map((stat) => (
               <Section key={stat.questionId}>

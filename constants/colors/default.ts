@@ -23,7 +23,10 @@ export const defaultColors = {
   },
   bg: {
     red: '#DC0000',
-    green: '#04B014',
+    green: {
+      DEFAULT: '#04B014',
+      hover: '#EEFFEF',
+    },
     yellow: '#FFAA00',
     regular: '#F1F1F1',
     light: '#F7F7F7',
