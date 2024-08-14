@@ -54,7 +54,7 @@ const WelcomePage = ({ wikiType }: PropswithWikiType) => {
           rightIcon: (
             <button
               onClick={() => {
-                router.replace('/garden')
+                router.replace('/main')
               }}
             >
               <svg
