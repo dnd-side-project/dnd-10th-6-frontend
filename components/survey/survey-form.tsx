@@ -25,6 +25,9 @@ import { useRaisedShadow } from '@/hooks/use-raised-shadow'
 import { ANSWER_TYPE } from '@/constants/enum'
 import UpDownSheet from '../ui/updownSheet'
 import questionTree from '@/assets/characters/question-tree.svg'
+import questionFlower from '@/assets/characters/question-flower.svg'
+import { useSearchParams } from 'next/navigation'
+import { WikiType } from '@/types'
 
 const surveyScheme = z.object({
   answer: z.string().min(1).or(z.number()).or(z.array(z.string())),
@@ -153,7 +156,7 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
         setOptionsState(state)
       }}
       values={optionsState}
-      className="flex-1 space-y-2 overflow-y-auto"
+      className="w-full flex-1 space-y-2 overflow-y-auto "
     >
       {optionsState.map((option, index) => (
         <ReorderOptionItem
@@ -274,6 +277,19 @@ const SurveyForm = ({
   const answerWatch = form.watch().answer
   const reasonWatch = form.watch().reason
 
+  const searchParams = useSearchParams()
+  const wikiType = searchParams.get('wikiType') as WikiType
+  const imgSrc = (() => {
+    switch (wikiType) {
+      case 'NAMUI':
+        return questionTree
+      case 'ROMANCE':
+        return questionFlower
+      default:
+        return questionTree // 기본값 설정
+    }
+  })()
+
   return (
     <FormProvider {...form}>
       <form
@@ -282,8 +298,8 @@ const SurveyForm = ({
       >
         {type === 'OX' ? (
           // OX 타입
-          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
-            <Image src={questionTree} alt="questionTree" />
+          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 text-center ">
+            <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
@@ -306,7 +322,7 @@ const SurveyForm = ({
                         'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
-                          'bg-brand-hover border border-brand-main',
+                          'border border-brand-main bg-brand-hover',
                       )}
                     >
                       <Inputbox
@@ -358,7 +374,7 @@ const SurveyForm = ({
         ) : type === 'MULTIPLE_CHOICE' ? (
           // 다중선택
           <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
-            <Image src={questionTree} alt="questionTree" />
+            <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
@@ -378,11 +394,11 @@ const SurveyForm = ({
                         duration: 0.3,
                       }}
                       className={cn(
-                        'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
+                        'flex w-full items-center justify-start rounded-md border border-[#E5E5EC] p-4 transition-all duration-200',
                         'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
-                          'bg-brand-hover border border-brand-main',
+                          'border border-brand-main bg-brand-hover',
                       )}
                     >
                       <Inputbox
@@ -451,7 +467,7 @@ const SurveyForm = ({
         ) : type === 'NUMERIC_CHOICE' ? (
           // 숫자 선택
           <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
-            <Image src={questionTree} alt="questionTree" />
+            <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
@@ -563,7 +579,7 @@ const SurveyForm = ({
           </div>
         ) : type === 'RANK' ? (
           <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
-            <Image src={questionTree} alt="questionTree" />
+            <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
@@ -572,7 +588,7 @@ const SurveyForm = ({
           </div>
         ) : (
           <div className="!mb-[240px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
-            <Image src={questionTree} alt="questionTree" />
+            <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
@@ -584,7 +600,7 @@ const SurveyForm = ({
               render={({ field }) => (
                 <div className="relative w-full px-4 py-[14px] text-left">
                   <textarea
-                    className="w-full resize-none border-none bg-white text-b2-kr-m text-black outline-none placeholder:text-font-gray-04 disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled"
+                    className="placeholder:text-muted peer flex w-full  resize-none border-none bg-transparent bg-white text-b2-kr-m text-black outline-none placeholder:text-font-gray-04 disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled"
                     {...field}
                     id={field.name}
                     placeholder={
@@ -593,9 +609,6 @@ const SurveyForm = ({
                         : '50글자 이내로 입력해주세요'
                     }
                     {...(name === 'FIVE_LETTER_WORD' && { minLength: 5 })}
-                    className={cn(
-                      'placeholder:text-muted peer flex w-full resize-none border-none bg-transparent text-body3-medium  outline-none  placeholder:text-text-sub-gray4f disabled:cursor-not-allowed disabled:text-disabled disabled:placeholder:text-disabled ',
-                    )}
                     maxLength={name === 'FIVE_LETTER_WORD' ? 5 : 50}
                     rows={2}
                     value={field.value + ''}
