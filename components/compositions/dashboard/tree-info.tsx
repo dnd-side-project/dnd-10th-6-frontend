@@ -1,22 +1,25 @@
-import { Button } from '@/components/ui'
-import { FilterType } from '@/hooks/use-filter'
+import { useRouter } from 'next/router'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { GetSurveyResponse } from '@/model/survey.entity'
-import { NamuiApi } from '@/lib/namui-api'
 import { AnimatePresence } from 'framer-motion'
-import TreeCard from '../tree-card'
-import { fadeInProps } from '@/variants'
+
+import { NamuiApi } from '@/lib/namui-api'
 import { cn } from '@/lib/client/utils'
+import { FilterType } from '@/hooks/use-filter'
+
+import { fadeInProps } from '@/variants'
 import { PropswithWikiType } from '@/types'
-import { useRouter } from 'next/router'
+import { GetSurveyResponse } from '@/model/survey.entity'
+
+import { Button } from '@/components/ui'
+import TreeCard from '../tree-card'
 
 const TreeInfo = ({
   wikiType,
   wikiCount,
 }: PropswithWikiType<{ filter: FilterType; wikiCount: number }>) => {
   const { data: surveys, isLoading } = useQuery<GetSurveyResponse>({
-    queryKey: ['survey'],
+    queryKey: ['survey', wikiType],
     queryFn: ({ pageParam = 0 }) => {
       return NamuiApi.getSurveys(pageParam as number, wikiType)
     },
@@ -31,7 +34,7 @@ const TreeInfo = ({
         <b className="text-d4-kr-b">{wikiCount}그루</b>
       </div>
 
-      <div className="[mask-image:linear-gradient(to_bottom,white_0%,transparent_100%)]">
+      <div className="[mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]">
         <AnimatePresence mode="wait">
           {!isLoading && surveys ? (
             <motion.div

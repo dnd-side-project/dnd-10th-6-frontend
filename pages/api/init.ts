@@ -1,7 +1,7 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { serialize } from 'cookie'
 import { withError } from '@/lib/server/utils'
 import withHandler from '@/lib/server/with-handler'
-import { serialize } from 'cookie'
-import type { NextApiRequest, NextApiResponse } from 'next'
 
 async function handler(_: NextApiRequest, res: NextApiResponse) {
   try {

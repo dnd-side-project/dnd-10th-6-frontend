@@ -1,7 +1,7 @@
-import { NamuiApi } from '@/lib/namui-api'
-import { DashboardResponse, Statistic } from '@/model/dashboard.entity'
-import { WikiType } from '@/types'
 import { UseQueryOptions } from '@tanstack/react-query'
+import { NamuiApi } from '@/lib/namui-api'
+import { WikiType } from '@/types'
+import { DashboardResponse, Statistic } from '@/model/dashboard.entity'
 
 export type DashboardFilter = {
   type: string
@@ -15,10 +15,15 @@ export const getDashboardQuery = (
   DashboardResponse,
   Error,
   Statistic[],
-  [string, string, string]
+  [string, WikiType, string, string]
 > => {
   return {
-    queryKey: ['Dashboard', filters?.type ?? 'period', filters?.value ?? 'ALL'],
+    queryKey: [
+      'Dashboard',
+      wikiType,
+      filters?.type ?? 'period',
+      filters?.value ?? 'ALL',
+    ],
     queryFn: ({ queryKey }) =>
       NamuiApi.getDashboard([queryKey[1], queryKey[2]], wikiType),
     select: (result) => {

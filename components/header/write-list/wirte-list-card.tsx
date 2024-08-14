@@ -3,7 +3,7 @@ import { useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Writing } from '@/queries/surveys'
-import { TreeType, treeCardAsset } from '@/model/tree.entity'
+import { CardType, treeCardAsset } from '@/model/card.entity'
 import { PeriodBadge, RelationBadge } from '@/components/badge'
 const variants = {
   hidden: {
@@ -45,7 +45,7 @@ const WriteListCard = ({ item }: { item: Writing }) => {
     const parsedCreatedAt = new Date(item.sentAt)
     return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
   }, [])
-  const treeType = useRef(new TreeType(treeCardAsset)).current
+  const treeType = useRef(new CardType(treeCardAsset)).current
   useEffect(() => {
     if (inView) {
       controls.start('show')

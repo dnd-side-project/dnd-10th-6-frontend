@@ -1,10 +1,10 @@
 import React, { PropsWithChildren, forwardRef } from 'react'
+import LocalFont from 'next/font/local'
 import { cn } from '@/lib/client/utils'
-import Header, { HeaderProps } from '@/components/header'
 import { HTMLMotionProps, motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
+import Header, { HeaderProps } from '@/components/header'
 
-import LocalFont from 'next/font/local'
 const pretendard = LocalFont({
   adjustFontFallback: 'Arial',
   src: [
@@ -47,7 +47,7 @@ const BaseLayout = forwardRef<HTMLElement, PropsWithChildren<BaseLayoutProps>>(
         className={cn(
           pretendard.variable,
           pretendard.className,
-          'flex w-full flex-col',
+          'flex w-full flex-col scrollbar-hide',
           className,
         )}
       >

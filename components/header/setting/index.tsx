@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import Modal from '@/components/modal'
-
 import { Close } from '@radix-ui/react-dialog'
 import { useSession } from '@/provider/session-provider'
 import { NamuiApi } from '@/lib/namui-api'
 import { toastError } from '@/lib/client/alert'
-import { DeveloperInfo } from '@/components/header/developer-info'
+
+import Modal from '@/components/modal'
 import SideDrawer from '@/components/side-drawer'
+import { DeveloperInfo } from '@/components/header/developer-info'
 import { EditProfile } from '@/components/header/edit-setting'
 
 export const Setting = () => {

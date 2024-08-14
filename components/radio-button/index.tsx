@@ -36,10 +36,10 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           duration: 0.3,
         }}
         className={cn(
-          'flex w-full items-center justify-start rounded-sm border border-[#E5E5EC] p-4 transition-all duration-200',
-          'focus-within:border-brand-main-green400',
+          'flex w-full items-center justify-start rounded-md border border-[#E5E5EC] p-4 transition-all duration-200 ',
+          'focus-within:border-brand-main',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          selected && 'border-brand-main-green400 border bg-main-green-green50',
+          selected && 'border border-brand-main bg-main-green-green50',
         )}
       >
         <input

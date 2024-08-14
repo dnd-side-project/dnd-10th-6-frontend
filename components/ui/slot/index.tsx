@@ -2,8 +2,8 @@
  * Slot
  * -----------------------------------------------------------------------------------------------*/
 
-import { composeRefs } from '@/lib/client/utils'
 import React from 'react'
+import { composeRefs } from '@/lib/client/utils'
 
 interface SlotProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode

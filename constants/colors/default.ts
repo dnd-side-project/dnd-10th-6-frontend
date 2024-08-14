@@ -1,4 +1,5 @@
 import { ThemeConfig } from 'tailwindcss/types/config'
+import { WikiType } from '@/types'
 
 export const defaultColors = {
   white: '#FFFFFF',
@@ -22,7 +23,10 @@ export const defaultColors = {
   },
   bg: {
     red: '#DC0000',
-    green: '#04B014',
+    green: {
+      DEFAULT: '#04B014',
+      hover: '#EEFFEF',
+    },
     yellow: '#FFAA00',
     regular: '#F1F1F1',
     light: '#F7F7F7',
@@ -39,6 +43,7 @@ export const defaultColors = {
     200: '#93E8B0',
     100: '#BFF1CF',
     50: '#E6F7EA',
+    hover: 'var(--brand-hover)',
     sub1: '#199EF0',
     sub2: '#FFEB34',
   },
@@ -119,3 +124,34 @@ export const defaultColors = {
     DEFAULT: '#111111',
   },
 } satisfies ThemeConfig['colors']
+
+type BINARY_GRADIENT_TYPE = { BINARY: { from: string; to: string }[] }
+type MONEY_GRADIENT_TYPE = { MONEY: { from: string; to: string } }
+export const MAIN_COLOR: { [key in WikiType]: string } & BINARY_GRADIENT_TYPE &
+  MONEY_GRADIENT_TYPE = {
+  NAMUI: '#00be4f',
+  ROMANCE: '#ff4e46',
+  MONEY: {
+    from: '#FF8F36',
+    to: '#FFE09C',
+  },
+
+  BINARY: [
+    {
+      from: '#FF8F36',
+      to: '#FFE09C',
+    },
+    {
+      from: '#00BE4F',
+      to: '#BFF1CF',
+    },
+    {
+      from: '#199EF0',
+      to: '#B4E6FF',
+    },
+    {
+      from: '#FDD82E',
+      to: '#FFF59B',
+    },
+  ],
+}

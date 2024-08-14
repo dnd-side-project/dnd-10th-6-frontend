@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { motion, useAnimate } from 'framer-motion'
-import { fadeInProps } from '@/variants'
 import { cn } from '@/lib/client/utils'
+import { fadeInProps } from '@/variants'
 
 interface FilterButtonProps {
   selected?: boolean

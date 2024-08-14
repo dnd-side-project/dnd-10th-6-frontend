@@ -1,20 +1,24 @@
+import React, { HTMLAttributes, PropsWithChildren, useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { AnimatePresence, motion } from 'framer-motion'
+import { cn } from '@/lib/client/utils'
+
 import useFilter, { Filter } from '@/hooks/use-filter'
 import { getDashboardQuery } from '@/queries/dashboard'
-import { useQuery } from '@tanstack/react-query'
-import React, { HTMLAttributes, PropsWithChildren } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { PropswithWikiType } from '@/types'
 import { fadeInProps } from '@/variants'
-import { cn } from '@/lib/client/utils'
+
+import { BubbleChart } from '../compositions/dashboard/bubble-chart'
+import { BarChart } from '../compositions/dashboard/bar-chart'
+import { Button } from '@/components/ui'
+import TreeInfo from '@/components/compositions/dashboard/tree-info'
 import TripleTrees from '../svgs/triple-trees'
 import ShareModal from '../share-modal'
-import { Button } from '@/components/ui'
-import BestWorth from '@/components/compositions/dashboard/best-worth'
-import Character from '@/components/compositions/dashboard/character'
-import Money from '@/components/compositions/dashboard/money'
-import Happy from '@/components/compositions/dashboard/happy'
-import Sad from '@/components/compositions/dashboard/sad'
-import TreeInfo from '@/components/compositions/dashboard/tree-info'
-import { PropswithWikiType } from '@/types'
+import { Statistic } from '@/model/dashboard.entity'
+import { BinaryChart } from '../compositions/dashboard/binary-chart'
+import Money from '../compositions/dashboard/money'
+
+import { RankChart } from '../compositions/dashboard/rank-chart'
 import { KnowAbout } from '../compositions/dashboard/know-about'
 
 const DashboardContainer = ({
@@ -30,6 +34,8 @@ const DashboardContainer = ({
     getDashboardQuery(wikiType, selectedFilter),
   )
 
+  const dashboardList = useMemo(() => statisics, [statisics])
+
   return (
     <motion.div
       {...fadeInProps}
@@ -41,7 +47,7 @@ const DashboardContainer = ({
           <motion.div
             {...fadeInProps}
             key="exist"
-            className="flex flex-col px-5"
+            className="flex flex-col space-y-5 px-5 pb-5"
           >
             {/* 내 정원에 심어진 나무는? */}
             <Section className="pt-5">
@@ -54,24 +60,11 @@ const DashboardContainer = ({
             <Section>
               <KnowAbout wikiType={wikiType} />
             </Section>
-            {/* 가장 중요한 것 - 파이차트 */}
-            <Section>
-              <BestWorth filter={selectedFilter} wikiType={wikiType} />
-            </Section>
-            {/* 이런사람이에요 - 박스 */}
-            <Section>
-              <Character filter={selectedFilter} wikiType={wikiType} />
-            </Section>
-            <Section>
-              <Money filter={selectedFilter} wikiType={wikiType} />
-            </Section>
-            {/* 기쁠 떄 */}
-            <Section>
-              <Happy filter={selectedFilter} wikiType={wikiType} />
-            </Section>
-            <Section>
-              <Sad filter={selectedFilter} wikiType={wikiType} />
-            </Section>
+            {dashboardList?.map((stat) => (
+              <Section key={stat.questionId}>
+                <RecursiveDashboard wikiType={wikiType} dashboard={stat} />
+              </Section>
+            ))}
           </motion.div>
         ) : (
           <motion.div
@@ -118,4 +111,29 @@ function Section({
       {children}
     </section>
   )
+}
+
+interface RecursiveDashboardProps {
+  dashboard: Statistic
+}
+
+const RecursiveDashboard = ({
+  wikiType,
+  dashboard,
+}: PropswithWikiType<RecursiveDashboardProps>) => {
+  const dashboardChild = useMemo(() => {
+    switch (dashboard.dashboardType) {
+      case 'BAR_CHART':
+        return <BarChart wikiType={wikiType} dashboard={dashboard} />
+      case 'BINARY':
+        return <BinaryChart wikiType={wikiType} dashboard={dashboard} />
+      case 'BUBBLE_CHART':
+        return <BubbleChart wikiType={wikiType} dashboard={dashboard} />
+      case 'MONEY':
+        return <Money wikiType={wikiType} dashboard={dashboard} />
+      case 'RANK':
+        return <RankChart dashboard={dashboard} wikiType={wikiType} />
+    }
+  }, [dashboard, wikiType])
+  return dashboardChild
 }

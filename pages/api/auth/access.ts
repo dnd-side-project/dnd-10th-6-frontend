@@ -1,7 +1,8 @@
-import { UnauthorizedError, isNamuiError } from '@/error'
-import withHandler from '@/lib/server/with-handler'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import * as z from 'zod'
+import { UnauthorizedError, isNamuiError } from '@/error'
+import withHandler from '@/lib/server/with-handler'
+
 const token = z.object({
   accessToken: z.string().min(1),
   refreshToken: z.string().min(1),

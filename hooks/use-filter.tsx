@@ -1,6 +1,3 @@
-import FilterText from '@/components/filter-text'
-import { cn } from '@/lib/client/utils'
-import { AnimatePresence } from 'framer-motion'
 import React, {
   Dispatch,
   PropsWithChildren,
@@ -9,8 +6,12 @@ import React, {
   useContext,
   useState,
 } from 'react'
+import { cn } from '@/lib/client/utils'
+import { AnimatePresence } from 'framer-motion'
 import { motion } from 'framer-motion'
+
 import { fadeInProps } from '@/variants'
+import FilterText from '@/components/filter-text'
 import FilterButton from '@/components/filter-button'
 
 export type KnowFilterType = 'period' | 'relation' | 'total'
