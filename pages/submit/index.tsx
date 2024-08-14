@@ -74,19 +74,17 @@ const index = () => {
 export default index
 index.getLayout = (page: ReactNode) => page
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { wikiId, wikiType } = ctx.query
-  if (!wikiId || typeof wikiId === 'object') return { notFound: true }
+  const { wikiType } = ctx.query
   if (
     !wikiType ||
     typeof wikiType !== 'string' ||
-    ['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())
+    !['NAMUI', 'ROMANCE'].includes(wikiType.toUpperCase())
   ) {
     return { notFound: true }
   }
 
   return {
     props: {
-      wikiId,
       wikiType,
     },
   }

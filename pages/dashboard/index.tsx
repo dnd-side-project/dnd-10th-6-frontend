@@ -175,6 +175,7 @@ function DashboardTitle({
   wikiCount,
 }: PropswithWikiType<{ wikiCount: number }>) {
   const { data } = useSession()
+
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref)
 

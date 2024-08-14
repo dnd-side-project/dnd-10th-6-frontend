@@ -49,7 +49,12 @@ const Question = ({
         goNext()
 
         // 애니메이션과 함께 제출화면으로 이동하기 위해 추가
-        router.replace('/submit')
+        router.replace({
+          pathname: '/submit',
+          query: {
+            wikiType,
+          },
+        })
       },
       onError() {
         toastError()

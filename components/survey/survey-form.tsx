@@ -310,7 +310,8 @@ const SurveyForm = ({
               render={({ field }) => (
                 <>
                   {options.map((option) => (
-                    <motion.div
+                    <motion.label
+                      htmlFor={option.id}
                       key={option.id}
                       {...fadeInProps}
                       transition={{
@@ -320,7 +321,7 @@ const SurveyForm = ({
                       className={cn(
                         'flex w-full items-center justify-start rounded-md border border-[#E5E5EC] p-4 transition-all duration-200',
                         'focus-within:border-brand-main',
-                        'disabled:cursor-not-allowed disabled:opacity-50',
+                        'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
                         field.value === option.id + '' &&
                           'border border-brand-main bg-brand-hover',
                       )}
@@ -343,8 +344,7 @@ const SurveyForm = ({
                           field.onChange(target.value)
                         }}
                       />
-                      <label
-                        htmlFor={option.id}
+                      <div
                         className={cn(
                           'flex items-center',
                           'cursor-pointer',
@@ -364,8 +364,8 @@ const SurveyForm = ({
                         ></div>
 
                         <span className="ml-2">{option.text}</span>
-                      </label>
-                    </motion.div>
+                      </div>
+                    </motion.label>
                   ))}
                 </>
               )}
@@ -386,17 +386,19 @@ const SurveyForm = ({
               render={({ field }) => (
                 <>
                   {options.map((option) => (
-                    <motion.div
+                    <motion.label
                       key={option.id}
+                      htmlFor={option.id}
                       {...fadeInProps}
                       transition={{
                         delay: 0.2,
                         duration: 0.3,
                       }}
                       className={cn(
-                        'flex w-full items-center justify-start rounded-md border border-[#E5E5EC] p-4 transition-all duration-200',
+                        'flex w-full items-start justify-start rounded-md border border-[#E5E5EC] p-4 transition-all duration-200',
                         'focus-within:border-brand-main',
                         'disabled:cursor-not-allowed disabled:opacity-50',
+                        'cursor-pointer flex-col',
                         field.value === option.id + '' &&
                           'border border-brand-main bg-brand-hover',
                       )}
@@ -421,8 +423,7 @@ const SurveyForm = ({
                           field.onChange(target.value)
                         }}
                       />
-                      <label
-                        htmlFor={option.id}
+                      <div
                         className={cn(
                           'flex items-center',
                           'cursor-pointer',
@@ -439,7 +440,7 @@ const SurveyForm = ({
                             field.value === option.id + '' &&
                               'border-4 border-brand-main',
                           )}
-                        ></div>
+                        />
 
                         {[option.value, selectedType].every(
                           (item) => item === 'MANUAL',
@@ -455,10 +456,15 @@ const SurveyForm = ({
                             }}
                           />
                         ) : (
-                          <span className="ml-2">{option.text}</span>
+                          <span className="ml-2 text-b1-kr-b">
+                            {option.text}
+                          </span>
                         )}
-                      </label>
-                    </motion.div>
+                      </div>
+                      <span className="ml-8 text-b1-kr-b text-font-gray-04">
+                        {option.description}
+                      </span>
+                    </motion.label>
                   ))}
                 </>
               )}
