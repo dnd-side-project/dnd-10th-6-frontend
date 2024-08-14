@@ -12,7 +12,7 @@ import { Button } from '@/components/ui'
 
 export const BubbleChart = ({
   dashboard,
-  isLoading,
+
   wikiType,
 }: PropswithWikiType<{
   dashboard: BubbleChartType

@@ -1,9 +1,9 @@
-import Confetti from '@/components/confetti'
-import { Button } from '@/components/ui'
+// import Confetti from '@/components/confetti'
+// import { Button } from '@/components/ui'
 
-import MetaHead from '@/components/meta-head'
-import Image from 'next/image'
-import welcomeTree from '@/assets/characters/welcome-tree.webp'
+// import MetaHead from '@/components/meta-head'
+// import Image from 'next/image'
+// import welcomeTree from '@/assets/characters/welcome-tree.webp'
 
 const OnboardStep1 = () => {
   return (

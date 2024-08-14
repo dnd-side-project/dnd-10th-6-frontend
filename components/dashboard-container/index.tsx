@@ -1,9 +1,4 @@
-import React, {
-  HTMLAttributes,
-  PropsWithChildren,
-  useMemo,
-  useRef,
-} from 'react'
+import React, { HTMLAttributes, PropsWithChildren, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
@@ -22,7 +17,7 @@ import ShareModal from '../share-modal'
 import { Statistic } from '@/model/dashboard.entity'
 import { BinaryChart } from '../compositions/dashboard/binary-chart'
 import Money from '../compositions/dashboard/money'
-import { MAIN_COLOR } from '@/constants'
+
 import { RankChart } from '../compositions/dashboard/rank-chart'
 import { KnowAbout } from '../compositions/dashboard/know-about'
 

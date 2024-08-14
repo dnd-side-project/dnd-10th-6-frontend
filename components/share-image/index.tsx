@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Period, Relation, treeCardAsset, TreeType } from '@/model/card.entity'
+import { Period, Relation, treeCardAsset, CardType } from '@/model/card.entity'
 
 import { useSession } from '@/provider/session-provider'
 import { parseShareCardItems } from './constants'
@@ -99,7 +99,7 @@ export const ShareImage = ({
     }
   })()
 
-  const treeType = useRef(new TreeType(treeCardAsset)).current
+  const treeType = useRef(new CardType(treeCardAsset)).current
 
   const handleShare = (type: ShareType) => () => {
     if (ref.current === null) {

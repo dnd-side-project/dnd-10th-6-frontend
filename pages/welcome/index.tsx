@@ -203,7 +203,7 @@ const BottomSheetButton = ({
                           <h3 className="text-t3-kr-b">
                             {wikiInfo[wiki].name}
                           </h3>
-                          <div className="bg-bg-green-hover rounded-full px-[10px]  py-[3px] text-but4-m  text-green-500">
+                          <div className="rounded-full bg-bg-green-hover px-[10px]  py-[3px] text-but4-m  text-green-500">
                             질문 {wikiInfo[wiki].questionCount}개
                           </div>
                         </div>

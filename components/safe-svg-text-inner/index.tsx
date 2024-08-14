@@ -2,7 +2,6 @@ import { ReactNode, RefObject, useRef, useState } from 'react'
 import { useBrowserLayoutEffect } from '@/lib/client/utils'
 import { clamp } from '@/lib/server/utils'
 
-
 interface SafeSvgTextInnerProps {
   minWidth?: number
   maxWidth?: number
