@@ -42,7 +42,7 @@ const TreeInfo = ({
               transition={{ staggerChildren: 0.03 }}
               className="grid w-full grid-cols-3 gap-3"
             >
-              {surveys.data.content.map((item) => (
+              {surveys.data.content.slice(0, 6).map((item) => (
                 <TreeCard
                   disabled
                   senderName={item.senderName}

@@ -75,10 +75,10 @@ const TreeCard = ({
       )}
       onClick={!disabled ? handleCardClick : () => {}}
     >
-      <div className={`card flex w-full justify-center `}>
+      <div className={`card flex w-full items-end justify-center `}>
         <div
           className={cn(
-            `card-front m-auto flex w-full flex-col items-center justify-center rounded-lg ${bgColor}`,
+            `card-front m-auto flex w-full flex-col items-center !justify-end rounded-lg ${bgColor} px-8 pt-4`,
           )}
         >
           <div className="z-0 mt-3 flex items-center justify-center overflow-hidden  ">
@@ -124,7 +124,6 @@ const BottomSheetButton = ({
   closeBottomSheet,
 }: BottomSheetButtonProps) => {
   const [modalOpen, setModalOpen] = useState(false)
-
   const handleLinkClick = (e: MouseEvent) => {
     if (senderWikiId === null) {
       e.preventDefault()
