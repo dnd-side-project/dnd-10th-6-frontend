@@ -202,6 +202,7 @@ const Pages = () => {
                       id={item.surveyId}
                       period={item.period}
                       relation={item.relation}
+                      wikiType={wikiType}
                     />
                   )),
                 )}

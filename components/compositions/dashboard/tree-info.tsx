@@ -51,6 +51,7 @@ const TreeInfo = ({
                   id={item.surveyId}
                   period={item.period}
                   relation={item.relation}
+                  wikiType={wikiType}
                 />
               ))}
               {Array.from(

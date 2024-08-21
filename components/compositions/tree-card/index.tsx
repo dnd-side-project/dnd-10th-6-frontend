@@ -6,7 +6,13 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
 import { fadeInProps } from '@/variants'
-import { CardType, Period, Relation, treeCardAsset } from '@/model/card.entity'
+import {
+  CardType,
+  Period,
+  Relation,
+  flowerCardAsset,
+  treeCardAsset,
+} from '@/model/card.entity'
 import Modal from '@/components/modal'
 import {
   Drawer,
@@ -17,6 +23,7 @@ import {
 
 import pen from '@/assets/icons/pen.svg'
 import eye from '@/assets/icons/eye.svg'
+import { WikiType } from '@/types'
 interface TreeCardProps {
   period: string
   relation: string
@@ -24,6 +31,7 @@ interface TreeCardProps {
   senderName: string
   senderWikiId: string
   disabled?: boolean
+  wikiType: WikiType
 }
 
 const TreeCard = ({
@@ -33,29 +41,52 @@ const TreeCard = ({
   senderName,
   senderWikiId,
   disabled,
+  wikiType,
 }: TreeCardProps) => {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
-
   const bgColor = (() => {
-    switch (relation) {
-      case 'ELEMENTARY_SCHOOL':
-        return 'bg-yellow-50'
-      case 'MIDDLE_AND_HIGH_SCHOOL':
-        return 'bg-orange-50'
-      case 'UNIVERSITY':
-        return 'bg-[#EEFFEF]'
-      case 'WORK':
-        return 'bg-blue-50'
-      case 'SOCIAL':
-        return 'bg-green-50'
-      case 'ETC':
-        return 'bg-black-50'
-      default:
-        return ''
+    if (wikiType === 'NAMUI') {
+      // TreeCard 배경색 설정
+      switch (relation) {
+        case 'ELEMENTARY_SCHOOL':
+          return 'bg-yellow-50'
+        case 'MIDDLE_AND_HIGH_SCHOOL':
+          return 'bg-orange-100'
+        case 'UNIVERSITY':
+          return 'bg-[#EEFFEF]'
+        case 'WORK':
+          return 'bg-blue-50'
+        case 'SOCIAL':
+          return 'bg-green-50'
+        case 'ETC':
+          return 'bg-black-50'
+        default:
+          return ''
+      }
+    } else {
+      // FlowerCard 배경색 설정
+      switch (relation) {
+        case 'ELEMENTARY_SCHOOL':
+          return 'bg-yellow-50'
+        case 'MIDDLE_AND_HIGH_SCHOOL':
+          return 'bg-orange-100'
+        case 'UNIVERSITY':
+          return 'bg-pink-300'
+        case 'WORK':
+          return 'bg-blue-50'
+        case 'SOCIAL':
+          return 'bg-pink-200'
+        case 'ETC':
+          return 'bg-black-100'
+        default:
+          return ''
+      }
     }
   })()
 
-  const treeType = useRef(new CardType(treeCardAsset)).current
+  const cardType = useRef(
+    new CardType(wikiType === 'NAMUI' ? treeCardAsset : flowerCardAsset),
+  ).current
 
   const handleCardClick = () => {
     setBottomSheetOpen(true)
@@ -81,8 +112,8 @@ const TreeCard = ({
             `card-front m-auto flex w-full flex-col items-center justify-center rounded-lg ${bgColor}`,
           )}
         >
-          <div className="z-0 mt-3 flex items-center justify-center overflow-hidden  ">
-            {treeType.render(period as Period, relation as Relation)}
+          <div className="z-0 pt-8 flex items-center justify-center overflow-hidden  ">
+            {cardType.render(period as Period, relation as Relation)}
           </div>
         </div>
 
