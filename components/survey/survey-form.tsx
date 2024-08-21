@@ -149,69 +149,79 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
   }
 
   return (
-    <Reorder.Group
-      axis="y"
-      onReorder={(state) => {
-        form.setValue('answer', state)
-        setOptionsState(state)
-      }}
-      values={optionsState}
-      className="w-full flex-1 space-y-2 overflow-y-auto "
-    >
-      {optionsState.map((option, index) => (
-        <ReorderOptionItem
-          key={option}
-          value={option}
-          id={option}
-          index={index}
-          totalItems={optionsState.length}
-          moveItem={moveItem}
-          selectedId={selectedId}
-          setSelectedId={setSelectedId}
-        >
-          <label
-            className={cn(
-              'flex items-center',
-              'cursor-pointer',
-              'text-b1-kr-m  text-gray-700 transition-all duration-200',
-              'w-full pl-2',
-              'justify-between',
-            )}
+    <>
+      <div className="mb-7 mt-1 flex items-center justify-center space-x-2">
+        <span className="rounded-full bg-pink-200 px-4 py-[7px] text-but4-sb text-pink-600">
+          순서대로
+        </span>
+        <span className="rounded-full bg-bg-regular px-4 py-[7px] text-but4-sb text-font-gray-04">
+          선택해주세요
+        </span>
+      </div>
+      <Reorder.Group
+        axis="y"
+        onReorder={(state) => {
+          form.setValue('answer', state)
+          setOptionsState(state)
+        }}
+        values={optionsState}
+        className="w-full flex-1 space-y-2 overflow-y-auto "
+      >
+        {optionsState.map((option, index) => (
+          <ReorderOptionItem
+            key={option}
+            value={option}
+            id={option}
+            index={index}
+            totalItems={optionsState.length}
+            moveItem={moveItem}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
           >
-            <span className="ml-2">{optionMap?.current?.get(option)}</span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <label
+              className={cn(
+                'flex items-center',
+                'cursor-pointer',
+                'text-b1-kr-m  text-gray-700 transition-all duration-200',
+                'w-full pl-2',
+                'justify-between',
+              )}
             >
-              <path
-                d="M2.6665 4H13.3332"
-                stroke="#767676"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M2.6665 8H13.3332"
-                stroke="#767676"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M2.6665 12H13.3332"
-                stroke="#767676"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </label>
-        </ReorderOptionItem>
-      ))}
-    </Reorder.Group>
+              <span className="ml-2">{optionMap?.current?.get(option)}</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.6665 4H13.3332"
+                  stroke="#767676"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M2.6665 8H13.3332"
+                  stroke="#767676"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M2.6665 12H13.3332"
+                  stroke="#767676"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </label>
+          </ReorderOptionItem>
+        ))}
+      </Reorder.Group>
+    </>
   )
 }
 
@@ -581,7 +591,7 @@ const SurveyForm = ({
           <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
             <Image src={imgSrc} alt="questionAssets" />
             <div
-              className="mb-4 mt-1 text-t2-kr-m"
+              className="mt-1 text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             />
             <ReorderOptions options={options} name={name} id={id} />

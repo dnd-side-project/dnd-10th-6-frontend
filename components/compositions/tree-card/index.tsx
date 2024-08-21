@@ -112,7 +112,7 @@ const TreeCard = ({
             `card-front m-auto flex w-full flex-col items-center justify-center rounded-lg ${bgColor}`,
           )}
         >
-          <div className="z-0 pt-8 flex items-center justify-center overflow-hidden  ">
+          <div className="z-0 pt-6 pb-2 flex items-center justify-center overflow-hidden  ">
             {cardType.render(period as Period, relation as Relation)}
           </div>
         </div>
