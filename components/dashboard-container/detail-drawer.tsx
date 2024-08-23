@@ -220,121 +220,127 @@ function Content({ id, type }: { id: string; type: DetailType }) {
             ))
           : parsedData?.pages.map((page, pageNo) => (
               <div key={page.data.answers.page}>
-                {page.data.answers.content.map((cardItem, cardIndex) => {
-                  const parsedCreatedAt = new Date(cardItem.createdAt)
-                  const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
-                  return type === 'TWO_CHOICE' ? (
-                    <TwoChoice
-                      cardItem={cardItem}
-                      onShareClick={
-                        Object.hasOwn(
-                          parseShareCardItems,
-                          page.data.questionName,
-                        )
-                          ? () =>
-                              showShareImage({
-                                period: cardItem.period,
-                                relation: cardItem.relation,
-                                optionName: cardItem.optionName,
-                                questionName: page.data
-                                  .questionName as QS_NAMES,
-                                reason: cardItem.reason,
-                                senderName: cardItem.senderName,
-                                value:
-                                  page.data.questionName === 'BORROWING_LIMIT'
-                                    ? parseInt(cardItem.answer).toLocaleString()
-                                    : cardItem.answer,
-                              })
-                          : undefined
-                      }
-                      summary={[
-                        periods[cardItem.period],
-                        relations[cardItem.relation],
-                        createdAt,
-                      ].join(' · ')}
-                      treeType={treeType}
-                      key={
-                        cardItem.senderName +
-                        cardItem.answer +
-                        `${pageNo}-${cardIndex}`
-                      }
-                    />
-                  ) : type === 'MULTIPLE_CHOICE' ? (
-                    <MultipleChoice
-                      cardItem={cardItem}
-                      onShareClick={
-                        Object.hasOwn(
-                          parseShareCardItems,
-                          page.data.questionName,
-                        )
-                          ? () =>
-                              showShareImage({
-                                period: cardItem.period,
-                                relation: cardItem.relation,
-                                optionName: cardItem.optionName,
-                                questionName: page.data
-                                  .questionName as QS_NAMES,
-                                reason: cardItem.reason,
-                                senderName: cardItem.senderName,
-                                value:
-                                  page.data.questionName === 'BORROWING_LIMIT'
-                                    ? parseInt(cardItem.answer).toLocaleString()
-                                    : cardItem.answer,
-                              })
-                          : undefined
-                      }
-                      summary={[
-                        periods[cardItem.period],
-                        relations[cardItem.relation],
-                        createdAt,
-                      ].join(' · ')}
-                      treeType={treeType}
-                      key={
-                        cardItem.senderName +
-                        cardItem.answer +
-                        `${pageNo}-${cardIndex}`
-                      }
-                    />
-                  ) : (
-                    <motion.div
-                      key={
-                        cardItem.senderName +
-                        cardItem.answer +
-                        `${pageNo}-${cardIndex}`
-                      }
-                      variants={fadeInProps.variants}
-                      className="flex justify-between space-x-4 p-4"
-                    >
-                      <div
-                        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
-                          cardItem,
-                        )}`}
+                {page.data.answers.content
+                  .filter(Boolean)
+                  .map((cardItem, cardIndex) => {
+                    const parsedCreatedAt = new Date(cardItem.createdAt)
+                    const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
+                    return type === 'TWO_CHOICE' ? (
+                      <TwoChoice
+                        cardItem={cardItem}
+                        onShareClick={
+                          Object.hasOwn(
+                            parseShareCardItems,
+                            page.data.questionName,
+                          )
+                            ? () =>
+                                showShareImage({
+                                  period: cardItem.period,
+                                  relation: cardItem.relation,
+                                  optionName: cardItem.optionName,
+                                  questionName: page.data
+                                    .questionName as QS_NAMES,
+                                  reason: cardItem.reason,
+                                  senderName: cardItem.senderName,
+                                  value:
+                                    page.data.questionName === 'BORROWING_LIMIT'
+                                      ? parseInt(
+                                          cardItem.answer,
+                                        ).toLocaleString()
+                                      : cardItem.answer,
+                                })
+                            : undefined
+                        }
+                        summary={[
+                          periods[cardItem.period],
+                          relations[cardItem.relation],
+                          createdAt,
+                        ].join(' · ')}
+                        treeType={treeType}
+                        key={
+                          cardItem.senderName +
+                          cardItem.answer +
+                          `${pageNo}-${cardIndex}`
+                        }
+                      />
+                    ) : type === 'MULTIPLE_CHOICE' ? (
+                      <MultipleChoice
+                        cardItem={cardItem}
+                        onShareClick={
+                          Object.hasOwn(
+                            parseShareCardItems,
+                            page.data.questionName,
+                          )
+                            ? () =>
+                                showShareImage({
+                                  period: cardItem.period,
+                                  relation: cardItem.relation,
+                                  optionName: cardItem.optionName,
+                                  questionName: page.data
+                                    .questionName as QS_NAMES,
+                                  reason: cardItem.reason,
+                                  senderName: cardItem.senderName,
+                                  value:
+                                    page.data.questionName === 'BORROWING_LIMIT'
+                                      ? parseInt(
+                                          cardItem.answer,
+                                        ).toLocaleString()
+                                      : cardItem.answer,
+                                })
+                            : undefined
+                        }
+                        summary={[
+                          periods[cardItem.period],
+                          relations[cardItem.relation],
+                          createdAt,
+                        ].join(' · ')}
+                        treeType={treeType}
+                        key={
+                          cardItem.senderName +
+                          cardItem.answer +
+                          `${pageNo}-${cardIndex}`
+                        }
+                      />
+                    ) : (
+                      <motion.div
+                        key={
+                          cardItem.senderName +
+                          cardItem.answer +
+                          `${pageNo}-${cardIndex}`
+                        }
+                        variants={fadeInProps.variants}
+                        className="flex justify-between space-x-4 p-4"
                       >
-                        {treeType.render(
-                          cardItem.period as Period,
-                          cardItem.relation as Relation,
-                        )}
-                      </div>
-                      <div className="flex grow flex-col space-y-4">
-                        <div className="flex flex-col space-y-1">
-                          <h3 className="text-body1-bold">
-                            {cardItem.senderName}님
-                          </h3>
-                          <p className="text-body3-medium text-text-sub-gray76">
-                            {[
-                              periods[cardItem.period],
-                              relations[cardItem.relation],
-                              createdAt,
-                            ].join(' · ')}
+                        <div
+                          className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
+                            cardItem,
+                          )}`}
+                        >
+                          {treeType.render(
+                            cardItem.period as Period,
+                            cardItem.relation as Relation,
+                          )}
+                        </div>
+                        <div className="flex grow flex-col space-y-4">
+                          <div className="flex flex-col space-y-1">
+                            <h3 className="text-body1-bold">
+                              {cardItem.senderName}님
+                            </h3>
+                            <p className="text-body3-medium text-text-sub-gray76">
+                              {[
+                                periods[cardItem.period],
+                                relations[cardItem.relation],
+                                createdAt,
+                              ].join(' · ')}
+                            </p>
+                          </div>
+                          <p className="bg-gray-gray50 rounded-md p-4 text-body1-medium text-text-sub-gray76">
+                            {cardItem.answer}
                           </p>
                         </div>
-                        <p className="bg-gray-gray50 rounded-md p-4 text-body1-medium text-text-sub-gray76">
-                          {cardItem.answer}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )
-                })}
+                      </motion.div>
+                    )
+                  })}
               </div>
             ))}
         <div ref={ref} className="h-1 w-2" />

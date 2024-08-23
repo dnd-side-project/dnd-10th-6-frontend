@@ -73,12 +73,13 @@ export const BinaryChart = ({
                 positive
                 active={inView}
                 value={myAvg.mine * 100}
-                color={color}
+                color={myAvg.mine >= myAvg.entire ? color : undefined}
               />
               <BinaryBarBar
                 active={inView}
                 isMe={false}
                 value={myAvg.entire * 100}
+                color={myAvg.mine < myAvg.entire ? color : undefined}
               />
             </div>
           </>
@@ -108,13 +109,7 @@ interface BinaryBarProps {
   color?: { from: string; to: string }
 }
 
-function BinaryBarBar({
-  active,
-  value,
-  positive,
-  color,
-  isMe = true,
-}: BinaryBarProps) {
+function BinaryBarBar({ active, value, positive, color }: BinaryBarProps) {
   const id = useId()
   return (
     <m.div className="flex h-full flex-col">
@@ -158,7 +153,7 @@ function BinaryBarBar({
         <span
           className={cn(
             'absolute bottom-3 z-[1] text-b2-kr-m ',
-            positive ? 'text-white' : 'text-font-gray-disabled',
+            color ? 'text-white' : 'text-font-gray-disabled',
           )}
         >
           {value}%
@@ -179,10 +174,10 @@ function BinaryBarBar({
           }
           className={cn(
             'relative w-full origin-bottom rounded-md',
-            !isMe && 'bg-bg-regular',
+            !color && 'bg-bg-regular',
           )}
           style={{
-            ...(isMe
+            ...(color
               ? {
                   background: `linear-gradient(to top, ${color?.from || MAIN_COLOR.MONEY.from} 0%, ${color?.to || MAIN_COLOR.MONEY.to} 100%)`,
                 }

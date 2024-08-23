@@ -25,7 +25,7 @@ export const getDashboardQuery = (
       filters?.value ?? 'ALL',
     ],
     queryFn: ({ queryKey }) =>
-      NamuiApi.getDashboard([queryKey[1], queryKey[2]], wikiType),
+      NamuiApi.getDashboard([queryKey[2], queryKey[3]], wikiType),
     select: (result) => {
       return result.data?.statistics ?? []
     },

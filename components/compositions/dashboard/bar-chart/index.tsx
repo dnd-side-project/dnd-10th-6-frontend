@@ -88,9 +88,9 @@ export const BarChart = ({
                     color={item.color}
                     active={inView}
                     title={item.legend
-                      .split(' ')
-                      .splice(1, Infinity)
-                      .join(' ')
+                      // .split(' ')
+                      // .splice(1, Infinity)
+                      // .join(' ')
                       .trim()}
                   />
                 )

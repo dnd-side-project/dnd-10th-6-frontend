@@ -37,60 +37,62 @@ const DashboardContainer = ({
   const dashboardList = useMemo(() => statisics, [statisics])
 
   return (
-    <motion.div
-      {...fadeInProps}
-      className="flex h-full grow flex-col pb-[50px]"
-    >
+    <>
       <Filter className={cn(shouldShowHeader && 'top-header')} />
-      <AnimatePresence mode="wait">
-        {isLoading || statisics?.length ? (
-          <motion.div
-            {...fadeInProps}
-            key="exist"
-            className="flex flex-col space-y-5 px-5 pb-5"
-          >
-            {/* 내 정원에 심어진 나무는? */}
-            <Section className="pt-5">
-              <TreeInfo
-                filter={selectedFilter}
-                wikiType={wikiType}
-                wikiCount={wikiCount}
-              />
-            </Section>
-            <Section>
-              <KnowAbout wikiType={wikiType} />
-            </Section>
-            {dashboardList?.map((stat) => (
-              <Section key={stat.questionId}>
-                <RecursiveDashboard wikiType={wikiType} dashboard={stat} />
+      <motion.div
+        {...fadeInProps}
+        className="flex h-full grow flex-col pb-[50px]"
+      >
+        <AnimatePresence mode="wait">
+          {isLoading || statisics?.length ? (
+            <motion.div
+              {...fadeInProps}
+              key="exist"
+              className="flex flex-col space-y-5 px-5 pb-5"
+            >
+              {/* 내 정원에 심어진 나무는? */}
+              <Section className="pt-5">
+                <TreeInfo
+                  filter={selectedFilter}
+                  wikiType={wikiType}
+                  wikiCount={wikiCount}
+                />
               </Section>
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            key="empty"
-            {...fadeInProps}
-            className="relative mx-5 flex h-full flex-col items-center justify-between space-y-6 py-[16px] text-center"
-          >
-            <div />
-            <div className="flex flex-col items-center">
-              <TripleTrees />
-              <h3 className="mb-4 mt-8 text-t2-kr-b">
-                나무를 심어준 친구가 없어요
-              </h3>
-              <p className="text-b1-kr-m text-font-gray-03 ">
-                나에 대해 궁금하다면 링크 공유하기를 눌러
-                <br />
-                친구에게 알려달라고 부탁해보세요
-              </p>
-            </div>
-            <ShareModal wikiType={wikiType}>
-              <Button>링크 공유하기</Button>
-            </ShareModal>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+              <Section>
+                <KnowAbout wikiType={wikiType} />
+              </Section>
+              {dashboardList?.map((stat) => (
+                <Section key={stat.questionId}>
+                  <RecursiveDashboard wikiType={wikiType} dashboard={stat} />
+                </Section>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              {...fadeInProps}
+              className="relative mx-5 flex h-full flex-col items-center justify-between space-y-6 py-[16px] text-center"
+            >
+              <div />
+              <div className="flex flex-col items-center">
+                <TripleTrees />
+                <h3 className="mb-4 mt-8 text-t2-kr-b">
+                  나무를 심어준 친구가 없어요
+                </h3>
+                <p className="text-b1-kr-m text-font-gray-03 ">
+                  나에 대해 궁금하다면 링크 공유하기를 눌러
+                  <br />
+                  친구에게 알려달라고 부탁해보세요
+                </p>
+              </div>
+              <ShareModal wikiType={wikiType}>
+                <Button>링크 공유하기</Button>
+              </ShareModal>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </>
   )
 }
 
