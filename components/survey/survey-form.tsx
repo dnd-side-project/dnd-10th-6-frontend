@@ -26,6 +26,7 @@ import { ANSWER_TYPE } from '@/constants/enum'
 import UpDownSheet from '../ui/updownSheet'
 import questionTree from '@/assets/characters/question-tree.svg'
 import questionFlower from '@/assets/characters/question-flower.svg'
+import rankingIcon from '@/assets/icons/ranking.svg'
 import { useSearchParams } from 'next/navigation'
 import { WikiType } from '@/types'
 
@@ -93,7 +94,7 @@ const ReorderOptionItem = ({
         className={cn(
           'flex w-full items-center justify-start rounded-md border bg-white p-4',
           selectedId === id
-            ? 'border-brand-main bg-pink-300' //romance ui이기 때문에 pink가 적용되야하지만, 200,300에 대한 값은 brand-main으로 설정되있지않아 임의로 줌.
+            ? 'border-brand-main bg-pink-300'
             : 'border-[#E5E5EC]',
           'hover:border-brand-main hover:bg-pink-200',
           'focus-within:border-brand-main',
@@ -155,7 +156,7 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
           순서대로
         </span>
         <span className="rounded-full bg-bg-regular px-4 py-[7px] text-but4-sb text-font-gray-04">
-          선택해주세요
+          옮겨주세요
         </span>
       </div>
       <Reorder.Group
@@ -168,57 +169,36 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
         className="w-full flex-1 space-y-2 overflow-y-auto "
       >
         {optionsState.map((option, index) => (
-          <ReorderOptionItem
-            key={option}
-            value={option}
-            id={option}
-            index={index}
-            totalItems={optionsState.length}
-            moveItem={moveItem}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
-          >
-            <label
+          <div className="flex w-full items-center" key={option}>
+            <span
               className={cn(
-                'flex items-center',
-                'cursor-pointer',
-                'text-b1-kr-m  text-gray-700 transition-all duration-200',
-                'w-full pl-2',
-                'justify-between',
+                'mr-3 whitespace-nowrap p-4 text-but3-sb ',
+                index === 0 ? 'text-pink-600' : 'text-gray-500', // Apply pink color for the first item
               )}
             >
-              <span className="ml-2">{optionMap?.current?.get(option)}</span>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+              {index + 1}위
+            </span>
+            <ReorderOptionItem
+              key={option}
+              value={option}
+              id={option}
+              index={index}
+              totalItems={optionsState.length}
+              moveItem={moveItem}
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+            >
+              <label
+                className={cn(
+                  'flex w-full cursor-pointer items-center justify-between',
+                  'pl-2 text-b1-kr-m text-gray-700 transition-all duration-200',
+                )}
               >
-                <path
-                  d="M2.6665 4H13.3332"
-                  stroke="#767676"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M2.6665 8H13.3332"
-                  stroke="#767676"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M2.6665 12H13.3332"
-                  stroke="#767676"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </label>
-          </ReorderOptionItem>
+                <span className="ml-2">{optionMap?.current?.get(option)}</span>
+                <Image src={rankingIcon} alt="rankingIcon" />
+              </label>
+            </ReorderOptionItem>
+          </div>
         ))}
       </Reorder.Group>
     </>
@@ -296,7 +276,7 @@ const SurveyForm = ({
       case 'ROMANCE':
         return questionFlower
       default:
-        return questionTree // 기본값 설정
+        return questionTree
     }
   })()
 
@@ -471,7 +451,7 @@ const SurveyForm = ({
                           </span>
                         )}
                       </div>
-                      <span className="ml-8 text-b1-kr-b text-font-gray-04">
+                      <span className="ml-8 text-b2-kr-m text-font-gray-04">
                         {option.description}
                       </span>
                     </motion.label>
