@@ -11,7 +11,7 @@ const OnboardStep4 = () => {
         <br />
         <b>내가 원하는 답변을 공유</b>할 수 있어요
       </h2>
-     
+
       <svg
         width="242"
         height="463"
