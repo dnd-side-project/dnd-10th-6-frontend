@@ -9,13 +9,12 @@
     --brand-400: #0bd774;
     --brand-hover: #eeffef;
   }
-
-  .romance :root {
-    --brand-600: #ff4e46;
-    --brand-500: #ff5544;
-    --brand-400: #ff6460;
-    --brand-hover: #ffeef1;
-  }
+}
+html.romance {
+  --brand-600: #ff4e46;
+  --brand-500: #ff5544;
+  --brand-400: #ff6460;
+  --brand-hover: #ffeef1;
 }
 
 .card {
