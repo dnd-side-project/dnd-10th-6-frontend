@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         'BG-brand':
-          'enabled:hover:bg-brand-500  enabled:active:bg-brand-400 text-font-white bg-brand-main',
+          'enabled:hover:bg-brand-500  enabled:active:bg-brand-400 text-font-white bg-brand-600',
         'BG-accent':
           'bg-black text-font-white  enabled:hover:bg-black-800  enabled:active:bg-black-700',
         'BG-neutral':
