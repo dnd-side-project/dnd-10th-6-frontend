@@ -195,7 +195,11 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
                 )}
               >
                 <span className="ml-2">{optionMap?.current?.get(option)}</span>
-                <Image src={rankingIcon} alt="rankingIcon" />
+                <Image
+                  src={rankingIcon}
+                  alt="rankingIcon"
+                  className="pointer-events-none"
+                />
               </label>
             </ReorderOptionItem>
           </div>

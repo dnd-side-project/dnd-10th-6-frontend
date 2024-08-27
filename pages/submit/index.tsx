@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
@@ -10,6 +10,7 @@ import { WikiType } from '@/types'
 import { Button } from '@/components/ui'
 import ShareModal from '@/components/share-modal'
 import submitTree from '@/assets/characters/submit-tree.svg'
+import submitFlower from '@/assets/characters/submit-flower.svg'
 
 const index = () => {
   const { data } = useSession()
@@ -17,6 +18,20 @@ const index = () => {
   const wikiType = searchParams.get('wikiType')! as WikiType
 
   useToggletheme(wikiType)
+
+  const wikiInfo = useMemo(
+    () => ({
+      NAMUI: {
+        icon: submitTree,
+        wikiName: '남의위키',
+      },
+      ROMANCE: {
+        icon: submitFlower,
+        wikiName: '연애위키',
+      },
+    }),
+    [],
+  )
 
   return (
     <FormLayout
@@ -53,10 +68,10 @@ const index = () => {
       content={
         <>
           <div className="flex grow flex-col items-center justify-center space-y-8 px-5 text-center">
-            <Image src={submitTree} alt="submitTree" />
+            <Image src={wikiInfo[wikiType].icon} alt="submitTree" />
             <div className="flex w-full flex-col items-center justify-center space-y-2">
               <h1 className="text-mainTitle2-bold ">
-                남의위키 작성이 끝났어요{' '}
+                {wikiInfo[wikiType].wikiName} 작성이 끝났어요
               </h1>
               <p className="text-subTitle2-medium text-text-sub-gray4f">
                 친구에게도 나에 대해 알려달라고
