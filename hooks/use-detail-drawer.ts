@@ -22,7 +22,7 @@ const useDetailDrawer = () => {
         { shallow: true },
       )
     },
-    [],
+    [router, wikiType],
   )
   return { handle }
 }

@@ -9,6 +9,7 @@ import { RANK_COLOR } from '@/constants'
 import { PropswithWikiType, WikiType } from '@/types'
 import { BubbleChartType, Rank } from '@/model/dashboard.entity'
 import { Button } from '@/components/ui'
+import useDetailDrawer from '@/hooks/use-detail-drawer'
 
 export const BubbleChart = ({
   dashboard,
@@ -19,6 +20,7 @@ export const BubbleChart = ({
   isLoading?: boolean
 }>) => {
   const { data } = useSession()
+  const { handle } = useDetailDrawer()
 
   const orderByMaxValueList = useMemo(() => {
     const arr = dashboard?.rank?.sort((a, b) => b.percentage - a.percentage)
@@ -38,6 +40,7 @@ export const BubbleChart = ({
       </h2>
       <GrowingCircles data={orderByMaxValueList} wikiType={wikiType} />
       <Button
+        onClick={() => dashboard?.questionId && handle(dashboard?.questionId)}
         variant="Line-neutral"
         rounded="full"
         className="mx-auto w-fit px-12 py-4"
@@ -187,7 +190,7 @@ const GrowingCircles = ({
                 fontSize: mapValue(bubble.percentage, 100, 0, 28, 100),
               }}
             >
-              {bubble.label.split('  ')[1]}
+              {bubble.label}
             </p>
           </motion.div>
         ))}

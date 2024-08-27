@@ -10,7 +10,13 @@ import { useIntersectionObserver } from '@/hooks/use-observer'
 
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-import { Period, Relation, CardType, treeCardAsset } from '@/model/card.entity'
+import {
+  Period,
+  Relation,
+  CardType,
+  treeCardAsset,
+  flowerCardAsset,
+} from '@/model/card.entity'
 
 import { QS_NAMES, ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
@@ -18,6 +24,7 @@ import { useMount } from '@/hooks/use-mount'
 import SideDrawer from '../side-drawer'
 import { periods } from '../badge/badge-period'
 import { relations } from '../badge/badge-relation'
+import { useWikiContext } from '@/contexts/wiki-provider'
 
 export interface DetailResponse {
   data: Data
@@ -61,6 +68,7 @@ const DetailDrawer = () => {
     return () => {
       clear()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
   return !isMounted ? (
     <></>
@@ -109,6 +117,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
   const { selectedFilter } = useFilter()
   const { showShareImage } = useContext(ShareImageContext)
   const { data: user } = useSession()
+  const { wikiType } = useWikiContext()
   const {
     data: qs,
     isLoading,
@@ -166,7 +175,9 @@ function Content({ id, type }: { id: string; type: DetailType }) {
     fetchNextPage,
   })
 
-  const treeType = useRef(new CardType(treeCardAsset)).current
+  const cardType = useRef(
+    new CardType(wikiType === 'NAMUI' ? treeCardAsset : flowerCardAsset),
+  ).current
 
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">
@@ -256,7 +267,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                           relations[cardItem.relation],
                           createdAt,
                         ].join(' · ')}
-                        treeType={treeType}
+                        treeType={cardType}
                         key={
                           cardItem.senderName +
                           cardItem.answer +
@@ -294,7 +305,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                           relations[cardItem.relation],
                           createdAt,
                         ].join(' · ')}
-                        treeType={treeType}
+                        treeType={cardType}
                         key={
                           cardItem.senderName +
                           cardItem.answer +
@@ -312,11 +323,11 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                         className="flex justify-between space-x-4 p-4"
                       >
                         <div
-                          className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
+                          className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
                             cardItem,
                           )}`}
                         >
-                          {treeType.render(
+                          {cardType.render(
                             cardItem.period as Period,
                             cardItem.relation as Relation,
                           )}
@@ -334,7 +345,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                               ].join(' · ')}
                             </p>
                           </div>
-                          <p className="bg-gray-gray50 rounded-md p-4 text-body1-medium text-text-sub-gray76">
+                          <p className="rounded-md bg-bg-light p-4 text-body1-medium text-text-sub-gray76">
                             {cardItem.answer}
                           </p>
                         </div>
@@ -360,13 +371,14 @@ function MultipleChoice({
   treeType: CardType
   onShareClick?: () => void
 }) {
+  console.log(cardItem.answer, onShareClick, '<cardItem.answer')
   return (
     <motion.div
       variants={fadeInProps.variants}
       className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
           cardItem,
         )}`}
       >
@@ -416,12 +428,12 @@ function MultipleChoice({
         </div>
         <div
           className={cn(
-            'bg-gray-gray50 w-fit rounded-md px-2 py-1 text-body3-medium text-text-sub-gray76',
+            'w-fit rounded-md bg-bg-light px-2 py-1 text-body3-medium text-text-sub-gray76',
           )}
         >
           {cardItem.answer}
         </div>
-        <p className="bg-gray-gray50 rounded-md p-4 text-body1-medium text-text-sub-gray4f">
+        <p className="rounded-md bg-bg-light p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
         </p>
       </div>
@@ -441,13 +453,14 @@ function TwoChoice({
   onShareClick?: () => void
 }) {
   const isPositiveAnswer = cardItem.answer.includes('🙆‍♂️')
+
   return (
     <motion.div
       variants={fadeInProps.variants}
       className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
           cardItem,
         )}`}
       >
@@ -500,13 +513,13 @@ function TwoChoice({
           className={cn(
             'w-fit rounded-md px-2 py-1 text-body3-medium',
             isPositiveAnswer
-              ? 'bg-brand-main-200 text-brand-main-green400'
+              ? 'bg-green-50 text-green-900'
               : 'bg-brand-alert-200 text-brand-alert-900',
           )}
         >
           {cardItem.answer}
         </div>
-        <p className="bg-gray-gray50 rounded-md  p-4 text-body1-medium text-text-sub-gray4f">
+        <p className="rounded-md bg-bg-light  p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
         </p>
       </div>

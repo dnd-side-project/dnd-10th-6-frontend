@@ -87,7 +87,8 @@ export const BinaryChart = ({
         <div className="mx-auto mt-10 flex w-1/2 justify-center">
           <Button
             onClick={() =>
-              dashboard?.questionId && handle(dashboard?.questionId)
+              dashboard?.questionId &&
+              handle(dashboard?.questionId, 'TWO_CHOICE')
             }
             rounded="full"
             variant="Line-neutral"
