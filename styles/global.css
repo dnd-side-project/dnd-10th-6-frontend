@@ -10,7 +10,7 @@
     --brand-hover: #eeffef;
   }
 
-  .romance {
+  .romance :root {
     --brand-600: #ff4e46;
     --brand-500: #ff5544;
     --brand-400: #ff6460;
