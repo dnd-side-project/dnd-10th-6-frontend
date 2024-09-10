@@ -7,9 +7,9 @@ const OnboardStep2 = () => {
       className="flex h-full flex-col items-center justify-center gap-5 space-y-8 px-4 text-center"
     >
       <h2 className="text-h4-kr-m">
-        친구와 <b>알게 된 기간, 경로</b>에 따라
+        친구들과 함께 <b>연애위키를 공유</b>하며
         <br />
-        <b>나무 카드의 모양과 색</b>이 달라져요
+        서로에 대해 더 알아가 보세요
       </h2>
       <svg
         width="242"
@@ -30,7 +30,7 @@ const OnboardStep2 = () => {
             stroke="white"
             stroke-width="6"
           />
-          <g clip-path="url(#clip0_1320_43467)">
+          <g clipPath="url(#clip0_1320_43467)">
             <rect
               x="75"
               y="30"

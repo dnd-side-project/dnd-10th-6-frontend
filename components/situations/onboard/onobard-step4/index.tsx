@@ -7,9 +7,9 @@ const OnboardStep4 = () => {
       className="flex h-full flex-col items-center justify-center gap-5 space-y-8 px-4 text-center"
     >
       <h2 className="text-h4-kr-m">
-        답변 상세 보기에서
+        친구가 남긴 재미있는 답변을
         <br />
-        <b>내가 원하는 답변을 공유</b>할 수 있어요
+        <b>SNS에 공유할 수 있어요</b>
       </h2>
 
       <svg

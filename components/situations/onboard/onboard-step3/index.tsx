@@ -19,9 +19,9 @@ const OnboardStep3 = () => {
       className="flex h-full flex-col items-center justify-center gap-5 space-y-8 px-4 text-center"
     >
       <h2 className="text-h4-kr-m">
-        내 결과 보기 페이지에서 그룹별로
+        <b>친구가 남긴 답변을 보며,</b>
         <br />
-        <b>상세 데이터를 확인</b>할 수 있어요
+        나도 몰랐던 내 모습을 발견할 수 있어요
       </h2>
 
       <svg

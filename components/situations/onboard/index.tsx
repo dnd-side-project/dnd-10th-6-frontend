@@ -48,6 +48,7 @@ const OnBoard = ({ onStartClick }: OnBoardProps) => {
       />
       <Button
         variant="BG-brand"
+        className="bg-pink-600"
         onClick={
           selectedIndex !== onBoardingItems.length - 1
             ? () => emblaApi?.scrollNext()

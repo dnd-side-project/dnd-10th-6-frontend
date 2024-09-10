@@ -7,9 +7,9 @@ const OnboardStep5 = () => {
       className="flex h-full flex-col items-center justify-center gap-5 space-y-8 px-4 text-center"
     >
       <h2 className="text-h4-kr-m">
-        친구가 작성해준 답변을
+        연애위키를 작성해준 친구에 따라
         <br />
-        <b>SNS에 공유</b>해보세요
+        <b>꽃 카드의 모양과 색이 달라져요</b>
       </h2>
 
       <svg
