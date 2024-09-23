@@ -84,6 +84,7 @@ export class NamuiApi {
   }
 
   static async getQuestionDetailById(
+    wikiType: WikiType,
     pageNo: number,
     questionId: string,
     filter: [key: string, value: string],
@@ -92,6 +93,7 @@ export class NamuiApi {
       method: 'GET',
       url: '/api/v1/answers',
       params: {
+        wikiType,
         pageSize: 20,
         pageNo,
         questionId,

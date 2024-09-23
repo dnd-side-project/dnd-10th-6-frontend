@@ -25,6 +25,7 @@ import SideDrawer from '../side-drawer'
 import { periods } from '../badge/badge-period'
 import { relations } from '../badge/badge-relation'
 import { useWikiContext } from '@/contexts/wiki-provider'
+import { WikiType } from '@/types'
 
 export interface DetailResponse {
   data: Data
@@ -49,7 +50,7 @@ export interface Content {
   optionName: string
   period: Period
   relation: Relation
-  answer: string
+  answer: { text: string; value: string; optionName: string }
   reason: string
   createdAt: string
 }
@@ -127,7 +128,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
     DetailResponse,
     Error,
     InfiniteData<DetailResponse>,
-    [string, string, string, string]
+    [string, WikiType, string, string, string]
   >({
     initialPageParam: 0,
     getNextPageParam: (page) => {
@@ -137,15 +138,18 @@ function Content({ id, type }: { id: string; type: DetailType }) {
     },
     queryKey: [
       'question-detail',
+      wikiType,
       id,
       selectedFilter?.type ?? 'period',
       selectedFilter?.value ?? 'ALL',
     ],
     queryFn: ({ pageParam = 0, queryKey }) => {
-      return NamuiApi.getQuestionDetailById(pageParam as number, queryKey[1], [
+      return NamuiApi.getQuestionDetailById(
+        queryKey[1],
+        pageParam as number,
         queryKey[2],
-        queryKey[3],
-      ])
+        [queryKey[3], queryKey[4]],
+      )
     },
     enabled: !!id,
     select(data) {
@@ -256,7 +260,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                   value:
                                     page.data.questionName === 'BORROWING_LIMIT'
                                       ? parseInt(
-                                          cardItem.answer,
+                                          cardItem.answer.text,
                                         ).toLocaleString()
                                       : cardItem.answer,
                                 })
@@ -294,7 +298,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                   value:
                                     page.data.questionName === 'BORROWING_LIMIT'
                                       ? parseInt(
-                                          cardItem.answer,
+                                          cardItem.answer.text,
                                         ).toLocaleString()
                                       : cardItem.answer,
                                 })
@@ -346,7 +350,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                             </p>
                           </div>
                           <p className="rounded-md bg-bg-light p-4 text-body1-medium text-text-sub-gray76">
-                            {cardItem.answer}
+                            {cardItem.answer.text}
                           </p>
                         </div>
                       </motion.div>
@@ -431,7 +435,7 @@ function MultipleChoice({
             'w-fit rounded-md bg-bg-light px-2 py-1 text-body3-medium text-text-sub-gray76',
           )}
         >
-          {cardItem.answer}
+          {cardItem.answer.text}
         </div>
         <p className="rounded-md bg-bg-light p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
@@ -452,7 +456,7 @@ function TwoChoice({
   treeType: CardType
   onShareClick?: () => void
 }) {
-  const isPositiveAnswer = cardItem.answer.includes('🙆‍♂️')
+  const isPositiveAnswer = cardItem.answer.text.includes('🙆‍♂️')
 
   return (
     <motion.div
@@ -517,7 +521,7 @@ function TwoChoice({
               : 'bg-brand-alert-200 text-brand-alert-900',
           )}
         >
-          {cardItem.answer}
+          {cardItem.answer.text}
         </div>
         <p className="rounded-md bg-bg-light  p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
