@@ -16,6 +16,7 @@ import { PropswithWikiType } from '@/types'
 import SurveyTree from '@/components/svgs/survey-tree'
 import Modal from '@/components/modal'
 import { Button } from '@/components/ui'
+import SurveyFlower from '@/components/svgs/survey-flower' // SurveyFlower 추가
 
 const Page = ({
   wikiType,
@@ -45,18 +46,25 @@ const Page = ({
     )
   }
 
+  // wikiType에 따라 SurveyTree 또는 SurveyFlower 선택
+  const SurveyComponent = wikiType === 'ROMANCE' ? SurveyFlower : SurveyTree
+
   return (
     <div className="flex h-calc-h flex-col px-5 py-4">
       <section className="flex grow flex-col items-center justify-center space-y-16 text-center">
         <div className="flex flex-col items-center">
-          <SurveyTree />
+          {/* 위키타입에 따라 SurveyTree 또는 SurveyFlower 표시 */}
+          <SurveyComponent />
           <h1 className="mt-6 text-mainTitle2-bold">
             {nickname}님의
             <br />
-            남의위키가 도착했어요
+            {/* 위키타입이 ROMANCE일 경우 텍스트 변경 */}
+            {wikiType === 'ROMANCE'
+              ? '연애위키가 도착했어요'
+              : '남의위키가 도착했어요'}
           </h1>
           <p className="mt-3 text-subTitle2-medium text-text-sub-gray4f">
-            남의위키를 통해
+            {wikiType === 'ROMANCE' ? '연애위키를 통해' : '남의위키를 통해'}
             <br />
             내가 본 친구의 모습을 알려주세요
           </p>
@@ -72,7 +80,9 @@ const Page = ({
             <div className="relative h-full w-full flex-1 rounded-lg bg-white  px-3 py-4 shadow-chat-bubble">
               <p className="text-body3-medium text-black">
                 <b>비회원</b>으로 시작하면 <br />
-                내가 작성한 <b>남의위키를 볼 수 없어요!</b>
+                내가 작성한{' '}
+                <b>{wikiType === 'ROMANCE' ? '연애위키' : '남의위키'}</b>를 볼
+                수 없어요!
               </p>
             </div>
             <svg
@@ -93,7 +103,6 @@ const Page = ({
         {data?.user?.wikiId ? (
           <Button onClick={handleStart}>시작하기</Button>
         ) : (
-          // variant 적용: kakao
           <Button
             disabled={isPending}
             variant="Line-neutral"
@@ -146,7 +155,6 @@ const Page = ({
           divider: false,
           item: [
             [
-              // TODO : variant 적용 kakao
               <Close className="flex-[1_0_50%]" key="survey-footer">
                 <Button
                   variant="BG-neutral"

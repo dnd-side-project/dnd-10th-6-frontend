@@ -20,6 +20,7 @@ import Money from '../compositions/dashboard/money'
 
 import { RankChart } from '../compositions/dashboard/rank-chart'
 import { KnowAbout } from '../compositions/dashboard/know-about'
+import TripleFlowers from '../svgs/triple-flowers'
 
 const DashboardContainer = ({
   shouldShowHeader,
@@ -75,9 +76,11 @@ const DashboardContainer = ({
             >
               <div />
               <div className="flex flex-col items-center">
-                <TripleTrees />
+                {wikiType === 'ROMANCE' ? <TripleFlowers /> : <TripleTrees />}
                 <h3 className="mb-4 mt-8 text-t2-kr-b">
-                  나무를 심어준 친구가 없어요
+                  {wikiType === 'ROMANCE'
+                    ? '꽃을 심어준 친구가 없어요'
+                    : '나무를 심어준 친구가 없어요'}
                 </h3>
                 <p className="text-b1-kr-m text-font-gray-03 ">
                   나에 대해 궁금하다면 링크 공유하기를 눌러
