@@ -23,14 +23,13 @@ export const RankChart = ({
 
   const { inView, ref } = useInViewRef<HTMLDivElement>({
     once: true,
-    amount: 'all',
   })
 
   const parsedDashboard = useMemo(() => {
     const sorted = dashboard.rank.sort((a, b) => a.percentage + b.percentage)
-    const temp = sorted[1]
-    sorted[1] = sorted[0]
-    sorted[0] = temp
+    // const temp = sorted[1]
+    // sorted[1] = sorted[0]
+    // sorted[0] = temp
     return sorted
   }, [dashboard.rank])
 
