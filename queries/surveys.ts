@@ -33,7 +33,7 @@ export interface Survey {
 
 export interface QuestionAndAnswer {
   questionName: string
-  answer: Answer
+  answer: Answer | Answer[]
   questionTitle: string
   reason?: string
 }

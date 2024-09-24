@@ -168,42 +168,43 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
   const { data } = useSession()
   return (
     <div className="grid w-full grid-cols-1 justify-start space-y-4 divide-y">
-      {survey.questionAndAnswers.map((item, index) => (
-        <AnswerDetail
-          questionName={item.questionName}
-          onShareClick={
-            Object.hasOwn(parseShareCardItems, item.questionName)
-              ? () => {
-                  showShareImage({
-                    period: survey.period,
-                    optionName: item.answer?.optionName,
-                    questionName: item.questionName as QS_NAMES,
-                    reason: item.reason as QS_NAMES,
-                    relation: survey.relation,
-                    senderName: survey.senderName,
-                    value:
-                      typeof item.answer.value === 'number'
-                        ? item.answer.value.toLocaleString()
-                        : item.answer.value,
-                  })
-                }
-              : undefined
-          }
-          index={index}
-          key={index}
-          questionTitle={item.questionTitle
-            .replace('{{userName}}', data?.user?.name ?? '')
-            .replace('<br/>', ' ')}
-          //
-          answer={
-            item.answer.value === true
-              ? `⭕ ${item.answer.text}`
-              : `❌ ${item.answer.text}`
-          }
-          value={item.answer.value as string | boolean}
-          reason={item.reason ?? item.answer.text}
-        />
-      ))}
+      {survey.questionAndAnswers.map((item, index) => {
+        const answer = Array.isArray(item.answer) ? item.answer[0] : item.answer
+        return (
+          <AnswerDetail
+            questionName={item.questionName}
+            onShareClick={
+              Object.hasOwn(parseShareCardItems, item.questionName)
+                ? () => {
+                    showShareImage({
+                      period: survey.period,
+                      optionName: answer.optionName,
+                      questionName: item.questionName as QS_NAMES,
+                      reason: item.reason as QS_NAMES,
+                      relation: survey.relation,
+                      senderName: survey.senderName,
+                      value:
+                        typeof answer.value === 'number'
+                          ? answer.value.toLocaleString()
+                          : answer.value,
+                    })
+                  }
+                : undefined
+            }
+            index={index}
+            key={index}
+            questionTitle={item.questionTitle
+              .replace('{{userName}}', data?.user?.name ?? '')
+              .replace('<br/>', ' ')}
+            //
+            answer={
+              answer.value === true ? `⭕ ${answer.text}` : `❌ ${answer.text}`
+            }
+            value={answer.value as string | boolean}
+            reason={item.reason ?? answer.text}
+          />
+        )
+      })}
     </div>
   )
 }
