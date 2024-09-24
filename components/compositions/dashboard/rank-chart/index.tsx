@@ -24,6 +24,7 @@ export const RankChart = ({
   const { inView, ref } = useInViewRef<HTMLDivElement>({
     once: true,
     amount: 'all',
+    margin: '10%',
   })
 
   const parsedDashboard = useMemo(() => {
@@ -146,6 +147,9 @@ export const RankChart = ({
                             }
                           : {}
                       }
+                      transition={{
+                        duration: 2,
+                      }}
                       style={{
                         height: [34, 59, 30][index],
                       }}
