@@ -6,13 +6,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/client/utils'
 import { fadeInProps } from '@/variants'
-import {
-  CardType,
-  Period,
-  Relation,
-  flowerCardAsset,
-  treeCardAsset,
-} from '@/model/card.entity'
+import { CardType, Period, Relation } from '@/model/card.entity'
 import Modal from '@/components/modal'
 import {
   Drawer,
@@ -84,9 +78,7 @@ const TreeCard = ({
     }
   })()
 
-  const cardType = useRef(
-    new CardType(wikiType === 'NAMUI' ? treeCardAsset : flowerCardAsset),
-  ).current
+  const cardType = useRef(new CardType(wikiType)).current
 
   const handleCardClick = () => {
     setBottomSheetOpen(true)

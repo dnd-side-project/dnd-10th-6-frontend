@@ -48,6 +48,7 @@ import InfiniteSocialFlower from '@/components/svgs/flower-card/infinite/infinit
 import InfiniteEtcFlower from '@/components/svgs/flower-card/infinite/infinite-etc-flower'
 import InfiniteMiddleHighFlower from '@/components/svgs/flower-card/infinite/infinite-middle-high-flower'
 import InfiniteUniversityFlower from '@/components/svgs/flower-card/infinite/infinite-university-flower'
+import { WikiType } from '@/types'
 
 export type Period = 'SIX_MONTHS' | 'ONE_YEAR' | 'FOUR_YEARS' | 'INFINITE'
 export type Relation =
@@ -79,7 +80,17 @@ interface CardAdapter {
 }
 
 export class CardType implements CardAdapter {
-  constructor(private readonly asset: Record<AssetKey, ReactNode>) {}
+  private readonly asset: Record<AssetKey, ReactNode>
+  constructor(wikiType: WikiType) {
+    switch (wikiType) {
+      case 'NAMUI':
+        this.asset = treeCardAsset
+        break
+      case 'ROMANCE':
+        this.asset = flowerCardAsset
+        break
+    }
+  }
 
   render(period: Period, relation: Relation) {
     const assetKey = `${period}_${relation}` as AssetKey

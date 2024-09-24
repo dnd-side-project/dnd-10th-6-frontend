@@ -9,7 +9,7 @@ import { useSession } from '@/provider/session-provider'
 
 import { Survey, getSurveyByIdQuery } from '@/queries/surveys'
 import { fadeInProps } from '@/variants'
-import { CardType, treeCardAsset } from '@/model/card.entity'
+import { CardType } from '@/model/card.entity'
 import AnswerDetail from '@/components/compositions/answers/answer-detail'
 import { RelationBadge, PeriodBadge } from '@/components/badge'
 import {
@@ -19,21 +19,21 @@ import {
   ShareImageProvider,
 } from '@/components/share-image'
 import { parseShareCardItems } from '@/components/share-image/constants'
+import { useWikiContext } from '@/contexts/wiki-provider'
 
 const Pages = ({ surveyId }: { surveyId: string }) => {
   const { data: { data: survey } = {}, isLoading } = useQuery(
     getSurveyByIdQuery(surveyId),
   )
-  console.log(survey)
   const router = useRouter()
-
+  const { wikiType } = useWikiContext()
   const createdAt = useMemo(() => {
     if (!survey) return
     const parsedCreatedAt = new Date(survey.createdAt)
     return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
   }, [survey])
 
-  const treeType = useRef(new CardType(treeCardAsset)).current
+  const treeType = useRef(new CardType(wikiType)).current
 
   const bgColor = (survey: Survey) => {
     switch (survey.relation) {

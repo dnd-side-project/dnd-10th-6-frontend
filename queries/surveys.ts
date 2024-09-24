@@ -74,4 +74,5 @@ export interface Writing {
   period: Period
   senderName: string
   sentAt: string
+  wikiType: WikiType
 }

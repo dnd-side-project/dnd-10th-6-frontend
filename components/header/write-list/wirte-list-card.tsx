@@ -3,8 +3,9 @@ import { useAnimation } from 'framer-motion'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Writing } from '@/queries/surveys'
-import { CardType, treeCardAsset } from '@/model/card.entity'
+import { CardType } from '@/model/card.entity'
 import { PeriodBadge, RelationBadge } from '@/components/badge'
+import { PropswithWikiType } from '@/types'
 const variants = {
   hidden: {
     opacity: 0,
@@ -37,7 +38,10 @@ const bgColor = (cardItem: Writing) => {
   }
 }
 
-const WriteListCard = ({ item }: { item: Writing }) => {
+const WriteListCard = ({
+  item,
+  wikiType,
+}: PropswithWikiType<{ item: Writing }>) => {
   const controls = useAnimation()
   const { ref, inView } = useInViewRef<HTMLDivElement>()
 
@@ -45,7 +49,7 @@ const WriteListCard = ({ item }: { item: Writing }) => {
     const parsedCreatedAt = new Date(item.sentAt)
     return `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
   }, [])
-  const treeType = useRef(new CardType(treeCardAsset)).current
+  const treeType = useRef(new CardType(wikiType)).current
   useEffect(() => {
     if (inView) {
       controls.start('show')

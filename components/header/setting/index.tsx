@@ -8,8 +8,8 @@ import Modal from '@/components/modal'
 import SideDrawer from '@/components/side-drawer'
 import { DeveloperInfo } from '@/components/header/developer-info'
 import { EditProfile } from '@/components/header/edit-setting'
-import WriteList from '../write-list'
 import { FilterProvider } from '@/hooks/use-filter'
+import WriteList from '../write-list'
 
 export const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)

@@ -10,13 +10,7 @@ import { useIntersectionObserver } from '@/hooks/use-observer'
 
 import { motion } from 'framer-motion'
 import { fadeInProps } from '@/variants'
-import {
-  Period,
-  Relation,
-  CardType,
-  treeCardAsset,
-  flowerCardAsset,
-} from '@/model/card.entity'
+import { Period, Relation, CardType } from '@/model/card.entity'
 
 import { QS_NAMES, ShareImageContext } from '../share-image'
 import { parseShareCardItems } from '../share-image/constants'
@@ -179,9 +173,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
     fetchNextPage,
   })
 
-  const cardType = useRef(
-    new CardType(wikiType === 'NAMUI' ? treeCardAsset : flowerCardAsset),
-  ).current
+  const cardType = useRef(new CardType(wikiType)).current
 
   return (
     <div className="flex flex-col divide-y-[12px] divide-line-soft">

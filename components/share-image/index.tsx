@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Period, Relation, treeCardAsset, CardType } from '@/model/card.entity'
+import { Period, Relation, CardType } from '@/model/card.entity'
 
 import { useSession } from '@/provider/session-provider'
 import { parseShareCardItems } from './constants'
@@ -14,6 +14,7 @@ import { cn } from '@/lib/client/utils'
 
 import Reason from '@/components/compositions/answers/reason'
 import SideDrawer from '../side-drawer'
+import { useWikiContext } from '@/contexts/wiki-provider'
 
 type TWO_CHOICE =
   | 'FRIENDLINESS_LEVEL'
@@ -99,7 +100,9 @@ export const ShareImage = ({
     }
   })()
 
-  const treeType = useRef(new CardType(treeCardAsset)).current
+  const { wikiType } = useWikiContext()
+
+  const treeType = useRef(new CardType(wikiType)).current
 
   const handleShare = (type: ShareType) => () => {
     if (ref.current === null) {

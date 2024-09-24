@@ -88,7 +88,11 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
           {!isLoading && data
             ? data.pages.map((page) =>
                 page.data.content.map((item, index) => (
-                  <WriteListCard key={index + item.surveyId} item={item} />
+                  <WriteListCard
+                    wikiType={item.wikiType}
+                    key={index + item.surveyId}
+                    item={item}
+                  />
                 )),
               )
             : Array.from({ length: 10 }).map((_, index) => (
