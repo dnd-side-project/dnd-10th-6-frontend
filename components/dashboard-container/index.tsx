@@ -78,9 +78,8 @@ const DashboardContainer = ({
               <div className="flex flex-col items-center">
                 {wikiType === 'ROMANCE' ? <TripleFlowers /> : <TripleTrees />}
                 <h3 className="mb-4 mt-8 text-t2-kr-b">
-                  {wikiType === 'ROMANCE'
-                    ? '꽃을 심어준 친구가 없어요'
-                    : '나무를 심어준 친구가 없어요'}
+                  {wikiType === 'ROMANCE' ? '꽃을' : '나무를'}
+                  심어준 친구가 없어요
                 </h3>
                 <p className="text-b1-kr-m text-font-gray-03 ">
                   나에 대해 궁금하다면 링크 공유하기를 눌러

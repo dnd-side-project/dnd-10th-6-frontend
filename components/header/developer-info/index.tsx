@@ -37,7 +37,7 @@ export const DeveloperInfo = () => {
               <Ch />
               <div className="flex flex-col justify-start">
                 <p className="text-b2-kr-b text-black">김찬현</p>
-                <p className="text-b4-kr-m text-font-gray-04">BE Developer</p>
+                <p className="text-b4-kr-m text-font-gray-04">백엔드 개발자</p>
               </div>
             </div>
 
@@ -45,7 +45,9 @@ export const DeveloperInfo = () => {
               <Yk />
               <div className="flex flex-col justify-start">
                 <p className="text-b2-kr-b text-black">송여경</p>
-                <p className="text-b4-kr-m text-font-gray-04">FE Developer</p>
+                <p className="text-b4-kr-m text-font-gray-04">
+                  프론트엔드 개발자
+                </p>
               </div>
             </div>
 
@@ -53,7 +55,9 @@ export const DeveloperInfo = () => {
               <Yh />
               <div className="flex flex-col justify-start">
                 <p className="text-b2-kr-b text-black">엽용현</p>
-                <p className="text-b4-kr-m text-font-gray-04">FE Developer</p>
+                <p className="text-b4-kr-m text-font-gray-04">
+                  프론트엔드 개발자
+                </p>
               </div>
             </div>
 
@@ -61,7 +65,7 @@ export const DeveloperInfo = () => {
               <Es />
               <div className="flex flex-col justify-start">
                 <p className="text-b2-kr-b text-black">이은성</p>
-                <p className="text-b4-kr-m text-font-gray-04">BE Developer</p>
+                <p className="text-b4-kr-m text-font-gray-04">백엔드 개발자</p>
               </div>
             </div>
 
@@ -69,9 +73,7 @@ export const DeveloperInfo = () => {
               <Aa />
               <div className="flex flex-col justify-start">
                 <p className="text-b2-kr-b text-black">하아얀</p>
-                <p className="text-b4-kr-m text-font-gray-04">
-                  Product Designer
-                </p>
+                <p className="text-b4-kr-m text-font-gray-04">UI/UX 디자이너</p>
               </div>
             </div>
           </div>

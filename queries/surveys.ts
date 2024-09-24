@@ -33,11 +33,15 @@ export interface Survey {
 
 export interface QuestionAndAnswer {
   questionName: string
-  optionName: string
+  answer: Answer
   questionTitle: string
-  text: string
-  value: string | unknown
   reason?: string
+}
+
+export interface Answer {
+  text: string
+  value: string | unknown | boolean
+  optionName: string
 }
 
 export const getSurveyByIdQuery = (

@@ -1,3 +1,4 @@
+import React from 'react'
 import Reason from '@/components/compositions/answers/reason'
 
 interface AnswerDetailProps {
@@ -19,18 +20,19 @@ const AnswerDetail = ({
   onShareClick,
 }: AnswerDetailProps) => {
   const trueValueStyle = {
-    color: '#00BC68',
-    backgroundColor: '#E9FAEF',
+    color: '#00BC68', // 초록색
+    backgroundColor: '#E9FAEF', // 초록 배경
   }
   const falseValueStyle = {
-    color: '#EB2A2A',
-    backgroundColor: '#FFF2F2',
+    color: '#EB2A2A', // 빨간색
+    backgroundColor: '#FFF2F2', // 빨간 배경
   }
   const remainValueStyle = {
-    color: '#6B7280',
-    backgroundColor: '#F7F7F7',
+    color: '#6B7280', // 기본 회색
+    backgroundColor: '#F7F7F7', // 기본 회색 배경
   }
 
+  // answerStyle 결정 로직
   const answerStyle = (() => {
     if (value === true) {
       return trueValueStyle
@@ -40,9 +42,10 @@ const AnswerDetail = ({
       return remainValueStyle
     }
   })()
+
   return (
     <>
-      <div className="flex flex-col space-y-4 px-1 py-4 ">
+      <div className="flex flex-col space-y-4 px-1 py-4">
         <div className="flex justify-between">
           <p className="text-b3-kr-b">
             {index + 1}.{' '}
@@ -87,6 +90,7 @@ const AnswerDetail = ({
             {answer}
           </div>
         )}
+
         {reason && <Reason reason={reason} />}
       </div>
     </>

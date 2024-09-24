@@ -8,6 +8,8 @@ import Modal from '@/components/modal'
 import SideDrawer from '@/components/side-drawer'
 import { DeveloperInfo } from '@/components/header/developer-info'
 import { EditProfile } from '@/components/header/edit-setting'
+// import WriteList from '../write-list'
+// import { FilterProvider } from '@/hooks/use-filter'
 
 export const Setting = () => {
   const [openSetting, setOpenSetting] = useState(false)
@@ -112,6 +114,12 @@ export const Setting = () => {
             정말 탈퇴하시겠어요?`}
           />
         </section>
+        {/* <section className="flex flex-col items-start px-5 py-4">
+          <h4 className="py-2 text-but4-m text-font-gray-03">작성 목록</h4>
+          <FilterProvider>
+            <WriteList />
+          </FilterProvider>
+        </section> */}
         <section className="flex flex-col items-start px-5 py-4">
           <h4 className="py-2 text-but4-m text-font-gray-03 ">남의 위키</h4>
           <DeveloperInfo />

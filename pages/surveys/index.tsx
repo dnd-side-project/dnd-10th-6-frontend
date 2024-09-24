@@ -16,7 +16,7 @@ import { PropswithWikiType } from '@/types'
 import SurveyTree from '@/components/svgs/survey-tree'
 import Modal from '@/components/modal'
 import { Button } from '@/components/ui'
-import SurveyFlower from '@/components/svgs/survey-flower' // SurveyFlower 추가
+import SurveyFlower from '@/components/svgs/survey-flower'
 
 const Page = ({
   wikiType,
@@ -46,7 +46,6 @@ const Page = ({
     )
   }
 
-  // wikiType에 따라 SurveyTree 또는 SurveyFlower 선택
   const SurveyComponent = wikiType === 'ROMANCE' ? SurveyFlower : SurveyTree
 
   return (

@@ -24,6 +24,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
   const { data: { data: survey } = {}, isLoading } = useQuery(
     getSurveyByIdQuery(surveyId),
   )
+  console.log(survey)
   const router = useRouter()
 
   const createdAt = useMemo(() => {
@@ -166,7 +167,7 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
   const { showShareImage } = useContext(ShareImageContext)
   const { data } = useSession()
   return (
-    <div className="grid w-full  grid-cols-1 justify-start space-y-4 divide-y">
+    <div className="grid w-full grid-cols-1 justify-start space-y-4 divide-y">
       {survey.questionAndAnswers.map((item, index) => (
         <AnswerDetail
           questionName={item.questionName}
@@ -175,15 +176,15 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
               ? () => {
                   showShareImage({
                     period: survey.period,
-                    optionName: item.optionName,
+                    optionName: item.answer?.optionName,
                     questionName: item.questionName as QS_NAMES,
                     reason: item.reason as QS_NAMES,
                     relation: survey.relation,
                     senderName: survey.senderName,
                     value:
-                      typeof item.value === 'number'
-                        ? item.value.toLocaleString()
-                        : item.value,
+                      typeof item.answer.value === 'number'
+                        ? item.answer.value.toLocaleString()
+                        : item.answer.value,
                   })
                 }
               : undefined
@@ -193,9 +194,14 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
           questionTitle={item.questionTitle
             .replace('{{userName}}', data?.user?.name ?? '')
             .replace('<br/>', ' ')}
-          answer={item.reason ? item.text : item.reason}
-          value={item.value as string | boolean}
-          reason={item.reason ?? item.text}
+          //
+          answer={
+            item.answer.value === true
+              ? `⭕ ${item.answer.text}`
+              : `❌ ${item.answer.text}`
+          }
+          value={item.answer.value as string | boolean}
+          reason={item.reason ?? item.answer.text}
         />
       ))}
     </div>
