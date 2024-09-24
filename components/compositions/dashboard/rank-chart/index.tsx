@@ -27,7 +27,10 @@ export const RankChart = ({
   })
 
   const parsedDashboard = useMemo(() => {
-    const sorted = dashboard.rank.sort((a, b) => a.percentage - b.percentage)
+    const sorted = dashboard.rank.sort((a, b) => a.percentage + b.percentage)
+    const temp = sorted[1]
+    sorted[1] = sorted[0]
+    sorted[0] = temp
     return sorted
   }, [dashboard.rank])
 
