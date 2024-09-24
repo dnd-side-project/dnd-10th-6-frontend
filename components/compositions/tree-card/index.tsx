@@ -62,7 +62,7 @@ const TreeCard = ({
       <div className={`card flex w-full items-end justify-center`}>
         <div
           className={cn(
-            `card-front m-auto flex w-full flex-col items-center !justify-end rounded-lg ${CardType.getBgColorClassName(wikiType, relation)} px-8 pt-4`,
+            `card-front m-auto flex w-full flex-col items-center !justify-end rounded-lg ${CardType.getBgColorClassName(wikiType, relation)}  px-8 pt-4`,
           )}
         >
           <div className="z-0 flex items-center justify-center overflow-hidden pb-2 pt-6  ">

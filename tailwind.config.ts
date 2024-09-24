@@ -220,7 +220,13 @@ const config = {
       },
     },
   },
-  safelist: ['mr-auto', ...Object.values(namuiColors.relation)],
+  safelist: [
+    'mr-auto',
+    ...Object.values(namuiColors.relation),
+    {
+      pattern: /^bg-/,
+    },
+  ],
   plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 } satisfies Config
 
