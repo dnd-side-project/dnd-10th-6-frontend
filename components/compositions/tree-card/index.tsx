@@ -118,6 +118,7 @@ const TreeCard = ({
             senderName={senderName}
             period={period}
             relation={relation}
+            wikiType={wikiType}
           />
         </div>
       </div>
@@ -145,7 +146,8 @@ const BottomSheetButton = ({
   period,
   relation,
   closeBottomSheet,
-}: BottomSheetButtonProps) => {
+  wikiType, //
+}: BottomSheetButtonProps & { wikiType: WikiType }) => {
   const [modalOpen, setModalOpen] = useState(false)
   const handleLinkClick = (e: MouseEvent) => {
     if (senderWikiId === null) {
@@ -186,7 +188,7 @@ const BottomSheetButton = ({
           <div className="flex flex-col p-4">
             <div className="my-auto ml-2 flex flex-col items-start justify-start space-y-4">
               <Link
-                href={`/surveys/questions?wikiId=${senderWikiId}`}
+                href={`/surveys/questions?wikiId=${senderWikiId}&wikiType=${wikiType}`}
                 onClick={handleLinkClick}
               >
                 <button

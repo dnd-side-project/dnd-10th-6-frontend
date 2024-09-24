@@ -120,11 +120,14 @@ const Pages = () => {
       <div className="flex items-center justify-between py-6 ">
         <div className="flex flex-col space-y-2 ">
           <p className="text-b2-kr-m text-font-gray-03">
-            내 정원에 심어진 나무
+            내 정원에 심어진
+            {wikiType === 'ROMANCE' ? ' 꽃' : ' 나무'}
           </p>
           <h3 className="text-d4-kr-b text-black">
             {wikiAnswerCount}
-            <span className=" text-subTitle1-bold text-black"> 그루</span>
+            <span className=" text-subTitle1-bold text-black">
+              {wikiType === 'ROMANCE' ? ' 송이' : ' 그루'}
+            </span>
           </h3>
         </div>
         <div className="flex items-center justify-start ">

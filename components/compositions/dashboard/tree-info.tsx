@@ -30,8 +30,15 @@ const TreeInfo = ({
   return (
     <div className="mb-[100px] flex flex-col space-y-8">
       <div className="mx-auto mb-8 flex flex-col space-y-4 text-center">
-        <h3 className="text-t3-kr-m">내 정원에 심어진 나무</h3>
-        <b className="text-d4-kr-b">{wikiCount}그루</b>
+        <h3 className="text-t3-kr-m">
+          {' '}
+          내 정원에 심어진
+          {wikiType === 'ROMANCE' ? ' 꽃' : ' 나무'}
+        </h3>
+        <b className="text-d4-kr-b">
+          {wikiCount}
+          {wikiType === 'ROMANCE' ? ' 송이' : ' 그루'}
+        </b>
       </div>
 
       <div className="[mask-image:linear-gradient(to_bottom,white_50%,transparent_100%)]">

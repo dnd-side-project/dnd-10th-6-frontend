@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react'
+import React, { ReactNode, useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
@@ -11,11 +11,18 @@ import { Button } from '@/components/ui'
 import ShareModal from '@/components/share-modal'
 import submitTree from '@/assets/characters/submit-tree.svg'
 import submitFlower from '@/assets/characters/submit-flower.svg'
+import { BottomSheetButton } from '../welcome'
+import { useRouter } from 'next/router'
+import Modal from '@/components/modal'
 
 const index = () => {
   const { data } = useSession()
+  const router = useRouter()
   const searchParams = useSearchParams()
   const wikiType = searchParams.get('wikiType')! as WikiType
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
+  const [shareModalOpen, setShareModalOpen] = useState(false)
+  const [copyModalOpen, setCopyModalOpen] = useState(false)
 
   useToggletheme(wikiType)
 
@@ -33,21 +40,73 @@ const index = () => {
     [],
   )
 
+  const closeBottomSheet = useCallback(
+    (wikiType?: WikiType) => {
+      setBottomSheetOpen(false)
+      if (wikiType) {
+        router.push({
+          query: {
+            wikiType,
+          },
+        })
+        setShareModalOpen(true)
+      }
+    },
+    [router],
+  )
+
   return (
     <FormLayout
       button={
         <div className="flex w-full flex-col space-y-3">
-          <ShareModal wikiType={wikiType}>
-            <Button>친구에게 내 소개 부탁하기</Button>
-          </ShareModal>
-          {/* <Button variant="default">작성한 소개서 보러가기</Button> */}
+          <Modal
+            open={copyModalOpen}
+            onOpenChange={setCopyModalOpen}
+            key="copyLinkModal"
+            title="링크가 복사되었어요"
+            footer={{
+              item: [
+                <Button
+                  onClick={() => setCopyModalOpen(false)}
+                  variant="BG-accent"
+                  className="border-t-[1px]"
+                  key="copy-close"
+                >
+                  확인
+                </Button>,
+              ],
+            }}
+            trigger={<></>}
+          />
+          <div className="absolute bottom-4 mb-10 mt-auto flex w-full justify-center pb-4">
+            <Button
+              onClick={() => setBottomSheetOpen(true)}
+              variant="BG-brand"
+              className="w-full max-w-sm"
+            >
+              나에 대해 물어보기
+            </Button>
+          </div>
+
+          <BottomSheetButton
+            bottomSheetOpen={bottomSheetOpen}
+            closeBottomSheet={closeBottomSheet}
+            wikiType={wikiType}
+          />
+          <ShareModal
+            wikiType={wikiType}
+            onOpenChange={setShareModalOpen}
+            open={shareModalOpen}
+          ></ShareModal>
+
+          {/* <Button variants="default">작성한 소개서 보러가기</Button> */}
         </div>
       }
       header={{
         leftIcon: <></>,
         center: <></>,
         rightIcon: (
-          <Link href={data?.user?.wikiId ? 'garden' : '/'}>
+          <Link href={data?.user?.wikiId ? 'main' : '/'}>
             <svg
               width="28"
               height="28"

@@ -84,7 +84,7 @@ const WelcomePage = ({ wikiType }: PropswithWikiType) => {
             <Button
               onClick={() => setBottomSheetOpen(true)}
               variant="BG-brand"
-              className="w-full max-w-xs"
+              className="w-full max-w-sm"
             >
               나에 대해 물어보기
             </Button>
@@ -108,13 +108,13 @@ const WelcomePage = ({ wikiType }: PropswithWikiType) => {
 export default WelcomePage
 
 // 추가된 BottomSheetButton 컴포넌트
-interface BottomSheetButtonProps {
+export interface BottomSheetButtonProps {
   bottomSheetOpen: boolean
   closeBottomSheet: (selectedWikiType?: WikiType) => void
   wikiType: WikiType
 }
 
-const BottomSheetButton = ({
+export const BottomSheetButton = ({
   bottomSheetOpen,
   closeBottomSheet,
 }: BottomSheetButtonProps) => {
@@ -171,7 +171,12 @@ const BottomSheetButton = ({
                       data-selected={field.value === wiki}
                       className={cn(
                         'group flex w-full items-center justify-between space-y-2 rounded-2xl border-[1px] border-line-regular bg-white px-6 py-[30px] ',
-                        'duration-200 data-[selected=true]:border-brand-main data-[selected=true]:bg-green-50',
+                        'duration-200',
+                        field.value === wiki
+                          ? wiki === 'NAMUI'
+                            ? 'border-green-500 bg-green-50'
+                            : 'border-pink-500 bg-pink-50'
+                          : '',
                       )}
                     >
                       <div>
@@ -179,7 +184,14 @@ const BottomSheetButton = ({
                           <h3 className="text-t3-kr-b">
                             {wikiInfo[wiki].name}
                           </h3>
-                          <div className="rounded-full bg-bg-green-hover px-[10px]  py-[3px] text-but4-m  text-green-500">
+                          <div
+                            className={cn(
+                              'rounded-full px-[10px] py-[3px] text-but4-m',
+                              wiki === 'NAMUI'
+                                ? 'bg-green-50 text-green-500'
+                                : 'bg-pink-50 text-pink-500',
+                            )}
+                          >
                             질문 {wikiInfo[wiki].questionCount}개
                           </div>
                         </div>
@@ -191,7 +203,14 @@ const BottomSheetButton = ({
                         viewBox="0 0 22 16"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="text-line-regular duration-200 group-data-[selected=true]:text-brand-main"
+                        className={cn(
+                          'text-line-regular duration-200',
+                          field.value === wiki
+                            ? wiki === 'NAMUI'
+                              ? 'text-green-500'
+                              : 'text-pink-500'
+                            : '',
+                        )}
                       >
                         <path
                           d="M1.66663 9.16667L8.66663 15L20.3333 1"
