@@ -79,7 +79,7 @@ export const Setting = () => {
                 <button
                   onClick={signout}
                   key="confirm"
-                  className="flex-1 rounded-none  bg-brand-main px-4 py-[14px] text-but2-sb text-white duration-150 active:bg-green-500"
+                  className="duration-150enabled:hover:bg-brand-500 flex-1  rounded-none bg-brand-600  px-4 py-[14px] text-but2-sb   text-white enabled:active:bg-brand-400"
                 >
                   확인
                 </button>,
@@ -100,7 +100,7 @@ export const Setting = () => {
                 <button
                   onClick={handleWithdrawClick}
                   key="confirm"
-                  className="flex-1 rounded-none bg-brand-main px-4 py-[14px] text-but2-sb text-white duration-150 active:bg-green-500"
+                  className=" flex-1  rounded-none bg-brand-main px-4 py-[14px] text-but2-sb text-white duration-150  enabled:hover:bg-brand-500  enabled:active:bg-brand-400"
                 >
                   탈퇴
                 </button>,
