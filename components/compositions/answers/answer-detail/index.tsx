@@ -11,6 +11,12 @@ interface AnswerDetailProps {
   onShareClick?: () => void
 }
 
+interface AnswerStyle {
+  color: string
+  backgroundColor: string
+  emoji?: string
+}
+
 const AnswerDetail = ({
   index,
   questionTitle,
@@ -19,15 +25,17 @@ const AnswerDetail = ({
   value,
   onShareClick,
 }: AnswerDetailProps) => {
-  const trueValueStyle = {
-    color: '#00BC68', // 초록색
-    backgroundColor: '#E9FAEF', // 초록 배경
+  const trueValueStyle: AnswerStyle = {
+    color: '#007820', // 초록색
+    backgroundColor: '#E6F7EA', // 초록 배경
+    emoji: ' 🙆🏻 ',
   }
-  const falseValueStyle = {
+  const falseValueStyle: AnswerStyle = {
     color: '#EB2A2A', // 빨간색
-    backgroundColor: '#FFF2F2', // 빨간 배경
+    backgroundColor: '#FFF2F2',
+    emoji: ' 🙅🏻 ',
   }
-  const remainValueStyle = {
+  const remainValueStyle: AnswerStyle = {
     color: '#6B7280', // 기본 회색
     backgroundColor: '#F7F7F7', // 기본 회색 배경
   }
@@ -87,6 +95,8 @@ const AnswerDetail = ({
             className="w-fit rounded-md px-2 py-1 text-b3-kr-m"
             style={answerStyle}
           >
+            {answerStyle.emoji}
+            {'  '}
             {answer}
           </div>
         )}

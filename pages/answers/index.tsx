@@ -34,25 +34,45 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
   }, [survey])
 
   const treeType = useRef(new CardType(wikiType)).current
-
-  const bgColor = (survey: Survey) => {
-    switch (survey.relation) {
-      case 'ELEMENTARY_SCHOOL':
-        return 'bg-relation-elementary_school'
-      case 'MIDDLE_AND_HIGH_SCHOOL':
-        return 'bg-relation-middle_and_high_school'
-      case 'UNIVERSITY':
-        return 'bg-relation-university'
-      case 'WORK':
-        return 'bg-relation-work'
-      case 'SOCIAL':
-        return 'bg-relation-social'
-      case 'ETC':
-        return 'bg-relation-etc'
-      default:
-        return ''
+  const bgColor = (() => {
+    if (wikiType === 'NAMUI') {
+      // TreeCard 배경색 설정
+      switch (survey?.relation) {
+        case 'ELEMENTARY_SCHOOL':
+          return 'bg-yellow-50'
+        case 'MIDDLE_AND_HIGH_SCHOOL':
+          return 'bg-orange-100'
+        case 'UNIVERSITY':
+          return 'bg-[#EEFFEF]'
+        case 'WORK':
+          return 'bg-blue-50'
+        case 'SOCIAL':
+          return 'bg-green-50'
+        case 'ETC':
+          return 'bg-black-50'
+        default:
+          return ''
+      }
+    } else {
+      // FlowerCard 배경색 설정
+      switch (survey?.relation) {
+        case 'ELEMENTARY_SCHOOL':
+          return 'bg-yellow-50'
+        case 'MIDDLE_AND_HIGH_SCHOOL':
+          return 'bg-orange-100'
+        case 'UNIVERSITY':
+          return 'bg-pink-300'
+        case 'WORK':
+          return 'bg-blue-50'
+        case 'SOCIAL':
+          return 'bg-pink-200'
+        case 'ETC':
+          return 'bg-black-100'
+        default:
+          return ''
+      }
     }
-  }
+  })()
 
   return (
     <ShareImageProvider>
@@ -96,9 +116,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
                 <section>
                   <div className="flex justify-between space-x-4 py-5">
                     <div
-                      className={`flex aspect-square h-[58px] w-[58px] items-center justify-center rounded-full ${bgColor(
-                        survey,
-                      )}`}
+                      className={`flex aspect-square h-[58px] w-[58px] items-center justify-center rounded-full ${bgColor}`}
                     >
                       {treeType.render(survey.period, survey.relation)}
                     </div>
@@ -170,11 +188,6 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
     <div className="grid w-full grid-cols-1 justify-start space-y-4 divide-y">
       {survey.questionAndAnswers.map((item, index) => {
         const answer = Array.isArray(item.answer) ? item.answer[0] : item.answer
-        const isTwoChoice =
-          (item.questionName as QS_NAMES) === 'FRIENDLINESS_LEVEL' ||
-          'PERSONALITY_TYPE' ||
-          'MBTI_IMMERSION' ||
-          'WEEKEND_COMMITMENTS'
 
         return (
           <AnswerDetail
@@ -203,13 +216,7 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
               .replace('{{userName}}', data?.user?.name ?? '')
               .replace('<br/>', ' ')}
             //
-            answer={
-              isTwoChoice && answer.value === true
-                ? `⭕ ${answer.text}`
-                : isTwoChoice && answer.value === false
-                  ? `❌ ${answer.text}`
-                  : answer.text
-            }
+            answer={item.reason ? answer.text : item.reason}
             value={answer.value as string | boolean}
             reason={item.reason ?? answer.text}
           />

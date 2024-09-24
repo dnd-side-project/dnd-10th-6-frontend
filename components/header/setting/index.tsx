@@ -115,7 +115,7 @@ export const Setting = () => {
           />
         </section>
         <section className="flex flex-col items-start px-5 py-4">
-          <h4 className="py-2 text-but4-m text-font-gray-03">작성 목록</h4>
+          <h4 className="py-2 text-but4-m text-font-gray-03 ">작성 목록</h4>
           <FilterProvider>
             <WriteList />
           </FilterProvider>

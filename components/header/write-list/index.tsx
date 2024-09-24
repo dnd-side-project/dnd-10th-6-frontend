@@ -65,7 +65,7 @@ const WriteList = ({ trigger }: { trigger?: ReactNode }) => {
       onChangeOpen={setOpenAlert}
       trigger={
         trigger ?? (
-          <p className="py-[14px] text-body1-bold text-text-main-black11">
+          <p className="cursor-pointer py-[14px] text-body1-bold text-text-main-black11">
             작성 목록
           </p>
         )
