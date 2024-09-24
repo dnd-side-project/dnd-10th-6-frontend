@@ -170,6 +170,12 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
     <div className="grid w-full grid-cols-1 justify-start space-y-4 divide-y">
       {survey.questionAndAnswers.map((item, index) => {
         const answer = Array.isArray(item.answer) ? item.answer[0] : item.answer
+        const isTwoChoice =
+          (item.questionName as QS_NAMES) === 'FRIENDLINESS_LEVEL' ||
+          'PERSONALITY_TYPE' ||
+          'MBTI_IMMERSION' ||
+          'WEEKEND_COMMITMENTS'
+
         return (
           <AnswerDetail
             questionName={item.questionName}
@@ -198,7 +204,11 @@ function SurveyAnswers({ survey }: { survey: Survey }) {
               .replace('<br/>', ' ')}
             //
             answer={
-              answer.value === true ? `⭕ ${answer.text}` : `❌ ${answer.text}`
+              isTwoChoice && answer.value === true
+                ? `⭕ ${answer.text}`
+                : isTwoChoice && answer.value === false
+                  ? `❌ ${answer.text}`
+                  : answer.text
             }
             value={answer.value as string | boolean}
             reason={item.reason ?? answer.text}
