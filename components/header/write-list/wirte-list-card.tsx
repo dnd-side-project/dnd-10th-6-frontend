@@ -19,25 +19,6 @@ const variants = {
   },
 }
 
-const bgColor = (cardItem: Writing) => {
-  switch (cardItem.relation) {
-    case 'ELEMENTARY_SCHOOL':
-      return 'bg-relation-elementary_school'
-    case 'MIDDLE_AND_HIGH_SCHOOL':
-      return 'bg-relation-middle_and_high_school'
-    case 'UNIVERSITY':
-      return 'bg-relation-university'
-    case 'WORK':
-      return 'bg-relation-work'
-    case 'SOCIAL':
-      return 'bg-relation-social'
-    case 'ETC':
-      return 'bg-relation-etc'
-    default:
-      return ''
-  }
-}
-
 const WriteListCard = ({
   item,
   wikiType,
@@ -62,9 +43,7 @@ const WriteListCard = ({
       className="flex justify-between space-x-4 py-5"
     >
       <div
-        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${bgColor(
-          item,
-        )}`}
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full ${CardType.getBgColorClassName(wikiType, item.relation)}`}
       >
         {treeType.render(item.period, item.relation)}
       </div>
@@ -73,7 +52,7 @@ const WriteListCard = ({
         <h3 className="text-body1-bold">{item.senderName}님</h3>
         <div className="flex space-x-1.5">
           <PeriodBadge period={item.period} />
-          <RelationBadge relation={item.relation} />
+          <RelationBadge wikiType={wikiType} relation={item.relation} />
         </div>
       </div>
       <div className="self-end text-body3-medium text-text-sub-gray76">

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { cn } from '@/lib/client/utils'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import { PeriodBadge, RelationBadge } from '@/components/badge'
+import { useWikiContext } from '@/contexts/wiki-provider'
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -65,17 +66,22 @@ const DrawerHeader = ({
   senderName: string
   period: string
   relation: string
-}) => (
-  <div className={cn(' p-4', className)} {...props}>
-    {senderName && (
-      <div className="flex items-center gap-2">
-        <h2 className=" text-t2-kr-b text-black">{senderName}님의 남의위키</h2>
-        <PeriodBadge period={period} />
-        <RelationBadge relation={relation} />
-      </div>
-    )}
-  </div>
-)
+}) => {
+  const { wikiType } = useWikiContext()
+  return (
+    <div className={cn(' p-4', className)} {...props}>
+      {senderName && (
+        <div className="flex items-center gap-2">
+          <h2 className=" text-t2-kr-b text-black">
+            {senderName}님의 남의위키
+          </h2>
+          <PeriodBadge period={period} />
+          <RelationBadge wikiType={wikiType} relation={relation} />
+        </div>
+      )}
+    </div>
+  )
+}
 DrawerHeader.displayName = 'DrawerHeader'
 
 const DrawerFooter = ({

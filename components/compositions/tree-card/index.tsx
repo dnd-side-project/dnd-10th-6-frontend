@@ -38,45 +38,6 @@ const TreeCard = ({
   wikiType,
 }: TreeCardProps) => {
   const [bottomSheetOpen, setBottomSheetOpen] = useState(false)
-  const bgColor = (() => {
-    if (wikiType === 'NAMUI') {
-      // TreeCard 배경색 설정
-      switch (relation) {
-        case 'ELEMENTARY_SCHOOL':
-          return 'bg-yellow-50'
-        case 'MIDDLE_AND_HIGH_SCHOOL':
-          return 'bg-orange-100'
-        case 'UNIVERSITY':
-          return 'bg-[#EEFFEF]'
-        case 'WORK':
-          return 'bg-blue-50'
-        case 'SOCIAL':
-          return 'bg-green-50'
-        case 'ETC':
-          return 'bg-black-50'
-        default:
-          return ''
-      }
-    } else {
-      // FlowerCard 배경색 설정
-      switch (relation) {
-        case 'ELEMENTARY_SCHOOL':
-          return 'bg-yellow-50'
-        case 'MIDDLE_AND_HIGH_SCHOOL':
-          return 'bg-orange-100'
-        case 'UNIVERSITY':
-          return 'bg-pink-300'
-        case 'WORK':
-          return 'bg-blue-50'
-        case 'SOCIAL':
-          return 'bg-pink-200'
-        case 'ETC':
-          return 'bg-black-100'
-        default:
-          return ''
-      }
-    }
-  })()
 
   const cardType = useRef(new CardType(wikiType)).current
 
@@ -98,10 +59,10 @@ const TreeCard = ({
       )}
       onClick={!disabled ? handleCardClick : () => {}}
     >
-      <div className={`card flex w-full items-end justify-center `}>
+      <div className={`card flex w-full items-end justify-center`}>
         <div
           className={cn(
-            `card-front m-auto flex w-full flex-col items-center !justify-end rounded-lg ${bgColor} px-8 pt-4`,
+            `card-front m-auto flex w-full flex-col items-center !justify-end rounded-lg ${CardType.getBgColorClassName(wikiType, relation)} px-8 pt-4`,
           )}
         >
           <div className="z-0 flex items-center justify-center overflow-hidden pb-2 pt-6  ">

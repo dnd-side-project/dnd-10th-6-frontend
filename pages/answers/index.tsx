@@ -34,45 +34,6 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
   }, [survey])
 
   const treeType = useRef(new CardType(wikiType)).current
-  const bgColor = (() => {
-    if (wikiType === 'NAMUI') {
-      // TreeCard 배경색 설정
-      switch (survey?.relation) {
-        case 'ELEMENTARY_SCHOOL':
-          return 'bg-yellow-50'
-        case 'MIDDLE_AND_HIGH_SCHOOL':
-          return 'bg-orange-100'
-        case 'UNIVERSITY':
-          return 'bg-[#EEFFEF]'
-        case 'WORK':
-          return 'bg-blue-50'
-        case 'SOCIAL':
-          return 'bg-green-50'
-        case 'ETC':
-          return 'bg-black-50'
-        default:
-          return ''
-      }
-    } else {
-      // FlowerCard 배경색 설정
-      switch (survey?.relation) {
-        case 'ELEMENTARY_SCHOOL':
-          return 'bg-yellow-50'
-        case 'MIDDLE_AND_HIGH_SCHOOL':
-          return 'bg-orange-100'
-        case 'UNIVERSITY':
-          return 'bg-pink-300'
-        case 'WORK':
-          return 'bg-blue-50'
-        case 'SOCIAL':
-          return 'bg-pink-200'
-        case 'ETC':
-          return 'bg-black-100'
-        default:
-          return ''
-      }
-    }
-  })()
 
   return (
     <ShareImageProvider>
@@ -116,7 +77,7 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
                 <section>
                   <div className="flex justify-between space-x-4 py-5">
                     <div
-                      className={`flex aspect-square h-[58px] w-[58px] items-center justify-center rounded-full ${bgColor}`}
+                      className={`flex aspect-square h-[58px] w-[58px] items-center justify-center rounded-full ${CardType.getBgColorClassName(wikiType, survey.relation)}`}
                     >
                       {treeType.render(survey.period, survey.relation)}
                     </div>
@@ -127,7 +88,10 @@ const Pages = ({ surveyId }: { surveyId: string }) => {
                       <div className="flex space-x-1.5">
                         <PeriodBadge period={survey.period} />
 
-                        <RelationBadge relation={survey.relation} />
+                        <RelationBadge
+                          wikiType={wikiType}
+                          relation={survey.relation}
+                        />
                       </div>
                     </div>
                     <div className="self-end  text-body3-medium text-text-sub-gray76">

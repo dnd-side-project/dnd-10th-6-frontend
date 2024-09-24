@@ -19,7 +19,7 @@ import SideDrawer from '../side-drawer'
 import { periods } from '../badge/badge-period'
 import { relations } from '../badge/badge-relation'
 import { useWikiContext } from '@/contexts/wiki-provider'
-import { WikiType } from '@/types'
+import { PropswithWikiType, WikiType } from '@/types'
 import { ComboboxDropdown } from '../ui'
 
 export interface DetailResponse {
@@ -29,6 +29,7 @@ export interface DetailResponse {
 export interface Data {
   questionTitle: string
   questionName: string
+  questionType: 'RANK' | string
   answers: Pageable
 }
 
@@ -42,12 +43,23 @@ export interface Pageable {
 
 export interface Content {
   senderName: string
+  period: Period
+  relation: Relation
+  answer: {
+    text: string
+    value: string
+    optionName: string
+  }
+  reason: string
+  createdAt: string
+}
+
+export interface RankContent {
+  senderName: string
   optionName: string
   period: Period
   relation: Relation
-  answer:
-    | { text: string; value: string; optionName: string }
-    | { text: string; value: string; optionName: string }[]
+  answer: { text: string; value: string; optionName: string }[]
   reason: string
   createdAt: string
 }
@@ -93,24 +105,7 @@ const DetailDrawer = () => {
 }
 
 export default DetailDrawer
-const bgColor = (cardItem: Content) => {
-  switch (cardItem.relation) {
-    case 'ELEMENTARY_SCHOOL':
-      return 'bg-yellow-50'
-    case 'MIDDLE_AND_HIGH_SCHOOL':
-      return 'bg-orange-50'
-    case 'UNIVERSITY':
-      return 'bg-[#EEFFEF]'
-    case 'WORK':
-      return 'bg-blue-50'
-    case 'SOCIAL':
-      return 'bg-green-50'
-    case 'ETC':
-      return 'bg-black-50'
-    default:
-      return ''
-  }
-}
+
 function Content({ id, type }: { id: string; type: DetailType }) {
   const { selectedFilter } = useFilter()
   const { showShareImage } = useContext(ShareImageContext)
@@ -237,6 +232,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                     const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
                     return Array.isArray(cardItem.answer) ? (
                       <RankChoice
+                        wikiType={wikiType}
                         cardItem={cardItem}
                         onShareClick={
                           Object.hasOwn(
@@ -247,7 +243,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 showShareImage({
                                   period: cardItem.period,
                                   relation: cardItem.relation,
-                                  optionName: cardItem.optionName,
+                                  optionName: cardItem.answer.optionName,
                                   questionName: page.data
                                     .questionName as QS_NAMES,
                                   reason: cardItem.reason,
@@ -277,6 +273,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                       />
                     ) : type === 'TWO_CHOICE' ? (
                       <TwoChoice
+                        wikiType={wikiType}
                         cardItem={cardItem}
                         label={cardItem.answer.text}
                         onShareClick={
@@ -288,7 +285,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 showShareImage({
                                   period: cardItem.period,
                                   relation: cardItem.relation,
-                                  optionName: cardItem.optionName,
+                                  optionName: cardItem.answer.optionName,
                                   questionName: page.data
                                     .questionName as QS_NAMES,
                                   reason: cardItem.reason,
@@ -318,6 +315,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                       />
                     ) : type === 'MULTIPLE_CHOICE' ? (
                       <MultipleChoice
+                        wikiType={wikiType}
                         cardItem={cardItem}
                         label={cardItem.answer.text}
                         onShareClick={
@@ -329,7 +327,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                 showShareImage({
                                   period: cardItem.period,
                                   relation: cardItem.relation,
-                                  optionName: cardItem.optionName,
+                                  optionName: cardItem.answer.optionName,
                                   questionName: page.data
                                     .questionName as QS_NAMES,
                                   reason: cardItem.reason,
@@ -368,9 +366,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                         className="flex justify-between space-x-4 p-4"
                       >
                         <div
-                          className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
-                            cardItem,
-                          )}`}
+                          className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${CardType.getBgColorClassName(wikiType, cardItem.relation)}`}
                         >
                           {cardType.render(
                             cardItem.period as Period,
@@ -411,22 +407,21 @@ function MultipleChoice({
   treeType,
   onShareClick,
   label,
-}: {
+  wikiType,
+}: PropswithWikiType<{
   cardItem: Content
   summary: string
   treeType: CardType
   onShareClick?: () => void
   label?: string
-}) {
+}>) {
   return (
     <motion.div
       variants={fadeInProps.variants}
       className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
-          cardItem,
-        )}`}
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${CardType.getBgColorClassName(wikiType, cardItem.relation)}`}
       >
         {treeType.render(
           cardItem.period as Period,
@@ -493,13 +488,14 @@ function TwoChoice({
   treeType,
   onShareClick,
   label,
-}: {
+  wikiType,
+}: PropswithWikiType<{
   cardItem: Content
   summary: string
   treeType: CardType
   onShareClick?: () => void
   label?: string
-}) {
+}>) {
   const isPositiveAnswer = label?.includes('🙆‍♂️')
 
   return (
@@ -508,9 +504,7 @@ function TwoChoice({
       className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
-          cardItem,
-        )}`}
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${CardType.getBgColorClassName(wikiType, cardItem.relation)}`}
       >
         {treeType.render(
           cardItem.period as Period,
@@ -579,21 +573,20 @@ function RankChoice({
   summary,
   treeType,
   onShareClick,
-}: {
+  wikiType,
+}: PropswithWikiType<{
   cardItem: Content
   summary: string
   treeType: CardType
   onShareClick?: () => void
-}) {
+}>) {
   return (
     <motion.div
       variants={fadeInProps.variants}
       className="flex justify-between space-x-4 p-4"
     >
       <div
-        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
-          cardItem,
-        )}`}
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${CardType.getBgColorClassName(wikiType, cardItem.relation)}`}
       >
         {treeType.render(
           cardItem.period as Period,

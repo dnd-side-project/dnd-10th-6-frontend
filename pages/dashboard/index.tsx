@@ -34,6 +34,11 @@ interface Colors {
   MAIN_COLOR: string
 }
 
+export const WIKI_NAME: { [key in WikiType]: string } = {
+  NAMUI: '남의위키',
+  ROMANCE: '연애위키',
+}
+
 export const WIKI_COLORS: { [key in WikiType]: Colors } = {
   NAMUI: {
     GRADIENT_FROM: '#BFF1CF',
@@ -325,7 +330,7 @@ function DashboardTitle({
             alignmentBaseline="middle"
             className="fill-black text-d3-kr-b"
           >
-            남의위키
+            {WIKI_NAME[wikiType]}
           </text>
         </motion.g>
         <motion.image

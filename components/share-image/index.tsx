@@ -82,24 +82,6 @@ export const ShareImage = ({
 
   const ref = useRef<HTMLDivElement>(null)
 
-  const bgColor = (() => {
-    switch (relation) {
-      case 'ELEMENTARY_SCHOOL':
-        return 'bg-relation-elementary_school'
-      case 'MIDDLE_AND_HIGH_SCHOOL':
-        return 'bg-relation-middle_and_high_school'
-      case 'UNIVERSITY':
-        return 'bg-relation-university'
-      case 'WORK':
-        return 'bg-relation-work'
-      case 'SOCIAL':
-        return 'bg-relation-social'
-      case 'ETC':
-        return 'bg-relation-etc'
-      default:
-    }
-  })()
-
   const { wikiType } = useWikiContext()
 
   const treeType = useRef(new CardType(wikiType)).current
@@ -177,7 +159,12 @@ export const ShareImage = ({
             </div>
             <div className="flex flex-col space-y-3">
               <div className="flex items-center space-x-2">
-                <div className={cn('h-[34px] w-[34px] rounded-full', bgColor)}>
+                <div
+                  className={cn(
+                    'h-[34px] w-[34px] rounded-full',
+                    CardType.getBgColorClassName(wikiType, relation),
+                  )}
+                >
                   {treeType.render(period as Period, relation as Relation)}
                 </div>
                 <div>
@@ -217,7 +204,10 @@ export const ShareImage = ({
               <div className="flex flex-col space-y-3">
                 <div className="flex items-center space-x-2">
                   <div
-                    className={cn('h-[34px] w-[34px] rounded-full', bgColor)}
+                    className={cn(
+                      'h-[34px] w-[34px] rounded-full',
+                      CardType.getBgColorClassName(wikiType, relation),
+                    )}
                   >
                     {treeType.render(period as Period, relation as Relation)}
                   </div>

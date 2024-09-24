@@ -44,6 +44,7 @@ const ShareModal = ({
     if (data?.user?.wikiId) {
       shareToKaKaoLink(
         `surveys?wikiId=${data?.user?.wikiId}&wikiType=${wikiType}`,
+        wikiType,
       )
     }
   }

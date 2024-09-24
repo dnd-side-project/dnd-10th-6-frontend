@@ -168,6 +168,16 @@ const config = {
           'Segoe UI Symbol',
           'Noto Color Emoji',
         ],
+        emoji: [
+          'var(--font-toss)',
+          'var(--font-base)',
+          'ui-sans-serif',
+          'system-ui, sans-serif',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          'Noto Color Emoji',
+        ],
       },
       boxShadow: {
         basic: '0px 4px 10px rgba(0,0,0,0.06)',

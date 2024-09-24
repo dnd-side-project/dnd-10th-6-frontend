@@ -97,6 +97,47 @@ export class CardType implements CardAdapter {
     const assetSvg = this.asset[assetKey]
     return assetSvg
   }
+
+  static getBgColorClassName(wikiType: WikiType, relation: string) {
+    if (wikiType === 'NAMUI') {
+      // TreeCard 배경색 설정
+      switch (relation) {
+        case 'ELEMENTARY_SCHOOL':
+          return 'bg-yellow-50'
+        case 'MIDDLE_AND_HIGH_SCHOOL':
+          return 'bg-orange-100'
+        case 'UNIVERSITY':
+          return 'bg-[#EEFFEF]'
+        case 'WORK':
+          return 'bg-blue-50'
+        case 'SOCIAL':
+          return 'bg-green-50'
+        case 'ETC':
+          return 'bg-black-50'
+        default:
+          return ''
+      }
+    } else {
+      // FlowerCard 배경색 설정
+
+      switch (relation) {
+        case 'ELEMENTARY_SCHOOL':
+          return 'bg-yellow-50'
+        case 'MIDDLE_AND_HIGH_SCHOOL':
+          return 'bg-orange-100'
+        case 'UNIVERSITY':
+          return 'bg-pink-300'
+        case 'WORK':
+          return 'bg-blue-50'
+        case 'SOCIAL':
+          return 'bg-pink-200'
+        case 'ETC':
+          return 'bg-black-100'
+        default:
+          return ''
+      }
+    }
+  }
 }
 
 export const treeCardAsset: Record<AssetKey, ReactNode> = {

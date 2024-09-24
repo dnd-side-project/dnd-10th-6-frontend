@@ -30,6 +30,18 @@ const pretendard = LocalFont({
   variable: '--font-base',
 })
 
+const tossFace = LocalFont({
+  adjustFontFallback: 'Arial',
+  src: [
+    {
+      path: '../pages/assets/fonts/TossFaceFontMac.ttf',
+    },
+  ],
+  preload: true,
+  display: 'swap',
+  variable: '--font-toss',
+})
+
 interface BaseLayoutProps {
   showHeader?: boolean
   header?: HeaderProps
@@ -45,6 +57,8 @@ const BaseLayout = forwardRef<HTMLElement, PropsWithChildren<BaseLayoutProps>>(
         {...fadeInProps}
         {...framer}
         className={cn(
+          tossFace.variable,
+          tossFace.className,
           pretendard.variable,
           pretendard.className,
           'flex w-full flex-col scrollbar-hide',
