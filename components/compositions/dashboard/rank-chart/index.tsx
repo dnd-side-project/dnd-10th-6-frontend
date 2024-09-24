@@ -27,9 +27,9 @@ export const RankChart = ({
 
   const parsedDashboard = useMemo(() => {
     const sorted = dashboard.rank.sort((a, b) => a.percentage + b.percentage)
-    // const temp = sorted[1]
-    // sorted[1] = sorted[0]
-    // sorted[0] = temp
+    const temp = sorted[1]
+    sorted[1] = sorted[0]
+    sorted[0] = temp
     return sorted
   }, [dashboard.rank])
 
@@ -93,7 +93,7 @@ export const RankChart = ({
     <LazyMotion features={domAnimation}>
       <div
         ref={ref}
-        className="flex flex-col items-center  rounded-[20px] bg-bg-light py-10"
+        className="flex flex-col items-center  rounded-[20px] bg-bg-light px-5 py-10"
       >
         {isLoading || !dashboard ? (
           <>
@@ -117,7 +117,7 @@ export const RankChart = ({
               }}
             ></h2>
 
-            <div className="mt-10  flex h-full w-full space-x-3 px-5">
+            <div className="mt-10  flex h-full w-full space-x-3 ">
               <div className="grid flex-1 grid-cols-3  gap-x-1">
                 {parsedDashboard.slice(0, 3).map((data, index) => (
                   <div
@@ -165,7 +165,7 @@ export const RankChart = ({
                 ))}
               </div>
             </div>
-            <div className="mt-5 w-full space-y-2 px-5">
+            <div className="mt-5 w-full space-y-2 ">
               {parsedDashboard.slice(3, 5).map((item, index) => (
                 <div
                   key={item.text}
