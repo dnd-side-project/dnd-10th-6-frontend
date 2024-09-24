@@ -107,7 +107,7 @@ export class CardType implements CardAdapter {
         case 'MIDDLE_AND_HIGH_SCHOOL':
           return 'bg-orange-100'
         case 'UNIVERSITY':
-          return 'bg-[#EEFFEF]'
+          return 'bg-brand-hover'
         case 'WORK':
           return 'bg-blue-50'
         case 'SOCIAL':
