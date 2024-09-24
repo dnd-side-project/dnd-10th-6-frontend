@@ -233,7 +233,6 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                 {page.data.answers.content
                   .filter(Boolean)
                   .map((cardItem, cardIndex) => {
-                    console.log(cardItem)
                     const parsedCreatedAt = new Date(cardItem.createdAt)
                     const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
                     return Array.isArray(cardItem.answer) ? (
@@ -279,6 +278,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                     ) : type === 'TWO_CHOICE' ? (
                       <TwoChoice
                         cardItem={cardItem}
+                        label={cardItem.answer.text}
                         onShareClick={
                           Object.hasOwn(
                             parseShareCardItems,
@@ -319,6 +319,7 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                     ) : type === 'MULTIPLE_CHOICE' ? (
                       <MultipleChoice
                         cardItem={cardItem}
+                        label={cardItem.answer.text}
                         onShareClick={
                           Object.hasOwn(
                             parseShareCardItems,
@@ -417,7 +418,6 @@ function MultipleChoice({
   onShareClick?: () => void
   label?: string
 }) {
-  console.log(cardItem.answer, onShareClick, '<cardItem.answer')
   return (
     <motion.div
       variants={fadeInProps.variants}

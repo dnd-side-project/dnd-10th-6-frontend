@@ -151,7 +151,7 @@ export const RankChart = ({
                         duration: 2,
                       }}
                       style={{
-                        height: [34, 59, 30][index],
+                        height: [50, 100, 30][index],
                       }}
                     >
                       <span
