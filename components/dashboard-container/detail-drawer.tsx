@@ -20,6 +20,7 @@ import { periods } from '../badge/badge-period'
 import { relations } from '../badge/badge-relation'
 import { useWikiContext } from '@/contexts/wiki-provider'
 import { WikiType } from '@/types'
+import { ComboboxDropdown } from '../ui'
 
 export interface DetailResponse {
   data: Data
@@ -44,7 +45,9 @@ export interface Content {
   optionName: string
   period: Period
   relation: Relation
-  answer: { text: string; value: string; optionName: string }
+  answer:
+    | { text: string; value: string; optionName: string }
+    | { text: string; value: string; optionName: string }[]
   reason: string
   createdAt: string
 }
@@ -230,9 +233,50 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                 {page.data.answers.content
                   .filter(Boolean)
                   .map((cardItem, cardIndex) => {
+                    console.log(cardItem)
                     const parsedCreatedAt = new Date(cardItem.createdAt)
                     const createdAt = `${parsedCreatedAt.getFullYear()}.${parsedCreatedAt.getMonth() + 1}.${parsedCreatedAt.getDate()}`
-                    return type === 'TWO_CHOICE' ? (
+                    return Array.isArray(cardItem.answer) ? (
+                      <RankChoice
+                        cardItem={cardItem}
+                        onShareClick={
+                          Object.hasOwn(
+                            parseShareCardItems,
+                            page.data.questionName,
+                          )
+                            ? () =>
+                                showShareImage({
+                                  period: cardItem.period,
+                                  relation: cardItem.relation,
+                                  optionName: cardItem.optionName,
+                                  questionName: page.data
+                                    .questionName as QS_NAMES,
+                                  reason: cardItem.reason,
+                                  senderName: cardItem.senderName,
+                                  value:
+                                    page.data.questionName === 'BORROWING_LIMIT'
+                                      ? Array.isArray(cardItem.answer)
+                                        ? ''
+                                        : parseInt(
+                                            cardItem.answer.text,
+                                          ).toLocaleString()
+                                      : cardItem.answer,
+                                })
+                            : undefined
+                        }
+                        summary={[
+                          periods[cardItem.period],
+                          relations[cardItem.relation],
+                          createdAt,
+                        ].join(' · ')}
+                        treeType={cardType}
+                        key={
+                          cardItem.senderName +
+                          cardItem.answer +
+                          `${pageNo}-${cardIndex}`
+                        }
+                      />
+                    ) : type === 'TWO_CHOICE' ? (
                       <TwoChoice
                         cardItem={cardItem}
                         onShareClick={
@@ -251,9 +295,11 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                   senderName: cardItem.senderName,
                                   value:
                                     page.data.questionName === 'BORROWING_LIMIT'
-                                      ? parseInt(
-                                          cardItem.answer.text,
-                                        ).toLocaleString()
+                                      ? Array.isArray(cardItem.answer)
+                                        ? ''
+                                        : parseInt(
+                                            cardItem.answer.text,
+                                          ).toLocaleString()
                                       : cardItem.answer,
                                 })
                             : undefined
@@ -289,9 +335,11 @@ function Content({ id, type }: { id: string; type: DetailType }) {
                                   senderName: cardItem.senderName,
                                   value:
                                     page.data.questionName === 'BORROWING_LIMIT'
-                                      ? parseInt(
-                                          cardItem.answer.text,
-                                        ).toLocaleString()
+                                      ? Array.isArray(cardItem.answer)
+                                        ? ''
+                                        : parseInt(
+                                            cardItem.answer.text,
+                                          ).toLocaleString()
                                       : cardItem.answer,
                                 })
                             : undefined
@@ -361,11 +409,13 @@ function MultipleChoice({
   summary,
   treeType,
   onShareClick,
+  label,
 }: {
   cardItem: Content
   summary: string
   treeType: CardType
   onShareClick?: () => void
+  label?: string
 }) {
   console.log(cardItem.answer, onShareClick, '<cardItem.answer')
   return (
@@ -427,7 +477,7 @@ function MultipleChoice({
             'w-fit rounded-md bg-bg-light px-2 py-1 text-body3-medium text-text-sub-gray76',
           )}
         >
-          {cardItem.answer.text}
+          {label}
         </div>
         <p className="rounded-md bg-bg-light p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}
@@ -442,13 +492,15 @@ function TwoChoice({
   summary,
   treeType,
   onShareClick,
+  label,
 }: {
   cardItem: Content
   summary: string
   treeType: CardType
   onShareClick?: () => void
+  label?: string
 }) {
-  const isPositiveAnswer = cardItem.answer.text.includes('🙆‍♂️')
+  const isPositiveAnswer = label?.includes('🙆‍♂️')
 
   return (
     <motion.div
@@ -513,7 +565,101 @@ function TwoChoice({
               : 'bg-brand-alert-200 text-brand-alert-900',
           )}
         >
-          {cardItem.answer.text}
+          {label}
+        </div>
+        <p className="rounded-md bg-bg-light  p-4 text-body1-medium text-text-sub-gray4f">
+          {cardItem.reason}
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+function RankChoice({
+  cardItem,
+  summary,
+  treeType,
+  onShareClick,
+}: {
+  cardItem: Content
+  summary: string
+  treeType: CardType
+  onShareClick?: () => void
+}) {
+  return (
+    <motion.div
+      variants={fadeInProps.variants}
+      className="flex justify-between space-x-4 p-4"
+    >
+      <div
+        className={`flex h-[48px] w-[48px] items-center justify-center rounded-full px-2 pt-[5px] ${bgColor(
+          cardItem,
+        )}`}
+      >
+        {treeType.render(
+          cardItem.period as Period,
+          cardItem.relation as Relation,
+        )}
+      </div>
+      <div className="flex grow flex-col space-y-4">
+        <div className="flex flex-col space-y-1">
+          <div className="flex justify-between">
+            <h3 className="text-body1-bold">{cardItem.senderName}님</h3>
+            {onShareClick && (
+              <button onClick={onShareClick} className="shrink-0 self-baseline">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M5.41406 8.39453C5.06888 8.39453 4.78906 8.67435 4.78906 9.01953V16.2493C4.78906 16.5944 5.06888 16.8743 5.41406 16.8743H14.5807C14.9259 16.8743 15.2057 16.5944 15.2057 16.2493V9.01953C15.2057 8.67435 14.9259 8.39453 14.5807 8.39453H12.4974C12.1522 8.39453 11.8724 8.11471 11.8724 7.76953C11.8724 7.42435 12.1522 7.14453 12.4974 7.14453H14.5807C15.6163 7.14453 16.4557 7.984 16.4557 9.01953V16.2493C16.4557 17.2848 15.6163 18.1243 14.5807 18.1243H5.41406C4.37853 18.1243 3.53906 17.2848 3.53906 16.2493V9.01953C3.53906 7.984 4.37853 7.14453 5.41406 7.14453H7.4974C7.84257 7.14453 8.1224 7.42435 8.1224 7.76953C8.1224 8.11471 7.84257 8.39453 7.4974 8.39453H5.41406Z"
+                    fill="#999999"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M10 2.70703C10.3452 2.70703 10.625 2.98685 10.625 3.33203V12.4987C10.625 12.8439 10.3452 13.1237 10 13.1237C9.65482 13.1237 9.375 12.8439 9.375 12.4987V3.33203C9.375 2.98685 9.65482 2.70703 10 2.70703Z"
+                    fill="#999999"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9.56676 2.05205C9.80938 1.81598 10.1958 1.81598 10.4385 2.05205L13.3551 4.88988C13.6025 5.1306 13.6079 5.52629 13.3672 5.77368C13.1265 6.02108 12.7308 6.0265 12.4834 5.78579L10.0026 3.37202L7.52178 5.78579C7.27439 6.0265 6.8787 6.02108 6.63798 5.77368C6.39727 5.52629 6.40269 5.1306 6.65009 4.88988L9.56676 2.05205Z"
+                    fill="#999999"
+                  />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          <p className={cn('text-body3-medium text-text-sub-gray76')}>
+            {summary}
+          </p>
+        </div>
+        <div className={cn('w-full rounded-md px-2 py-1 text-body3-medium')}>
+          {Array.isArray(cardItem.answer) ? (
+            <ComboboxDropdown
+              placeholder=""
+              name=""
+              controlled
+              prefix={<div className="pr-[16px] text-b2-kr-b">순위</div>}
+              value={cardItem.answer[0].value}
+              onChange={() => {}}
+              options={cardItem.answer.map((answer, index) => ({
+                label: (
+                  <p className="text-b3-kr-m">
+                    <b className="pr-2">{index + 1} </b>
+                    {answer.text}
+                  </p>
+                ),
+                value: answer.value,
+              }))}
+            />
+          ) : null}
         </div>
         <p className="rounded-md bg-bg-light  p-4 text-body1-medium text-text-sub-gray4f">
           {cardItem.reason}

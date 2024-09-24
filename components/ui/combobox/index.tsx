@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { forwardRef } from 'react'
 import { cn } from '@/lib/client/utils'
 
@@ -6,7 +6,7 @@ import { cva, VariantProps } from 'class-variance-authority'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const comboBoxVariants = cva(
-  'round-md flex w-full items-center justify-between rounded-md border border-[#E5E5EC] bg-white px-4 py-[14px] text-left shadow-sm text-b2-kr-m focus:border-brand-main-green400 focus:outline-none',
+  'round-md flex w-full items-center rounded-md border border-[#E5E5EC] bg-white px-4 py-[14px] text-left shadow-sm text-b2-kr-m focus:border-brand-main-green400 focus:outline-none',
   {
     variants: {
       variant: {
@@ -26,7 +26,7 @@ const variants = {
 }
 
 interface Option {
-  label: string
+  label: string | ReactNode
   value: string
 }
 
@@ -38,11 +38,24 @@ interface ComboxDropdownProps extends VariantProps<typeof comboBoxVariants> {
   value: string
   onChange: (value: Option) => void
   variant?: 'default'
+  prefix?: ReactNode
+  suffix?: ReactNode
+  controlled?: boolean
 }
 
 export const ComboboxDropdown = forwardRef<HTMLDivElement, ComboxDropdownProps>(
   (
-    { options, placeholder, disabled, value, onChange, variant = 'default' },
+    {
+      options,
+      placeholder,
+      disabled,
+      value,
+      onChange,
+      prefix,
+      suffix,
+      variant = 'default',
+      controlled = false,
+    },
     ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -51,8 +64,10 @@ export const ComboboxDropdown = forwardRef<HTMLDivElement, ComboxDropdownProps>(
     )
 
     const handleOptionClick = (option: Option) => {
-      setSelectedOption(option)
       setIsOpen(false)
+      if (!controlled) {
+        setSelectedOption(option)
+      }
       onChange(option)
     }
 
@@ -69,14 +84,16 @@ export const ComboboxDropdown = forwardRef<HTMLDivElement, ComboxDropdownProps>(
             disabled &&
               'bg-gray-gray50 cursor-not-allowed  text-text-sub-gray99',
             !disabled && 'hover:bg-gray-gray50',
-            isOpen && 'border-brand-600 text-b2-kr-sb',
+            isOpen && 'border-brand-600 text-b2-kr-m',
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
+          {prefix}
+
           <span className={cn(selectedOption && 'font-bold')}>
             {selectedOption ? selectedOption.label : placeholder}
           </span>
-
+          {suffix}
           <svg
             width="16"
             height="16"
@@ -84,7 +101,7 @@ export const ComboboxDropdown = forwardRef<HTMLDivElement, ComboxDropdownProps>(
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={cn(
-              'h-5 w-5 text-text-sub-gray76 duration-300 ease-in-out',
+              'ml-auto h-5 w-5 text-text-sub-gray76 duration-300 ease-in-out',
               isOpen && 'rotate-180',
             )}
           >
