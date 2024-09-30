@@ -144,8 +144,6 @@ const GrowingCircles = ({
     return bubbles.reduce((acc, cur) => acc + cur.percentage, 0)
   }, [bubbles])
 
-  console.log(bubbles, '<<bubblesbubbles')
-
   const inview = useInView(containerRef, {
     once: true,
     margin: '-100px',
