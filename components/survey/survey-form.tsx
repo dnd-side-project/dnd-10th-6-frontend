@@ -166,7 +166,7 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
           setOptionsState(state)
         }}
         values={optionsState}
-        className="w-full flex-1 space-y-2 overflow-y-auto "
+        className="w-full flex-1 space-y-2"
       >
         {optionsState.map((option, index) => (
           <div className="flex w-full items-center" key={option}>
@@ -292,7 +292,7 @@ const SurveyForm = ({
       >
         {type === 'OX' ? (
           // OX
-          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll pt-7 text-center">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
@@ -367,10 +367,10 @@ const SurveyForm = ({
           </div>
         ) : type === 'MULTIPLE_CHOICE' ? (
           // 다중선택
-          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
-              className="mb-4 mt-1 text-t2-kr-m"
+              className="mb-4 mt-1 text-center text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller
@@ -450,12 +450,12 @@ const SurveyForm = ({
                             }}
                           />
                         ) : (
-                          <span className="ml-2 text-b1-kr-b">
+                          <span className="ml-2 text-left text-b1-kr-b">
                             {option.text}
                           </span>
                         )}
                       </div>
-                      <span className="ml-8 text-b2-kr-m text-font-gray-04">
+                      <span className="ml-8 text-left text-b2-kr-m text-font-gray-04">
                         {option.description}
                       </span>
                     </motion.label>
@@ -466,10 +466,10 @@ const SurveyForm = ({
           </div>
         ) : type === 'NUMERIC_CHOICE' ? (
           // 숫자 선택
-          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center ">
             <Image src={imgSrc} alt="questionAssets" />
             <div
-              className="mb-4 mt-1 text-t2-kr-m"
+              className="mb-4 mt-1 text-center text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller
@@ -578,7 +578,7 @@ const SurveyForm = ({
             />
           </div>
         ) : type === 'RANK' ? (
-          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mt-1 text-t2-kr-m"
@@ -587,10 +587,10 @@ const SurveyForm = ({
             <ReorderOptions options={options} name={name} id={id} />
           </div>
         ) : (
-          <div className="!mb-[240px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+          <div className="gap-3text-center !mb-[240px] mt-7 flex  grow flex-col items-center ">
             <Image src={imgSrc} alt="questionAssets" />
             <div
-              className="mb-4 mt-1 text-t2-kr-m"
+              className="mb-4 mt-1 text-center text-t2-kr-m"
               dangerouslySetInnerHTML={{ __html: title }}
             ></div>
             <Controller

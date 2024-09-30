@@ -78,7 +78,7 @@ const index = () => {
             }}
             trigger={<></>}
           />
-          <div className="absolute bottom-4 mb-10 mt-auto flex w-full justify-center pb-4">
+          <div className="bottom-4 mt-auto flex w-full justify-center pb-4">
             <Button
               onClick={() => setBottomSheetOpen(true)}
               variant="BG-brand"

@@ -195,7 +195,9 @@ export const BottomSheetButton = ({
                             질문 {wikiInfo[wiki].questionCount}개
                           </div>
                         </div>
-                        <p>{wikiInfo[wiki].description}</p>
+                        <p className="text-left">
+                          {wikiInfo[wiki].description}
+                        </p>
                       </div>
                       <svg
                         width="22"
