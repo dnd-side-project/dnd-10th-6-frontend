@@ -189,7 +189,7 @@ const GrowingCircles = ({
             <p
               className="font-medium"
               style={{
-                fontSize: mapValue(bubble.percentage, 100, 0, 28, 100),
+                fontSize: mapValue(bubble.percentage, 100, 0, 22, 75),
               }}
             >
               {bubble.label}
