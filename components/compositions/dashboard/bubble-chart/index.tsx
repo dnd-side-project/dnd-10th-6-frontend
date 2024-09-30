@@ -126,8 +126,9 @@ const GrowingCircles = ({
   const bubbles = useMemo(() => {
     if (!data) return null
     let lastIndex = data.findIndex((i) => i.percentage === 0)
-    if (lastIndex < 0) lastIndex = data.length - 1
-    const currentBubbleOptions = BUBBLE_OPTIONS[lastIndex > 3 ? 2 : lastIndex]
+    if (lastIndex <= 0) lastIndex = data.length
+    const currentBubbleOptions =
+      BUBBLE_OPTIONS[lastIndex > 3 ? 2 : lastIndex - 1]
 
     return currentBubbleOptions?.map((item, index) => ({
       ...item,
