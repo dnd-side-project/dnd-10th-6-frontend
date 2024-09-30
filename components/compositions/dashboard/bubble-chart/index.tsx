@@ -33,6 +33,7 @@ export const BubbleChart = ({
         `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`,
     }))
   }, [dashboard?.rank, wikiType])
+
   return (
     <div className="flex flex-col items-center rounded-[20px] bg-bg-light py-10">
       <h2 className="mx-auto w-fit px-5 text-t1-kr-b">
@@ -124,15 +125,17 @@ const GrowingCircles = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const bubbles = useMemo(() => {
     if (!data) return null
-    const lastIndex = data.findIndex((i) => i.percentage === 0)
+    // const lastIndex = data.findIndex((i) => i.percentage === 0)
+    const lastIndex = data.length - 1
     if (lastIndex <= 0) return
     const currentBubbleOptions =
       BUBBLE_OPTIONS[lastIndex > 3 ? 2 : lastIndex - 1]
+
     return currentBubbleOptions?.map((item, index) => ({
       ...item,
       id: data[index].legend,
       percentage: data[index].percentage,
-      label: data[index].legend,
+      label: data[index].legend.split(' ').splice(1, Infinity).join(''),
     }))
   }, [data])
 
@@ -140,6 +143,8 @@ const GrowingCircles = ({
     if (!bubbles?.length) return 0
     return bubbles.reduce((acc, cur) => acc + cur.percentage, 0)
   }, [bubbles])
+
+  console.log(bubbles, '<<bubblesbubbles')
 
   const inview = useInView(containerRef, {
     once: true,
