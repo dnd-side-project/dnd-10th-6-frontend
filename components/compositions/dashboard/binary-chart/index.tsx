@@ -29,8 +29,9 @@ export const BinaryChart = ({
     const total = 100
 
     return {
-      mine: (dashboard.percentage ?? 0) / total,
-      entire: (total - dashboard.percentage ?? 0) / total,
+      mine: Math.round(((dashboard.percentage ?? 0) / total) * 100) / 100,
+      entire:
+        Math.round(((total - dashboard.percentage ?? 0) / total) * 100) / 100,
     }
   }, [dashboard])
 
