@@ -648,10 +648,10 @@ const SurveyForm = ({
             />
           </div>
         )}
-        <div className="absolute bottom-0 flex w-full flex-col items-end justify-end">
+        <div className="absolute bottom-0 flex w-full flex-col items-end justify-end py-2">
           {type !== 'SHORT_ANSWER' && (
             <InputLabel
-              className="text-t4-kr-m"
+              className="py-1 text-t4-kr-m"
               label="이유를 말해주세요"
               required
             >
