@@ -175,7 +175,7 @@ const GrowingCircles = ({
               delay: 0.15 * index + 0.3,
             }}
             className={cn(
-              'absolute flex aspect-square w-[70%] origin-center flex-col items-center justify-center rounded-full',
+              'absolute flex aspect-square w-full max-w-[70%] origin-center flex-col items-center justify-center rounded-full',
             )}
           >
             <p
@@ -189,7 +189,13 @@ const GrowingCircles = ({
             <p
               className="font-medium"
               style={{
-                fontSize: mapValue(bubble.percentage, 100, 0, 22, 75),
+                fontSize: mapValue(
+                  bubble.percentage,
+                  100,
+                  0,
+                  100 * bubble.percentage * (1 / totalPercentage),
+                  50,
+                ),
               }}
             >
               {bubble.label}
