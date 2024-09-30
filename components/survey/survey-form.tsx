@@ -291,8 +291,8 @@ const SurveyForm = ({
         className="relative flex h-full flex-col space-y-6 overflow-y-hidden text-left"
       >
         {type === 'OX' ? (
-          // OX 타입
-          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 text-center ">
+          // OX
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll pt-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
@@ -367,7 +367,7 @@ const SurveyForm = ({
           </div>
         ) : type === 'MULTIPLE_CHOICE' ? (
           // 다중선택
-          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center ">
+          <div className="!mb-[190px] mt-7 flex grow  flex-col items-center gap-3 overflow-y-scroll text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
