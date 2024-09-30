@@ -158,7 +158,7 @@ function BinaryBarBar({ active, value, positive, color }: BinaryBarProps) {
             color ? 'text-white' : 'text-font-gray-disabled',
           )}
         >
-          {value}%
+          {value.toFixed()}%
         </span>
         <m.div
           key={id}
