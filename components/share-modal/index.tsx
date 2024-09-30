@@ -95,7 +95,7 @@ const ShareModal = ({
             : [
                 // TODO: variant 적용 :default
                 <Button
-                  onClick={() => setShareModalOpen(false)}
+                  onClick={() => onStateChange(false)}
                   variant="Line-neutral"
                   key="copy-link"
                   className="rounded-none"

@@ -123,13 +123,19 @@ const ReorderOptionItem = ({
   )
 }
 
+function checkArray(value: unknown): value is Array<string> {
+  return Array.isArray(value) && value.every((v) => typeof v === 'string')
+}
 const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
   const form = useFormContext<surveyFormType>()
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
-  const [optionsState, setOptionsState] = useState(
-    options.map((option) => option.id),
-  )
+  const [optionsState, setOptionsState] = useState(() => {
+    const initialValues = form.getValues('answer')
+    return checkArray(initialValues) && initialValues.length
+      ? initialValues
+      : options.map((option) => option.id)
+  })
 
   const optionMap = useRef(
     new Map(options.map((option) => [option.id, option.text])),
@@ -166,7 +172,7 @@ const ReorderOptions = ({ options, id }: ReorderOptionsProps) => {
           setOptionsState(state)
         }}
         values={optionsState}
-        className="w-full flex-1 space-y-2"
+        className="w-full flex-1 space-y-2 px-1"
       >
         {optionsState.map((option, index) => (
           <div className="flex w-full items-center" key={option}>
