@@ -127,9 +127,8 @@ const GrowingCircles = ({
     if (!data) return null
     // const lastIndex = data.findIndex((i) => i.percentage === 0)
     const lastIndex = data.length - 1
-    if (lastIndex <= 0) return
-    const currentBubbleOptions =
-      BUBBLE_OPTIONS[lastIndex > 3 ? 2 : lastIndex - 1]
+    if (lastIndex < 0) return
+    const currentBubbleOptions = BUBBLE_OPTIONS[lastIndex > 3 ? 2 : lastIndex]
 
     return currentBubbleOptions?.map((item, index) => ({
       ...item,
