@@ -134,7 +134,7 @@ const GrowingCircles = ({
       ...item,
       id: data[index].legend,
       percentage: data[index].percentage,
-      label: data[index].legend.split(' ').splice(1, Infinity).join(''),
+      label: data[index].legend,
     }))
   }, [data])
 
