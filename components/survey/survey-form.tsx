@@ -298,7 +298,7 @@ const SurveyForm = ({
       >
         {type === 'OX' ? (
           // OX
-          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-1.5 overflow-y-scroll pb-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-t2-kr-m"
@@ -373,7 +373,7 @@ const SurveyForm = ({
           </div>
         ) : type === 'MULTIPLE_CHOICE' ? (
           // 다중선택
-          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-1.5 overflow-y-scroll pb-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-center text-t2-kr-m"
@@ -472,7 +472,7 @@ const SurveyForm = ({
           </div>
         ) : type === 'NUMERIC_CHOICE' ? (
           // 숫자 선택
-          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center ">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-1.5 overflow-y-scroll pb-7 text-center ">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-center text-t2-kr-m"
@@ -584,7 +584,7 @@ const SurveyForm = ({
             />
           </div>
         ) : type === 'RANK' ? (
-          <div className="!mb-[190px] flex grow flex-col  items-center gap-3 overflow-y-scroll py-7 text-center">
+          <div className="!mb-[190px] flex grow flex-col  items-center gap-1.5 overflow-y-scroll pb-7 text-center">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mt-1 text-t2-kr-m"
@@ -593,7 +593,7 @@ const SurveyForm = ({
             <ReorderOptions options={options} name={name} id={id} />
           </div>
         ) : (
-          <div className="gap-3text-center !mb-[240px] mt-7 flex  grow flex-col items-center ">
+          <div className="gap-1.5text-center !mb-[240px] flex grow  flex-col items-center pb-7 ">
             <Image src={imgSrc} alt="questionAssets" />
             <div
               className="mb-4 mt-1 text-center text-t2-kr-m"
@@ -654,7 +654,7 @@ const SurveyForm = ({
             />
           </div>
         )}
-        <div className="absolute bottom-0 flex w-full flex-col items-end justify-end py-2">
+        <div className="absolute bottom-0 flex w-full flex-col items-end justify-end bg-white py-2">
           {type !== 'SHORT_ANSWER' && (
             <InputLabel
               className="py-1 text-t4-kr-m"
